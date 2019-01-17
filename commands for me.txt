@@ -1,15 +1,6 @@
-// git commans
-
-https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html
-
+//=========== git commands ===============//
+To see Git version
 git --version
-git init "repository name"
-git add .
-git add *
-git add "file_Name"
-git commit -m "Commit message"
-git push
-git pull
 
 Tell Git who you are
 git config --global user.name "Sam Smith"
@@ -32,13 +23,22 @@ git commit -a
 
 Push
 git push origin master
+git push h-origin master
 
 Status
 git status
 
 Connect to a remote repository
-git remote add origin <server>
+git remote add origin https://github.com/*******/******.git
 git remote -v
+
+Delete the existing remote repository
+git remote rm destination
+
+Rename the existing remote
+git remote rename origin destination
+git remote rename oldName newName
+
 
 Branches
 git checkout -b <branchname>
@@ -69,4 +69,15 @@ git reset --hard origin/master
 
 Search
 git grep "foo()"
-//=====================================================//
+
+//=========== End of git commands ===============//
+
+
+//=========== composer commands ===============//
+
+//=========== End of composer commands ===============//
+
+
+//=========== Laravel commands ===============//
+
+//=========== End of Laravel commands ===============//
