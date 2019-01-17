@@ -39,6 +39,9 @@ Rename the existing remote
 git remote rename origin destination
 git remote rename oldName newName
 
+Change the URL in the local directory of remote repository
+git remote set-url origin git@XXXXXXXXXXXX
+git remote set-url origin https://github.com/alhakeemarch/h-app.git
 
 Branches
 git checkout -b <branchname>
