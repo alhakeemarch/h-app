@@ -82,5 +82,50 @@ git grep "foo()"
 
 
 //=========== Laravel commands ===============//
+==============================================================================
+for crating Localization middleware
+    php artisan make:middleware Localization
+go to app/Http/middleware/Localization.php
+edit as fowing:
+ public function handle($request, Closure $next)
+    {
+        if($request->session()->has('locale')){
+        // if(\Session::has('locale')){
+            \App::setlocale(\Session::get('locale'));
+        }
+        return $next($request);
+    }
+add the new middleware to
+app/Http/middleware/kernel.php
+to end of this array
+protected $middlewareGroups = [
+    \App\Http\Middleware\Localization::class,
+add new rout to:
+    routes/web.php
+        Route::get('/locale/{locale}', function ($locale) {
+            Session::put('locale', $locale);
+            return redirect()->back();
+        });
+
+add link whare you wont
+    @if (App::isLocale('ar'))
+    <a href= "locale/en"> English</a>
+    @else
+    <a href="locale/ar"> العربية</a>    
+    @endif
+
+add language JSON files in 
+resources/lang/
+    ar.json
+    en.json
+
+putt words in json file and call thim by thire keys in your pages
+    {{__('key')}}
+or
+    @lang('key')
+for more details go to:
+https://laravel.com/docs/5.7/localization
+==============================================================================
+
 
 //=========== End of Laravel commands ===============//
