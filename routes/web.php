@@ -20,8 +20,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/test', function () {
-    return view('test');
+    if ((auth()->user()->user_level)>=10) {
+        return view('test');
+    }else{
+        return "you are not allowed to goo..";
+    }
 });
+
+// a
+// a@test.com
+// 123456
+
 Route::get('/locale/{locale}', function ($locale) {
     Session::put('locale', $locale);
     return redirect()->back();

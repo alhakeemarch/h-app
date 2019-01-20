@@ -83,6 +83,16 @@ git grep "foo()"
 
 //=========== Laravel commands ===============//
 ==============================================================================
+app/providers/AppServiceProvider.php
+    use Illuminate\Support\Facades\Schema;
+
+    public function boot()
+    {
+        Schema::defaultStringLength(191);
+    }
+==============================================================================
+php artisan 
+==============================================================================
 for crating Localization middleware
     php artisan make:middleware Localization
 go to app/Http/middleware/Localization.php
