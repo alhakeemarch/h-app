@@ -83,6 +83,12 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
+                @if (!Auth::guest())
+                    @if((auth()->user()->user_level)>=10)
+                    <a class="btn btn-info">i am admin</a>
+                    @endif
+                @endif
+                
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>

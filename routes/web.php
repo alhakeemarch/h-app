@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +21,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/test', function () {
-    if ((auth()->user()->user_level)>=10) {
-        return view('test');
-    }else{
-        return "you are not allowed to goo..";
+    if (\Auth::check()) {
+        if ((auth()->user()->user_level)>=10) {
+            return view('test');
+        }else{
+            return "you are not allowed to goo..";
+        }
+    }else {
+        return "you must log in";
+    }
+});
+Route::get('/test2', function () {
+    if(!Auth::guest())
+    {
+        return Auth::user();
+        return "you are NOT  guest";
+    }else {
+        return "you are guest";
     }
 });
 
