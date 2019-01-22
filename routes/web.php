@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use App\Person;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 // $locale = "en";
 // $locale = "ar";
     // App::setLocale($locale);
@@ -22,21 +23,26 @@ Route::get('/', function () {
 });
 Route::get('/test', function () {
     if (\Auth::check()) {
-        if ((auth()->user()->user_level)>=10) {
+        if ((auth()->user()->user_level) >= 10) {
             return view('test');
-        }else{
+        } else {
             return "you are not allowed to goo..";
         }
-    }else {
-        return "you must log in";
+    } else {
+        return redirect('/login');
     }
 });
 Route::get('/test2', function () {
-    if(!Auth::guest())
-    {
+    // return now();
+return Person::all();
+    dd(Person::all());
+    dd(\App\Person::all());
+    dd(\Auth::check());
+    dd(Auth::guest());
+    if (!Auth::guest()) {
         return Auth::user();
-        return "you are NOT  guest";
-    }else {
+
+    } else {
         return "you are guest";
     }
 });
@@ -49,6 +55,12 @@ Route::get('/locale/{locale}', function ($locale) {
     Session::put('locale', $locale);
     return redirect()->back();
 });
+
+
+// Route::resources([
+//     'photos' => 'PhotoController',
+//     'posts' => 'PostController'
+// ]);
 
 
 

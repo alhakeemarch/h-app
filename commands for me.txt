@@ -92,6 +92,7 @@ app/providers/AppServiceProvider.php
     }
 ==============================================================================
 php artisan 
+php artisan make:model Person -mcr
 ==============================================================================
 for crating Localization middleware
     php artisan make:middleware Localization
