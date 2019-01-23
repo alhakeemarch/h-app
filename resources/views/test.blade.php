@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"> @if (App::isLocale('ar'))
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- usign bootstrab css -->
+    @if (App::isLocale('ar'))
     <link href="{{ asset('css/bootstrab_ar.css') }}" rel="stylesheet"> @else
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> @endif
 
