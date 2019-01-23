@@ -34,10 +34,16 @@
             <div class="card-body">
                 <!-- <h4 class="card-title">Title</h4>
                 <p class="card-text">Text</p> -->
+                <form action="person\check" method="post">
+                    @csrf
+                    <label for="fname">{{__( 'nId')}}:</label>
+                    <input type="text" name="n_id" id="" class="form-control mb-3" placeholder="{{__( 'nIdNumber')}}..">
+                    <input type="submit" value="{{__('submit')}}" class="btn btn-secondary btn-block">
+                </form>
+
                 <form action="#" method="POST">
                     <div class="form-group">
                         <label for="fname" class="d-block">{{__('the name')}}:</label>
-
                         <div class="form-row mb-3">
                             <div class="col-md">
                                 <input type="text" name="fname" id="" class="form-control" placeholder="{{ __('name1') }}.." required>
@@ -75,12 +81,10 @@
                     @if (App::isLocale('ar'))
                     <a href="locale/en">
                     <i class="fas fa-globe-asia fa-2x"></i>
-                    </a> 
-                    @else
+                    </a> @else
                     <a href="locale/ar">
                     <i class="fas fa-globe-asia fa-2x"></i>
-                    </a>
-                    @endif
+                    </a> @endif
                 </div>
 
             </div>

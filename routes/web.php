@@ -56,11 +56,12 @@ Route::get('/locale/{locale}', function ($locale) {
     return redirect()->back();
 });
 
+Route::post('/person/check', 'PersonController@check');
 
-// Route::resources([
-//     'photos' => 'PhotoController',
-//     'posts' => 'PostController'
-// ]);
+Route::resources([
+    'person' => 'PersonController',
+    // 'posts' => 'PostController'
+]);
 
 
 
