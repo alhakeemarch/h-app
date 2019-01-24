@@ -17,14 +17,15 @@ use App\Person;
 
 Route::get('/locale/{locale}', function ($locale) {
     Session::put('locale', $locale);
+    // return back();
     return redirect()->back();
-});
+}) ->name('localeization');
 
  Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/person/check', 'PersonController@check');
+Route::any('/person/check', 'PersonController@check')->name('person.check');
 
 Route::resources([
     'person' => 'PersonController',

@@ -87,9 +87,14 @@ class PersonController extends Controller
     
     public function check(Request $request, Person $person)
     {
-        $national_id = $request->input('n_id');
-        $this_person = $person->getPersonByNationalId($national_id);
-        return ($this_person) ? $this_person : 'no person found';
+        if ($request->input('n_id')) {
+            $national_id = $request->input('n_id');
+        $found_person = $person->getPersonByNationalId($national_id);
+        return ($found_person) ? view('')->with('found_person', $found_person) : view('/person/create');
+        }else {
+            return view('/person/create');
+        }
+        
     }
 
 }

@@ -132,10 +132,10 @@
                     <!-- language icon -->
                     <div class="">
                         @if (App::isLocale('ar'))
-                        <a href="locale/en" class="nav-item nav-link">
+                        <a href="{{ url('locale/en') }}" class="nav-item nav-link">
                                     <i class="fas fa-globe-asia fa-2x"></i>
                                     </a> @else
-                        <a href="locale/ar" class="nav-item nav-link">
+                        <a href="{{ url('locale/ar') }}" class="nav-item nav-link">
                                     <i class="fas fa-globe-asia fa-2x"></i>
                                     </a> @endif
                     </div>
@@ -162,7 +162,6 @@
                                                          document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
-
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
