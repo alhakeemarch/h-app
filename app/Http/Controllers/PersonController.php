@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Person;
 use Illuminate\Http\Request;
+use App\Nationality;
 
 class PersonController extends Controller
 {
@@ -87,14 +88,19 @@ class PersonController extends Controller
     
     public function check(Request $request, Person $person)
     {
+    $nat=Nationality::gitNationalities();
+        if ($request->method()==="GET") {
+            return view('/person/check');
+        }
+  
         if ($request->input('n_id')) {
             $national_id = $request->input('n_id');
         $found_person = $person->getPersonByNationalId($national_id);
-        return ($found_person) ? view('')->with('found_person', $found_person) : view('/person/create');
+        return ($found_person) ? view('person/show')->with('person', $found_person) : view('/person/create', ['n_id' => $national_id,'nat' => $nat]);
         }else {
-            return view('/person/create');
-        }
-        
+            return 'not valed input';
+            return view('/person/show');
+        }        
     }
 
 }

@@ -6,11 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', 'Hakeem-App')</title>
+    {{--
+    <title>{{ config('app.name', 'Laravel') }}</title> --}}
     <!-- fav Icon -->
     <link rel="icon" href="{{ asset('img/logo.png') }}">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script>        
+            function onlyNumber(evt){
+                    var theEvent = evt || window.event;
+                    var key = theEvent.keyCode || theEvent.which;
+                    // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
+                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys
+                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9) { 
+                        return;
+                    }
+                   var ch = String.fromCharCode(theEvent.which);
+                    if(!(/[0-9]/.test(ch))){
+                        theEvent.preventDefault();
+                    }
+                }
+            // ================================
+            function onlyString(evt){
+                    var theEvent = evt || window.event;
+                    var key = theEvent.keyCode || theEvent.which;
+                    // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
+                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys
+                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9) { 
+                        return;
+                    }
+                   var ch = String.fromCharCode(theEvent.which);
+                    // arabic letters will be in this group as regex [\u0621-\u064A\u0660-\u0669 ]+$
+                    if(!(/[a-z\u0621-\u064A\u0660-\u0669 ]/i.test(ch))){
+                        theEvent.preventDefault();
+                    }
+                }
+             // ================================
+             function onlyArabicString(evt){
+                    var theEvent = evt || window.event;
+                    var key = theEvent.keyCode || theEvent.which;
+                    // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
+                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys
+                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9) { 
+                        return;
+                    }
+                   var ch = String.fromCharCode(theEvent.which);
+                    // arabic letters will be in this group as regex [\u0621-\u064A\u0660-\u0669 ]+$
+                    if(!(/[\u0621-\u064A\u0660-\u0669 ]/.test(ch))){
+                        theEvent.preventDefault();
+                    }
+                }
+             // ================================
+             function onlyEnglishString(evt){
+                    var theEvent = evt || window.event;
+                    var key = theEvent.keyCode || theEvent.which;
+                    // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
+                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys
+                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9) { 
+                        return;
+                    }
+                   var ch = String.fromCharCode(theEvent.which);
+                    if(!(/[a-z ]/i.test(ch))){
+                        theEvent.preventDefault();
+                    }
+                }
+        </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -28,11 +89,12 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- // -->
     @endif
+
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark shadow">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow fixed-top">
             <!-- navlogo -->
             <div class="navlogo col-lg-2 d-none d-lg-inline-block text-justify">
                 <a class="navbar-brand mr-0" href="{{ url('/') }}">
@@ -72,7 +134,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('New')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('person/create') }}">{{__('Person')}}</a>
+                                <a class="dropdown-item" href="{{ url('person/check') }}">{{__('Person')}}</a>
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>
@@ -177,17 +239,21 @@
 
         </nav>
     </div>
+    {{--
+    <div style="width: 100%; height: 70px; background-color: rgba(0,0,255,0.1);"></div> --}}
+    <div style="width: 100%; height: 80px;"> </div>
     <!-- /End of div id="app" -->
 
-    <main class="py-4">
+
+    <main class="container-fluid" style="min-height:100vh;">
         @yield('content')
     </main>
     </div>
 
-
-    <footer class="footer text-light bg-dark shadow fixed-bottom py-3 text-center">
+    {{-- fixed-bottom --}}
+    <footer class="footer text-light bg-dark shadow  py-3 text-center">
         <div class="">
-        <span class="" >&copy; {{__('the_rights')}}</span>
+            <span class="">&copy; {{__('the_rights')}}</span>
         </div>
     </footer>
 </body>
