@@ -74,6 +74,8 @@
         </script>
 
     <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Amiri|Aref+Ruqaa|Baloo+Bhaijaan|Changa|El+Messiri|Harmattan|Jomhuria|Katibeh|Lateef|Lemonada|Mada|Markazi+Text|Rakkas|Reem+Kufi|Tajawal|Prosto+One" rel="stylesheet"> {{-- // google fonts  --}}
+
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <!-- Font Awesome CDN -->
@@ -89,6 +91,26 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- // -->
     @endif
+    <style>
+    body{
+        /* font-family: 'Reem Kufi', sans-serif; */
+        font-family: 'Tajawal','Prosto One', sans-serif; /* 100 */
+        /* font-family: 'Amiri', serif; */
+        /* font-family: 'Changa', sans-serif; // 100  */
+        /* font-family: 'El Messiri', sans-serif; // 100 */
+        /* font-family: 'Lateef', cursive; */
+        /* font-family: 'Mada', sans-serif; */
+        /* font-family: 'Baloo Bhaijaan', cursive; */
+        /* font-family: 'Lemonada', cursive; */
+        /* font-family: 'Markazi Text', serif; // 50 */
+        /* font-family: 'Harmattan', sans-serif; */
+        /* font-family: 'Aref Ruqaa', serif; */
+        /* font-family: 'Jomhuria', cursive; */
+        /* font-family: 'Rakkas', cursive; */
+        /* font-family: 'Katibeh', cursive; */
+        /* font-family: 'Prosto One', cursive; */
+    }
+    </style>
 
 </head>
 
@@ -186,9 +208,9 @@
                         </li>
                         <!--/End of dropdown 4 -->
                     </ul>
+                    @endauth
                 </ul>
-                @endauth
-
+                
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- language icon -->
