@@ -9,8 +9,15 @@
             <h1 class="text-center">
                 {{__('app name')}}
             </h1>
-            <p>{{__('you are : ')}} {{Auth::user()->name1}}</p>
-            <p>{{{ Auth::user()->name or Auth::user()->email }}}</p>
+            <p class="lead">{{__('you are : ')}} {{Auth::user()->name}}</p>
+            <p>{{__('your Email is : ')}} {{Auth::user()->email}}</p>
+            <p>{{__('your Password is : ')}} {{Auth::user()->password}}</p>
+            <p>{{__('your User Level : ')}} {{Auth::user()->user_level}}</p>
+            <p>{{__('your Job Level : ')}}{{Auth::user()->job_level}}</p>
+            <p>{{__('your user Remember Token is : ')}}{{Auth::user()->remember_token}}</p>
+            <p>{{__('your user Created at : ')}}{{Auth::user()->created_at}}</p>
+            <p>{{__('your user Updated at : ')}}{{Auth::user()->updated_at}}</p>
+
         </div>
     </div>
 </div>

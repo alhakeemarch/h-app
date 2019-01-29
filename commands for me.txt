@@ -77,11 +77,15 @@ git grep "foo()"
 
 
 //=========== composer commands ===============//
+composer -v
+mv composer.phar /user/local/bin/composer
+composer global require laravel/installer
 
 //=========== End of composer commands ===============//
 
 
 //=========== Laravel commands ===============//
+composer global require laravel/installer
 ==============================================================================
 app/providers/AppServiceProvider.php
     use Illuminate\Support\Facades\Schema;

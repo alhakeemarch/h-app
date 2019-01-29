@@ -23,7 +23,7 @@ class Person extends Model
      * @param  $national_id
      * @return $person or false
      */
-    public function getPersonByNationalId($national_id)
+    public static function getPersonByNationalId($national_id)
     {
         $personCollection = Person::where('national_id', $national_id)->get();
         $the_person = false;

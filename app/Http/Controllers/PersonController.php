@@ -15,7 +15,9 @@ class PersonController extends Controller
      */
     public function index()
     {
-        //
+        // return Person::all();
+        $allPersons = Person::all();
+        return view('person.index')->with('persons', $allPersons);
     }
 
     /**
@@ -23,10 +25,13 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('person.add');
-        //
+        $nat = Nationality::gitNationalities();
+        $national_id = $request->input('n_id');
+        // $national_id = 11;
+        return view('/person/create', ['n_id' => $national_id, 'nat' => $nat]);
+        return view('person.create');
     }
 
     /**
@@ -37,7 +42,7 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return 'this is store method';
     }
 
     /**
@@ -48,7 +53,7 @@ class PersonController extends Controller
      */
     public function show(Person $person)
     {
-        //
+        return view('person/show')->with('person', $person);
     }
 
     /**
@@ -59,7 +64,7 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
-        //
+        return 'this is edit method';
     }
 
     /**
@@ -71,7 +76,7 @@ class PersonController extends Controller
      */
     public function update(Request $request, Person $person)
     {
-        //
+        return 'this is update method';
     }
 
     /**
@@ -82,25 +87,27 @@ class PersonController extends Controller
      */
     public function destroy(Person $person)
     {
-        //
+        return 'this is destroy method';
     }
 
-    
+
     public function check(Request $request, Person $person)
     {
-    $nat=Nationality::gitNationalities();
-        if ($request->method()==="GET") {
+        if ($request->method() === "GET") {
             return view('/person/check');
         }
-  
-        if ($request->input('n_id')) {
-            $national_id = $request->input('n_id');
-        $found_person = $person->getPersonByNationalId($national_id);
-        return ($found_person) ? view('person/show')->with('person', $found_person) : view('/person/create', ['n_id' => $national_id,'nat' => $nat]);
-        }else {
+
+        if ($request->input('n_id') && false) {
+            $found_person = $person->getPersonByNationalId($request->input('n_id'));
+            if ($found_person) {
+                redirect()->action('PersonController@show', ['id' => $found_person->id]);
+            }else {
+                redirect()->action('PersonController@create',$request);
+            }
+        } else {
             return 'not valed input';
-            return view('/person/show');
-        }        
+            return redirect()->action('PersonController@index'); // need to fix
+        }
     }
 
 }
