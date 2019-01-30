@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 @section('content')
 
 
@@ -17,10 +17,10 @@
             <p>{{__('your user Remember Token is : ')}}{{Auth::user()->remember_token}}</p>
             <p>{{__('your user Created at : ')}}{{Auth::user()->created_at}}</p>
             <p>{{__('your user Updated at : ')}}{{Auth::user()->updated_at}}</p>
-
         </div>
     </div>
 </div>
+
 
 {{-- original hoem file frome laravel
 <div class="container">

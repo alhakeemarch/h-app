@@ -18,8 +18,8 @@
                     var theEvent = evt || window.event;
                     var key = theEvent.keyCode || theEvent.which;
                     // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
-                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys
-                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9) { 
+                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys,  Enter=13
+                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9 || key == 13) { 
                         return;
                     }
                    var ch = String.fromCharCode(theEvent.which);
@@ -32,8 +32,8 @@
                     var theEvent = evt || window.event;
                     var key = theEvent.keyCode || theEvent.which;
                     // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
-                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys
-                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9) { 
+                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys,  Enter=13
+                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9 || key == 13) { 
                         return;
                     }
                    var ch = String.fromCharCode(theEvent.which);
@@ -47,8 +47,8 @@
                     var theEvent = evt || window.event;
                     var key = theEvent.keyCode || theEvent.which;
                     // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
-                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys
-                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9) { 
+                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys,  Enter=13
+                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9 || key == 13) { 
                         return;
                     }
                    var ch = String.fromCharCode(theEvent.which);
@@ -62,8 +62,8 @@
                     var theEvent = evt || window.event;
                     var key = theEvent.keyCode || theEvent.which;
                     // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
-                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys
-                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9) { 
+                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys,  Enter=13
+                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9 || key == 13) { 
                         return;
                     }
                    var ch = String.fromCharCode(theEvent.which);
@@ -93,6 +93,12 @@
     @endif
     <style>
     body{
+           background-image:
+            radial-gradient(
+	        #c3c8d5,
+            #5e6a87
+            );
+
         /* font-family: 'Reem Kufi', sans-serif; */
         font-family: 'Tajawal','Prosto One', sans-serif; /* 100 */
         /* font-family: 'Amiri', serif; */
@@ -261,13 +267,10 @@
 
         </nav>
     </div>
-    {{--
-    <div style="width: 100%; height: 70px; background-color: rgba(0,0,255,0.1);"></div> --}}
     <div style="width: 100%; height: 80px;"> </div>
     <!-- /End of div id="app" -->
 
-
-    <main class="container-fluid" style="min-height:100vh;">
+    <main class="container-fluid" style="min-height:85vh;">
         @yield('content')
     </main>
     </div>
