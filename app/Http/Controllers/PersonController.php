@@ -28,9 +28,9 @@ class PersonController extends Controller
     public function create(Request $request)
     {
         $nat = Nationality::gitNationalities();
-        $national_id = $request->input('n_id');
+        $national_id = $request->input('national_id');
         // $national_id = 11;
-        return view('/person/create', ['n_id' => $national_id, 'nat' => $nat]);
+        return view('/person/create', ['national_id' => $national_id, 'nat' => $nat]);
         return view('person.create');
     }
 
@@ -97,17 +97,19 @@ class PersonController extends Controller
             return view('/person/check');
         }
 
-        if ($request->input('n_id') && false) {
-            $found_person = $person->getPersonByNationalId($request->input('n_id'));
-            if ($found_person) {
-                redirect()->action('PersonController@show', ['id' => $found_person->id]);
-            }else {
-                redirect()->action('PersonController@create',$request);
-            }
+        $validatedData = $request->validate([
+            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+            // 'body' => 'required',
+        ]);
+
+        $found_person = $person->getPersonByNationalId($request->input('national_id'));
+        if ($found_person) {
+
+            return redirect()->action('PersonController@show', ['id' => $found_person->id]);
         } else {
-            return 'not valed input';
-            return redirect()->action('PersonController@index'); // need to fix
+            return redirect()->action('PersonController@create', $request);
         }
+
     }
 
 }

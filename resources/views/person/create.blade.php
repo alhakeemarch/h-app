@@ -69,9 +69,9 @@
                                 <!-- end of  English Name -->
                                 <div class="form-row mb-3">
                                     <div class="col-md">
-                                        <label for="n_id">{{__( 'nId')}} <span class="small text-danger">({{__('required')}})</span> :</label>
-                                        <input type="text" onkeypress="onlyNumber(event)" maxlenght="10" name="n_id" class="form-control mb-3" placeholder="{{__( 'nIdNumber')}}.."
-                                            value="{{$n_id}}" maxlength="10" pattern=".{10,}" required title="{{__('must be 10 digits')}}">
+                                        <label for="national_id">{{__( 'nId')}} <span class="small text-danger">({{__('required')}})</span> :</label>
+                                        <input type="text" onkeypress="onlyNumber(event)" maxlenght="10" name="national_id" class="form-control mb-3" placeholder="{{__( 'nIdNumber')}}.."
+                                            value="{{$national_id}}" maxlength="10" pattern=".{10,}" required title="{{__('must be 10 digits')}}">
                                     </div>
                                     <div class="col-md">
                                         <label for="fname">{{__( 'phoneNo')}} <span class="small text-danger">({{__('required')}})</span> :</label>
