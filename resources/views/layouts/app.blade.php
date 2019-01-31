@@ -126,7 +126,7 @@
             <!-- navlogo -->
             <div class="navlogo col-lg-2 d-none d-lg-inline-block text-justify">
                 <a class="navbar-brand mr-0" href="{{ url('/') }}">
-                    <img src="{{ asset('img/logo5.png') }}" width="35" height="35" class="d-inline-block align-top d-md-inline" alt="LOGO">
+                    <img src="{{ asset('img/logo-3.png') }}" width="35" height="35" class="d-inline-block align-top d-md-inline" alt="LOGO">
                     <span class=" font-weight-bold">{{__('app name')}}</span>
                 </a>
             </div>
@@ -135,7 +135,7 @@
             <!-- navlogo for small screens -->
             <div class="navlogo text-center d-lg-none">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('img/logo5.png') }}" width="35" height="35" class="d-inline-block align-top d-md-inline" alt="">
+                    <img src="{{ asset('img/logo-3.png') }}" width="35" height="35" class="d-inline-block align-top d-md-inline" alt="">
                 </a>
             </div>
             <!-- /END navlogo for small screens -->

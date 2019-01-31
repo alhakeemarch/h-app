@@ -3,11 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Person;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Nationality;
 
 class PersonController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +27,10 @@ class PersonController extends Controller
      */
     public function index()
     {
+
+        if (Auth::user()->user_level >= 100) {
+            return "you are the 100";
+        }
         // return Person::all();
         $allPersons = Person::all();
         return view('person.index')->with('persons', $allPersons);

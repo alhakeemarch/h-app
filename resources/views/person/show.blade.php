@@ -7,11 +7,10 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4 text-center">
-                <img class="img-thumbnail rounded img-responsive" src="{{ asset('img/myAvatar.png') }}" alt="avatar" > 
+                <img class="img-thumbnail rounded img-responsive" src="{{ asset('img/mail.png') }}" alt="avatar" style="max-height: 250px;"> 
                 <h2> {{$person->name1}} {{$person->name5}}</h2>
             </div>
-            <div class="col-md-8">
-                
+            <div class="col-md-8">  
                 <h5 class="shadow-sm p-2 mb-2 rounded text-center text-uppercase bg-secondary text-light">Personal Information</h5>
                 <div>Person ID = {{$person->id}} </div>
                 <div>Person National ID Number = {{$person->national_id}}</div>
@@ -28,11 +27,7 @@
                     Person Birth Place = {{$person->birth_place}} <br>
                     Person Time Stamps = {{$person->timestamps}} <br>
             </div>
-        </div>
-        
+        </div>  
     </div>
 </div>
-
-
-
 @endsection

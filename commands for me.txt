@@ -86,6 +86,11 @@ composer global require laravel/installer
 
 //=========== Laravel commands ===============//
 composer global require laravel/installer
+
+to use  Auth::user()->user_level;
+in any contorller
+use Illuminate\Support\Facades\Auth;
+
 ==============================================================================
 app/providers/AppServiceProvider.php
     use Illuminate\Support\Facades\Schema;
