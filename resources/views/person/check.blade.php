@@ -6,7 +6,8 @@
 
         <div class="container">
             <div class="card">
-                {{-- /////////////////////////////// --}} @if ($errors->any())
+                <!-- ///////////////////////////////-->
+                @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -14,7 +15,8 @@
                         @endforeach
                     </ul>
                 </div>
-                @endif {{-- /////////////////////////////// --}}
+                @endif
+                <!-- ///////////////////////////////-->
                 <div class="card-body">
                     <h4 class="card-title">{{__('Customer registration checking form')}}</h4>
                     <p class="card-text">{{__('Enter national ID to check')}}</p>
@@ -31,6 +33,7 @@
             <!-- end card -->
 
         </div>
-        <!-- end of row -->
+        <!-- end of container -->
     </div>
+    <!-- end of row -->
 @endsection

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Person;
 use Illuminate\Support\Facades\Auth;
 use App\Nationality;
+use Illuminate\Http\Request;
+
 
 class PersonController extends Controller
 {
@@ -58,7 +60,36 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        return 'this is store method';
+
+        $validatedData = $request->validate([
+            'name1' => 'required|string|min:2',
+            'name2' => 'string|nullable',
+            'name3' => 'string|nullable',
+            'name4' => 'string|nullable',
+            'name5' => "required|string|min:2",
+            'en_name1' => 'string|nullable',
+            'en_name2' => 'string|nullable',
+            'en_name3' => 'string|nullable',
+            'en_name4' => 'string|nullable',
+            'en_name5' => 'string|nullable',
+            'phone_no' => 'required|numeric|starts_with:0,9|digits:10,12,14',
+            'nationaltiy' => "required",
+            'hafizah_number' => 'numeric|nullable',
+            'national_id_issue_date' => 'nullable',
+            'national_id_issue_place' => 'string|nullable',
+            'birth_date' => 'nullable',
+            'birth_place' => 'string|nullable',
+            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+            // 'body' => 'required',
+        ]);
+
+        return $request->all();
+
+
+
+        $person = Person::create($request->all());
+        // $person->save();
+        return redirect()->action('PersonController@index');
     }
 
     /**

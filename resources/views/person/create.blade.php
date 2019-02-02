@@ -8,19 +8,19 @@
             <div class="card mb-3">
 
                 <div class="card-body">
-                    <h4 class="card-title">إنشاء عميل جديد</h4>
-                    <p class="card-text">يرجى التأكد من صحة البيانات المدخلة</p>
+                    <h4 class="card-title">{{__('Create New Person')}}</h4>
+                    <p class="card-text">{{__("this is to add new person (customer/Employee)")}}</p>
                     <!-- Main Information -->
                     <div class="card-header text-white bg-dark mb-3">
                         Main Information:
                     </div>
-                    <form action="#" method="POST">
+                    <form action="{{ url('person') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="fname" class="d-block">{{__('the name')}} <span class="small text-danger">({{__('required')}})</span> :</label>
                             <div class="form-row mb-3">
                                 <div class="col-md">
-                                    <input type="text" name="fname" id="" class="form-control" placeholder="{{ __('name1') }}.." required onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="name1" id="" class="form-control" placeholder="{{ __('name1') }}.." required onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                                 <div class="col-md">
@@ -45,23 +45,23 @@
                                 <label for="fname" class="d-block">{{__('The Name in English')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
                                 <div class="form-row mb-3">
                                     <div class="col-md">
-                                        <input type="text" name="fname" id="" class="form-control" placeholder="{{ __('name1') }}.." onkeypress="onlyEnglishString(event)"
+                                        <input type="text" name="en_name1" id="" class="form-control" placeholder="{{ __('name1') }}.." onkeypress="onlyEnglishString(event)"
                                             pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                     </div>
                                     <div class="col-md">
-                                        <input type="text" name="name2" id="" class="form-control" placeholder="{{__( 'name2')}}.." onkeypress="onlyEnglishString(event)"
+                                        <input type="text" name="en_name2" id="" class="form-control" placeholder="{{__( 'name2')}}.." onkeypress="onlyEnglishString(event)"
                                             pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                     </div>
                                     <div class="col-md">
-                                        <input type="text" name="name3" id="" class="form-control" placeholder="{{__( 'name3')}}.." onkeypress="onlyEnglishString(event)"
+                                        <input type="text" name="en_name3" id="" class="form-control" placeholder="{{__( 'name3')}}.." onkeypress="onlyEnglishString(event)"
                                             pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                     </div>
                                     <div class="col-md">
-                                        <input type="text" name="name4" id="" class="form-control" placeholder="{{__( 'name4')}}.." onkeypress="onlyEnglishString(event)"
+                                        <input type="text" name="en_name4" id="" class="form-control" placeholder="{{__( 'name4')}}.." onkeypress="onlyEnglishString(event)"
                                             pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                     </div>
                                     <div class="col-md">
-                                        <input type="text" name="name5" id="" class="form-control" placeholder="{{__( 'name5')}}.." onkeypress="onlyEnglishString(event)"
+                                        <input type="text" name="en_name5" id="" class="form-control" placeholder="{{__( 'name5')}}.." onkeypress="onlyEnglishString(event)"
                                             pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                     </div>
                                 </div>
@@ -75,8 +75,8 @@
                                     </div>
                                     <div class="col-md">
                                         <label for="fname">{{__( 'phoneNo')}} <span class="small text-danger">({{__('required')}})</span> :</label>
-                                        <input type="text" name="fname" id="" class="form-control mb-3" placeholder="{{__( 'phoneNo')}}.." aria-describedby="helpId"
-                                            onkeypress="onlyNumber(event)" maxlenght="10" required title="{{__('must be 10 digits')}}">
+                                        <input type="text" name="phone_no" id="" class="form-control mb-3" placeholder="{{__( 'phoneNo')}}.." aria-describedby="helpId"
+                                            onkeypress="onlyNumber(event)" maxlength="10" pattern=".{10,}" required title="{{__('must be 10 digits')}}">
                                         <!-- <small id="helpId" class="text-muted">Help text</small> -->
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@
                                 <div class="form-row mb-3">
                                     <div class="col-md">
                                         <label for="fname">{{__( 'Nationaltiy')}} <span class="small text-danger">({{__('required')}})</span> :</label>
-                                        <select name="Nationaltiy" class="form-control" required >
+                                        <select name="nationaltiy" class="form-control" required>
                                             <option selected value="">{{__( 'Nationaltiy')}}..</option>
                                             @foreach ($nat as $key => $value)
                                                 @if (App::isLocale('ar'))
@@ -102,15 +102,15 @@
                                     </div>
                                     <div class="col-md">
                                         <label for="fname">{{__( 'Hafizah Number')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
-                                        <input type="text" name="fname" id="" class="form-control mb-3" placeholder="{{__( 'Hafizah Number')}}..">
+                                        <input type="text" name="hafizah_number" id="" class="form-control mb-3" placeholder="{{__( 'Hafizah Number')}}..">
                                     </div>
                                     <div class="col-md">
                                         <label for="fname">{{__( 'National ID Issue Date')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
-                                        <input type="date" name="fname" id="" class="form-control mb-3" placeholder="{{__( 'National ID Issue Date')}}..">
+                                        <input type="date" name="national_id_issue_date" id="" class="form-control mb-3" placeholder="{{__( 'National ID Issue Date')}}..">
                                     </div>
                                     <div class="col-md">
                                         <label for="fname">{{__( 'National ID Issue Place')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
-                                        <input type="text" name="fname" id="" class="form-control mb-3" placeholder="{{__( 'National ID Issue Place')}}..">
+                                        <input type="text" name="national_id_issue_place" id="" class="form-control mb-3" placeholder="{{__( 'National ID Issue Place')}}..">
                                     </div>
                                     <!-- End of Nationaltiy Information -->
                                 </div>
@@ -122,11 +122,11 @@
                                 <div class="form-row mb-3">
                                     <div class="col-md">
                                         <label for="fname">{{__( 'Birth Date')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
-                                        <input type="text" name="fname" id="" class="form-control mb-3" placeholder="{{__( 'Birth Date')}}..">
+                                        <input type="text" name="birth_date" id="" class="form-control mb-3" placeholder="{{__( 'Birth Date')}}..">
                                     </div>
                                     <div class="col-md">
                                         <label for="fname">{{__( 'Birth Place')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
-                                        <input type="text" name="fname" id="" class="form-control mb-3" placeholder="{{__( 'Birth Place')}}..">
+                                        <input type="text" name="birth_place" id="" class="form-control mb-3" placeholder="{{__( 'Birth Place')}}..">
                                     </div>
                                     <!--/End of Personal Information -->
                                 </div>
@@ -135,6 +135,17 @@
                             <input type="submit" value="{{__('submit')}}" class="btn btn-secondary btn-block text-white bg-dark">
                     </form>
                     </div>
+                    <!-- ///////////////////////////////-->
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                    <!-- ///////////////////////////////-->
                     <!-- end card-body -->
                 </div>
                 <!-- end card -->

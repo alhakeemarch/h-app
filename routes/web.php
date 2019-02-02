@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Person;
+use App\Auth\RegisterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,8 @@ Route::get('/locale/{locale}', function ($locale) {
 });
 
 Route::any('/person/check', 'PersonController@check')->name('person.check');
+Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
+Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
 
 Route::resources([
     'person' => 'PersonController',
