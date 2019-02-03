@@ -1,8 +1,9 @@
 @extends('layouts.app') 
 @section('title','Create user view') 
 @section('content')
+
 @php
-echo 'r3';
+    echo 'this file ben canseld';
     return;
 @endphp
     <div class="row justify-content-center">
@@ -15,7 +16,7 @@ echo 'r3';
                     <p class="card-text">{{__("this is to add new User")}}</p>
                     <!-- Main Information -->
                     <div class="card-header text-white bg-dark mb-3 rounded">
-                        Main Information:
+                    Login Information
                     </div>
                     <form action="{{ url('/user/personStore') }}" method="POST">
                         @csrf
@@ -24,23 +25,23 @@ echo 'r3';
                             <label for="fname" class="d-block">{{__('the name')}} باللغة العربية <span class="small text-danger">({{__('required')}})</span> :</label>
                             <div class="form-row mb-3">
                                 <div class="col-md">
-                                    <input type="text" name="name1" id="" class="form-control" placeholder="{{ __('name1') }}.." required onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="ar_name1" id="" class="form-control" placeholder="{{ __('name1') }}.." required onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" name="name2" id="" class="form-control" placeholder="{{__( 'name2')}}.." onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="ar_name2" id="" class="form-control" placeholder="{{__( 'name2')}}.." onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" name="name3" id="" class="form-control" placeholder="{{__( 'name3')}}.." onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="ar_name3" id="" class="form-control" placeholder="{{__( 'name3')}}.." onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" name="name4" id="" class="form-control" placeholder="{{__( 'name4')}}.." onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="ar_name4" id="" class="form-control" placeholder="{{__( 'name4')}}.." onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" name="name5" id="" class="form-control" placeholder="{{__( 'name5')}}.." required onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="ar_name5" id="" class="form-control" placeholder="{{__( 'name5')}}.." required onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                             </div>

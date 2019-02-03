@@ -16,28 +16,28 @@
                     </div>
                     <form action="{{ url('/user/personStore') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="is_employee" value="1"> 
+                        <input type="hidden" name="is_employee" value="1" > 
                         <div class="form-group">
                             <label for="fname" class="d-block">{{__('the name')}} باللغة العربية <span class="small text-danger">({{__('required')}})</span> :</label>
                             <div class="form-row mb-3">
                                 <div class="col-md">
-                                    <input type="text" name="name1" id="" class="form-control" placeholder="{{ __('name1') }}.." required onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="ar_name1" id="" class="form-control" placeholder="{{ __('name1') }}.." required onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" name="name2" id="" class="form-control" placeholder="{{__( 'name2')}}.." onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="ar_name2" id="" class="form-control" placeholder="{{__( 'name2')}}.." onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" name="name3" id="" class="form-control" placeholder="{{__( 'name3')}}.." onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="ar_name3" id="" class="form-control" placeholder="{{__( 'name3')}}.." onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" name="name4" id="" class="form-control" placeholder="{{__( 'name4')}}.." onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="ar_name4" id="" class="form-control" placeholder="{{__( 'name4')}}.." onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" name="name5" id="" class="form-control" placeholder="{{__( 'name5')}}.." required onkeypress="onlyArabicString(event)"
+                                    <input type="text" name="ar_name5" id="" class="form-control" placeholder="{{__( 'name5')}}.." required onkeypress="onlyArabicString(event)"
                                         pattern=".{2,}" title="{{__('minimum 2 letters')}}">
                                 </div>
                             </div>

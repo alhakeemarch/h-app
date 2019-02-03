@@ -24,6 +24,14 @@ class RegisterController extends Controller
      */
 
     use RegistersUsers;
+    // public function register(Request $request, Person $person)
+    // {
+    //     // $found = $person->findOrFail(6);
+    //     return $found;
+    //     return $request;
+
+    //     # code...
+    // }
 
     /**
      * Where to redirect users after registration.
@@ -89,12 +97,10 @@ class RegisterController extends Controller
 
             // return redirect()->action('PersonController@show', ['id' => $found_person->id]);
             // return 'hi1';
-            return view('/auth/register3')->with('person',$found_person);
+            return view('/auth/register')->with('person', $found_person);
 
         } else {
-            // return'hi2';
-            // return redirect()->action('PersonController@create', $request);
-
+            return 'Contact System Administrator to Rigister';
             return view('/auth/register2')->with('national_id', $request->input('national_id'));
         }
 
@@ -110,11 +116,11 @@ class RegisterController extends Controller
         $validatedData = $request->validate([
             'national_id' => 'required|numeric|starts_with:1,2|digits:10',
 
-            'name1' => 'required|string|min:2',
-            'name2' => 'string|nullable',
-            'name3' => 'string|nullable',
-            'name4' => 'string|nullable',
-            'name5' => "required|string|min:2",
+            'ar_name1' => 'required|string|min:2',
+            'ar_name2' => 'string|nullable',
+            'ar_name3' => 'string|nullable',
+            'ar_name4' => 'string|nullable',
+            'ar_name5' => "required|string|min:2",
 
             'mobile' => 'required|numeric|starts_with:0,9|digits:10,12,14',
             'email' => 'required|email',
@@ -123,8 +129,8 @@ class RegisterController extends Controller
         ]);
 
         $person = Person::create($request->all());
-        
-        return view('/auth/register3')->with('person',$person);
+
+        return view('/auth/register3')->with('person', $person);
 
 
     }

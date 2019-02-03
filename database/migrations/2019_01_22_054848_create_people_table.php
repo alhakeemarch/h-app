@@ -16,15 +16,15 @@ class CreatePeopleTable extends Migration
         Schema::create('people', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('national_id')->unique();
-            
+
             $table->boolean('is_employee')->default(false);
             $table->boolean('is_customer')->default(false);
 
-            $table->string('name1')->nullable();
-            $table->string('name2')->nullable();
-            $table->string('name3')->nullable();
-            $table->string('name4')->nullable();
-            $table->string('name5')->nullable();
+            $table->string('ar_name1');
+            $table->string('ar_name2')->nullable();
+            $table->string('ar_name3')->nullable();
+            $table->string('ar_name4')->nullable();
+            $table->string('ar_name5');
 
             $table->string('en_name1')->nullable();
             $table->string('en_name2')->nullable();
