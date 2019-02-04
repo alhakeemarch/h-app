@@ -1,3 +1,18 @@
+user settings 
+
+{
+    "workbench.iconTheme": "vscode-icons",
+    "editor.fontSize": 16,
+    "editor.wordWrap": "on",
+    "php.validate.run": "onType",
+    "emmet.triggerExpansionOnTab": true,
+    "blade.format.enable": true
+}
+
+
+
+
+
 //=========== git commands ===============//
 To see Git version
 git --version

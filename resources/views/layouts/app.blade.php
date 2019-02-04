@@ -162,7 +162,10 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('New')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('person/check') }}">{{__('Person')}}</a>
+                                <a class="dropdown-item" href="{{ url('person/check') }}">{{__('Customer')}}</a>
+                                @if (auth()->user()->user_level >= 10)
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a>
+                                @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>
@@ -176,7 +179,10 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('Edit')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">{{__('Person')}}</a>
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Customer')}}</a>
+                                @if (auth()->user()->user_level >= 10)
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a>
+                                @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>
@@ -190,7 +196,10 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('Show')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href=" {{ url('/person') }}">{{__('Person')}}</a>
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Customer')}}</a>
+                                @if (auth()->user()->user_level >= 10)
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a>
+                                @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>
@@ -204,7 +213,10 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('Delet')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">{{__('Person')}}</a>
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Customer')}}</a>
+                                @if (auth()->user()->user_level >= 10)
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a>
+                                @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>
