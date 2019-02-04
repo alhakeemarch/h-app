@@ -20,7 +20,7 @@
                     @foreach ($persons as $person)
                     <tr>
                         <th scope="row">{{$i}}</th>
-                        <td>{{$person->name1}} {{$person->name2}} {{$person->name3}} {{$person->name4}} {{$person->name5}}</td>
+                        <td>{{$person->ar_name1}} {{$person->ar_name2}} {{$person->ar_name3}} {{$person->ar_name4}} {{$person->ar_name5}}</td>
                         <td>{{$person->national_id}}</td>
                         <td> $person->Mobile NO</td>
                         <td>

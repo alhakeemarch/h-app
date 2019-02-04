@@ -285,7 +285,7 @@
     <main class="container-fluid" style="min-height:85vh;">
         @yield('content')
     </main>
-    </div>
+    
 
     {{-- fixed-bottom --}}
     <footer class="footer text-light bg-dark shadow  py-3 text-center">

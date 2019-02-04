@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Person;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Error;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -24,14 +26,48 @@ class RegisterController extends Controller
      */
 
     use RegistersUsers;
-    // public function register(Request $request, Person $person)
-    // {
-    //     // $found = $person->findOrFail(6);
-    //     return $found;
-    //     return $request;
 
-    //     # code...
+    /**
+     * Handle a registration request for the application.
+     * fa
+     * this method is overriding the original one in //Illuminate\Foundation\Auth\RegistersUsers
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request, Person $person)
+    {
+        $found_person = $person->find($request->id);
+        if (!$found_person) {
+            return 'contact the system administrator to register the initial data first';
+        }
+        if (!$found_person->is_employee) {
+            return 'unauthorised access - just for employees';
+        }
+        if (($found_person->id != $request->id) || ($found_person->national_id != $request->national_id) || ($found_person->email != $request->email)) {
+            return 'Data mismatch - try again or contact the system administrator';
+        }
+
+        $validatedData = $request->validate([
+            'id' => 'required|numeric|min:1',
+            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+            'email' => 'required|email',
+            'is_employee' => 'required|boolean',
+
+            'user_name' => 'required|string|min:3',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        event(new Registered($user = $this->create($request->all())));
+        $this->guard()->login($user);
+        return $this->registered($request, $user)
+            ? : redirect($this->redirectPath());
+    }
+
+    // protected function registered(Request $request, $user)
+    // {
+    //     //
     // }
+
 
     /**
      * Where to redirect users after registration.
@@ -50,6 +86,8 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    
+    // not used fa
     /**
      * Get a validator for an incoming registration request.
      *
@@ -59,12 +97,16 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'id' => ['required'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
 
+    
+
+    // edited by fa
     /**
      * Create a new user instance after a valid registration.
      *
@@ -73,15 +115,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // dd($data);
         return User::create([
-            'name' => $data['name'],
+            'person_id' => (int)$data['id'],
+            'national_id' => (int)$data['national_id'],
+            'name' => $data['the_name'],
+            'user_name' => $data['user_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
     }
 
 // byme
-    public function userRegister(Request $request, Person $person)
+    public function userRegister(Request $request, Person $person, User $user)
     {
         if ($request->method() === "GET") {
             return view('/auth/register');
@@ -89,51 +135,21 @@ class RegisterController extends Controller
 
         $validatedData = $request->validate([
             'national_id' => 'required|numeric|starts_with:1,2|digits:10',
-            // 'body' => 'required',
         ]);
 
-        $found_person = $person->getPersonByNationalId($request->input('national_id'));
+        $found_user = $user->where('national_id', $request->national_id)->first();
+        if ($found_user) {
+            return 'This person already registered go to login';
+        }
+        
+        $found_person = $person->where('national_id', $request->national_id)->first();
         if ($found_person) {
-
-            // return redirect()->action('PersonController@show', ['id' => $found_person->id]);
-            // return 'hi1';
             return view('/auth/register')->with('person', $found_person);
-
         } else {
             return 'Contact System Administrator to Rigister';
-            return view('/auth/register2')->with('national_id', $request->input('national_id'));
+            // return view('/auth/register2')->with('national_id', $request->input('national_id'));
         }
 
     }
-
-    // byme
-    public function personStore(Request $request, Person $person)
-    {
-        if ($request->method() === "GET") {
-            return view('/auth/register');
-        }
-
-        $validatedData = $request->validate([
-            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
-
-            'ar_name1' => 'required|string|min:2',
-            'ar_name2' => 'string|nullable',
-            'ar_name3' => 'string|nullable',
-            'ar_name4' => 'string|nullable',
-            'ar_name5' => "required|string|min:2",
-
-            'mobile' => 'required|numeric|starts_with:0,9|digits:10,12,14',
-            'email' => 'required|email',
-
-            'is_employee' => 'required|boolean'
-        ]);
-
-        $person = Person::create($request->all());
-
-        return view('/auth/register3')->with('person', $person);
-
-
-    }
-
 
 }
