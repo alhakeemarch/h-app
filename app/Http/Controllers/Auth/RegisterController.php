@@ -11,6 +11,8 @@ use App\Person;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Error;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Str;
+
 
 class RegisterController extends Controller
 {
@@ -53,7 +55,7 @@ class RegisterController extends Controller
             'email' => 'required|email',
             'is_employee' => 'required|boolean',
 
-            'user_name' => 'required|string|min:3',
+            'user_name' => 'required|string|min:3|max:10|regex:/^[a-z][a-z0-9_-]+$/',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
@@ -120,7 +122,8 @@ class RegisterController extends Controller
             'person_id' => (int)$data['id'],
             'national_id' => (int)$data['national_id'],
             'name' => $data['the_name'],
-            'user_name' => $data['user_name'],
+            // 'user_name' => $data['user_name'],
+            'user_name' => Str::lower($data['user_name']),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

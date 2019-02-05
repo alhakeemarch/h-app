@@ -71,8 +71,12 @@
                     <div class="form-group row">
                         <label for="user_name" class="col-md-2 col-form-label text-md-left">{{ __('User Name') }}</label>
                         <div class="col-md-10">
-                            <input type="text" id="user_name" class="form-control" onkeypress="userNameString(event)" name="user_name" value="{{ old('name') }}" required autofocus>
+                            <input type="text" id="user_name" class="form-control" onkeypress="userNameString(event)" onkeyup="userNameString(event)" name="user_name" value="{{ old('name') }}" placeholder="{{__( 'User Name')}}.."
+                            maxlength="10" pattern=".{3,10}" required title="{{__('between 3 and 10 characters')}}" autofocus>
+                            <small class="form-text text-muted">User name between 3 and 10 characters, start with letters and can contain only small letters, numbers, _ or - </small>
                         </div> 
+
+
                     </div>
 
                     <div class="form-group row">
