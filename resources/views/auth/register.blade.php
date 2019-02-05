@@ -71,8 +71,8 @@
                     <div class="form-group row">
                         <label for="user_name" class="col-md-2 col-form-label text-md-left">{{ __('User Name') }}</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="user_name" value="{{ old('name') }}" required autofocus>
-                        </div>
+                            <input type="text" id="user_name" class="form-control" onkeypress="userNameString(event)" name="user_name" value="{{ old('name') }}" required autofocus>
+                        </div> 
                     </div>
 
                     <div class="form-group row">

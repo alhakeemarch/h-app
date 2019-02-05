@@ -13,8 +13,8 @@
     <link rel="icon" href="{{ asset('img/logo.png') }}">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script>        
-            function onlyNumber(evt){
+    <script>
+        function onlyNumber(evt){
                     var theEvent = evt || window.event;
                     var key = theEvent.keyCode || theEvent.which;
                     // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
@@ -71,10 +71,29 @@
                         theEvent.preventDefault();
                     }
                 }
-        </script>
+            // ================================
+             function userNameString(evt){
+                    var theEvent = evt || window.event;
+                    var key = theEvent.keyCode || theEvent.which;
+                    // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
+                    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys,  Enter=13
+                    if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9 || key == 13) { 
+                        return;
+                    }
+
+                   var ch = String.fromCharCode(theEvent.which);
+                    if(!(/[a-z0-9_]/.test(ch))){
+                        theEvent.preventDefault();
+                    }
+
+                }
+                // document.getElementById('user_name').addEventListener("blur", document.getElementById('user_name').value="hi");
+
+    </script>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Amiri|Aref+Ruqaa|Baloo+Bhaijaan|Changa|El+Messiri|Harmattan|Jomhuria|Katibeh|Lateef|Lemonada|Mada|Markazi+Text|Rakkas|Reem+Kufi|Tajawal|Prosto+One" rel="stylesheet"> {{-- // google fonts  --}}
+    <link href="https://fonts.googleapis.com/css?family=Amiri|Aref+Ruqaa|Baloo+Bhaijaan|Changa|El+Messiri|Harmattan|Jomhuria|Katibeh|Lateef|Lemonada|Mada|Markazi+Text|Rakkas|Reem+Kufi|Tajawal|Prosto+One"
+        rel="stylesheet"> {{-- // google fonts --}}
 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -92,30 +111,28 @@
     <!-- // -->
     @endif
     <style>
-    body{
-           background-image:
-            radial-gradient(
-	        #c3c8d5,
-            #5e6a87
-            );
+        body {
+            background-image: radial-gradient( #c3c8d5,
+            #5e6a87);
 
-        /* font-family: 'Reem Kufi', sans-serif; */
-        font-family: 'Tajawal','Prosto One', sans-serif; /* 100 */
-        /* font-family: 'Amiri', serif; */
-        /* font-family: 'Changa', sans-serif; // 100  */
-        /* font-family: 'El Messiri', sans-serif; // 100 */
-        /* font-family: 'Lateef', cursive; */
-        /* font-family: 'Mada', sans-serif; */
-        /* font-family: 'Baloo Bhaijaan', cursive; */
-        /* font-family: 'Lemonada', cursive; */
-        /* font-family: 'Markazi Text', serif; // 50 */
-        /* font-family: 'Harmattan', sans-serif; */
-        /* font-family: 'Aref Ruqaa', serif; */
-        /* font-family: 'Jomhuria', cursive; */
-        /* font-family: 'Rakkas', cursive; */
-        /* font-family: 'Katibeh', cursive; */
-        /* font-family: 'Prosto One', cursive; */
-    }
+            /* font-family: 'Reem Kufi', sans-serif; */
+            font-family: 'Tajawal', 'Prosto One', sans-serif;
+            /* 100 */
+            /* font-family: 'Amiri', serif; */
+            /* font-family: 'Changa', sans-serif; // 100  */
+            /* font-family: 'El Messiri', sans-serif; // 100 */
+            /* font-family: 'Lateef', cursive; */
+            /* font-family: 'Mada', sans-serif; */
+            /* font-family: 'Baloo Bhaijaan', cursive; */
+            /* font-family: 'Lemonada', cursive; */
+            /* font-family: 'Markazi Text', serif; // 50 */
+            /* font-family: 'Harmattan', sans-serif; */
+            /* font-family: 'Aref Ruqaa', serif; */
+            /* font-family: 'Jomhuria', cursive; */
+            /* font-family: 'Rakkas', cursive; */
+            /* font-family: 'Katibeh', cursive; */
+            /* font-family: 'Prosto One', cursive; */
+        }
     </style>
 
 </head>
@@ -162,10 +179,9 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('New')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('person/check') }}">{{__('Customer')}}</a>
-                                @if (auth()->user()->user_level >= 10)
-                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a>
-                                @endif
+                                <a class="dropdown-item" href="{{ url('person/check') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
+                                >= 10)
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a> @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>
@@ -179,10 +195,9 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('Edit')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Customer')}}</a>
-                                @if (auth()->user()->user_level >= 10)
-                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a>
-                                @endif
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
+                                >= 10)
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a> @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>
@@ -196,10 +211,9 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('Show')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Customer')}}</a>
-                                @if (auth()->user()->user_level >= 10)
-                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a>
-                                @endif
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
+                                >= 10)
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a> @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>
@@ -213,10 +227,9 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('Delet')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Customer')}}</a>
-                                @if (auth()->user()->user_level >= 10)
-                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a>
-                                @endif
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
+                                >= 10)
+                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a> @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>
@@ -228,7 +241,7 @@
                     </ul>
                     @endauth
                 </ul>
-                
+
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- language icon -->
@@ -285,7 +298,7 @@
     <main class="container-fluid" style="min-height:85vh;">
         @yield('content')
     </main>
-    
+
 
     {{-- fixed-bottom --}}
     <footer class="footer text-light bg-dark shadow  py-3 text-center">
