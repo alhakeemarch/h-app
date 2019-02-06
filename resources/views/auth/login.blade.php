@@ -10,11 +10,12 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
+                        <input type="hidden" name="hi"value='noval'>
 
                         <div class="form-group row">
                             <label for="email" class="col-md-2 col-form-label">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-md-10">
+                            {{-- <div class="col-md-10">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
 
                                 @if ($errors->has('email'))
@@ -22,6 +23,10 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div> --}}
+                            <div class="col-md-10">
+                                <input id="" type="text" class="form-control" name="user_name" value="{{ old('user_name') }}" required autofocus>
                             </div>
                         </div>
 
