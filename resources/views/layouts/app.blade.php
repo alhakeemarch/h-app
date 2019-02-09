@@ -72,7 +72,7 @@
                     }
                 }
             // ================================
-            function userNameStrin-g(evt){
+            function userNameString(evt){
                 var theEvent = evt || window.event;
                 var key = theEvent.keyCode || theEvent.which;
                 // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
@@ -198,9 +198,9 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('New')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('person/check') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
+                                <a class="dropdown-item" href="{{ url('customer/check') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
                                 >= 10)
-                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a> @endif
+                                <a class="dropdown-item" href="{{ url('employee/check') }}">{{__('Employee')}}</a> @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>

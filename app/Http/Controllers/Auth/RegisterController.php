@@ -40,13 +40,14 @@ class RegisterController extends Controller
     {
         $found_person = $person->find($request->id);
         if (!$found_person) {
-            return 'contact the system administrator to register the initial data first';
+            return redirect('register')->withErrors(['contact the system administrator to register the initial data first']);
         }
         if (!$found_person->is_employee) {
-            return 'unauthorised access - just for employees';
+            return redirect('register')->withErrors(['unauthorised access - just for employees']);
         }
         if (($found_person->id != $request->id) || ($found_person->national_id != $request->national_id) || ($found_person->email != $request->email)) {
-            return 'Data mismatch - try again or contact the system administrator';
+            
+            return redirect()->back()->withErrors(['Data mismatch - try again or contact the system administrator']);
         }
 
         $validatedData = $request->validate([
@@ -140,19 +141,24 @@ class RegisterController extends Controller
             'national_id' => 'required|numeric|starts_with:1,2|digits:10',
         ]);
 
+
         $found_user = $user->where('national_id', $request->national_id)->first();
         if ($found_user) {
-            return 'This person already registered go to login';
-        }
-        
-        $found_person = $person->where('national_id', $request->national_id)->first();
-        if ($found_person) {
-            return view('/auth/register')->with('person', $found_person);
-        } else {
-            return 'Contact System Administrator to Rigister';
-            // return view('/auth/register2')->with('national_id', $request->input('national_id'));
+            return redirect('login')->withErrors(['This ID already registered tray to login']);
         }
 
+        $found_person = $person->where('national_id', $request->national_id)->first();
+        
+        if ($found_person) {
+            if (!$found_person->is_employee) {
+                return redirect('register')->withErrors(['unauthorised access - just for employees']);
+            }
+            return view('/auth/register')->with('person', $found_person);
+        } else {
+            return redirect('register')->withErrors(['contact the system administrator to register the initial data first']);
+        }
     }
+
+
 
 }

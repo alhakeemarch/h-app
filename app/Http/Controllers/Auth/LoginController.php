@@ -6,6 +6,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
+
+use App\User;
+
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
+use App\Person;
+
+use PhpParser\Node\Expr\Error;
+
+use Illuminate\Support\Str;
+
+
+
+
+
+
+
+
+
 class LoginController extends Controller
 {
     /*
@@ -21,51 +41,6 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    public function login(Request $request)
-    {
-        $usr_name = $request->user_name;
-
-        // var_dump($usr_name);
-        // return;
-
-        // if (substr($usr_name, '@') !== false) {
-        //     echo 'it is email';
-        // }
-        // substr($string, 0, $len) === $startString
-        // if (strpos($usr_name ,0, '1') !== false) {
-        //     echo 'it is saudi emp';
-        // }
-        // if (substr($usr_name ,0, '2') !== false) {
-        //     echo 'it is AGNABI emp';
-        // }
-        // preg_match('/^\d/', $usr_name) === 1;
-
-        // if (preg_match('/^\d/', $usr_name) === 1) {
-        //     echo 'it is number';
-        // }
-
-        
-
-        // If the class is using the ThrottlesLogins trait, we can automatically throttle
-        // the login attempts for this application. We'll key this by the username and
-        // the IP address of the client making these requests into this application.
-        if ($this->hasTooManyLoginAttempts($request)) {
-            $this->fireLockoutEvent($request);
-
-            return $this->sendLockoutResponse($request);
-        }
-
-        if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
-        }
-
-        // If the login attempt was unsuccessful we will increment the number of attempts
-        // to login and redirect the user back to the login form. Of course, when this
-        // user surpasses their maximum number of attempts they will get locked out.
-        $this->incrementLoginAttempts($request);
-
-        return $this->sendFailedLoginResponse($request);
-    }
 
     /**
      * Where to redirect users after login.
@@ -82,5 +57,39 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    // byme
+    public function userLogin(Request $request, Person $person, User $user)
+    {
+        if ($request->method() === "GET") {
+            return view('/auth/login');
+        }
+
+        $request_user_name = $request->user_name;
+
+        if (substr($request_user_name, 0, 1) == '1' || substr($request_user_name, 0, 1) == '2') {
+            $found_user = $user->where('national_id', $request_user_name)->first();
+            if (!$found_user) {
+                return redirect('login')->withErrors(['User Not found. Try Again or Contact the Administrator']);
+            }
+            return view('/auth/login')->with('user', $found_user);
+        }
+        if (strpos($request_user_name, "@")) {
+            $found_user = $user->where('email', $request_user_name)->first();
+            if (!$found_user) {
+                return redirect('login')->withErrors(['User Not found. Try Again or Contact the Administrator']);
+            }
+            return view('/auth/login')->with('user', $found_user);
+        }
+        if (preg_match('/^[a-z][a-z0-9_]+$/i', $request_user_name)) {
+            $request_user_name = Str::lower($request_user_name);
+            $found_user = $user->where('user_name', $request_user_name)->first();
+            if (!$found_user) {
+                return redirect('login')->withErrors(['User Not found. Try Again or Contact the Administrator']);
+            }
+            return view('/auth/login')->with('user', $found_user);
+        }
+        return redirect('login')->withErrors(['Input Must be : Email, Username, National ID OR Employee ID (ONLY)']);
+
     }
 }

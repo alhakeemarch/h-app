@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Person;
 use Illuminate\Support\Facades\Auth;
 use App\Nationality;
-use Illuminate\Http\Request;
 
-
-class PersonController extends Controller
+class CustomerController extends PersonController
 {
+    //    /**
+    //  * Create a new controller instance.
+    //  *
+    //  * @return void
+    //  */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
 
     /**
      * Display a listing of the resource.
@@ -18,41 +27,16 @@ class PersonController extends Controller
      */
     public function index(Person $person)
     {
+        return 'this is customer index to show all customers';
 
         if (Auth::user()->user_level >= 100) {
-            // return "you are the 100";
+            return "you are the 100";
         }
         // return Person::all();
-        $allPersons = Person::all();
+        $allPersons = $person->all();
         return view('person.index')->with('persons', $allPersons);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request, Person $person)
-    {
-        $persontype = false;
-        if ($request->fromeEmployee) {
-            $persontype = 'employee';
-        }
-        if ($request->fromeCustomer) {
-            $persontype = 'customer';
-        }
-        if ($persontype == false) {
-            return redirect('/')->withErrors(['Undefined Person type', 'please Contact the Administrator']);
-        }
-
-        $nationalitiesArr = Nationality::gitNationalities();
-        $national_id = $request->input('national_id');
-        return view('/person/create', [
-            'national_id' => $national_id,
-            'nationalitiesArr' => $nationalitiesArr, 
-            'persontype' => $persontype
-            ]);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -62,14 +46,14 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-
+        return 'this is customer Create Method';
         $validatedData = $request->validate([
-            'ar_name1' => 'required|string|min:2',
-            'ar_name2' => 'string|nullable',
-            'ar_name3' => 'string|nullable',
-            'ar_name4' => 'string|nullable',
-            'ar_name5' => "required|string|min:2",
-            'en_name1' => 'string|nullable|regex:/[A-Za-z]/',
+            'name1' => 'required|string|min:2',
+            'name2' => 'string|nullable',
+            'name3' => 'string|nullable',
+            'name4' => 'string|nullable',
+            'name5' => "required|string|min:2",
+            'en_name1' => 'string|nullable',
             'en_name2' => 'string|nullable',
             'en_name3' => 'string|nullable',
             'en_name4' => 'string|nullable',
@@ -101,7 +85,8 @@ class PersonController extends Controller
      */
     public function show(Request $request, Person $person)
     {
-        return view('person/show')->with('person', $person);
+        return 'this is customer show 1 customer';
+        // return view('person/show')->with('person', $person);
     }
 
     /**
@@ -112,7 +97,7 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
-        return 'this is edit method';
+        return 'this is edit customer method';
     }
 
     /**
@@ -124,7 +109,7 @@ class PersonController extends Controller
      */
     public function update(Request $request, Person $person)
     {
-        return 'this is update method';
+        return 'this is update customer method';
     }
 
     /**
@@ -135,29 +120,28 @@ class PersonController extends Controller
      */
     public function destroy(Person $person)
     {
-        return 'this is destroy method';
+        return 'this is destroy customer method';
     }
 
 
     public function check(Request $request, Person $person)
     {
+        $fromeCustomer = true;
+        $fromeEmployee = false;
         if ($request->method() === "GET") {
-            return view('/person/check');
+            return view('/person/check')->with(['fromeEmployee'=> $fromeEmployee, 'fromeCustomer'=>$fromeCustomer ]);
         }
 
         $validatedData = $request->validate([
             'national_id' => 'required|numeric|starts_with:1,2|digits:10',
-            // 'body' => 'required',
         ]);
 
         $found_person = $person->where('national_id', $request->national_id)->first();
         if ($found_person) {
-
-            return redirect()->action('PersonController@show', ['id' => $found_person->id]);
+            return redirect()->action('CustomerController@show', ['id' => $found_person->id]);
         } else {
-            return redirect()->action('PersonController@create', $request);
+            return redirect()->action('CustomerController@create', $request);
         }
 
     }
-
 }

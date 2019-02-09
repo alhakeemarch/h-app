@@ -28,12 +28,32 @@ Route::get('/locale/{locale}', function ($locale) {
 });
 
 Route::any('/person/check', 'PersonController@check')->name('person.check');
+Route::any('/customer/check', 'CustomerController@check')->name('customer.check');
+Route::any('/employee/check', 'EmployeeController@check')->name('employee.check');
 Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
+Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
 
 Route::resources([
     'person' => 'PersonController',
-    // 'posts' => 'PostController'
+    // 'personDoc' => 'PersonDocController',
+    'customer'=>'CustomerController',
+    'employee'=>'EmployeeController',
+    
+    // 'plot'=>'PlottController',
+    // 'plotDoc'=>'PlottDocController',
+    // 'project'=>'ProjectController',
+    // 'projectDoc'=>'ProjectDocController',
+    // 'task'=>'TaskController',
+    // 'contract'=>'ContractController',
+    
+    // 'receiptIn'=>'ReceiptInController',
+    // 'receiptOut'=>'ReceiptOutController',
+    // 'receiptDiscount'=>'ReceiptDiscountController',
+    // 'invoice'=>'InvoiceController',
+    // 'invoiceRe'=>'InvoiceRrController',
+
+    // 'project'=>'ProjectController',
 ]);
 
 
