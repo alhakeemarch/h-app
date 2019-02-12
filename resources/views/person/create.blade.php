@@ -6,12 +6,13 @@
         <div class="card mb-3">
             <h5 class="card-header">{{ __('Registration') }} of {{$persontype}} 2/2</h5>
             <div class="card-body">
-                <!-- Main Information -->
-                <div class="card-header text-white bg-dark mb-3 rounded">
-                    Main Information:
-                </div>
+                <!-- Nmae -->
+                
                 <form action="{{ url('person') }}" method="POST">
                     @csrf
+                    <div class="card-header text-white bg-dark mb-3 rounded">
+                        {{__('Name')}}:
+                    </div>
                     <div class="form-group">
                         <label for="fname" class="d-block">{{__('the name')}} <span class="small text-danger">({{__('required')}})</span> :</label>
                         <div class="form-row mb-3">
@@ -63,6 +64,25 @@
                             </div>
                             <!-- end form-row -->
                             <!-- end of  English Name -->
+
+
+
+
+
+                           
+                            <!-- end of Main Information -->
+
+                            <!-- Nationaltiy Information -->
+                            <div class="card-header text-white bg-dark mb-3 rounded">
+                                Identity Information:
+                            </div>
+
+
+                            
+                            @if (substr($national_id,0,1)=='1')
+                                <h1>you are saudi</h1>
+                            @endif
+
                             <div class="form-row mb-3">
                                 <div class="col-md">
                                     <label for="national_id">{{__( 'nId')}} <span class="small text-danger">({{__('required')}})</span> :</label>
@@ -76,12 +96,11 @@
                                     <!-- <small id="helpId" class="text-muted">Help text</small> -->
                                 </div>
                             </div>
-                            <!-- end of Main Information -->
 
-                            <!-- Nationaltiy Information -->
-                            <div class="card-header text-white bg-dark mb-3 rounded">
-                                Nationaltiy Information:
-                            </div>
+
+
+
+
                             <div class="form-row mb-3">
                                 <div class="col-md">
                                     <label for="fname">{{__( 'Nationaltiy')}} <span class="small text-danger">({{__('required')}})</span> :</label>

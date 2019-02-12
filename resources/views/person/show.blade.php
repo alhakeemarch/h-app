@@ -7,8 +7,10 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4 text-center">
-                <img class="img-thumbnail rounded img-responsive" src="{{ asset('img/mail.png') }}" alt="avatar" style="max-height: 250px;"> 
-                <h2> {{$person->name1}} {{$person->name5}}</h2>
+                <img class="img-thumbnail rounded img-responsive mb-2" src="{{ asset('img/mail.png') }}" alt="avatar" style="max-height: 250px;">
+
+                <h2> {{$person->en_name1}} {{$person->en_name5}}</h2>
+                <h2> {{$person->ar_name1}} {{$person->ar_name5}}</h2>
             </div>
             <div class="col-md-8">  
                 <h5 class="shadow-sm p-2 mb-2 rounded text-center text-uppercase bg-secondary text-light">Personal Information</h5>

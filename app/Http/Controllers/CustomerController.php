@@ -30,7 +30,7 @@ class CustomerController extends PersonController
         return 'this is customer index to show all customers';
 
         if (Auth::user()->user_level >= 100) {
-            return "you are the 100";
+            // return "you are the 100";
         }
         // return Person::all();
         $allPersons = $person->all();
@@ -83,10 +83,22 @@ class CustomerController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person)
+    public function show(Request $request, Person $person, $found_person)
     {
-        return 'this is customer show 1 customer';
-        // return view('person/show')->with('person', $person);
+        $customer = $person->find($found_person);
+        if ($customer->is_employee) {
+            if (Auth::user()->user_level >= 100) {
+                return view('person/show')->with('person', $customer);
+            } else {
+                return redirect()->back()->withErrors(['This (ID) is already registered as employer,
+                contact your administrator for more details.']);
+            }
+        }
+        if ($customer->is_customer) {
+            return view('person/show')->with('person', $customer);
+        }
+        return redirect()->back()->withErrors(['This (ID) is already registered (!! not employee or customer),
+        contact your administrator for more details.']);
     }
 
     /**
@@ -138,7 +150,10 @@ class CustomerController extends PersonController
 
         $found_person = $person->where('national_id', $request->national_id)->first();
         if ($found_person) {
+
+            return redirect()->route('customer.show', [$found_person]);
             return redirect()->action('CustomerController@show', ['id' => $found_person->id]);
+            
         } else {
             return redirect()->action('CustomerController@create', $request);
         }

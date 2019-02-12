@@ -99,7 +99,7 @@ class PersonController extends Controller
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person)
+    public function show(Request $request, Person $person, $found_person)
     {
         return view('person/show')->with('person', $person);
     }

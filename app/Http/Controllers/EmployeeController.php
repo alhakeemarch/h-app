@@ -73,11 +73,22 @@ class EmployeeController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person)
+    public function show(Request $request, Person $person, $found_person)
     {
-        return $request;
-        return 'this is employee show 1 employe';
-        return view('person/show')->with('person', $person);
+        $customer = $person->find($found_person);
+        if ($customer->is_employee) {
+            if (Auth::user()->user_level >= 100) {
+                return view('person/show')->with('person', $customer);
+            } else {
+                return redirect()->back()->withErrors(['This (ID) is already registered as employer,
+                contact your administrator for more details.']);
+            }
+        }
+        if ($customer->is_customer) {
+            return view('person/show')->with('person', $customer);
+        }
+        return redirect()->back()->withErrors(['This (ID) is already registered (!! not employee or customer),
+        contact your administrator for more details.']);
     }
 
     /**
