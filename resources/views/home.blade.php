@@ -21,7 +21,12 @@
     </div>
 </div>
 
-
+ <!-- ///////////////////////////////-->
+ @if ($errors->any())
+ @include('layouts.errors')
+ @endif
+ <!-- ///////////////////////////////-->
+    
 {{-- original hoem file frome laravel
 <div class="container">
     <div class="row justify-content-center">

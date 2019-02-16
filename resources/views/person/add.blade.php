@@ -55,4 +55,12 @@
         
     </div><!-- end of row --> 
 </div>
+
+
+ <!-- ///////////////////////////////-->
+ @if ($errors->any())
+ @include('layouts.errors')
+ @endif
+ <!-- ///////////////////////////////-->
+ 
 @endsection

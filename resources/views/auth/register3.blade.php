@@ -69,17 +69,11 @@
                             <input type="submit" value="{{__('submit')}}" class="btn btn-secondary btn-block text-white bg-dark">
                     </form>
                     </div>
-                    <!-- ///////////////////////////////-->
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-                    <!-- ///////////////////////////////-->
+ <!-- ///////////////////////////////-->
+ @if ($errors->any())
+ @include('layouts.errors')
+ @endif
+ <!-- ///////////////////////////////-->
                     <!-- end card-body -->
                 </div>
                 <!-- end card -->

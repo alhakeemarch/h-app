@@ -3,7 +3,7 @@
 <!-- -->
 @if (Request::isMethod('get'))
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="card">
             <h5 class="card-header">{{ __('Login') }}</h5>
 
@@ -31,25 +31,18 @@
                         </div>
                         <!-- /End of user_name -->
 
-                        <input type="submit" class="btn btn btn-secondary btn-block my-2" value="{{ __('Next') }}">
-                        
-{{-- 
+                        <input type="submit" class="btn btn btn-secondary btn-block my-2" value="{{ __('Next') }}"> {{--
                         <!-- -->
                         @if (Route::has('password.request'))
                         <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
                         <!-- -->
                         @endif
                         <!-- -->
-                         --}}
+                        --}}
                     </form>
                     <!-- ///////////////////////////////-->
                     @if ($errors->any())
-                    <ul class="alert alert-danger">
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    @endif
+    @include('layouts.errors') @endif
                     <!-- ///////////////////////////////-->
             </div>
             <!-- /End of card body -->
@@ -65,7 +58,7 @@
 <!-- -->
 @if (Request::isMethod('post') && $user->email)
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="card">
             <strong class="card-header">{{ __('Login') }}</strong>
             <div class="card-body">
@@ -73,8 +66,9 @@
                     @csrf
                     <input type="hidden" name="email" value={{$user->email}}>
                     <h3 class="mb-3 text-center">{{$user->name}}</h3>
-                    <input id="password" type="password" class="my-2 form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
+                    <input type="password" name="password" class="my-2 form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{__('Password')}}"
                         required autofocus>
+                    <small id="helpId" class="text-muted">{{__('Password')}}</small>
                     <!-- -->
                     @if ($errors->has('password'))
                     <span class="invalid-feedback" role="alert">

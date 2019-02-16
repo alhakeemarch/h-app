@@ -7,7 +7,7 @@
             <h5 class="card-header">{{ __('Registration') }} of {{$persontype}} 2/2</h5>
             <div class="card-body">
                 <!-- Nmae -->
-                
+
                 <form action="{{ url('person') }}" method="POST">
                     @csrf
                     <div class="card-header text-white bg-dark mb-3 rounded">
@@ -64,23 +64,50 @@
                             </div>
                             <!-- end form-row -->
                             <!-- end of  English Name -->
-
-
-
-
-
-                           
                             <!-- end of Main Information -->
+
+
+
+
 
                             <!-- Nationaltiy Information -->
                             <div class="card-header text-white bg-dark mb-3 rounded">
                                 Identity Information:
                             </div>
 
-
-                            
                             @if (substr($national_id,0,1)=='1')
-                                <h1>you are saudi</h1>
+                            <div class="form-row mb-3">
+                                <div class="col-md">
+                                    <label for="national_id">{{__( 'nId')}} <span class="small text-danger">({{__('required')}})</span> :</label>
+                                    <input type="text" onkeypress="onlyNumber(event)" maxlenght="10" name="national_id" class="form-control mb-3" placeholder="{{__( 'nIdNumber')}}.."
+                                        value="{{$national_id}}" maxlength="10" pattern=".{10,}" required title="{{__('must be 10 digits')}}"
+                                        disabled>
+                                </div>
+                                <div class="col-md">
+                                    <label for="fname">{{__( 'Hafizah Number')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
+                                    <input type="text" name="hafizah_number" id="" class="form-control mb-3" placeholder="{{__( 'Hafizah Number')}}..">
+                                </div>
+
+                                @include('components.dateFields')
+                                
+
+                              
+
+                                {{-- <div class="col-md">
+                                    <label for="fname">{{__( 'National ID Issue Date')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
+                                    <input type="date" name="national_id_issue_date" id="" class="form-control mb-3" placeholder="{{__( 'National ID Issue Date')}}..">
+                                </div> --}}
+                                <div class="col-md">
+                                    <label for="fname">{{__( 'National ID Issue Place')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
+                                    <input type="text" name="national_id_issue_place" id="" class="form-control mb-3" placeholder="{{__( 'National ID Issue Place')}}..">
+                                </div>
+
+                            </div>
+
+                            <h1>you are saudi</h1>
+
+                            @else
+                            <h1>you are Agnabi</h1>
                             @endif
 
                             <div class="form-row mb-3">
@@ -152,12 +179,7 @@
                 </div>
                 <!-- ///////////////////////////////-->
                 @if ($errors->any())
-                    <ul class="alert alert-danger">
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                @endif
+    @include('layouts.errors') @endif
                 <!-- ///////////////////////////////-->
             </div>
             <!-- end card-body -->

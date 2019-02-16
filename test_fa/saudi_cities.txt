@@ -1,0 +1,235 @@
+
+الترتيب	اسم المدينة	عدد السكان في
+1992
+
+عدد السكان في
+2010
+
+المنطقة
+1	الرياض	2,776,096	6,777,146	الرياض
+
+INSERT INTO `saudi_cities` (`id`, `ar_region_name`, `en_region_name`, `ar_city_name`, `en_city_name`, `created_at`, `updated_at`) 
+VALUES  (NULL, 'الرياض', 'Riyadh', 'الرياض', 'Riyadh', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الخرج', 'Al Kharj', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الزلفي', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الدوادمي', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'وادي الدواسر', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الحوطة/ حوطة بني تميم', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الأفلاج', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الدرعية', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'المجمعة', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'القويعية', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'شقراء', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'عفيف', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الغاط', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'السليل', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'ضرما', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'المزاحمية', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'رماح', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'ثادق', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'حريملاء', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الحريق', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'مرات', 'en_name', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'مكة المكرمة', 'Mecca', NULL, NULL),
+        
+
+
+);
+
+مكة المكرمة
+مكة المكرمة جدة، الطائف، القنفذة، الليث، رابغ، خليص، الخربة، رنية، تربة 9 
+الجموم، الكامل، المويه، ميسان، أضم، العرضيات، بحرة 7
+
+
+
+
+
+
+
+
+// حسب وزارة التجارة  //
+
+منطقة الرياض - مقر الإمارة: الرياض
+منطقة مكة المكرمة - مقر الإمارة: مكة المكرمة
+منطقة المدينة المنورة - مقر الإمارة: المدينة المنورة
+منطقة القصيم - مقر الإمارة: بريده
+المنطقة الشرقية - مقر الإمارة: الدمام
+منطقة عسير - مقر الإمارة: أبها
+منطقة تبوك - مقر الإمارة: تبوك
+منطقة حائل - مقر الإمارة: حائل
+منطقة الحدود الشمالية – مقر الإمارة: عرعر
+منطقة جازان - مقر الإمارة: جازان
+منطقة نجران - مقر الإمارة: نجران
+منطقة الباحة - مقر الإمارة: الباحة
+منطقة الجوف - مقر الإمارة: سكاكا.
+
+
+
+
+
+
+
+Al-Abwa
+Al Artaweeiyah
+Badr
+Baljurashi
+Bisha
+Bareg
+Buraydah
+Al Bahah
+Buq a
+Dammam
+Dhahran
+Dhurma
+Dahaban
+Diriyah
+Duba
+Dumat Al-Jandal
+Dawadmi
+Farasan city
+Gatgat
+Gerrha
+Gurayat
+Al-Gwei'iyyah
+Hautat Sudair
+Habala
+Hajrah
+Haql
+Al-Hareeq
+Harmah
+Ha'il
+Hotat Bani Tamim
+Hofuf
+Huraymila
+Hafr Al-Batin
+Jabal Umm al Ru'us
+Jalajil
+Al Jawf
+Jeddah
+Jizan
+Jizan Economic City
+Jubail
+Al Jafer
+Khafji
+Khaybar
+King Abdullah Economic City
+Khamis Mushayt
+Al Kharj //
+Knowledge Economic City , Medina
+Khobar
+Al-Khutt
+Layla
+Lihyan
+Al Lith
+Al Majma'ah
+Mastoorah
+Al Mikhwah
+Al-Mubarraz
+Al Mawain
+Mecca //
+Medina
+Muzahmiyya
+Najran
+Al-Namas
+Omloj
+Al-Omran
+Al-Oyoon
+Qadeimah
+Qatif
+Qaisumah
+Al Qunfudhah
+Rabigh
+Rafha
+Ar Rass
+Ras Tanura
+Riyadh
+Riyadh Al-Khabra
+Rumailah
+Sabt Al Alaya
+Saihat
+Safwa city
+Sakakah
+Sharurah
+Shaqraa
+Shaybah
+As Sulayyil
+Taif
+Tabuk
+Tanomah
+Tarout
+Tayma
+Thadiq
+Thuwal
+Thuqbah
+Turaif
+Tabarjal
+Udhailiyah
+Al-`Ula
+Um Al-Sahek
+Unaizah
+Uqair
+'Uyayna
+Uyun AlJiwa
+Wadi Al-Dawasir
+Al Wajh
+Yanbu
+Az Zaimah
+Zulfi 
+
+
+
+المنطقة مقر الإمارة محافظات فئة أ العدد محافظات فئة ب العدد 
+
+الرياض
+الرياض الدرعية، الخرج، الدوادمي، المجمعة، القويعية، الأفلاج، وادي الدواسر، الزلفي، شقراء، عفيف، الغاط، حوطة بن تميم 12 
+السليل، ضرما، المزاحمية، رماح، ثادق، حريملاء، الحريق، مرات 8 
+
+مكة المكرمة
+مكة المكرمة جدة، الطائف، القنفذة، الليث، رابغ، خليص، الخربة، رنية، تربة 9 
+الجموم، الكامل، المويه، ميسان، أضم، العرضيات، بحرة 7 
+
+المدينة المنورة
+المدينة المنورة ينبع، العلا، المهد، الحناكية 4 
+بدر، خيبر، العيص، وادي الفرع 4 
+
+القصيم
+بريدة عنيزة، الرس، المذنب، البكيرية، البدائع 5 
+الأسياح، النبهانية، الشماسية، عيون الجواء، رياض الخبراء، عقلة الصقور، ضرية 7 
+
+المنطقة الشرقية
+الدمام الأحساء، حفر الباطن، الجبيل، القطيف، الخبر، الخفجي 6 
+رأس تنورة، بقيق، النعيرية، قرية العليا، العديد 5 
+
+عسير
+أبها خميس مشيط، بيشة، النماص، محايل، ظهران الجنوب، تثليث 6 
+سراة عبيدة، رجال ألمع، بلقرن، أحد رفيدة، المجاردة، البرك، بارق، تنومة، طريب 9 
+
+تبوك
+تبوك الوجه، ضبا، تيماء، أملج 4 
+حقل، البدع 2 
+
+حائل
+حائل بقعاء 1 
+الغزالة، الشنان، الحائط، السليمي، الشملي، موقق، سميراء 7 
+
+الحدود الشمالية
+عرعر رفحا، طريف 2 
+العويقيلة 1 
+
+جازان
+جازان صبيا، أبو عريش، صامتة، بيش، الدرب 5 
+الحرث، ضمد، الريث، فرسان، الدائر، العارضة، أحد المسارحة، العيدابي، فيفا، الطوال، الهروب 11 
+
+نجران
+نجران شرورة 1 
+حبونا، بدر الجنوب، يدمة، ثار، خباش، الخرخير 6 
+
+الباحة
+الباحة بلجرشي، المندق، المخواة، قلوة 4 
+العقيق، القرى، غامد الزناد، الحجرة، بني حسن 5 
+
+الجوف
+سكاكا القريات، دومة الجندل 2 
+طبرجل 1
+
+

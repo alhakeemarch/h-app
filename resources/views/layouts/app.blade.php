@@ -14,6 +14,12 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script>
+
+        // to refresh page without asking , after post ..
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+        
         function onlyNumber(evt){
                     var theEvent = evt || window.event;
                     var key = theEvent.keyCode || theEvent.which;
@@ -107,7 +113,6 @@
                     theEvent.preventDefault();
                 }
             }
-
     </script>
 
     <!-- Fonts -->
@@ -317,8 +322,6 @@
     <main class="container-fluid" style="min-height:85vh;">
         @yield('content')
     </main>
-
-
     {{-- fixed-bottom --}}
     <footer class="footer text-light bg-dark shadow  py-3 text-center">
         <div class="">
