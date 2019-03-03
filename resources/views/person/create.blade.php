@@ -66,10 +66,6 @@
                             <!-- end of  English Name -->
                             <!-- end of Main Information -->
 
-
-
-
-
                             <!-- Nationaltiy Information -->
                             <div class="card-header text-white bg-dark mb-3 rounded">
                                 Identity Information:
@@ -87,16 +83,13 @@
                                     <label for="fname">{{__( 'Hafizah Number')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
                                     <input type="text" name="hafizah_number" id="" class="form-control mb-3" placeholder="{{__( 'Hafizah Number')}}..">
                                 </div>
-
-                                @include('components.dateFields')
-                                
-
-                              
-
-                                {{-- <div class="col-md">
+                                                                
+                                <div class="col-md">
                                     <label for="fname">{{__( 'National ID Issue Date')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
-                                    <input type="date" name="national_id_issue_date" id="" class="form-control mb-3" placeholder="{{__( 'National ID Issue Date')}}..">
-                                </div> --}}
+                                    <input type="text" name="national_id_issue_date" id="" class="form-control mb-3" placeholder="{{__( 'dd/mm/yyyy')}}.." pattern="\d{1,2}/\d{1,2}/\d{4}">
+                                </div>
+
+
                                 <div class="col-md">
                                     <label for="fname">{{__( 'National ID Issue Place')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
                                     <input type="text" name="national_id_issue_place" id="" class="form-control mb-3" placeholder="{{__( 'National ID Issue Place')}}..">
@@ -167,7 +160,7 @@
                                     <input type="text" name="birth_date" id="" class="form-control mb-3" placeholder="{{__( 'Birth Date')}}..">
                                 </div>
                                 <div class="col-md">
-                                    <label for="fname">{{__( 'Birth Place')}} <span class="small text-muted">({{__('optional')}})</span> :</label>
+                                    <label for="fname">{{__( 'Birth Place')}} <span class="small text-muted">({{__('optional')}})</span>:</label>
                                     <input type="text" name="birth_place" id="" class="form-control mb-3" placeholder="{{__( 'Birth Place')}}..">
                                 </div>
                                 <!--/End of Personal Information -->

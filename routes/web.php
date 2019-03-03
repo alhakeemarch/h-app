@@ -27,6 +27,8 @@ Route::get('/locale/{locale}', function ($locale) {
     return view('welcome');
 });
 
+
+
 Route::any('/person/check', 'PersonController@check')->name('person.check');
 Route::any('/customer/check', 'CustomerController@check')->name('customer.check');
 Route::any('/employee/check', 'EmployeeController@check')->name('employee.check');
