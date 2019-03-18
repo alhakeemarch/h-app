@@ -43,12 +43,12 @@ class CreatePeopleTable extends Migration
 
             $table->unsignedInteger('hafizah_no')->nullable();
             $table->date('national_id_issue_date')->nullable();
-            $table->date('national_id_exp_date')->nullable();
+            $table->date('national_id_expire_date')->nullable();
             $table->string('national_id_issue_place')->nullable();
 
             $table->string('pasport_no')->nullable();
             $table->date('pasport_issue_date')->nullable();
-            $table->date('pasport_id_exp_date')->nullable();
+            $table->date('pasport_id_expire_date')->nullable();
             $table->string('pasport_id_issue_place')->nullable();
 
             $table->date('ah_birth_date')->nullable();

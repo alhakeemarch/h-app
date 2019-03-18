@@ -17,13 +17,8 @@ class EmployeeController extends PersonController
      */
     public function index(Person $person)
     {
-        return 'this is employee index to show all employees';
 
-        if (Auth::user()->user_level >= 100) {
-            return "you are the 100";
-        }
-        // return Person::all();
-        $allPersons = $person->all();
+        $allPersons = $person->all()->where('is_employee', true);;
         return view('person.index')->with('persons', $allPersons);
     }
 
@@ -73,8 +68,10 @@ class EmployeeController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person, $found_person)
+    public function show(Request $request, Person $person)
     {
+        return view('person/show')->with('person', $person);
+        return 'Employee Show function';
         $customer = $person->find($found_person);
         if ($customer->is_employee) {
             if (Auth::user()->user_level >= 100) {

@@ -235,9 +235,9 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('Show')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
+                                <a class="dropdown-item" href="{{ route ('customer.index') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
                                 >= 10)
-                                <a class="dropdown-item" href="{{ url('/') }}">{{__('Employee')}}</a> @endif
+                                <a class="dropdown-item" href="{{ route ('employee.index') }}">{{__('Employee')}}</a> @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{__('Project')}}</a>

@@ -62,8 +62,7 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-
-        return $request;
+        // return $request;
         
         $validatedData = $request->validate([
             'ar_name1' => 'required|string|min:2',
@@ -72,25 +71,40 @@ class PersonController extends Controller
             'ar_name4' => 'string|nullable',
             'ar_name5' => "required|string|min:2",
             'en_name1' => 'string|nullable|regex:/[A-Za-z]/',
-            'en_name2' => 'string|nullable',
-            'en_name3' => 'string|nullable',
-            'en_name4' => 'string|nullable',
-            'en_name5' => 'string|nullable',
-            'phone_no' => 'required|numeric|starts_with:0,9|digits:10,12,14',
-            'nationaltiy' => "required",
-            'hafizah_number' => 'numeric|nullable',
+            'en_name2' => 'string|nullable|regex:/[A-Za-z]/',
+            'en_name3' => 'string|nullable|regex:/[A-Za-z]/',
+            'en_name4' => 'string|nullable|regex:/[A-Za-z]/',
+            'en_name5' => 'string|nullable|regex:/[A-Za-z]/',
+            'mobile' => 'required|numeric|starts_with:0,9|digits:10,12,14',
+            'nationaltiy_id' => "required",
+            'hafizah_no' => 'numeric|nullable',
             'national_id_issue_date' => 'nullable',
+            'national_id_expire_date' => 'nullable',
             'national_id_issue_place' => 'string|nullable',
-            'birth_date' => 'nullable',
+            'ah_birth_date' => 'nullable',
+            'ad_birth_date' => 'nullable',
             'birth_place' => 'string|nullable',
             'national_id' => 'required|numeric|starts_with:1,2|digits:10',
         ]);
 
-        return $request->all();
-
-
-
-        $person = Person::create($request->all());
+        $nationalitiesArr = Nationality::gitNationalities();
+        $request_nationality_id = $request->nationaltiy_id;
+        $nationality_ar ='';
+        $nationality_en ='';
+        foreach ($nationalitiesArr as $nationality_id => $nationality) {
+            foreach ($nationality as $en_nationality => $ar_nationality) {
+                if ($request_nationality_id == $nationality_id) {
+                    $nationality_ar =$ar_nationality ;
+                    $nationality_en =$en_nationality;
+                }
+            }
+        }
+       
+        $input = collect($request) ;
+        $input->put('nationaltiy_ar',$nationality_ar,);
+        $input->put('nationaltiy_en', $nationality_en);
+       
+        $person = Person::create($input->all());
         // $person->save();
         return redirect()->action('PersonController@index');
     }
@@ -101,8 +115,17 @@ class PersonController extends Controller
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person, $found_person)
+    public function show(Request $request, Person $person)
     {
+        if ($person->is_employee) {
+            return redirect()->action('EmployeeController@show', $person);
+            return 'is emp';
+        }
+        if ($person->is_customer) {
+            return redirect()->action('CustomerController@show', $person);
+            return 'is cust';
+        }
+        
         return view('person/show')->with('person', $person);
     }
 

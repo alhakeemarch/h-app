@@ -3,14 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        @php $formPostTo ='/'; 
-        if($fromeCustomer){ $formPostTo="customer/check"; }
-        elseif($fromeEmployee){ $formPostTo="employee/check";} 
+        @php $formPostTo ='/'; $persontype = '';
+        if($fromeCustomer){ $formPostTo="customer/check"; $persontype = 'Customer'; }
+        elseif($fromeEmployee){ $formPostTo="employee/check";  $persontype = 'Employee';} 
         @endphp
 
         <div class="container">
             <div class="card">
-                <h5 class="card-header">{{ __('Registration') }} 1/2 </h5>
+                <h5 class="card-header">{{ __('Registration') }} of {{$persontype}} 1/2 </h5>
                 <div class="card-body">
                     <form action="{{ url ($formPostTo) }}" method="post">
                         @csrf
