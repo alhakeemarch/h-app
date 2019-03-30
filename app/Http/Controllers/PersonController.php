@@ -115,17 +115,14 @@ class PersonController extends Controller
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person)
+    public function show(Request $request, Person $person, $id=null)
     {
         if ($person->is_employee) {
-            return redirect()->action('EmployeeController@show', $person);
-            return 'is emp';
+            return redirect()->route('employee.show', ['id' => $person->id]);
         }
         if ($person->is_customer) {
-            return redirect()->action('CustomerController@show', $person);
-            return 'is cust';
+            return redirect()->route('customer.show', ['id' => $person->id]);
         }
-        
         return view('person/show')->with('person', $person);
     }
 

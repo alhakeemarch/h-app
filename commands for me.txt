@@ -1,5 +1,6 @@
-user settings 
+//=========== Visual Studio Code ===============//
 
+user settings 
 {
     "workbench.iconTheme": "vscode-icons",
     "editor.fontSize": 16,
@@ -117,6 +118,9 @@ app/providers/AppServiceProvider.php
 ==============================================================================
 php artisan 
 php artisan make:model Person -mcr
+php artisan make:model Project -mcr
+php artisan make:model Contract -mcr
+php artisan make:model Task -mcr
 ==============================================================================
 for crating Localization middleware
     php artisan make:middleware Localization

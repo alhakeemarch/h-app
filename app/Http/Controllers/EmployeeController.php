@@ -68,9 +68,15 @@ class EmployeeController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person)
+    public function show(Request $request, Person $person, $id=null)
     {
-        return view('person/show')->with('person', $person);
+        $employee =  $person->where('id', $id)->first();
+if ($employee) {
+    return view('person/show')->with('person', $employee);
+    # code...
+}else{
+    abort(404);
+}
         return 'Employee Show function';
         $customer = $person->find($found_person);
         if ($customer->is_employee) {

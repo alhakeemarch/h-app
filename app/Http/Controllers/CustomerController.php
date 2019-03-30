@@ -82,7 +82,7 @@ class CustomerController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person)
+    public function show(Request $request, Person $person, $id=null)
     {
         return view('person/show')->with('person', $person);
         return 'Employee Show function';
