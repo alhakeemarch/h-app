@@ -240,9 +240,9 @@
                                 <a class="dropdown-item" href="{{ route ('employee.index') }}">{{__('Employee')}}</a> @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">{{__('Project')}}</a>
-                                <a class="dropdown-item" href="#">{{__('Contract')}}</a>
-                                <a class="dropdown-item" href="#">{{__('Task')}}</a>
+                                <a class="dropdown-item" href="{{ route ('project.index') }}">{{__('Project')}}</a>
+                                <a class="dropdown-item" href="{{ route ('contract.index') }}">{{__('Contract')}}</a>
+                                <a class="dropdown-item" href="{{ route ('task.index') }}">{{__('Task')}}</a>
                             </div>
                         </li>
                         <!--/End of dropdown 3 -->

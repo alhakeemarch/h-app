@@ -68,30 +68,32 @@ class EmployeeController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person, $id=null)
+    public function show(Request $request, Person $person, $id = null)
     {
         $employee =  $person->where('id', $id)->first();
-if ($employee) {
-    return view('person/show')->with('person', $employee);
-    # code...
-}else{
-    abort(404);
-}
-        return 'Employee Show function';
-        $customer = $person->find($found_person);
-        if ($customer->is_employee) {
-            if (Auth::user()->user_level >= 100) {
-                return view('person/show')->with('person', $customer);
-            } else {
-                return redirect()->back()->withErrors(['This (ID) is already registered as employer,
-                contact your administrator for more details.']);
-            }
+        if ($employee) {
+            return view('person/show')->with('person', $employee);
+            # code...
+        } else {
+            abort(404);
         }
-        if ($customer->is_customer) {
-            return view('person/show')->with('person', $customer);
-        }
-        return redirect()->back()->withErrors(['This (ID) is already registered (!! not employee or customer),
-        contact your administrator for more details.']);
+
+                    
+                    return 'Employee Show function';
+                    $customer = $person->find($found_person);
+                    if ($customer->is_employee) {
+                        if (Auth::user()->user_level >= 100) {
+                            return view('person/show')->with('person', $customer);
+                        } else {
+                            return redirect()->back()->withErrors(['This (ID) is already registered as employer,
+                            contact your administrator for more details.']);
+                        }
+                    }
+                    if ($customer->is_customer) {
+                        return view('person/show')->with('person', $customer);
+                    }
+                    return redirect()->back()->withErrors(['This (ID) is already registered (!! not employee or customer),
+                    contact your administrator for more details.']);
     }
 
     /**
@@ -149,6 +151,5 @@ if ($employee) {
         } else {
             return redirect()->action('EmployeeController@create', $request);
         }
-
     }
 }

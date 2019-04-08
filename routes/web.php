@@ -44,10 +44,10 @@ Route::resources([
     
     // 'plot'=>'PlottController',
     // 'plotDoc'=>'PlottDocController',
-    // 'project'=>'ProjectController',
+    'project'=>'ProjectController',
     // 'projectDoc'=>'ProjectDocController',
-    // 'task'=>'TaskController',
-    // 'contract'=>'ContractController',
+    'task'=>'TaskController',
+    'contract'=>'ContractController',
     
     // 'receiptIn'=>'ReceiptInController',
     // 'receiptOut'=>'ReceiptOutController',
