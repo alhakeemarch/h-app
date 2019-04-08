@@ -1,44 +1,155 @@
 
-الترتيب	اسم المدينة	عدد السكان في
-1992
 
-عدد السكان في
-2010
-
-المنطقة
-1	الرياض	2,776,096	6,777,146	الرياض
 
 INSERT INTO `saudi_cities` (`id`, `ar_region_name`, `en_region_name`, `ar_city_name`, `en_city_name`, `created_at`, `updated_at`) 
 VALUES  (NULL, 'الرياض', 'Riyadh', 'الرياض', 'Riyadh', NULL, NULL),
         (NULL, 'الرياض', 'Riyadh', 'الخرج', 'Al Kharj', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'الزلفي', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'الدوادمي', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'وادي الدواسر', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'الحوطة/ حوطة بني تميم', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'الأفلاج', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'الدرعية', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'المجمعة', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'القويعية', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'شقراء', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'عفيف', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'الغاط', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'السليل', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'ضرما', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'المزاحمية', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'رماح', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'ثادق', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'حريملاء', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'الحريق', 'en_name', NULL, NULL),
-        (NULL, 'الرياض', 'Riyadh', 'مرات', 'en_name', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الزلفي', 'Zulfi ', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الدوادمي', 'Dawadmi', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'وادي الدواسر', 'Wadi Al-Dawasir', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الحوطة/ حوطة بني تميم', 'Hotat Bani Tamim', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الأفلاج', 'Aflaj', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الدرعية', 'Diriyah', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'المجمعة', 'Al Majmaah', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'القويعية', 'Al-Gweiiyyah', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'شقراء', 'Shaqraa', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'عفيف', 'Afif', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الغاط', 'al-Ghat', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'السليل', 'As Sulayyil', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'ضرما', 'Dhurma', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'المزاحمية', 'Muzahmiyya', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'رماح', 'Rimah', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'ثادق', 'Thadiq', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'حريملاء', 'Huraymila', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'الحريق', 'Al-Hareeq', NULL, NULL),
+        (NULL, 'الرياض', 'Riyadh', 'مرات', ' Marat', NULL, NULL),
         (NULL, 'مكة المكرمة', 'Mecca', 'مكة المكرمة', 'Mecca', NULL, NULL),
-        
-
+        (NULL, 'مكة المكرمة', 'Mecca', 'جدة', 'Jeddah', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'الطائف', 'Taif', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'القنفذة', 'Al Qunfudhah', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'الليث', 'Al-Lith ', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'رابغ', 'Rabigh', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'خليص', 'Khulays', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'الخرمة', 'Al-Khurmah', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'رنية', 'Ranyah ', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'تربة', 'Turubah', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'الجموم', 'Al-Jumum ', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'الكامل', 'Al-Kamil', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'المويه', 'Moya', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'ميسان', 'Mesaan', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'أضم', 'Adam', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'العرضيات', 'Aredaat', NULL, NULL),
+        (NULL, 'مكة المكرمة', 'Mecca', 'بحرة', 'Bahra', NULL, NULL),
+        (NULL, 'المدينة المنورة', 'Medina', 'المدينة المنورة', 'Medina', NULL, NULL),
+        (NULL, 'المدينة المنورة', 'Medina', 'ينبع', 'Yanbu', NULL, NULL),
+        (NULL, 'المدينة المنورة', 'Medina', 'العلا', 'Al-Ula', NULL, NULL),
+        (NULL, 'المدينة المنورة', 'Medina', 'المهد', 'AL-Mahd ', NULL, NULL),
+        (NULL, 'المدينة المنورة', 'Medina', 'الحناكية', 'Al Hunakiyah', NULL, NULL),
+        (NULL, 'المدينة المنورة', 'Medina', 'بدر', 'Badr', NULL, NULL),
+        (NULL, 'المدينة المنورة', 'Medina', 'خيبر', 'Khaybar', NULL, NULL),
+        (NULL, 'المدينة المنورة', 'Medina', 'العيص', 'Al-Ayes', NULL, NULL),
+        (NULL, 'المدينة المنورة', 'Medina', 'وادي الفرع', 'Wadi-ALfaraa', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'بريدة', 'Buraydah', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'عنيزة', 'Unaizah', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'الرس', 'Ar Rass', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'المذنب', 'Al-Muznib', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'البكيرية', 'Al-Bukairiyah', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'البدائع', 'Al-Badayea', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'الأسياح', 'Asyah', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'النبهانية', 'Al nabhaniah', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'الشماسية', 'Al shamasiah', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'عيون الجواء', 'Uyun AlJiwa', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'رياض الخبراء', 'Riyadh Al-Khabra', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'عقلة الصقور', 'Aqlat AL swqoor', NULL, NULL),
+        (NULL, 'القصيم', 'Qassim', 'ضرية', 'Dheriah', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'الدمام', 'Dammam', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'الأحساء', 'Al-Ahsa', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'حفر الباطن', 'Hafr Al-Batin', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'الجبيل', 'Jubail', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'القطيف', 'Qatif', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'الخبر', 'Khobar', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'الخفجي', 'Khafji', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'رأس تنورة', 'Ras Tanura', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'بقيق', 'Abqaiq', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'النعيرية', 'Nariyah', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'قرية العليا', 'Qaryat al-Ulya', NULL, NULL),
+        (NULL, 'المنطقة الشرقية', 'Eastren Province', 'العديد', 'AL Adeed', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'أبها', 'Abha', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'خميس مشيط', 'Khamis Mushayt', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'بيشة', 'Bisha', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'النماص', 'An-Namas', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'محايل', 'Muhayil', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'ظهران الجنوب', 'Zahran Al-Janub', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'تثليث', 'Tathlith', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'سراة عبيدة', 'Sarat Abidah ', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'رجال ألمع', 'Rijal Alma', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'بلقرن', 'Balqarn', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'أحد رفيدة', 'Ahad Rifaydah', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'المجاردة', 'Al-Majardah ', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'البرك', 'Baraq', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'بارق', 'Bareg', NULL, NULL),
+        (NULL, 'عسير', 'Asir', 'تنومة', 'Tanomah', NULL, NULL),
+        (NULL, 'عسير', 'Asir', ' طريب', 'Tareeb', NULL, NULL),
+        (NULL, 'تبوك', 'Tabuk','تبوك' , 'Tabuk', NULL, NULL),
+        (NULL, 'تبوك', 'Tabuk','الوجه' , 'Al Wajh', NULL, NULL),
+        (NULL, 'تبوك', 'Tabuk','ضباء' , 'Duba', NULL, NULL),
+        (NULL, 'تبوك', 'Tabuk','تيماء' , 'Tayma', NULL, NULL),
+        (NULL, 'تبوك', 'Tabuk','أملج' , 'Omloj', NULL, NULL),
+        (NULL, 'تبوك', 'Tabuk','حقل' , 'Haql', NULL, NULL),
+        (NULL, 'تبوك', 'Tabuk','البدع' , 'Al bedaa', NULL, NULL),
+        (NULL, 'حائل', 'Hail','حائل' , 'Hail', NULL, NULL),
+        (NULL, 'حائل', 'Hail','بقعاء' , 'Buqa', NULL, NULL),
+        (NULL, 'حائل', 'Hail','الغزالة' , 'Al-Ghazalah', NULL, NULL),
+        (NULL, 'حائل', 'Hail','الشنان' , 'Ash-Shnan', NULL, NULL),
+        (NULL, 'حائل', 'Hail','الحائط' , 'Al-Hayet', NULL, NULL),
+        (NULL, 'حائل', 'Hail','السليمي' , 'Al-Sulaimi', NULL, NULL),
+        (NULL, 'حائل', 'Hail','الشملي' , 'Ash-Shamli', NULL, NULL),
+        (NULL, 'حائل', 'Hail','موقق' , 'Mawqaq', NULL, NULL),
+        (NULL, 'منطقة الحدود الشمالية', 'Northern borders area','عرعر' , 'ARar', NULL, NULL),
+        (NULL, 'منطقة الحدود الشمالية', 'Northern borders area','رفحا' , 'Rafha', NULL, NULL),
+        (NULL, 'منطقة الحدود الشمالية', 'Northern borders area','طريف' , 'Taif', NULL, NULL),
+        (NULL, 'منطقة الحدود الشمالية', 'Northern borders area','العويقيلة' , 'Al ewaiqaliah', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','جازان' , 'Jizan', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','صبياء' , 'Sabya', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','أبو عريش' , 'Abu Arish', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','صامطة' , 'Samtah', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','بيش' , 'Baish', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','الدرب' , 'Alddarb', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','الحرث' , 'Alharth', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','ضمد' , 'Damad', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','الريث' , 'Alraith', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','فرسان' , 'Farasan ', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','الدائر' , 'Alddair', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','العارضة' , 'Alaridah', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','أحد المسارحة' , 'Ahad Almasarihah', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','العيدابي' , 'Alaydabi', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','فيفاء' , 'Fifaa', NULL, NULL),
+        (NULL, 'جازان', 'Jizan',' الطوال' , 'ALtwaal', NULL, NULL),
+        (NULL, 'جازان', 'Jizan','الهروب' , 'ALharoob', NULL, NULL),
+        (NULL, 'نجران', 'Najran','نجران' , 'Najran', NULL, NULL),
+        (NULL, 'نجران', 'Najran','شرورة' , 'Sharurah', NULL, NULL),
+        (NULL, 'نجران', 'Najran','حبونا' , 'Hayona', NULL, NULL),
+        (NULL, 'نجران', 'Najran','بدر الجنوب' , 'Badr aljanoob', NULL, NULL),
+        (NULL, 'نجران', 'Najran','يدمة' , 'Yadamah', NULL, NULL),
+        (NULL, 'نجران', 'Najran','ثار' , 'Thar', NULL, NULL),
+        (NULL, 'نجران', 'Najran','خباش' , 'Khabash', NULL, NULL),
+        (NULL, 'نجران', 'Najran','الخرخير' , 'khar kheer', NULL, NULL),
+        (NULL, 'الباحة', 'Al Baha','الباحة' , 'Al Baha', NULL, NULL),
+        (NULL, 'الباحة', 'Al Baha','بلجرشي' , 'Baljurashi', NULL, NULL),
+        (NULL, 'الباحة', 'Al Baha','المندق' , 'Al mandaq', NULL, NULL),
+        (NULL, 'الباحة', 'Al Baha','المخواة' , 'Al Mikhwah', NULL, NULL),
+        (NULL, 'الباحة', 'Al Baha',' قلوة' , 'Qelwa', NULL, NULL),
+        (NULL, 'الباحة', 'Al Baha','العقيق' , 'Alaqeeq', NULL, NULL),
+        (NULL, 'الباحة', 'Al Baha','القرى' , 'AL qura', NULL, NULL),
+        (NULL, 'الباحة', 'Al Baha','غامد الزناد' , 'Ghamed al zenad', NULL, NULL),
+        (NULL, 'الباحة', 'Al Baha','الحجرة' , 'Hajrah', NULL, NULL),
+        (NULL, 'الباحة', 'Al Baha','بني حسن' , 'Bani hassan', NULL, NULL),
+        (NULL, 'الجوف', 'Al Jawf','سكاكا' , 'Sakakah', NULL, NULL),
+        (NULL, 'الجوف', 'Al Jawf','القريات' , 'Gurayat', NULL, NULL),
+        (NULL, 'الجوف', 'Al Jawf','دومة الجندل' , 'Dumat Al-Jandal', NULL, NULL),
+        (NULL, 'الجوف', 'Al Jawf','طبرجل' , 'Tabarjal', NULL, NULL),
 
 );
-
-مكة المكرمة
-مكة المكرمة جدة، الطائف، القنفذة، الليث، رابغ، خليص، الخربة، رنية، تربة 9 
-الجموم، الكامل، المويه، ميسان، أضم، العرضيات، بحرة 7
 
 
 
@@ -62,6 +173,8 @@ VALUES  (NULL, 'الرياض', 'Riyadh', 'الرياض', 'Riyadh', NULL, NULL),
 منطقة نجران - مقر الإمارة: نجران
 منطقة الباحة - مقر الإمارة: الباحة
 منطقة الجوف - مقر الإمارة: سكاكا.
+
+// حسب وزارة التجارة  //
 
 
 
@@ -90,19 +203,19 @@ Farasan city
 Gatgat
 Gerrha
 Gurayat
-Al-Gwei'iyyah
+Al-Gweiiyyah
 Hautat Sudair
 Habala
 Hajrah
 Haql
 Al-Hareeq
 Harmah
-Ha'il
+Hail
 Hotat Bani Tamim
 Hofuf
 Huraymila
 Hafr Al-Batin
-Jabal Umm al Ru'us
+Jabal Umm al Ruus
 Jalajil
 Al Jawf
 Jeddah
@@ -121,7 +234,7 @@ Al-Khutt
 Layla
 Lihyan
 Al Lith
-Al Majma'ah
+Al Majmaah
 Mastoorah
 Al Mikhwah
 Al-Mubarraz
@@ -164,11 +277,11 @@ Thuqbah
 Turaif
 Tabarjal
 Udhailiyah
-Al-`Ula
+Al-Ula
 Um Al-Sahek
 Unaizah
 Uqair
-'Uyayna
+Uyayna
 Uyun AlJiwa
 Wadi Al-Dawasir
 Al Wajh
@@ -178,7 +291,7 @@ Zulfi
 
 
 
-المنطقة مقر الإمارة محافظات فئة أ العدد محافظات فئة ب العدد 
+
 
 الرياض
 الرياض الدرعية، الخرج، الدوادمي، المجمعة، القويعية، الأفلاج، وادي الدواسر، الزلفي، شقراء، عفيف، الغاط، حوطة بن تميم 12 
