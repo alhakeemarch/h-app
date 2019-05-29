@@ -21,9 +21,9 @@ Route::get('/locale/{locale}', function ($locale) {
     Session::put('locale', $locale);
     // return back();
     return redirect()->back();
-}) ->name('localeization');
+})->name('localeization');
 
- Route::get('/', function () {
+Route::get('/', function () {
     return view('welcome');
 });
 
@@ -33,6 +33,7 @@ Route::any('/person/check', 'PersonController@check')->name('person.check');
 Route::any('/customer/check', 'CustomerController@check')->name('customer.check');
 Route::any('/employee/check', 'EmployeeController@check')->name('employee.check');
 Route::any('/project/check', 'ProjectController@check')->name('project.check');
+Route::any('/plot/check', 'PlotController@check')->name('plot.check');
 Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
 Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
@@ -40,21 +41,20 @@ Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('pe
 Route::resources([
     'person' => 'PersonController',
     // 'personDoc' => 'PersonDocController',
-    'customer'=>'CustomerController',
-    'employee'=>'EmployeeController',
-    
-    // 'plot'=>'PlottController',
-    // 'plotDoc'=>'PlottDocController',
-    'project'=>'ProjectController',
-    // 'projectDoc'=>'ProjectDocController',
-    'task'=>'TaskController',
-    'contract'=>'ContractController',
-    
-    // 'receiptIn'=>'ReceiptInController',
-    // 'receiptOut'=>'ReceiptOutController',
-    // 'receiptDiscount'=>'ReceiptDiscountController',
-    // 'invoice'=>'InvoiceController',
-    // 'invoiceRe'=>'InvoiceRrController',
+    'customer' => 'CustomerController',
+    'employee' => 'EmployeeController',
+    'plot' => 'PlotController',
+    // 'plotDoc'=>'PlotDocController',
+    'project' => 'ProjectController',
+    'projectDoc' => 'ProjectDocController',
+    'task' => 'TaskController',
+    'contract' => 'ContractController',
+
+    'receiptIn' => 'ReceiptInController',
+    'receiptOut' => 'ReceiptOutController',
+    'receiptDiscount' => 'ReceiptDiscountController',
+    'invoice' => 'InvoiceController',
+    'invoiceRe' => 'InvoiceRrController',
 
     // 'project'=>'ProjectController',
 ]);
@@ -101,18 +101,14 @@ Route::get('/test', function () {
 });
 Route::get('/test2', function () {
     // return now();
-return Person::all();
+    return Person::all();
     // dd(Person::all());
     dd(\App\Person::all());
     dd(\Auth::check());
     dd(Auth::guest());
     if (!Auth::guest()) {
         return Auth::user();
-
     } else {
         return "you are guest";
     }
 });
-
-
-
