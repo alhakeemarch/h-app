@@ -32,6 +32,7 @@ Route::get('/locale/{locale}', function ($locale) {
 Route::any('/person/check', 'PersonController@check')->name('person.check');
 Route::any('/customer/check', 'CustomerController@check')->name('customer.check');
 Route::any('/employee/check', 'EmployeeController@check')->name('employee.check');
+Route::any('/project/check', 'ProjectController@check')->name('project.check');
 Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
 Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');

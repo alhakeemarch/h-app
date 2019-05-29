@@ -206,9 +206,9 @@
                                 <a class="dropdown-item" href="{{ url('customer/check') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
                                 >= 10)
                                 <a class="dropdown-item" href="{{ url('employee/check') }}">{{__('Employee')}}</a> @endif
-                                <a class="dropdown-item" href="#">{{__('Plot')}}</a>
+                                <a class="dropdown-item" href="plot/check">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">{{__('Project')}}</a>
+                                <a class="dropdown-item" href="project/check">{{__('Project')}}</a>
                                 <a class="dropdown-item" href="#">{{__('Contract')}}</a>
                                 <a class="dropdown-item" href="#">{{__('Task')}}</a>
                             </div>

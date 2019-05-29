@@ -83,4 +83,9 @@ class ProjectController extends Controller
     {
         //
     }
+
+    public function check(Project $project)
+    {
+        return 'this is check method in project controler';
+    }
 }
