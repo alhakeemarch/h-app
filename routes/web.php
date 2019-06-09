@@ -54,7 +54,7 @@ Route::resources([
     'receiptOut' => 'ReceiptOutController',
     'receiptDiscount' => 'ReceiptDiscountController',
     'invoice' => 'InvoiceController',
-    'invoiceRe' => 'InvoiceRrController',
+    'invoiceRe' => 'InvoiceReController',
 
     // 'project'=>'ProjectController',
 ]);

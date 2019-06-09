@@ -14,6 +14,7 @@ class PlotController extends Controller
      */
     public function index()
     {
+        return 'index function in plot controler';
         //
     }
 
@@ -24,7 +25,7 @@ class PlotController extends Controller
      */
     public function create()
     {
-        //
+        return 'create function in plot controler';
     }
 
     /**
@@ -35,7 +36,7 @@ class PlotController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return 'store function in plot controler';
     }
 
     /**
@@ -46,7 +47,7 @@ class PlotController extends Controller
      */
     public function show(plot $plot)
     {
-        //
+        return 'show function in plot controler';
     }
 
     /**
@@ -57,7 +58,7 @@ class PlotController extends Controller
      */
     public function edit(plot $plot)
     {
-        //
+        return 'edit function in plot controler';
     }
 
     /**
@@ -69,7 +70,7 @@ class PlotController extends Controller
      */
     public function update(Request $request, plot $plot)
     {
-        //
+        return 'update function in plot controler';
     }
 
     /**
@@ -80,8 +81,11 @@ class PlotController extends Controller
      */
     public function destroy(plot $plot)
     {
-        //
+        return 'destroy function in plot controler';
     }
+
+
+
     public function check(plot $plot)
     {
         return 'this is plot check method';
