@@ -15,6 +15,20 @@ class CreatePlotsTable extends Migration
     {
         Schema::create('plots', function (Blueprint $table) {
             $table->bigIncrements('id');
+            
+            $table->string('deed_no');
+            $table->date('deed_date');
+
+            $table->string('plot_no');
+            
+            // رقم المخطط
+            // إسم المخطط
+            // المنطقة
+            // الحي
+            // البلدية
+            // رقم الشارع
+            // إسم الشارع
+            // المساحة
             $table->timestamps();
         });
     }

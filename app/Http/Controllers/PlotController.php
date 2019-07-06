@@ -86,8 +86,34 @@ class PlotController extends Controller
 
 
 
-    public function check(plot $plot)
+    public function check( Request $request,plot $plot)
     {
-        return 'this is plot check method';
+        // return view('/plot/check')->withErrors(['Undefined Person type', 'please Contact the Administrator']);
+
+
+
+
+
+        if ($request->method() === "GET") {
+            return view('/plot/check');
+        }
+// return $request;
+        $validatedData = $request->validate([
+            'deed_no' => 'required',
+        ]);
+
+        $found_deed = $plot->where('deed_no', $request->deed_no)->first();
+        $found_deed = false;
+
+        
+        if ($found_deed) {
+
+            return redirect()->action('PlotController@show', ['id' => $found_deed->id]);
+        } else {
+            return redirect()->action('PlotController@create', $request);
+        }
+
+
+
     }
 }
