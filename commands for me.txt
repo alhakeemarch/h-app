@@ -166,7 +166,80 @@ for more details go to:
 https://laravel.com/docs/5.7/localization
 ==============================================================================
 
+install composer
+=====================================
+install laravel
+laravel new hakeemapp
+=====================================
+app/providers/AppServiceProvider.php
 
+use Illuminate\Support\Facades\Schema;
+
+public function boot()
+    {
+        Schema::defaultStringLength(191);
+    }
+
+=====================================
+php artisan make:auth
+php artisan maigrate:fresh
+=====================================
+install nod js
+npm install
+
+npm run watch
+
+npm install admin-lte@v3.0.0-alpha.2 --save
+=====================================
+php artisan rout:list
+
+=====================================
+
+Route::resources([
+    'persons' => 'PersonController',
+    'employees' => 'EmployeeController',
+    'majors' => 'MajorController',
+    'contacts' => 'ContactController',
+    'bankings' => 'BankingController',
+    'addresses' => 'AddressController',
+
+    'projects' => 'ProjectController',
+    'tasks' => 'TaskController',
+    'contracts' => 'ContractController',
+    'contractfields' => 'ContractfieldController',
+    
+    'bills' => 'BillController',
+    'paymentin' => 'PaymentinController',
+    'paymentout' => 'PaymentoutController',
+    
+    'imports' => 'ImportController',
+    'exports' => 'ExportController',
+    'letters' => 'LetterController',
+    'lettertypes' => 'LettertypeController',
+
+]);
+
+/*
+php artisan make:controller PersonController --resource --model=person
+php artisan make:controller EmployeesController --resource --model=employee
+php artisan make:controller MajorsController --resource --model=major
+php artisan make:controller ContactsController --resource --model=contact
+php artisan make:controller AddressesController --resource --model=address
+
+php artisan make:controller ProjectsController --resource --model=project
+php artisan make:controller TasksController --resource --model=task
+php artisan make:controller ContractsController --resource --model=contract
+php artisan make:controller ContractfieldsController --resource --model=contractfield
+
+php artisan make:controller BillController --resource --model=bill
+php artisan make:controller PaymentinController --resource --model=paymentin
+php artisan make:controller PaymentoutController --resource --model=paymentout
+
+php artisan make:controller ImportController --resource --model=import
+php artisan make:controller ExportController --resource --model=export
+php artisan make:controller LetterController --resource --model=letter
+php artisan make:controller LettertypeController --resource --model=lettertype
+*/
 //=========== End of Laravel commands ===============//
 
 

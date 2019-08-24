@@ -55,8 +55,24 @@ Route::resources([
     'receiptDiscount' => 'ReceiptDiscountController',
     'invoice' => 'InvoiceController',
     'invoiceRe' => 'InvoiceReController',
+   
+ 
+    // 'major' => 'MajorController',
+    // 'contact' => 'ContactController',
+    // 'banking' => 'BankingController',
+    // 'addresse' => 'AddressController',
+  
+    // 'contractfields' => 'ContractfieldController',
+    
+    // 'bills' => 'BillController',
+    // 'paymentin' => 'PaymentinController',
+    // 'paymentout' => 'PaymentoutController',
+    
+    // 'imports' => 'ImportController',
+    // 'exports' => 'ExportController',
+    // 'letters' => 'LetterController',
+    // 'lettertypes' => 'LettertypeController',
 
-    // 'project'=>'ProjectController',
 ]);
 
 
