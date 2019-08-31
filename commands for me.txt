@@ -196,12 +196,12 @@ php artisan rout:list
 =====================================
 
 Route::resources([
-    'persons' => 'PersonController',
-    'employees' => 'EmployeeController',
-    'majors' => 'MajorController',
-    'contacts' => 'ContactController',
-    'bankings' => 'BankingController',
-    'addresses' => 'AddressController',
+    'person' => 'PersonController',
+    'employee' => 'EmployeeController',
+    'major' => 'MajorController',
+    'contact' => 'ContactController',
+    'banking' => 'BankingController',
+    'addresse' => 'AddressController',
 
     'projects' => 'ProjectController',
     'tasks' => 'TaskController',
