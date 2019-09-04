@@ -117,10 +117,46 @@ app/providers/AppServiceProvider.php
     }
 ==============================================================================
 php artisan 
+
+php artisan make:model Person -a
+php artisan make:model PersonDoc -a
+
+php artisan make:model Employee -crf
+php artisan make:model Customer -crf
+
+php artisan make:model Major -a
+php artisan make:model Contact -a
+php artisan make:model Address -a
+
+php artisan make:model Project -a
+php artisan make:model ProjectDoc -a
+php artisan make:model Task -a
+php artisan make:model Contract -a
+php artisan make:model Contractfield -a
+
+php artisan make:model Plot -a
+php artisan make:model PlotDoc -a
+
+php artisan make:model Invoice -a
+php artisan make:model InvoiceReturn -a
+
+php artisan make:model ReceiptIn -a
+php artisan make:model ReceiptOut -a
+php artisan make:model ReceiptDiscount -a
+
+
+php artisan make:model Import -a
+php artisan make:model Export -a
+php artisan make:model Letter -a
+php artisan make:model Lettertype -a
+
+
+
+
+not neded 
 php artisan make:model Person -mcr
-php artisan make:model Project -mcr
-php artisan make:model Contract -mcr
-php artisan make:model Task -mcr
+php artisan make:model Project -mcrf
+
 ==============================================================================
 for crating Localization middleware
     php artisan make:middleware Localization
@@ -220,6 +256,8 @@ Route::resources([
 ]);
 
 /*
+not needed canceld :)
+
 php artisan make:controller PersonController --resource --model=person
 php artisan make:controller EmployeesController --resource --model=employee
 php artisan make:controller MajorsController --resource --model=major
@@ -240,7 +278,42 @@ php artisan make:controller ExportController --resource --model=export
 php artisan make:controller LetterController --resource --model=letter
 php artisan make:controller LettertypeController --resource --model=lettertype
 */
+
+
+
+//=========== Laravel 6.0 commands ===============//
+
+composer global require laravel/installer	Just 1st time
+laravel new blog	
+=====================================		
+composer require laravel/ui	Within your project
+php artisan ui vue --auth	Within your project
+php artisan migrate	
+=====================================
+npm install	
+npm run watch	To run styles and java
+=====================================		
+Create db In database folder
+database.sqlite
+
+set a db in .env file
+
+DB_CONNECTION=sqlite
+
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=laravel
+# DB_USERNAME=root
+# DB_PASSWORD=
+=====================================
+
+
+//=========== End of Laravel 6.0 commands ===============//
+
 //=========== End of Laravel commands ===============//
+
+
 
 
 
