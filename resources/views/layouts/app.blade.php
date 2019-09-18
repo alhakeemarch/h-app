@@ -203,12 +203,12 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('New')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('customer/check') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
+                                <a class="dropdown-item" href="{{ url('Customer/check') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
                                 >= 10)
-                                <a class="dropdown-item" href="{{ url('employee/check') }}">{{__('Employee')}}</a> @endif
+                                <a class="dropdown-item" href="{{ url('Employee/check') }}">{{__('Employee')}}</a> @endif
                                 <a class="dropdown-item" href="{{url('/plot/check')}}">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="project/check">{{__('Project')}}</a>
+                                <a class="dropdown-item" href="Project/check">{{__('Project')}}</a>
                                 <a class="dropdown-item" href="#">{{__('Contract')}}</a>
                                 <a class="dropdown-item" href="#">{{__('Task')}}</a>
                             </div>
@@ -235,14 +235,14 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> {{__('Show')}} &nbsp;</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route ('customer.index') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
+                                <a class="dropdown-item" href="{{ route ('Customer.index') }}">{{__('Customer')}}</a> @if (auth()->user()->user_level
                                 >= 10)
-                                <a class="dropdown-item" href="{{ route ('employee.index') }}">{{__('Employee')}}</a> @endif
+                                <a class="dropdown-item" href="{{ route ('Employee.index') }}">{{__('Employee')}}</a> @endif
                                 <a class="dropdown-item" href="#">{{__('Plot')}}</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route ('project.index') }}">{{__('Project')}}</a>
-                                <a class="dropdown-item" href="{{ route ('contract.index') }}">{{__('Contract')}}</a>
-                                <a class="dropdown-item" href="{{ route ('task.index') }}">{{__('Task')}}</a>
+                                <a class="dropdown-item" href="{{ route ('Project.index') }}">{{__('Project')}}</a>
+                                <a class="dropdown-item" href="{{ route ('Contract.index') }}">{{__('Contract')}}</a>
+                                <a class="dropdown-item" href="{{ route ('Task.index') }}">{{__('Task')}}</a>
                             </div>
                         </li>
                         <!--/End of dropdown 3 -->

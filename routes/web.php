@@ -29,50 +29,54 @@ Route::get('/', function () {
 
 
 
-Route::any('/person/check', 'PersonController@check')->name('person.check');
-Route::any('/customer/check', 'CustomerController@check')->name('customer.check');
-Route::any('/employee/check', 'EmployeeController@check')->name('employee.check');
-Route::any('/project/check', 'ProjectController@check')->name('project.check');
-Route::any('/plot/check', 'PlotController@check')->name('plot.check');
+Route::any('/Person/check', 'PersonController@check')->name('person.check');
+Route::any('/Customer/check', 'CustomerController@check')->name('customer.check');
+Route::any('/Employee/check', 'EmployeeController@check')->name('employee.check');
+Route::any('/Project/check', 'ProjectController@check')->name('project.check');
+Route::any('/Plot/check', 'PlotController@check')->name('plot.check');
 Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
 Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
 
 Route::resources([
-    'person' => 'PersonController',
-    // 'personDoc' => 'PersonDocController',
-    'customer' => 'CustomerController',
-    'employee' => 'EmployeeController',
-    'plot' => 'PlotController',
-    // 'plotDoc'=>'PlotDocController',
-    'project' => 'ProjectController',
-    'projectDoc' => 'ProjectDocController',
-    'task' => 'TaskController',
-    'contract' => 'ContractController',
 
-    'receiptIn' => 'ReceiptInController',
-    'receiptOut' => 'ReceiptOutController',
-    'receiptDiscount' => 'ReceiptDiscountController',
-    'invoice' => 'InvoiceController',
-    'invoiceRe' => 'InvoiceReController',
+    // new
+    'Person' => 'PersonController',
+    'PersonDoc' => 'PersonDocController',
+
+    'Customer' => 'CustomerController',
+    'Employee' => 'EmployeeController',
+    
+    'Major' => 'MajorController',
+    'Contact' => 'ContactController',
+    'Address' => 'AddressController',
+
+    'Project' => 'ProjectController',
+    'ProjectDoc' => 'ProjectDocController',
+    'Task' => 'TaskController',
+    'Contract' => 'ContractController',
+    'Contractfield' => 'ContractfieldController',
+    
+    'Plot' => 'PlotController',
+    'PlotDoc'=>'PlotDocController',
+    
+    'Invoice' => 'InvoiceController',
+    'InvoiceDetail' => 'InvoiceDetailController',
+    'InvoiceReturn' => 'InvoiceReturnController',
+    'InvoiceReturnDetail' => 'InvoiceReturnDetailController',
+
+    'ReceiptIn' => 'ReceiptInController',
+    'ReceiptOut' => 'ReceiptOutController',
+    'ReceiptDiscount' => 'ReceiptDiscountController',
+    'Account' => 'AccountController',
+    
+    
+    
+    'Imports' => 'ImportController',
+    'Exports' => 'ExportController',
+    'Letters' => 'LetterController',
+    'Lettertypes' => 'LettertypeController',
    
- 
-    // 'major' => 'MajorController',
-    // 'contact' => 'ContactController',
-    // 'banking' => 'BankingController',
-    // 'addresse' => 'AddressController',
-  
-    // 'contractfields' => 'ContractfieldController',
-    
-    // 'bills' => 'BillController',
-    // 'paymentin' => 'PaymentinController',
-    // 'paymentout' => 'PaymentoutController',
-    
-    // 'imports' => 'ImportController',
-    // 'exports' => 'ExportController',
-    // 'letters' => 'LetterController',
-    // 'lettertypes' => 'LettertypeController',
-
 ]);
 
 

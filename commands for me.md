@@ -138,8 +138,11 @@ php artisan make:model Plot -a
 php artisan make:model PlotDoc -a
 
 php artisan make:model Invoice -a
+php artisan make:model InvoiceDetail -a
 php artisan make:model InvoiceReturn -a
+php artisan make:model InvoiceReturnDetail -a
 
+php artisan make:model Account -a
 php artisan make:model ReceiptIn -a
 php artisan make:model ReceiptOut -a
 php artisan make:model ReceiptDiscount -a
