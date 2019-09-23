@@ -14,10 +14,10 @@ class CustomerController extends PersonController
     //  *
     //  * @return void
     //  */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
 
     /**
@@ -28,9 +28,9 @@ class CustomerController extends PersonController
     public function index(Person $person)
     {
   
-        if (Auth::user()->user_level >= 100) {
-            // return "you are the 100";
-        }
+        // if (Auth::user()->user_level >= 100) {
+        //     // return "you are the 100";
+        // }
 
         $allPersons = $person->all()->where('is_customer', true);
         return view('person.index')->with('persons', $allPersons);

@@ -16,30 +16,31 @@
                 </tr>
             </thead>
             <tbody>
-                    @php $i=1 @endphp
-                    @foreach ($persons as $person)
-                    <tr>
-                        <th scope="row">{{$i}}</th>
-                        <td>{{$person->ar_name1}} {{$person->ar_name2}} {{$person->ar_name3}} {{$person->ar_name4}} {{$person->ar_name5}}</td>
-                        <td>{{$person->national_id}}</td>
-                        <td> $person->Mobile NO</td>
-                        <td>
-                            <a href="{{ url('/person/'.$person->id) }}">    
+                @php $i=1 @endphp
+                @foreach ($persons as $person)
+                <tr>
+                    <th scope="row">{{$i}}</th>
+                    <td>{{$person->ar_name1}} {{$person->ar_name2}} {{$person->ar_name3}} {{$person->ar_name4}}
+                        {{$person->ar_name5}}</td>
+                    <td>{{$person->national_id}}</td>
+                    <td> $person->Mobile NO</td>
+                    <td>
+                        <a href="{{ url('/person/'.$person->id) }}">
                             <i class="far fa-eye"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    @php $i ++ @endphp
-                    </tr>
-                    @endforeach
+                        </a>
+                    </td>
+                </tr>
+                @php $i ++ @endphp
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div><!-- /End of container-fluid  -->
 </div><!-- /End of container-fluid  -->
 
- <!-- ///////////////////////////////-->
- @if ($errors->any())
- @include('layouts.errors')
- @endif
- <!-- ///////////////////////////////-->
+<!-- ///////////////////////////////-->
+@if ($errors->any())
+@include('layouts.errors')
+@endif
+<!-- ///////////////////////////////-->
 @endsection

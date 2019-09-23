@@ -117,6 +117,8 @@ class PersonController extends Controller
      */
     public function show(Request $request, Person $person, $id=null)
     {
+
+        // return "testtttt";
         if ($person->is_employee) {
             return redirect()->route('employee.show', ['id' => $person->id]);
         }

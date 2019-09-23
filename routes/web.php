@@ -27,13 +27,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::any('/f', function () {
+
+    function get_id()
+    {
+        $test = false;
+        // because rand function  accepts  just 9 digits
+        $first_9_digits = rand(100000000, 299999999);
+        $last_digit = rand(1, 9);
+        $new_national_id = $first_9_digits . $last_digit;
+        $all_id = Person::all()->pluck('national_id')->toArray();
+        if (!(in_array($new_national_id, $all_id))) {
+            $test = true;
+            return $new_national_id;
+        } else {
+            get_id();
+        }
+    }
+    return(get_id());
+});
 
 
-Route::any('/Person/check', 'PersonController@check')->name('person.check');
-Route::any('/Customer/check', 'CustomerController@check')->name('customer.check');
-Route::any('/Employee/check', 'EmployeeController@check')->name('employee.check');
-Route::any('/Project/check', 'ProjectController@check')->name('project.check');
-Route::any('/Plot/check', 'PlotController@check')->name('plot.check');
+Route::any('/person/check', 'PersonController@check')->name('person.check');
+Route::any('/customer/check', 'CustomerController@check')->name('customer.check');
+Route::any('/employee/check', 'EmployeeController@check')->name('employee.check');
+Route::any('/project/check', 'ProjectController@check')->name('project.check');
+Route::any('/plot/check', 'PlotController@check')->name('plot.check');
 Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
 Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
@@ -41,42 +60,42 @@ Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('pe
 Route::resources([
 
     // new
-    'Person' => 'PersonController',
-    'PersonDoc' => 'PersonDocController',
+    'person' => 'PersonController',
+    'personDoc' => 'PersonDocController',
 
-    'Customer' => 'CustomerController',
-    'Employee' => 'EmployeeController',
-    
-    'Major' => 'MajorController',
-    'Contact' => 'ContactController',
-    'Address' => 'AddressController',
+    'customer' => 'CustomerController',
+    'employee' => 'EmployeeController',
 
-    'Project' => 'ProjectController',
-    'ProjectDoc' => 'ProjectDocController',
-    'Task' => 'TaskController',
-    'Contract' => 'ContractController',
-    'Contractfield' => 'ContractfieldController',
-    
-    'Plot' => 'PlotController',
-    'PlotDoc'=>'PlotDocController',
-    
-    'Invoice' => 'InvoiceController',
-    'InvoiceDetail' => 'InvoiceDetailController',
-    'InvoiceReturn' => 'InvoiceReturnController',
-    'InvoiceReturnDetail' => 'InvoiceReturnDetailController',
+    'major' => 'MajorController',
+    'contact' => 'ContactController',
+    'address' => 'AddressController',
 
-    'ReceiptIn' => 'ReceiptInController',
-    'ReceiptOut' => 'ReceiptOutController',
-    'ReceiptDiscount' => 'ReceiptDiscountController',
-    'Account' => 'AccountController',
-    
-    
-    
-    'Imports' => 'ImportController',
-    'Exports' => 'ExportController',
-    'Letters' => 'LetterController',
-    'Lettertypes' => 'LettertypeController',
-   
+    'project' => 'ProjectController',
+    'projectDoc' => 'ProjectDocController',
+    'task' => 'TaskController',
+    'contract' => 'ContractController',
+    'contractfield' => 'ContractfieldController',
+
+    'plot' => 'PlotController',
+    'plotDoc' => 'PlotDocController',
+
+    'invoice' => 'InvoiceController',
+    'invoiceDetail' => 'InvoiceDetailController',
+    'invoiceReturn' => 'InvoiceReturnController',
+    'invoiceReturnDetail' => 'InvoiceReturnDetailController',
+
+    'receiptIn' => 'ReceiptInController',
+    'receiptOut' => 'ReceiptOutController',
+    'receiptDiscount' => 'ReceiptDiscountController',
+    'account' => 'AccountController',
+
+
+
+    'imports' => 'ImportController',
+    'exports' => 'ExportController',
+    'letters' => 'LetterController',
+    'lettertypes' => 'LettertypeController',
+
 ]);
 
 

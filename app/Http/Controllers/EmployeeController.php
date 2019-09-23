@@ -18,7 +18,7 @@ class EmployeeController extends PersonController
     public function index(Person $person)
     {
 
-        $allPersons = $person->all()->where('is_employee', true);;
+        $allPersons = $person->all()->where('is_employee', true);
         return view('person.index')->with('persons', $allPersons);
     }
 
@@ -78,21 +78,21 @@ class EmployeeController extends PersonController
             abort(404);
         }
 
-                    
-                    return 'Employee Show function';
-                    $customer = $person->find($found_person);
-                    if ($customer->is_employee) {
-                        if (Auth::user()->user_level >= 100) {
-                            return view('person/show')->with('person', $customer);
-                        } else {
-                            return redirect()->back()->withErrors(['This (ID) is already registered as employer,
+
+        return 'Employee Show function';
+        $customer = $person->find($found_person);
+        if ($customer->is_employee) {
+            if (Auth::user()->user_level >= 100) {
+                return view('person/show')->with('person', $customer);
+            } else {
+                return redirect()->back()->withErrors(['This (ID) is already registered as employer,
                             contact your administrator for more details.']);
-                        }
-                    }
-                    if ($customer->is_customer) {
-                        return view('person/show')->with('person', $customer);
-                    }
-                    return redirect()->back()->withErrors(['This (ID) is already registered (!! not employee or customer),
+            }
+        }
+        if ($customer->is_customer) {
+            return view('person/show')->with('person', $customer);
+        }
+        return redirect()->back()->withErrors(['This (ID) is already registered (!! not employee or customer),
                     contact your administrator for more details.']);
     }
 
@@ -133,11 +133,12 @@ class EmployeeController extends PersonController
 
     public function check(Request $request, Person $person)
     {
+        
         $fromeCustomer = false;
         $fromeEmployee = true;
 
         if ($request->method() === "GET") {
-            // ['name' => 'Victoria'];
+
             return view('/person/check')->with(['fromeEmployee' => $fromeEmployee, 'fromeCustomer' => $fromeCustomer]);
         }
 
@@ -145,7 +146,7 @@ class EmployeeController extends PersonController
             'national_id' => 'required|numeric|starts_with:1,2|digits:10',
         ]);
 
-        $found_person = $person->where('national_id', $request->national_id)->first();
+        $found_person = $person->isexist($request->national_id)->first();
         if ($found_person) {
             return redirect()->action('EmployeeController@show', ['id' => $found_person->id]);
         } else {
