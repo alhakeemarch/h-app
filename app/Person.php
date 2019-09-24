@@ -21,4 +21,9 @@ class Person extends Model
     {
         return $qury->where('national_id', $id);
     }
+
+    public function user(){
+        return $this->hasOne(User::class);
+    }
+
 }

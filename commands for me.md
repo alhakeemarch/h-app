@@ -116,8 +116,19 @@ app/providers/AppServiceProvider.php
         Schema::defaultStringLength(191);
     }
 ==============================================================================
-php artisan 
+ ## artisan Commands
 
+php artisan
+php artisan make:factory PersonFactory -m Person
+php artisan migrate:fresh
+php artisan cache:clear
+
+php artisan tinker
+>>> factory(\App\User::class, 20)->cerate();
+>>> factory(\App\User::class, 20)->cerate();
+
+
+============================
 php artisan make:model Person -a
 php artisan make:model PersonDoc -a
 
@@ -152,6 +163,15 @@ php artisan make:model Import -a
 php artisan make:model Export -a
 php artisan make:model Letter -a
 php artisan make:model Lettertype -a
+
+============== 
+# to do
+php artisan make:model ProjectActivity -a  // الحركات على الجداول
+php artisan make:model PersonActivity -a
+php artisan make:model AccuntsActivity -a
+php artisan make:model Transaction -a
+
+php artisan make:model ReceiptDiscount -a  // سند غير محدد متنوع
 
 
 
