@@ -124,8 +124,8 @@ php artisan migrate:fresh
 php artisan cache:clear
 
 php artisan tinker
->>> factory(\App\User::class, 20)->cerate();
->>> factory(\App\User::class, 20)->cerate();
+>>> factory(\App\User::class, 20)->create();
+>>> factory(\App\User::class, 20)->create();
 
 
 ============================

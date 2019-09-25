@@ -65,6 +65,7 @@ class PersonController extends Controller
         // return $request;
         
         $validatedData = $request->validate([
+            
             'ar_name1' => 'required|string|min:2',
             'ar_name2' => 'string|nullable',
             'ar_name3' => 'string|nullable',

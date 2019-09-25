@@ -6,6 +6,7 @@ use App\Person;
 use App\Auth\RegisterController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,24 +29,15 @@ Route::get('/', function () {
 });
 
 Route::any('/f', function () {
-
-    function get_id()
-    {
-        $test = false;
-        // because rand function  accepts  just 9 digits
-        $first_9_digits = rand(100000000, 299999999);
-        $last_digit = rand(1, 9);
-        $new_national_id = $first_9_digits . $last_digit;
-        $all_id = Person::all()->pluck('national_id')->toArray();
-        if (!(in_array($new_national_id, $all_id))) {
-            $test = true;
-            return $new_national_id;
-        } else {
-            get_id();
-        }
-    }
-    return(get_id());
+    // Artisan::call('migrate:fresh');
+    // return makeUser('admin');
+    // return makeUser('fahd');
+    // factory(\App\Person::class, 100)->create();
 });
+
+
+
+
 
 
 Route::any('/person/check', 'PersonController@check')->name('person.check');
@@ -151,3 +143,84 @@ Route::get('/test2', function () {
         return "you are guest";
     }
 });
+
+
+
+
+function makeUser($user)
+{
+    $fahd = [
+        'national_id' => '2001846613',
+        'is_employee' => '1',
+        'is_customer' => '1',
+        'ar_name1' => 'فهد',
+        'ar_name5' => "بخش",
+        'en_name1' => 'Fahd',
+        'en_name5' => 'Bakhsh',
+        'mobile' => '0500858415',
+        'phone' => '0148650000',
+        'phone_extension' => '102',
+        'email' => 'al-fahd@windowslive.com'
+    ];
+    $fahdUser = [
+        'user_name' => 'fff',
+        'password' => Hash::make('1'),
+        'user_type_id' => '100',
+        'user_type_name' => 'Admin',
+        'user_level' => '100',
+        'job_level' => '100',
+    ];
+    // ===========================================
+    $admin = [
+        'national_id' => '1000000000',
+        'is_employee' => '1',
+        'is_customer' => '1',
+        'ar_name1' => 'المدير',
+        'ar_name5' => '-',
+        'en_name1' => 'admin',
+        'en_name5' => '-',
+        'mobile' => '0500000000',
+        'phone' => '0148650000',
+        'phone_extension' => '102',
+        'email' => 'admin@hakeemarch.com'
+    ];
+    $adminUser = [
+        'user_name' => 'admin',
+        'password' => Hash::make('1'),
+        'user_type_id' => '100',
+        'user_type_name' => 'Admin',
+        'user_level' => '100',
+        'job_level' => '100',
+    ];
+
+
+    $the_person = [];
+    $the_user = [];
+
+    if ($user == 'fahd') {
+        $the_person = $fahd;
+        $the_user = $fahdUser;
+    } elseif ($user == 'admin') {
+        $the_person = $admin;
+        $the_user = $adminUser;
+    } elseif ($user == '') {
+        // 
+    } elseif ($user == '') {
+        // 
+    } else {
+        //
+    }
+
+    $fromPerson = [
+        'name' => $the_person['ar_name1'] . ' - ' . $the_person['en_name1'],
+        'national_id' => $the_person['national_id'],
+        'email' => $the_person['email'],
+    ];
+
+    Person::create($the_person);
+    
+    $person=Person::where('national_id', $the_person['national_id'])->first();
+    
+    $person->user()->create(array_merge($fromPerson, $the_user));
+    return redirect('/home');
+}
