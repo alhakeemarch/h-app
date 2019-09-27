@@ -1,5 +1,5 @@
-@extends('layouts.app') 
-@section('title','Welcom view') 
+@extends('layouts.app')
+@section('title','Welcom view')
 @section('content')
 
 <div class="card">

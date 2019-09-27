@@ -1,5 +1,5 @@
 @extends('layouts.app') 
-@section('title', 'Plot index') 
+@section('title', 'Plot show') 
 @section('content')
 
 

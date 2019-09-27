@@ -26,13 +26,18 @@ Route::get('/locale/{locale}', function ($locale) {
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+Route::get('/NotFound', function () {
+
+    return 'hi';
+    return view('notfound');
+})->name('notfound');
 
 Route::any('/f', function () {
     // Artisan::call('migrate:fresh');
     // return makeUser('admin');
     // return makeUser('fahd');
-    // factory(\App\Person::class, 100)->create();
+    // factory(\App\Person::class, 50)->create();
 });
 
 
@@ -45,6 +50,8 @@ Route::any('/customer/check', 'CustomerController@check')->name('customer.check'
 Route::any('/employee/check', 'EmployeeController@check')->name('employee.check');
 Route::any('/project/check', 'ProjectController@check')->name('project.check');
 Route::any('/plot/check', 'PlotController@check')->name('plot.check');
+Route::any('/contract/check', 'ContractController@check')->name('contract.check');
+Route::any('/task/check', 'TaskController@check')->name('task.check');
 Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
 Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
@@ -218,9 +225,9 @@ function makeUser($user)
     ];
 
     Person::create($the_person);
-    
-    $person=Person::where('national_id', $the_person['national_id'])->first();
-    
+
+    $person = Person::where('national_id', $the_person['national_id'])->first();
+
     $person->user()->create(array_merge($fromPerson, $the_user));
     return redirect('/home');
 }

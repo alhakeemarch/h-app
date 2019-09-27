@@ -27,12 +27,13 @@ class CustomerController extends PersonController
      */
     public function index(Person $person)
     {
-  
+
         // if (Auth::user()->user_level >= 100) {
         //     // return "you are the 100";
         // }
 
         $allPersons = $person->all()->where('is_customer', true);
+        // return $allPersons;
         return view('person.index')->with('persons', $allPersons);
     }
 
@@ -82,12 +83,12 @@ class CustomerController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person, $id=null)
+    public function show(Request $request, Person $person, $id = null)
     {
-        return view('person/show')->with('person', $person);
-        return 'Employee Show function';
-
-        $customer = $person->find($found_person);
+        $customer = $person->find($id);
+        if (!$customer) {
+            return view('notfound');
+        }
         if ($customer->is_employee) {
             if (Auth::user()->user_level >= 100) {
                 return view('person/show')->with('person', $customer);
@@ -143,7 +144,7 @@ class CustomerController extends PersonController
         $fromeCustomer = true;
         $fromeEmployee = false;
         if ($request->method() === "GET") {
-            return view('/person/check')->with(['fromeEmployee'=> $fromeEmployee, 'fromeCustomer'=>$fromeCustomer ]);
+            return view('/person/check')->with(['fromeEmployee' => $fromeEmployee, 'fromeCustomer' => $fromeCustomer]);
         }
 
         $validatedData = $request->validate([
@@ -155,10 +156,8 @@ class CustomerController extends PersonController
 
             return redirect()->route('customer.show', [$found_person]);
             return redirect()->action('CustomerController@show', ['id' => $found_person->id]);
-            
         } else {
             return redirect()->action('CustomerController@create', $request);
         }
-
     }
 }

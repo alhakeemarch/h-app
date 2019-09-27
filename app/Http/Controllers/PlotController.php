@@ -14,7 +14,7 @@ class PlotController extends Controller
      */
     public function index()
     {
-        return 'index function in plot controler';
+        return view('plot.index');
         //
     }
 
@@ -25,7 +25,7 @@ class PlotController extends Controller
      */
     public function create()
     {
-        return 'create function in plot controler';
+        return view('plot.create');
     }
 
     /**
@@ -47,7 +47,7 @@ class PlotController extends Controller
      */
     public function show(plot $plot)
     {
-        return 'show function in plot controler';
+        return view('plot.shwo');
     }
 
     /**
@@ -58,7 +58,7 @@ class PlotController extends Controller
      */
     public function edit(plot $plot)
     {
-        return 'edit function in plot controler';
+        return view('plot.edit');
     }
 
     /**

@@ -32,41 +32,41 @@
             <!-- navlinks -->
             <ul class="navbar-nav">
 
-                <!-- dropdown 1 -->
+                <!-- dropdown for New -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('New')}} &nbsp;</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ url('customer/check') }}">{{__('customer')}}</a>
+                        <a class="dropdown-item" href="{{ route ('customer.check') }}">{{__('customer')}}</a>
                         @if(auth()->user()->user_level >= 10)
-                        <a class="dropdown-item" href="{{ url('employee/check') }}">{{__('Employee')}}</a>
+                        <a class="dropdown-item" href="{{ route ('employee.check') }}">{{__('Employee')}}</a>
                         @endif
-                        <a class="dropdown-item" href="{{url('/plot/check')}}">{{__('Plot')}}</a>
+                        <a class="dropdown-item" href="{{ route ('plot.check') }}">{{__('Plot')}}</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="project/check">{{__('Project')}}</a>
-                        <a class="dropdown-item" href="#">{{__('contract')}}</a>
-                        <a class="dropdown-item" href="#">{{__('task')}}</a>
+                        <a class="dropdown-item" href="{{ route ('project.check') }}">{{__('Project')}}</a>
+                        <a class="dropdown-item" href="{{ route ('contract.check') }}">{{__('contract')}}</a>
+                        <a class="dropdown-item" href="{{ route ('task.check') }}">{{__('task')}}</a>
                     </div>
                 </li>
-                <!--/End of dropdown 1 -->
-                <!-- dropdown 2 -->
+                <!--/End of dropdown for New -->
+                <!-- dropdown for Edit -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('Edit')}} &nbsp;</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ url('/') }}">{{__('customer')}}</a>
+                        {{-- <a class="dropdown-item" href="{{ route ('customer.edit') }}">{{__('customer')}}</a> --}}
                         @if (auth()->user()->user_level >= 10)
-                        <a class="dropdown-item" href="{{ url('/') }}">{{__('employee')}}</a>
+                        {{-- <a class="dropdown-item" href="{{ route ('employee.edit') }}">{{__('employee')}}</a> --}}
                         @endif
-                        <a class="dropdown-item" href="#">{{__('plot')}}</a>
+                        {{-- <a class="dropdown-item" href="{{ route ('plote.edit') }}">{{__('plot')}}</a> --}}
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">{{__('project')}}</a>
-                        <a class="dropdown-item" href="#">{{__('contract')}}</a>
-                        <a class="dropdown-item" href="#">{{__('task')}}</a>
+                        {{-- <a class="dropdown-item" href="{{ route ('project.edit') }}">{{__('project')}}</a> --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('contract.edit') }}">{{__('contract')}}</a> --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('task.edit') }}">{{__('task')}}</a> --}}
                     </div>
                 </li>
-                <!--/End of dropdown 2 -->
-                <!-- dropdown 3 -->
+                <!--/End of dropdown for Edit -->
+                <!-- dropdown for show -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('Show')}} &nbsp;</a>
@@ -75,31 +75,31 @@
                         @if(auth()->user()->user_level>= 10)
                         <a class="dropdown-item" href="{{ route ('employee.index') }}">{{__('Employee')}}</a>
                         @endif
-                        <a class="dropdown-item" href="#">{{__('plot')}}</a>
+                        <a class="dropdown-item" href="{{ route ('plot.index') }}">{{__('plot')}}</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route ('project.index') }}">{{__('Project')}}</a>
                         <a class="dropdown-item" href="{{ route ('contract.index') }}">{{__('Contract')}}</a>
                         <a class="dropdown-item" href="{{ route ('task.index') }}">{{__('Task')}}</a>
                     </div>
                 </li>
-                <!--/End of dropdown 3 -->
-                <!-- dropdown 4 -->
+                <!--/End of dropdown for edit -->
+                <!-- dropdown for delet -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('Delet')}} &nbsp;</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ url('/') }}">{{__('customer')}}</a>
+                        {{-- <a class="dropdown-item" href="{{ route ('customer.delet') }}">{{__('customer')}}</a> --}}
                         @if (auth()->user()->user_level >= 10)
-                        <a class="dropdown-item" href="{{ url('/') }}">{{__('employee')}}</a>
+                        {{-- <a class="dropdown-item" href="{{ route ('employee.delet') }}">{{__('employee')}}</a> --}}
                         @endif
-                        <a class="dropdown-item" href="#">{{__('plot')}}</a>
+                        {{-- <a class="dropdown-item" href="{{ route ('plot.delet') }}">{{__('plot')}}</a> --}}
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">{{__('project')}}</a>
-                        <a class="dropdown-item" href="#">{{__('contract')}}</a>
-                        <a class="dropdown-item" href="#">{{__('task')}}</a>
+                        {{-- <a class="dropdown-item" href="{{ route ('project.delet') }}">{{__('project')}}</a> --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('contract.delet') }}">{{__('contract')}}</a> --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('task.delet') }}">{{__('task')}}</a> --}}
                     </div>
                 </li>
-                <!--/End of dropdown 4 -->
+                <!--/End of dropdown for delet -->
             </ul>
             @endauth
         </ul>
