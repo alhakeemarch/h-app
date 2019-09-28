@@ -49,9 +49,9 @@ class PersonController extends Controller
         $national_id = $request->input('national_id');
         return view('/person/create', [
             'national_id' => $national_id,
-            'nationalitiesArr' => $nationalitiesArr, 
+            'nationalitiesArr' => $nationalitiesArr,
             'persontype' => $persontype
-            ]);
+        ]);
     }
 
     /**
@@ -63,9 +63,9 @@ class PersonController extends Controller
     public function store(Request $request)
     {
         // return $request;
-        
+
         $validatedData = $request->validate([
-            
+
             'ar_name1' => 'required|string|min:2',
             'ar_name2' => 'string|nullable',
             'ar_name3' => 'string|nullable',
@@ -90,21 +90,21 @@ class PersonController extends Controller
 
         $nationalitiesArr = Nationality::gitNationalities();
         $request_nationality_id = $request->nationaltiy_id;
-        $nationality_ar ='';
-        $nationality_en ='';
+        $nationality_ar = '';
+        $nationality_en = '';
         foreach ($nationalitiesArr as $nationality_id => $nationality) {
             foreach ($nationality as $en_nationality => $ar_nationality) {
                 if ($request_nationality_id == $nationality_id) {
-                    $nationality_ar =$ar_nationality ;
-                    $nationality_en =$en_nationality;
+                    $nationality_ar = $ar_nationality;
+                    $nationality_en = $en_nationality;
                 }
             }
         }
-       
-        $input = collect($request) ;
-        $input->put('nationaltiy_ar',$nationality_ar,);
+
+        $input = collect($request);
+        $input->put('nationaltiy_ar', $nationality_ar);
         $input->put('nationaltiy_en', $nationality_en);
-       
+
         $person = Person::create($input->all());
         // $person->save();
         return redirect()->action('PersonController@index');
@@ -116,7 +116,7 @@ class PersonController extends Controller
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person, $id=null)
+    public function show(Request $request, Person $person, $id = null)
     {
 
         // return "testtttt";
@@ -182,7 +182,5 @@ class PersonController extends Controller
         } else {
             return redirect()->action('PersonController@create', $request);
         }
-
     }
-
 }

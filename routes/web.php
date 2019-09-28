@@ -27,17 +27,16 @@ Route::get('/locale/{locale}', function ($locale) {
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-Route::get('/NotFound', function () {
 
-    return 'hi';
-    return view('notfound');
-})->name('notfound');
 
 Route::any('/f', function () {
+
+    return App\Http\Controllers\PlotController::getDistricts();
+
     // Artisan::call('migrate:fresh');
     // return makeUser('admin');
     // return makeUser('fahd');
-    // factory(\App\Person::class, 50)->create();
+    // factory(\App\Person::class, 20)->create();
 });
 
 

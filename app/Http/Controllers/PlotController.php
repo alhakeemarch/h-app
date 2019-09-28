@@ -25,7 +25,11 @@ class PlotController extends Controller
      */
     public function create()
     {
-        return view('plot.create');
+        // return App\Http\Controllers\PlotController::getDistricts();
+
+        $districts = $this->getDistricts();
+        // $districts = self::getDistricts();
+        return view('plot.create')->with('districts', $districts);
     }
 
     /**
@@ -36,7 +40,19 @@ class PlotController extends Controller
      */
     public function store(Request $request)
     {
-        return 'store function in plot controler';
+
+        validator([
+            // 'deed_no' => '',
+            // 'deed_date' => '',
+            // 'plot_no' => '',
+            // 'plan_name' => '',
+            // 'area' => '',
+            // 'district' => '',
+            // 'road_code' => '',
+            // 'road_name' => ''
+        ]);
+
+        return $request->all();
     }
 
     /**
@@ -86,18 +102,12 @@ class PlotController extends Controller
 
 
 
-    public function check( Request $request,plot $plot)
+    public function check(Request $request, plot $plot)
     {
-        // return view('/plot/check')->withErrors(['Undefined Person type', 'please Contact the Administrator']);
-
-
-
-
-
         if ($request->method() === "GET") {
             return view('/plot/check');
         }
-// return $request;
+        // return $request;
         $validatedData = $request->validate([
             'deed_no' => 'required',
         ]);
@@ -105,15 +115,185 @@ class PlotController extends Controller
         $found_deed = $plot->where('deed_no', $request->deed_no)->first();
         $found_deed = false;
 
-        
+
+
         if ($found_deed) {
 
             return redirect()->action('PlotController@show', ['id' => $found_deed->id]);
         } else {
             return redirect()->action('PlotController@create', $request);
         }
+    }
 
-
-
+    protected $plans = [];
+    protected const DISTRICTS = [
+        'ابار علي',
+        'ابيار الماشي',
+        'ارض الكردي',
+        'الاصيفرين',
+        'الاعمده',
+        'الاكحل',
+        'الاناهي',
+        'الإسكان',
+        'الأمير تركي',
+        'البركة',
+        'البقيع',
+        'البيضاء',
+        'التشليح',
+        'التلعة',
+        'الجابرة',
+        'الجامعة',
+        'الجرنافة',
+        'الجصة',
+        'الجماوات',
+        'الجمعة',
+        'الحار',
+        'الحديدي',
+        'الحديقة',
+        'الحرم الشريف',
+        'الحساء',
+        'الحفية',
+        'الحلقة',
+        'الحمنة',
+        'الحنو',
+        'الخاتم',
+        'الخالدية',
+        'الدار',
+        'الدرع',
+        'الدفاع',
+        'الدويخلة',
+        'الدويمة',
+        'الرانوناء',
+        'الراية',
+        'الرذايا',
+        'الرصيعة',
+        'الرمانة',
+        'الروابي',
+        'الريان',
+        'الريض',
+        'الزهرة',
+        'السحمان',
+        'السد',
+        'السدرة',
+        'السقيا',
+        'السكب',
+        'السم',
+        'السيح',
+        'الشافية',
+        'الشامي',
+        'الشرائع',
+        'الشريبات',
+        'الشفية',
+        'الشهباء',
+        'الشهداء',
+        'الشوامين',
+        'الصادفية',
+        'الصميمة',
+        'الصناعية',
+        'الصهلوج',
+        'الضميرية',
+        'الظاهرة',
+        'العاطفه',
+        'العاقول',
+        'العريض',
+        'العزيزية',
+        'العصبة',
+        'العطشان',
+        'العنابس',
+        'العهن',
+        'العوالي',
+        'العوينة',
+        'العيون',
+        'الغابة',
+        'الغراء',
+        'الفتح',
+        'الفقير',
+        'الفيفا',
+        'القبلتين',
+        'القبيبة',
+        'القصواء',
+        'المبعوث',
+        'المحضة',
+        'المديرا',
+        'المزايين',
+        'المضيق',
+        'المطار',
+        'المغيسلة',
+        'المفرحات',
+        'المقلب',
+        'الملك فهد',
+        'المليليح',
+        'المناخة',
+        'المندسة',
+        'المنشار',
+        'النبلاء',
+        'النبلاء',
+        'النخيل',
+        'النقا',
+        'النقمي',
+        'الهدراء',
+        'الهضبة',
+        'الهمجة',
+        'الهندية',
+        'الوبرة',
+        'اليتمة',
+        'اليسرة',
+        'ام الدوود',
+        'ام السيوف',
+        'أبو بريقاء',
+        'أبو سدر',
+        'أبو ضباع',
+        'أبو مرخة',
+        'أبوكبير',
+        'أم العيال',
+        'أم خالد',
+        'بضاعة',
+        'بني النجار',
+        'بني بياضة',
+        'بني حارثة',
+        'بني خدرة',
+        'بني خدرة',
+        'بني ظفر',
+        'بني عبدالاشهل',
+        'بني معاوية',
+        'بئر عثمان',
+        'جبل أحد',
+        'جبل عير',
+        'جشم',
+        'حارة النصر',
+        'حضوضاء',
+        'خاخ',
+        'خلص',
+        'ذو الحليفة',
+        'رهط',
+        'سد الغابة',
+        'سلطانة',
+        'شظاة',
+        'شعيب الخضره',
+        'شوران',
+        'صوري',
+        'طيبة',
+        'عروة',
+        'عين الخيف',
+        'غراب',
+        'فرشة',
+        'قربان',
+        'قريضة',
+        'كنانة',
+        'مثلث الاكحل',
+        'مذينب',
+        'ملح',
+        'مهزوز',
+        'وادي البيطان',
+        'وادي ظمة',
+        'ورقان',
+        'وعيزة',
+        'ولد محمد',
+    ];
+    public static function  getDistricts()
+    {
+        // have 162 records
+        // from index 0 to 161
+        return self::DISTRICTS;
     }
 }
