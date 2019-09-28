@@ -23,13 +23,29 @@ class PlotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        // return App\Http\Controllers\PlotController::getDistricts();
-
+        if (!$request->deed_no) {
+            return redirect()->action('PlotController@check');
+        }
+        $new_deed_no = $request->deed_no;
         $districts = $this->getDistricts();
-        // $districts = self::getDistricts();
-        return view('plot.create')->with('districts', $districts);
+        $municipality_branchs = [
+            'Qbaa',
+            'ALAwali',
+            'AlHaram',
+            'AlOyun',
+            'Alaqeeq'
+        ];
+        $plot = new Plot;
+
+        return view('plot.create')->with([
+            'districts' => $districts,
+            'municipality_branchs' => $municipality_branchs,
+            'new_deed_no' => $new_deed_no,
+            'plot' => $plot
+
+        ]);
     }
 
     /**
@@ -40,19 +56,46 @@ class PlotController extends Controller
      */
     public function store(Request $request)
     {
-
-        validator([
-            // 'deed_no' => '',
-            // 'deed_date' => '',
-            // 'plot_no' => '',
-            // 'plan_name' => '',
-            // 'area' => '',
-            // 'district' => '',
-            // 'road_code' => '',
-            // 'road_name' => ''
+        // return $request->all();
+        $validatedData = $request->validate([
+            'deed_no' => 'required|',
+            'deed_date' => 'required|',
+            'plot_no' => 'required| numeric',
+            'plan_name' => 'required|string',
+            'area' => 'required| numeric',
+            'district' => 'required|string',
+            'road_code' => 'required|numeric',
+            'road_name' => 'required|string'
         ]);
 
-        return $request->all();
+
+
+        // $validatedData = $request->validate([
+
+        //     'ar_name1' => 'required|string|min:2',
+        //     'ar_name2' => 'string|nullable',
+        //     'ar_name3' => 'string|nullable',
+        //     'ar_name4' => 'string|nullable',
+        //     'ar_name5' => "required|string|min:2",
+        //     'en_name1' => 'string|nullable|regex:/[A-Za-z]/',
+        //     'en_name2' => 'string|nullable|regex:/[A-Za-z]/',
+        //     'en_name3' => 'string|nullable|regex:/[A-Za-z]/',
+        //     'en_name4' => 'string|nullable|regex:/[A-Za-z]/',
+        //     'en_name5' => 'string|nullable|regex:/[A-Za-z]/',
+        //     'mobile' => 'required|numeric|starts_with:0,9|digits:10,12,14',
+        //     'nationaltiy_id' => "required",
+        //     'hafizah_no' => 'numeric|nullable',
+        //     'national_id_issue_date' => 'nullable',
+        //     'national_id_expire_date' => 'nullable',
+        //     'national_id_issue_place' => 'string|nullable',
+        //     'ah_birth_date' => 'nullable',
+        //     'ad_birth_date' => 'nullable',
+        //     'birth_place' => 'string|nullable',
+        //     'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+        // ]);
+
+
+
     }
 
     /**

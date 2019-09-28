@@ -1,5 +1,34 @@
 //=========== Visual Studio Code ===============//
 
+<!-- settings.json -->
+{
+     "workbench.colorTheme": "Material Theme Darker High Contrast",
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.fontSize": 17,
+    "editor.minimap.enabled": false,
+    "blade.format.enable": true,
+    "editor.wordWrap": "on",
+    "editor.formatOnSave": true,
+    "html.format.endWithNewline": true,
+    "prettier.flattenTernaries": true,
+    "emmet.triggerExpansionOnTab": true,
+    "[php]": {
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[blade]": {
+        "editor.defaultFormatter": "onecentlin.laravel-blade"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+}
+
+
+
+
 user settings 
 {
     "workbench.iconTheme": "vscode-icons",
