@@ -27,10 +27,8 @@ class CustomerController extends PersonController
      */
     public function index(Person $person)
     {
-
-        // if (Auth::user()->user_level >= 100) {
-        //     // return "you are the 100";
-        // }
+        // يحتاج نرسله لصفحة مخصصة للزبائن
+        return abort(404);
 
         $allPersons = $person->all()->where('is_customer', true);
         // return $allPersons;
@@ -83,22 +81,19 @@ class CustomerController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person, $id = null)
+    public function show(Request $request, Person $customer)
     {
-        $customer = $person->find($id);
-        if (!$customer) {
-            return view('notfound');
+        // if person not found laravel (route model binding) will send us 404 page
+        if ($customer->is_customer) {
+            return view('customer.show')->with('person', $customer);
         }
         if ($customer->is_employee) {
             if (Auth::user()->user_level >= 100) {
-                return view('person/show')->with('person', $customer);
+                return view('employee.show')->with('person', $customer);
             } else {
                 return redirect()->back()->withErrors(['This (ID) is already registered as employer,
                 contact your administrator for more details.']);
             }
-        }
-        if ($customer->is_customer) {
-            return view('person/show')->with('person', $customer);
         }
         return redirect()->back()->withErrors(['This (ID) is already registered (!! not employee or customer),
         contact your administrator for more details.']);

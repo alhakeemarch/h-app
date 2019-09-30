@@ -13,9 +13,9 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Fonts -->
-   
- 
-        crossorigin="anonymous">
+
+
+    crossorigin="anonymous">
     <!-- Bootstrab css -->
     @if (App::isLocale('ar'))
     <!-- // -->
@@ -38,18 +38,17 @@
 </head>
 
 <body>
-    <div id="app">
-        @include('layouts.topnav')
+    @include('layouts.topnav')
 
-    </div>
-    <div style="width: 100%; height: 80px;"> </div>
-    <!-- /End of div id="app" -->
-
-    <main class="container-fluid" style="min-height:85vh;">
-        @yield('content')
+    <main class="container-fluid " style="min-height:100%;margin-top: 4rem !important; margin-bottom: 5rem !important;">
+        <div id="app">
+            @yield('content')
+        </div>
+        <!-- /End of div id="app" -->
     </main>
     {{-- fixed-bottom --}}
-    <footer class="footer text-light bg-dark shadow  py-3 text-center">
+    {{-- <footer class="footer text-light bg-dark shadow  py-3 text-center"> --}}
+    <footer class="footer text-light h-navbar-bg mt-3 py-3 text-center">
         <div class="">
             <span class="">&copy; {{__('the_rights')}}</span>
         </div>

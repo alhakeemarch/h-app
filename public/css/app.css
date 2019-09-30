@@ -1,5 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);body {
-  background-image: radial-gradient(#c3c8d5, #5e6a87);
+@import url(https://fonts.googleapis.com/css?family=Nunito);* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-image: radial-gradient(#bbc1cc, #abb6cd);
   /* font-family: 'Reem Kufi', sans-serif; */
   font-family: "Tajawal", "Prosto One", sans-serif;
   /* 100 */
@@ -19,8 +24,19 @@
   /* font-family: 'Prosto One', cursive; */
 }
 
-.navbar-laravel {
-  background-color: #fff;
+.h-navbar-bg {
+  background-color: #465573;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.navbar {
+  margin: 0;
+  margin-bottom: 0;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 

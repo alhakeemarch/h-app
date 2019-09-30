@@ -38,7 +38,6 @@
 </div>
 
 <script type="text/javascript">
-
     document.addEventListener("DOMContentLoaded", function(){
     document.getElementById('123').click();
             });

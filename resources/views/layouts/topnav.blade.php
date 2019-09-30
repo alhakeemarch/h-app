@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow fixed-top">
+{{-- <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow fixed-top"> --}}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top h-navbar-bg">
     <!-- navlogo -->
     <div class="navlogo col-lg-2 d-none d-lg-inline-block text-justify">
         <a class="navbar-brand mr-0" href="{{ url('/') }}">

@@ -17,6 +17,9 @@ class EmployeeController extends PersonController
      */
     public function index(Person $person)
     {
+        // يحتاج نرسله لصفحة مخصصة للموظفين
+        return abort(404);
+
 
         $allPersons = $person->all()->where('is_employee', true);
         return view('person.index')->with('persons', $allPersons);
@@ -68,12 +71,11 @@ class EmployeeController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person, $id = null)
+    public function show(Request $request, Person $employee)
     {
-        $employee =  $person->where('id', $id)->first();
-        if ($employee) {
-            return view('person/show')->with('person', $employee);
-            # code...
+
+        if ($employee->is_employee) {
+            return view('employee.show')->with('person', $employee);
         } else {
             abort(404);
         }
@@ -133,7 +135,7 @@ class EmployeeController extends PersonController
 
     public function check(Request $request, Person $person)
     {
-        
+
         $fromeCustomer = false;
         $fromeEmployee = true;
 

@@ -1,6 +1,7 @@
 @csrf
 <div class="form-group">
-    <h5 class="card-header text-white bg-dark  rounded my-2">{{ __('Deed Information') }} </h5>
+
+    <h5 class="card-header text-light bg-secondary  rounded my-2">{{ __('Deed Information') }} </h5>
     <div class="form-row ">
         <div class="col-md">
             <label for="fname">{{__( 'Deed Number')}} <span
@@ -19,7 +20,7 @@
         </div>
     </div>
     <hr class="">
-    <h5 class="card-header text-white bg-dark  rounded my-2">{{ __('Plot Information') }} </h5>
+    <h5 class="card-header text-white bg-secondary  rounded my-2">{{ __('Plot Information') }} </h5>
     <div class="form-row ">
         <div class="col-md">
             <label for="fname">{{__( 'Plot Number')}} <span class="small text-danger">({{__('required')}})</span>
@@ -52,7 +53,7 @@
         </div>
     </div>
     <hr class="">
-    <h5 class="card-header text-white bg-dark  rounded my-2">{{ __('Plan Information') }} </h5>
+    <h5 class="card-header text-white bg-secondary  rounded my-2">{{ __('Plan Information') }} </h5>
     <div class="form-row ">
         <div class="col-md">
             <label for="fname">{{__( 'Plan Number')}} <span class="small text-danger">({{__('required')}})</span>

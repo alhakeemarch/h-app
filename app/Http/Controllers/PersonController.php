@@ -116,17 +116,19 @@ class PersonController extends Controller
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person, $id = null)
+    public function show(Request $request, Person $person)
     {
+        // if person not found laravel (route model binding) will send us 404 page
+        if ($person->is_employee && $person->is_customer) {
+            return view('person.show')->with('person', $person);
+        }
 
-        // return "testtttt";
         if ($person->is_employee) {
-            return redirect()->route('employee.show', ['id' => $person->id]);
+            return redirect()->route('employee.show', ['employee' => $person->id]);
         }
         if ($person->is_customer) {
-            return redirect()->route('customer.show', ['id' => $person->id]);
+            return redirect()->route('customer.show', ['customer' => $person->id]);
         }
-        return view('person/show')->with('person', $person);
     }
 
     /**
