@@ -152,9 +152,22 @@ php artisan make:factory PersonFactory -m Person
 php artisan migrate:fresh
 php artisan cache:clear
 
+============================
+
 php artisan tinker
 >>> factory(\App\User::class, 20)->create();
 >>> factory(\App\User::class, 20)->create();
+
+============================
+php artisan make:policy PersonPolicy -m Person
+
+\\ in class function
+$this->authorize('viewAny', $person);
+or
+$this->authorize('viewAny', Person::class);
+
+
+
 
 
 ============================

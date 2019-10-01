@@ -17,12 +17,9 @@ class EmployeeController extends PersonController
      */
     public function index(Person $person)
     {
-        // يحتاج نرسله لصفحة مخصصة للموظفين
-        return abort(404);
-
-
-        $allPersons = $person->all()->where('is_employee', true);
-        return view('person.index')->with('persons', $allPersons);
+        $this->authorize('viewAny', $person);
+        $employees = $person->all()->where('is_employee', true);
+        return view('employee.index')->with('employees', $employees);
     }
 
     /**
@@ -73,29 +70,16 @@ class EmployeeController extends PersonController
      */
     public function show(Request $request, Person $employee)
     {
-
+        $this->authorize('viewAny', Person::class);
         if ($employee->is_employee) {
             return view('employee.show')->with('person', $employee);
-        } else {
-            abort(404);
         }
-
-
-        return 'Employee Show function';
-        $customer = $person->find($found_person);
-        if ($customer->is_employee) {
-            if (Auth::user()->user_level >= 100) {
-                return view('person/show')->with('person', $customer);
-            } else {
-                return redirect()->back()->withErrors(['This (ID) is already registered as employer,
-                            contact your administrator for more details.']);
-            }
+        if ($employee->is_customer) {
+            return view('errors.notExpected')->withErrors(['This (ID) is a Customer, You can show his details in Customers Page,
+             for more info contact your administrator.']);
         }
-        if ($customer->is_customer) {
-            return view('person/show')->with('person', $customer);
-        }
-        return redirect()->back()->withErrors(['This (ID) is already registered (!! not employee or customer),
-                    contact your administrator for more details.']);
+        return view('errors.notExpected')->withErrors(['This (ID) is already registered (!! not employee or customer),
+        contact your administrator for more details.']);
     }
 
     /**

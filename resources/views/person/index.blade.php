@@ -5,8 +5,11 @@
 
 <div class="container-fluid">
     <div class="card">
+        <h4 class="card-header text-primary text-center">
+            List of All Persons
+        </h4>
         <table class="table table-hover">
-            <thead>
+            <thead class="bg-thead">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
@@ -25,7 +28,7 @@
                     <td>{{$person->national_id}}</td>
                     <td> {{$person->mobile}}</td>
                     <td>
-                        <a href="{{ url('/customer/'.$person->id) }}">
+                        <a href="{{ url('/person/'.$person->id) }}">
                             <i class="far fa-eye"></i>
                         </a>
                     </td>

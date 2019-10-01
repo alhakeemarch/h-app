@@ -12,17 +12,26 @@ class PersonController extends Controller
 {
 
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->middleware('signed')->only('verify');
+        // $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Person $person)
     {
+        $this->authorize('viewAny', $person);
 
-        if (Auth::user()->user_level >= 100) {
-            // return "you are the 100";
-        }
-        // return Person::all();
         $allPersons = Person::all();
         return view('person.index')->with('persons', $allPersons);
     }
@@ -119,9 +128,8 @@ class PersonController extends Controller
     public function show(Request $request, Person $person)
     {
         // if person not found laravel (route model binding) will send us 404 page
-        if ($person->is_employee && $person->is_customer) {
-            return view('person.show')->with('person', $person);
-        }
+        $this->authorize('viewAny', $person);
+        return view('person.show')->with('person', $person);
 
         if ($person->is_employee) {
             return redirect()->route('employee.show', ['employee' => $person->id]);

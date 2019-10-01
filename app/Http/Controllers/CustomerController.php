@@ -27,12 +27,8 @@ class CustomerController extends PersonController
      */
     public function index(Person $person)
     {
-        // يحتاج نرسله لصفحة مخصصة للزبائن
-        return abort(404);
-
-        $allPersons = $person->all()->where('is_customer', true);
-        // return $allPersons;
-        return view('person.index')->with('persons', $allPersons);
+        $customers = $person->all()->where('is_customer', true);
+        return view('customer.index')->with('customers', $customers);
     }
 
 
@@ -88,12 +84,9 @@ class CustomerController extends PersonController
             return view('customer.show')->with('person', $customer);
         }
         if ($customer->is_employee) {
-            if (Auth::user()->user_level >= 100) {
-                return view('employee.show')->with('person', $customer);
-            } else {
-                return redirect()->back()->withErrors(['This (ID) is already registered as employer,
-                contact your administrator for more details.']);
-            }
+            $this->authorize('viewAny', Person::class);
+            return view('errors.notExpected')->withErrors(['This (ID) is already registered as employee,
+            contact your administrator for more details.']);
         }
         return redirect()->back()->withErrors(['This (ID) is already registered (!! not employee or customer),
         contact your administrator for more details.']);
