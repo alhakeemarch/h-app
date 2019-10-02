@@ -4,7 +4,8 @@
 }
 body {
 	// background-image: radial-gradient(#c3c8d5, #5e6a87);
-	background-image: radial-gradient(#bbc1cc, #abb6cd);
+	background-image: radial-gradient(#bbc1cc, #abb6cd); // أزرق
+	// background-image: radial-gradient(#d3eee0, #abc6b8); // أخضر
 
 	/* font-family: 'Reem Kufi', sans-serif; */
 	font-family: 'Tajawal', 'Prosto One', sans-serif;
@@ -30,7 +31,8 @@ body {
 // 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 // }
 .h-navbar-bg {
-	background-color: #465573;
+	background-color: #465573; // أزرق
+	// background-color: #536d60; // أخضر
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 .navbar {
@@ -44,5 +46,6 @@ footer {
 	width: 100%;
 }
 .bg-thead {
-	background: #bccad6;
+	background: #bccad6; // أزرق
+	// background: #a0b6ab; // أخضر
 }

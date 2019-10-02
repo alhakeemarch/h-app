@@ -5,7 +5,7 @@
 
 <div class="container-fluid">
     <div class="card">
-        <h4 class="card-header text-primary text-center">
+        <h4 class="card-header text-center">
             List of All Persons
         </h4>
         <table class="table table-hover">

@@ -212,8 +212,13 @@ php artisan make:model ProjectActivity -a  // الحركات على الجداو
 php artisan make:model PersonActivity -a
 php artisan make:model AccuntsActivity -a
 php artisan make:model Transaction -a
-
 php artisan make:model ReceiptDiscount -a  // سند غير محدد متنوع
+# جداول لحفظ الداتا
+php artisan make:model ReceiptDiscount -a  // الجنسيات
+php artisan make:model ReceiptDiscount -a  // الدول
+php artisan make:model ReceiptDiscount -a  // المدن
+php artisan make:model ReceiptDiscount -a  // الأحياء
+php artisan make:model ReceiptDiscount -a  // المخططات
 
 
 
