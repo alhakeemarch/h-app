@@ -31,9 +31,14 @@ Route::get('/', function () {
 
 Route::any('/f', function () {
 
-    return App\Http\Controllers\PlotController::getDistricts();
+    // // // inserts all available nationalities to db
+    // return App\Nationality::all()->count();
+    // return (App\Http\Controllers\NationalityController::firstInsertion()) ? App\Nationality::all() : 'some thing is worng';
+
+
 
     // Artisan::call('migrate:fresh');
+    // Artisan::call('cache:clear');
     // return makeUser('admin');
     // return makeUser('fahd');
     // factory(\App\Person::class, 20)->create();

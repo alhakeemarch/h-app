@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSaudiCitiesTable extends Migration
+class CreateDistrictsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,8 @@ class CreateSaudiCitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('saudi_cities', function (Blueprint $table) {
-            $table->increments('id');
-            
-            $table->string('ar_region_name');
-            $table->string('en_region_name');
-            $table->string('ar_city_name');
-            $table->string('en_city_name');
-
+        Schema::create('districts', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->timestamps();
         });
     }
@@ -32,6 +26,6 @@ class CreateSaudiCitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('saudi_cities');
+        Schema::dropIfExists('districts');
     }
 }

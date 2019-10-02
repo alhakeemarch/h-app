@@ -4,7 +4,7 @@
 }
 
 body {
-  background-image: radial-gradient(#bbc1cc, #abb6cd);
+  background-image: radial-gradient(#d3eee0, #abc6b8);
   /* font-family: 'Reem Kufi', sans-serif; */
   font-family: "Tajawal", "Prosto One", sans-serif;
   /* 100 */
@@ -25,7 +25,7 @@ body {
 }
 
 .h-navbar-bg {
-  background-color: #465573;
+  background-color: #536d60;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -41,6 +41,6 @@ footer {
 }
 
 .bg-thead {
-  background: #bccad6;
+  background: #a0b6ab;
 }
 
