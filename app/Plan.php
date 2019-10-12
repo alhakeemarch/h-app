@@ -4,10 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Plot extends Model
+class Plan extends Model
 {
-    protected $guarded = [
-        'id',
-    ];
     //
 }

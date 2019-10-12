@@ -12,9 +12,11 @@ class PlotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Plot $plot)
     {
-        return view('plot.index');
+        $plots = $plot->all();
+        // return view('person.index')->with('persons', $allPersons);
+        return view('plot.index')->with('plots', $plots);
         //
     }
 
@@ -58,44 +60,24 @@ class PlotController extends Controller
     {
         // return $request->all();
         $validatedData = $request->validate([
-            'deed_no' => 'required|',
-            'deed_date' => 'required|',
+            'deed_no' => 'required',
+            'deed_date' => 'required',
             'plot_no' => 'required| numeric',
-            'plan_name' => 'required|string',
+            'plan_name' => 'required|string|regex:/\p{Arabic}/u',
+            'plan_no' => 'required|string',
             'area' => 'required| numeric',
             'district' => 'required|string',
             'road_code' => 'required|numeric',
-            'road_name' => 'required|string'
+            'road_name' => 'required|string|regex:/\p{Arabic}/u',
+            'municipality_branch' => 'required|string'
         ]);
 
-
-
-        // $validatedData = $request->validate([
-
-        //     'ar_name1' => 'required|string|min:2',
-        //     'ar_name2' => 'string|nullable',
-        //     'ar_name3' => 'string|nullable',
-        //     'ar_name4' => 'string|nullable',
-        //     'ar_name5' => "required|string|min:2",
-        //     'en_name1' => 'string|nullable|regex:/[A-Za-z]/',
-        //     'en_name2' => 'string|nullable|regex:/[A-Za-z]/',
-        //     'en_name3' => 'string|nullable|regex:/[A-Za-z]/',
-        //     'en_name4' => 'string|nullable|regex:/[A-Za-z]/',
-        //     'en_name5' => 'string|nullable|regex:/[A-Za-z]/',
-        //     'mobile' => 'required|numeric|starts_with:0,9|digits:10,12,14',
-        //     'nationaltiy_id' => "required",
-        //     'hafizah_no' => 'numeric|nullable',
-        //     'national_id_issue_date' => 'nullable',
-        //     'national_id_expire_date' => 'nullable',
-        //     'national_id_issue_place' => 'string|nullable',
-        //     'ah_birth_date' => 'nullable',
-        //     'ad_birth_date' => 'nullable',
-        //     'birth_place' => 'string|nullable',
-        //     'national_id' => 'required|numeric|starts_with:1,2|digits:10',
-        // ]);
-
-
-
+        // return $validatedData;
+        // creat new plot
+        // $person = Person::create($input->all());
+        $plot = Plot::create($validatedData);
+        // return redirect()->action('PersonController@index');
+        return redirect()->action('PlotController@index');
     }
 
     /**

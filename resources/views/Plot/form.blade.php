@@ -25,8 +25,8 @@
         <div class="col-md">
             <label for="fname">{{__( 'Plot Number')}} <span class="small text-danger">({{__('required')}})</span>
                 :</label>
-            <input type="text" name="plot_no" id="" class="form-control "
-                value="{{old('plote_no') ?? $plot->plote_no }}" placeholder="{{__( 'Plot Number')}}.." required>
+            <input type="text" name="plot_no" id="" class="form-control " value="{{old('plot_no') ?? $plot->plot_no }}"
+                placeholder="{{__( 'Plot Number')}}.." required>
             <small id="" class="text-danger"> {{$errors->first('plot_no')}} </small>
         </div>
 
@@ -76,7 +76,7 @@
                 :</label>
             <input type="text" name="district" list="district_list" value="{{old('district') ?? $plot->district }}"
                 class="custom-select form-control " placeholder="{{__('Pick a District')}}" required
-                onkeypress="onlyArabicString(event)">
+                onkeypress="onlyArabicString(event)" autocomplete="off">
             <small id="" class="text-danger"> {{$errors->first('district')}} </small>
             <datalist id="district_list">
                 @foreach ($districts as $district)
@@ -91,8 +91,9 @@
                     class="small text-danger">({{__('required')}})</span>
                 :</label>
             <input type="text" name="municipality_branch" id="" class="custom-select form-control "
-                list="municipality_branch_list" placeholder="{{__( 'Municipality Branch')}}.." required
-                onkeypress="onlyArabicString(event)">
+                value="{{old('municipality_branch') ?? $plot->municipality_branch }}" list="municipality_branch_list"
+                placeholder="{{__( 'Municipality Branch')}}.." required onkeypress="onlyArabicString(event)"
+                autocomplete="off">
             <small id="" class="text-danger"> {{$errors->first('municipality_branch')}} </small>
             <datalist id="municipality_branch_list">
                 @foreach ($municipality_branchs as $municipality_branch)

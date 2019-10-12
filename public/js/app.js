@@ -49355,9 +49355,10 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/input_functions.js ***!
   \*****************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-// to refresh page without asking , after post ..
+window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"); // to refresh page without asking , after post ..
+
 if (window.history.replaceState) {
   window.history.replaceState(null, null, window.location.href);
 }

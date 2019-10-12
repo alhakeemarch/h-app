@@ -11,7 +11,9 @@
     <!-- fav Icon -->
     <link rel="icon" href="{{ asset('img/logo.png') }}">
     <!-- Scripts -->
+
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/input_functions.js') }}" defer></script>
     <!-- Fonts -->
 
 

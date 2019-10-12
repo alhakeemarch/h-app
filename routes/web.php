@@ -30,7 +30,6 @@ Route::get('/', function () {
 
 
 Route::any('/f', function () {
-
     // // // inserts all available nationalities to db
     // return App\Nationality::all()->count();
     // return (App\Http\Controllers\NationalityController::firstInsertion()) ? App\Nationality::all() : 'some thing is worng';
@@ -41,7 +40,7 @@ Route::any('/f', function () {
     // Artisan::call('cache:clear');
     // return makeUser('admin');
     // return makeUser('fahd');
-    // factory(\App\Person::class, 20)->create();
+    // factory(\App\Person::class, 100)->create();
 });
 
 
@@ -92,12 +91,18 @@ Route::resources([
     'receiptDiscount' => 'ReceiptDiscountController',
     'account' => 'AccountController',
 
+    'import' => 'ImportController',
+    'export' => 'ExportController',
+    'letter' => 'LetterController',
+    'lettertype' => 'LettertypeController',
 
-
-    'imports' => 'ImportController',
-    'exports' => 'ExportController',
-    'letters' => 'LetterController',
-    'lettertypes' => 'LettertypeController',
+    //  جداول لحفظ الداتا
+    'nationality' => 'NationalityController',
+    'country' => 'CountryController',
+    'saudiCity' => 'SaudiCityController',
+    'district' => 'DistrictController',
+    'plan' => 'PlanController',
+    'municipalityBranch' => 'MunicipalityBranchController',
 
 ]);
 
