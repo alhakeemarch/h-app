@@ -1,75 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fahd-Tech</title>
-    <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-        }
-
-        body,
-        html {
-            height: 100%;
-        }
-
-        body {
-            background-image: url("https://cdn.pixabay.com/photo/2016/06/25/12/52/laptop-1478822_960_720.jpg");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            font-family: "Open Sans", sans-serif;
-            overflow-x: hidden;
-
-        }
-
-        .transparent {
-            background: #FFFAF0;
-            height: 100%;
-            opacity: 0.5;
-            filter: alpha(opacity=50);
-            /* For IE8 and earlier */
-        }
-
-        .txt {
-            text-align: center;
-            color: #404040;
-            text-shadow: 1px 1px #999999;
-            position: absolute;
-            top: 45%;
-            left: 45%;
-        }
-
-        .rotate {
-            /* to rotate the text */
-            transform: translate(-50%, -50%) -ms-transform: rotate(-25deg);
-            /* IE 9 */
-            -webkit-transform: rotate(-25deg);
-            /* Safari 3-8 */
-            transform: rotate(-25deg);
-        }
-
-    </style>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
 </head>
 
-<body>
-    <div class="transparent">
-    </div>
-    <div class="txt rotate">
-        <h1> Fahd Tech</h1>
-        <div style="text-decoration: line-through;">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <h1> Coming Soon! </h1>
+<div class="container">
+    <div class="row">
+        <h2>Bootstrap-select example</h2>
+        <p>This uses <a
+                href="https://silviomoreto.github.io/bootstrap-select/">https://silviomoreto.github.io/bootstrap-select/</a>
+        </p>
+        <hr />
     </div>
 
-</body>
+    <div class="row-fluid">
+        <select class="selectpicker" data-show-subtext="true" data-live-search="true">
+            <option data-subtext="Rep California">Tom Foolery</option>
+            <option data-subtext="Sen California">Bill Gordon</option>
+            <option data-subtext="Sen Massacusetts">Elizabeth Warren</option>
+            <option data-subtext="Rep Alabama">Mario Flores</option>
+            <option data-subtext="Rep Alaska">Don Young</option>
+            <option data-subtext="Rep California" disabled="disabled">Marvin Martinez</option>
+        </select>
+        <span class="help-inline">With <code>data-show-subtext="true" data-live-search="true"</code>. Try searching for
+            california</span>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 </html>

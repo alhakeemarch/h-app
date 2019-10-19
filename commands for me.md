@@ -145,6 +145,9 @@ app/providers/AppServiceProvider.php
         Schema::defaultStringLength(191);
     }
 ==============================================================================
+add soft delet
+$table->timestamp('deleted_at')->nullable();
+==============================================================================
  ## artisan Commands
 
 php artisan

@@ -16,6 +16,11 @@ class CreatePlotsTable extends Migration
         Schema::create('plots', function (Blueprint $table) {
             $table->bigIncrements('id');
 
+            $table->bigInteger('aad_user_id');
+            $table->string('add_user_name');
+            $table->bigInteger('last_edit_user_id')->nullable();
+            $table->string('last_edit_user_name')->nullable();
+
             $table->string('deed_no')->unique();
             $table->date('deed_date');
 
@@ -29,6 +34,7 @@ class CreatePlotsTable extends Migration
             $table->string('road_name');
 
 
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

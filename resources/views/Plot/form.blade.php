@@ -6,7 +6,7 @@
         <div class="col-md">
             <label for="fname">{{__( 'Deed Number')}} <span
                     class="small text-danger">({{__('required')}})</span>:</label>
-            <input type="text" name="deed_no" id="" class="form-control " value="{{$new_deed_no}}"
+            <input type="text" name="deed_no" id="" class="form-control " value="{{$new_deed_no ?? $plot->deed_no}}"
                 placeholder="{{__( 'Deed Number')}}.." readonly required>
             <small id="" class="text-danger"> {{$errors->first('deed_no')}} </small>
         </div>
@@ -101,8 +101,8 @@
                 @endforeach
             </datalist>
         </div>
-    </div>
 
+    </div>
     <hr class="">
-    <button type="submet" name="submet" id="submet" class="btn btn-info btn-block">Submet</button>
+
 </div>

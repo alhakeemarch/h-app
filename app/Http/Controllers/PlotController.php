@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class PlotController extends Controller
 {
+
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -32,13 +43,7 @@ class PlotController extends Controller
         }
         $new_deed_no = $request->deed_no;
         $districts = $this->getDistricts();
-        $municipality_branchs = [
-            'Qbaa',
-            'ALAwali',
-            'AlHaram',
-            'AlOyun',
-            'Alaqeeq'
-        ];
+        $municipality_branchs = $this->get_municipality_branches();
         $plot = new Plot;
 
         return view('plot.create')->with([
@@ -59,25 +64,20 @@ class PlotController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-        $validatedData = $request->validate([
-            'deed_no' => 'required',
-            'deed_date' => 'required',
-            'plot_no' => 'required| numeric',
-            'plan_name' => 'required|string|regex:/\p{Arabic}/u',
-            'plan_no' => 'required|string',
-            'area' => 'required| numeric',
-            'district' => 'required|string',
-            'road_code' => 'required|numeric',
-            'road_name' => 'required|string|regex:/\p{Arabic}/u',
-            'municipality_branch' => 'required|string'
-        ]);
+        $validatedData = $this->validatePlot($request);
 
-        // return $validatedData;
-        // creat new plot
-        // $person = Person::create($input->all());
+        $aad_user_id = auth()->user()->id;
+        $add_user_name = auth()->user()->user_name;
+
+        $addby = [
+            'aad_user_id' =>  $aad_user_id,
+            'add_user_name' => $add_user_name
+        ];
+        $validatedData = array_merge($validatedData, $addby);
+
         $plot = Plot::create($validatedData);
-        // return redirect()->action('PersonController@index');
-        return redirect()->action('PlotController@index');
+
+        return redirect()->action('PlotController@show', [$plot]);
     }
 
     /**
@@ -88,7 +88,7 @@ class PlotController extends Controller
      */
     public function show(plot $plot)
     {
-        return view('plot.shwo');
+        return view('plot.show')->with('plot', $plot);
     }
 
     /**
@@ -99,7 +99,17 @@ class PlotController extends Controller
      */
     public function edit(plot $plot)
     {
-        return view('plot.edit');
+
+        $districts = $this->getDistricts();
+        $municipality_branchs = $this->get_municipality_branches();
+
+        return view('plot.edit')->with(
+            [
+                'districts' => $districts,
+                'municipality_branchs' => $municipality_branchs,
+                'plot' => $plot
+            ]
+        );
     }
 
     /**
@@ -111,7 +121,21 @@ class PlotController extends Controller
      */
     public function update(Request $request, plot $plot)
     {
-        return 'update function in plot controler';
+
+        $validatedData = $this->validatePlot($request);
+        $last_edit_user_id = auth()->user()->id;
+        $last_edit_user_name  = auth()->user()->user_name;
+
+        $editedby = [
+            'last_edit_user_id' =>  $last_edit_user_id,
+            'last_edit_user_name' => $last_edit_user_name
+        ];
+        $validatedData = array_merge($validatedData, $editedby);
+
+        // this returns true if don
+        Plot::where('id', $plot->id)->update($validatedData);
+
+        return redirect()->action('PlotController@show', [$plot]);
     }
 
     /**
@@ -138,16 +162,29 @@ class PlotController extends Controller
         ]);
 
         $found_deed = $plot->where('deed_no', $request->deed_no)->first();
-        $found_deed = false;
-
 
 
         if ($found_deed) {
-
-            return redirect()->action('PlotController@show', ['id' => $found_deed->id]);
+            return redirect()->action('PlotController@show', [$found_deed]);
         } else {
             return redirect()->action('PlotController@create', $request);
         }
+    }
+
+    public function validatePlot($request)
+    {
+        return $request->validate([
+            'deed_no' => 'required',
+            'deed_date' => 'required',
+            'plot_no' => 'required| numeric',
+            'plan_name' => 'required|string|regex:/\p{Arabic}/u',
+            'plan_no' => 'required|string',
+            'area' => 'required| numeric',
+            'district' => 'required|string',
+            'road_code' => 'required|numeric',
+            'road_name' => 'required|string|regex:/\p{Arabic}/u',
+            'municipality_branch' => 'required|string'
+        ]);
     }
 
     protected $plans = [];
@@ -320,5 +357,47 @@ class PlotController extends Controller
         // have 162 records
         // from index 0 to 161
         return self::DISTRICTS;
+    }
+
+
+
+    protected const Municipality_Branchs = [
+        'أمانة المدينة المنورة',
+        'بلدية قباء',
+        'بلدية أحد',
+        'بلدية العوالي',
+        'بلدية العقيق',
+        'بلدية العيون',
+        'بلدية البيداء',
+        'بلدية الحرم',
+        'بلدية الصويدرة',
+        'بلدية العاقول',
+        'بلدية المليليح',
+        'بلدية المندسة',
+        'بلدية أبيار الماشي',
+        'بلدية الفريش',
+        'البدلية النسائية',
+        'الحسو',
+        'الحناكية',
+        'السويرقية',
+        'الصلصلة',
+        'العشاش',
+        'العلا',
+        'العيص',
+        'المسيجيد والقاحة',
+        'المهد',
+        'النخيل',
+        'بدر',
+        'ثرب',
+        'خيبر',
+        'سليلة جهينة والمربع',
+        'وادي الفرع',
+        'ينبع',
+        'ينبع النخل'
+    ];
+
+    public static function get_municipality_branches()
+    {
+        return self::Municipality_Branchs;
     }
 }

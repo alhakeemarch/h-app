@@ -23,6 +23,7 @@ $factory->define(Person::class, function (Faker $faker) {
             }
         },
 
+
         'is_employee' => function () {
             return rand(0, 1);
         },
