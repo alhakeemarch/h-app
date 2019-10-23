@@ -13,12 +13,20 @@
     <!-- Scripts -->
 
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/input_functions.js') }}" defer></script>
+
+    <script src="{{ asset('js/input_functions.js') }}"></script>
+    <script>
+        // to refresh page without asking , after post ..
+    if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+
     <!-- Fonts -->
 
 
 
-    crossorigin="anonymous">
+    {{-- crossorigin="anonymous"> --}}
     <!-- Bootstrab css -->
     @if (App::isLocale('ar'))
     <!-- // -->
@@ -56,6 +64,8 @@
             <span class="">&copy; {{__('the_rights')}}</span>
         </div>
     </footer>
+
+
 </body>
 
 </html>

@@ -28,7 +28,7 @@ $factory->define(App\Plot::class, function (Faker $faker) {
         'plot_no' => function () {
             return rand(12, 386);
         },
-        'plan_name' => 'a', // need a fix
+        'plan_name' => 'إسم مخطط', // need a fix
         'area' => function () {
             return rand(600, 900);
         },
@@ -40,12 +40,15 @@ $factory->define(App\Plot::class, function (Faker $faker) {
         'road_code' => function () {
             return rand(1234, 4321);
         },
-        'road_name' => $faker->firstName,
+        'road_name' => 'إسم شارع',  // need a fix
         'plan_no' => '8', // need a fix
-        'municipality_branch' => function () {
-            $municipality_branchs = App\Http\Controllers\PlotController::get_municipality_branches();
-            $rand_key = array_rand($municipality_branchs);
-            return $municipality_branchs[$rand_key];
-        },
+        // 'municipality_branch' => function () {
+        //     $municipality_branchs = App\Http\Controllers\PlotController::get_municipality_branches();
+        //     $rand_key = array_rand($municipality_branchs);
+        //     return $municipality_branchs[$rand_key];
+        // },
+        'municipality_branch_name' => 'بلدية فرعية',
+        'municipality_branch_id' => '66',
+        'notes' => 'some notes about the plot'
     ];
 });

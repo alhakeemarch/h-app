@@ -15,8 +15,19 @@ class CreateMunicipalityBranchesTable extends Migration
     {
         Schema::create('municipality_branches', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('code')->nullable();
+
+            $table->bigInteger('aad_user_id');
+            $table->string('add_user_name');
+            $table->bigInteger('last_edit_user_id')->nullable();
+            $table->string('last_edit_user_name')->nullable();
+
             $table->string('en_name');
             $table->string('ar_name');
+            $table->string('area')->nullable();
+            $table->bigInteger('mi_prinx')->nullable();
+
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

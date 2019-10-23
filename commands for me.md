@@ -235,6 +235,12 @@ php artisan make:model Person -mcr
 php artisan make:model Project -mcrf
 
 ==============================================================================
+// Custom Validations
+php artisan make:rule ValidDistrict // حي
+php artisan make:rule ValidMunicipalityBranch // بلدية فرعية
+php artisan make:rule ValidPlan // مخطط
+
+==============================================================================
 for crating Localization middleware
     php artisan make:middleware Localization
 go to app/Http/middleware/Localization.php
@@ -398,9 +404,11 @@ DB_CONNECTION=sqlite
 
 
 
+# to do in app
+=====================================
+// --- person or employee or customer --- //
+soft delet
 
 
-
-
-
-INSERT INTO `people` (`id`, `national_id`, `is_employee`, `is_customer`, `ar_name1`, `ar_name2`, `ar_name3`, `ar_name4`, `ar_name5`, `en_name1`, `en_name2`, `en_name3`, `en_name4`, `en_name5`, `mobile`, `phone`, `phone_extension`, `email`, `nationaltiy_id`, `nationaltiy_ar`, `nationaltiy_en`, `hafizah_no`, `national_id_issue_date`, `national_id_exp_date`, `national_id_issue_place`, `pasport_no`, `pasport_issue_date`, `pasport_id_exp_date`, `pasport_id_issue_place`, `ah_birth_date`, `ad_birth_date`, `birth_place`, `birth_city`, `created_at`, `updated_at`) VALUES (NULL, '1000676971', '1', '0', 'عبدالرزاق', NULL, NULL, NULL, 'حكيم', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'athakim@hotmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+=====================================
+// --- plot --- //

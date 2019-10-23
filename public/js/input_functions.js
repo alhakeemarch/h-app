@@ -1,9 +1,6 @@
-window._ = require('lodash');
 
-// to refresh page without asking , after post ..
-if (window.history.replaceState) {
-    window.history.replaceState(null, null, window.location.href);
-}
+
+
 
 function onlyNumber(evt) {
     var theEvent = evt || window.event;

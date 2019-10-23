@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\plot;
+use App\Rules\ValidDistrict;
+use App\Rules\ValidMunicipalityBranch;
+use App\Rules\ValidPlan;
 use Illuminate\Http\Request;
+use App\MunicipalityBranch;
 
 class PlotController extends Controller
 {
@@ -43,15 +47,14 @@ class PlotController extends Controller
         }
         $new_deed_no = $request->deed_no;
         $districts = $this->getDistricts();
-        $municipality_branchs = $this->get_municipality_branches();
+        $municipality_branchs = MunicipalityBranch::all();
         $plot = new Plot;
 
         return view('plot.create')->with([
             'districts' => $districts,
             'municipality_branchs' => $municipality_branchs,
             'new_deed_no' => $new_deed_no,
-            'plot' => $plot
-
+            'plot' => $plot,
         ]);
     }
 
@@ -63,17 +66,27 @@ class PlotController extends Controller
      */
     public function store(Request $request)
     {
+
         // return $request->all();
         $validatedData = $this->validatePlot($request);
 
         $aad_user_id = auth()->user()->id;
         $add_user_name = auth()->user()->user_name;
+        // dd($validatedData);
+
+        $municipality_branch_id = MunicipalityBranch::where('ar_name', $validatedData['municipality_branch_name'])->first()->id;
+
+        // return $municipality_branch_id;
+        $some_ides = [
+            'municipality_branch_id' => $municipality_branch_id
+
+        ];
 
         $addby = [
             'aad_user_id' =>  $aad_user_id,
             'add_user_name' => $add_user_name
         ];
-        $validatedData = array_merge($validatedData, $addby);
+        $validatedData = array_merge($validatedData, $addby, $some_ides);
 
         $plot = Plot::create($validatedData);
 
@@ -101,7 +114,7 @@ class PlotController extends Controller
     {
 
         $districts = $this->getDistricts();
-        $municipality_branchs = $this->get_municipality_branches();
+        $municipality_branchs = MunicipalityBranch::all();
 
         return view('plot.edit')->with(
             [
@@ -176,14 +189,24 @@ class PlotController extends Controller
         return $request->validate([
             'deed_no' => 'required',
             'deed_date' => 'required',
-            'plot_no' => 'required| numeric',
+            'plot_no' => [
+                'required', 'numeric',
+                // new ValidPlan
+            ],
             'plan_name' => 'required|string|regex:/\p{Arabic}/u',
             'plan_no' => 'required|string',
             'area' => 'required| numeric',
-            'district' => 'required|string',
+            'district' => [
+                'required', 'string',
+                // new ValidDistrict
+            ],
             'road_code' => 'required|numeric',
             'road_name' => 'required|string|regex:/\p{Arabic}/u',
-            'municipality_branch' => 'required|string'
+            'municipality_branch_name' => [
+                'required', 'string',
+                new ValidMunicipalityBranch
+            ],
+            'notes' => 'string|nullable'
         ]);
     }
 
@@ -357,47 +380,5 @@ class PlotController extends Controller
         // have 162 records
         // from index 0 to 161
         return self::DISTRICTS;
-    }
-
-
-
-    protected const Municipality_Branchs = [
-        'أمانة المدينة المنورة',
-        'بلدية قباء',
-        'بلدية أحد',
-        'بلدية العوالي',
-        'بلدية العقيق',
-        'بلدية العيون',
-        'بلدية البيداء',
-        'بلدية الحرم',
-        'بلدية الصويدرة',
-        'بلدية العاقول',
-        'بلدية المليليح',
-        'بلدية المندسة',
-        'بلدية أبيار الماشي',
-        'بلدية الفريش',
-        'البدلية النسائية',
-        'الحسو',
-        'الحناكية',
-        'السويرقية',
-        'الصلصلة',
-        'العشاش',
-        'العلا',
-        'العيص',
-        'المسيجيد والقاحة',
-        'المهد',
-        'النخيل',
-        'بدر',
-        'ثرب',
-        'خيبر',
-        'سليلة جهينة والمربع',
-        'وادي الفرع',
-        'ينبع',
-        'ينبع النخل'
-    ];
-
-    public static function get_municipality_branches()
-    {
-        return self::Municipality_Branchs;
     }
 }

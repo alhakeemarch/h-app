@@ -1,7 +1,7 @@
 {
     "workbench.colorTheme": "Material Theme Darker High Contrast",
     "workbench.iconTheme": "material-icon-theme",
-    "editor.fontSize": 17,
+    "editor.fontSize": 18,
     "editor.minimap.enabled": false,
     "blade.format.enable": true,
     "editor.wordWrap": "on",

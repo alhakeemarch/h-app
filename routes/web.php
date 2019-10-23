@@ -34,11 +34,8 @@ Route::any('/f', function () {
     // return App\Nationality::all()->count();
     // return (App\Http\Controllers\NationalityController::firstInsertion()) ? App\Nationality::all() : 'some thing is worng';
 
-
-
-
-
-
+    // // // inserts all available Municipality Branchs to db
+    // return (App\Http\Controllers\MunicipalityBranchController::firstInsertion()) ? App\MunicipalityBranch::all() : 'some thing is worng';
 
 
     // Artisan::call('migrate:fresh');
@@ -46,7 +43,7 @@ Route::any('/f', function () {
     // return makeUser('admin');
     // return makeUser('fahd');
     // factory(\App\Person::class, 100)->create();
-    // factory(\App\Plot::class, 50)->create();
+    factory(\App\Plot::class, 10)->create();
 });
 
 
