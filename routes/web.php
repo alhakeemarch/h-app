@@ -38,12 +38,23 @@ Route::any('/f', function () {
     // return (App\Http\Controllers\MunicipalityBranchController::firstInsertion()) ? App\MunicipalityBranch::all() : 'some thing is worng';
 
 
+    // // // inserts all available Districts to db
+    #### must have Municipality Branchs in db
+    // return (App\Http\Controllers\DistrictController::firstInsertion()) ? App\District::all() : 'some thing is worng';
+
+
+
+
+
+
+
+
     // Artisan::call('migrate:fresh');
     // Artisan::call('cache:clear');
     // return makeUser('admin');
     // return makeUser('fahd');
     // factory(\App\Person::class, 100)->create();
-    factory(\App\Plot::class, 10)->create();
+    // factory(\App\Plot::class, 10)->create();
 });
 
 
