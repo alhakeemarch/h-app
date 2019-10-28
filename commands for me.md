@@ -213,8 +213,10 @@ php artisan make:model Lettertype -a
 php artisan make:model Nationality -a  // الجنسيات
 php artisan make:model Country -a  // الدول
 php artisan make:model SaudiCity -a  // المدن
-php artisan make:model District -a  // الأحياء
+php artisan make:model District -a  // المناطق الرئيسية بالمدينة
+php artisan make:model Neighbor -a  // الأحياء
 php artisan make:model Plan -a  // المخططات
+php artisan make:model street -a  // الشوارع
 php artisan make:model MunicipalityBranch -a  // البلدية الفرعية
 
 ============== 

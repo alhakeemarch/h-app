@@ -15,6 +15,51 @@ class CreatePlansTable extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->bigIncrements('id');
+            // -----------------------------
+            $table->string('plan_no')->default('مخطط غير معروف رقمه');;
+            $table->string('plan_ar_name')->default('مخطط غير معروف إسمه');
+            // -----------------------------
+            $table->string('plan_oracle_name')->nullable();
+            $table->string('paln_type_code')->nullable();
+            $table->string('plan_year')->nullable();
+            $table->string('plan_date')->nullable();
+            $table->string('office_raster')->nullable();
+            $table->string('office_name')->nullable();
+            $table->string('dwg_name_amana')->nullable();
+            $table->string('plan_dir_amana')->nullable();
+            $table->string('status_amana')->nullable();
+            $table->string('plan_sources_amana')->nullable();
+            $table->string('editor_amana')->nullable();
+            $table->string('berauno')->nullable();
+            $table->string('land_use_code')->nullable();
+            $table->string('land_use')->nullable();
+            $table->string('plan_ind')->nullable();
+            $table->string('owner_type')->nullable();
+            $table->string('num_of_parcel')->nullable();
+            $table->string('paln_out_per')->nullable();
+            $table->string('gog_loc_code')->nullable();
+            $table->string('gog_location')->nullable();
+            $table->string('scale')->nullable();
+
+            $table->string('building_area_per')->nullable();
+            $table->string('cnt_no')->nullable();
+            $table->string('cnt_src')->nullable();
+            $table->string('cnt_source')->nullable();
+            $table->string('cnt_date')->nullable();
+            $table->string('mins_no')->nullable();
+            $table->string('mins_date')->nullable();
+            $table->text('notes_amana')->nullable();
+            $table->string('kar_ok')->nullable();
+            $table->string('mi_prinx')->nullable();
+
+            // -----------------------------
+            $table->bigInteger('aad_user_id');
+            $table->string('add_user_name');
+            $table->bigInteger('last_edit_user_id')->nullable();
+            $table->string('last_edit_user_name')->nullable();
+
+            // -----------------------------
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

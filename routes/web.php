@@ -42,12 +42,17 @@ Route::any('/f', function () {
     #### must have Municipality Branchs in db
     // return (App\Http\Controllers\DistrictController::firstInsertion()) ? App\District::all() : 'some thing is worng';
 
+    // // // inserts all available Districts to db
+    #### must have Municipality Branchs in db
+    #### must have Districts in db
+    // return (App\Http\Controllers\NeighborController::firstInsertion()) ? App\Neighbor::all() : 'some thing is worng';
 
+    // // // inserts all available Plans to db
+    // return (App\Http\Controllers\PlanController::firstInsertion()) ? App\Plan::all() : 'some thing is worng';
 
-
-
-
-
+    // // // inserts all available streets to db
+    // return (App\Http\Controllers\StreetController::firstInsertion()) ? App\Street::all() : 'some thing is worng';
+    // return (App\Http\Controllers\StreetController::firstInsertion());
 
     // Artisan::call('migrate:fresh');
     // Artisan::call('cache:clear');
