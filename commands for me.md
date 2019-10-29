@@ -414,3 +414,10 @@ soft delet
 
 =====================================
 // --- plot --- //
+
+
+
+=====================================
+Maximum execution time of 30 seconds exceeded
+https://laracasts.com/discuss/channels/general-discussion/maximum-execution-time-of-30-seconds-exceeded?page=1
+=====================================

@@ -52,7 +52,7 @@ Route::any('/f', function () {
 
     // // // inserts all available streets to db
     // return (App\Http\Controllers\StreetController::firstInsertion()) ? App\Street::all() : 'some thing is worng';
-    // return (App\Http\Controllers\StreetController::firstInsertion());
+
 
     // Artisan::call('migrate:fresh');
     // Artisan::call('cache:clear');
