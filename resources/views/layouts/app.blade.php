@@ -49,7 +49,9 @@
 </head>
 
 <body>
-    @include('layouts.topnav')
+    <header>
+        @include('layouts.topnav')
+    </header>
 
     <main class="container-fluid " style="min-height:100%;margin-top: 4rem !important; margin-bottom: 5rem !important;">
         <div id="app">
@@ -64,8 +66,6 @@
             <span class="">&copy; {{__('the_rights')}}</span>
         </div>
     </footer>
-
-
 </body>
 
 </html>
