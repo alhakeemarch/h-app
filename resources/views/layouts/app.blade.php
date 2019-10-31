@@ -49,23 +49,34 @@
 </head>
 
 <body>
-    <header>
-        @include('layouts.topnav')
-    </header>
+    <div class="wrapper">
+        <header>
+            @include('layouts.topnav')
+        </header>
 
-    <main class="container-fluid " style="min-height:100%;margin-top: 4rem !important; margin-bottom: 5rem !important;">
-        <div id="app">
-            @yield('content')
-        </div>
-        <!-- /End of div id="app" -->
-    </main>
-    {{-- fixed-bottom --}}
-    {{-- <footer class="footer text-light bg-dark shadow  py-3 text-center"> --}}
-    <footer class="footer text-light h-navbar-bg mt-3 py-3 text-center">
-        <div class="">
-            <span class="">&copy; {{__('the_rights')}}</span>
-        </div>
-    </footer>
+        <main class="container-fluid "
+            style="min-height:100%;margin-top: 4rem !important; margin-bottom: 5rem !important;">
+            <div id="app">
+                @yield('content')
+            </div>
+            <!-- /End of div id="app" -->
+        </main>
+
+        {{-- fixed-bottom --}}
+        <footer>
+            <div class="footer-copyright text-center py-3 text-light h-navbar-bg">&copy; {{__('the_rights')}}
+                {{-- <a href="www.hakeemarch.com"> HakeemArch.com</a> --}}
+            </div>
+        </footer>
+
+
+
+
+
+
+
+    </div>
+
 </body>
 
 </html>

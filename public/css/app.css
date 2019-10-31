@@ -5,7 +5,6 @@
 }
 
 body {
-	/* grid-template-areas: "header" "main" "footer"; */
 	background-image: radial-gradient(#bbc1cc, #abb6cd);
 	/* font-family: 'Reem Kufi', sans-serif; */
 	font-family: "Tajawal", "Prosto One", sans-serif;
@@ -37,9 +36,9 @@ body {
 }
 
 footer {
-	position: fixed;
+	/* position: fixed;
 	bottom: 0;
-	width: 100%;
+	width: 100%; */
 }
 
 .bg-thead {
@@ -61,8 +60,8 @@ footer {
 }
 
 .btn,
-.navbar,
 input,
+.navbar,
 textarea,
 .card,
 .card-header {
@@ -73,25 +72,24 @@ textarea,
 /* ============================================================ */
 /* grid */
 
-body {
+.wrapper {
+	/* background: blue; */
 	min-height: 100vh;
 	display: grid;
-	/* grid-template-rows: 1fr 100% 1fr;
-	grid-gap: 6px; */
+	grid-template-rows: max-content 100% max-content;
 }
 
 header {
-	grid-row: 1 / 2;
+	/* grid-template-areas; */
+	background: red;
 }
 
 main {
-	grid-row: 2 / 3;
-}
-footer {
-	grid-row: 3 / 4;
+	padding-top: 20px;
+	/* background: burlywood; */
 }
 
-#app {
-	margin-top: 1rem;
-	/* display: grid; */
+footer {
+	background: green;
+	margin: 0 !important;
 }
