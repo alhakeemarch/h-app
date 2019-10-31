@@ -1,5 +1,4 @@
-{{-- <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow fixed-top"> --}}
-<nav class="navbar navbar-expand-md navbar-dark fixed-top h-navbar-bg">
+<nav class="navbar navbar-expand-lg navbar-dark h-navbar-bg">
     <!-- navlogo -->
     <div class="navlogo col-lg-2 d-none d-lg-inline-block text-justify">
         <a class="navbar-brand mr-0" href="{{ url('/') }}">
@@ -55,14 +54,17 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('Edit')}} &nbsp;</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {{-- <a class="dropdown-item" href="{{ route ('customer.edit') }}">{{__('customer')}}</a> --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('customer.edit') }}">{{__('customer')}}</a>
+                        --}}
                         @if (auth()->user()->user_level >= 10)
-                        {{-- <a class="dropdown-item" href="{{ route ('employee.edit') }}">{{__('employee')}}</a> --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('employee.edit') }}">{{__('employee')}}</a>
+                        --}}
                         @endif
                         {{-- <a class="dropdown-item" href="{{ route ('plote.edit') }}">{{__('plot')}}</a> --}}
                         <div class="dropdown-divider"></div>
                         {{-- <a class="dropdown-item" href="{{ route ('project.edit') }}">{{__('project')}}</a> --}}
-                        {{-- <a class="dropdown-item" href="{{ route ('contract.edit') }}">{{__('contract')}}</a> --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('contract.edit') }}">{{__('contract')}}</a>
+                        --}}
                         {{-- <a class="dropdown-item" href="{{ route ('task.edit') }}">{{__('task')}}</a> --}}
                     </div>
                 </li>
@@ -91,16 +93,21 @@
                 <!-- dropdown for delet -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('Delet')}} &nbsp;</a>
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('Delet')}}
+                        &nbsp;</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {{-- <a class="dropdown-item" href="{{ route ('customer.delet') }}">{{__('customer')}}</a> --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('customer.delet') }}">{{__('customer')}}</a>
+                        --}}
                         @if (auth()->user()->user_level >= 10)
-                        {{-- <a class="dropdown-item" href="{{ route ('employee.delet') }}">{{__('employee')}}</a> --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('employee.delet') }}">{{__('employee')}}</a>
+                        --}}
                         @endif
                         {{-- <a class="dropdown-item" href="{{ route ('plot.delet') }}">{{__('plot')}}</a> --}}
                         <div class="dropdown-divider"></div>
-                        {{-- <a class="dropdown-item" href="{{ route ('project.delet') }}">{{__('project')}}</a> --}}
-                        {{-- <a class="dropdown-item" href="{{ route ('contract.delet') }}">{{__('contract')}}</a> --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('project.delet') }}">{{__('project')}}</a>
+                        --}}
+                        {{-- <a class="dropdown-item" href="{{ route ('contract.delet') }}">{{__('contract')}}</a>
+                        --}}
                         {{-- <a class="dropdown-item" href="{{ route ('task.delet') }}">{{__('task')}}</a> --}}
                     </div>
                 </li>
@@ -141,7 +148,7 @@
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                                             document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
                         <i class="fas fa-sign-out-alt mx-4"></i>
                     </a>

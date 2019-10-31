@@ -1,0 +1,61 @@
+@font-face {
+	font-family: DroidArabicKufi;
+	src: url('../fonts/DroidKufi-Regular.ttf');
+	unicode-range: U+0B02-CD;
+}
+@font-face {
+	font-family: DroidArabicKufiBold;
+	src: url('../fonts/DroidKufi-Bold.ttf');
+}
+@font-face {
+	font-family: gretArabic;
+	src: url('../fonts/greta-arabic-bold-italic.ttf');
+}
+@font-face {
+	font-family: AlMohannad;
+	src: url('../fonts/al_mohannad.ttf');
+}
+@font-face {
+	font-family: Dubi;
+	src: url('../fonts/DUBAI-REGULAR.TTF');
+	src: url('../fonts/DUBAI-MEDIUM.TTF');
+}
+@font-face {
+	font-family: Dubi;
+
+	src: url('../fonts/majallab.ttf');
+}
+@font-face {
+	font-family: Markazi;
+	/* src: url('../fonts/Markazi.ttf'); */
+	src: url('../fonts/Markazi2.ttf');
+	/* font-weight: 500; */
+}
+
+body {
+	font-family: 'Markazi', sans-serif;
+	font-size: 1.3em;
+	/* font-family: 'SakkalMajalla', sans-serif; */
+	/* font-family: 'Dubi', sans-serif; */
+	/* font-family: 'Reem Kufi', sans-serif; */
+	/* font-family: "Tajawal", "Prosto One", sans-serif; */
+	/* font-family: 'DroidArabicKufi', sans-serif; */
+	/* font-family: "gretArabic", serif; */
+	/* font-family: "AlMohannad", serif !important; */
+
+	/* 100 */
+	/* font-family: 'Amiri', serif; */
+	/* font-family: 'Changa', sans-serif; // 100  */
+	/* font-family: 'El Messiri', sans-serif; // 100 */
+	/* font-family: 'Lateef', cursive; */
+	/* font-family: 'Mada', sans-serif; */
+	/* font-family: 'Baloo Bhaijaan', cursive; */
+	/* font-family: 'Lemonada', cursive; */
+	/* font-family: 'Markazi Text', serif; // 50 */
+	/* font-family: 'Harmattan', sans-serif; */
+	/* font-family: 'Aref Ruqaa', serif; */
+	/* font-family: 'Jomhuria', cursive; */
+	/* font-family: 'Rakkas', cursive; */
+	/* font-family: 'Katibeh', cursive; */
+	/* font-family: 'Prosto One', cursive; */
+}

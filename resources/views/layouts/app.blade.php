@@ -49,37 +49,30 @@
 </head>
 
 <body>
-    <header>
-        @include('layouts.topnav')
-    </header>
 
-    <main class="container-fluid " style="min-height:100%;margin-top: 4rem !important; margin-bottom: 5rem !important;">
-        <div id="app">
-            @yield('content')
-        </div>
-        <!-- /End of div id="app" -->
-    </main>
-    {{-- fixed-bottom --}}
-    {{-- <footer class="footer text-light bg-dark shadow  py-3 text-center"> --}}
-    <footer class="footer text-light h-navbar-bg mt-3 py-3 text-center">
-        <div class="">
-            <span class="">&copy; {{__('the_rights')}}</span>
-            <button class="btn btn-primary" type="button" onclick="abc()">Text</button>
-        </div>
-    </footer>
+    <div class="wrapper">
+        <header class="sticky-top">
+            @include('layouts.topnav')
+        </header>
+
+        {{-- <main class="container-fluid "style="min-height:100%;margin-top: 4rem !important; margin-bottom: 5rem !important;"> --}}
+        <main>
+            <div id="app" class="container-fluid">
+                @yield('content')
+            </div>
+            <!-- /End of div id="app" -->
+        </main>
+
+        {{-- fixed-bottom --}}
+
+        <footer>
+            <div class="footer-copyright text-center py-3 text-light h-navbar-bg">&copy; {{__('the_rights')}}
+                {{-- <a href="www.hakeemarch.com"> HakeemArch.com</a> --}}
+            </div>
+        </footer>
+    </div>
 
 
-    <script>
-        function abc (){
-            console.log('hi');
-            var inputs = document.getElementsByTagName('input');
-                for (var i = 0; i < inputs.length; ++i) {
-                    
-                    inputs[i].placeholder='';
-                }
-        }
-    
-    </script>
 </body>
 
 </html>
