@@ -117,8 +117,9 @@
             <input type="text" name="municipality_branch_name" id="mu"
                 class="custom-select form-control @error ('municipality_branch_name') is-invalid @enderror"
                 value="{{old('municipality_branch_name') ?? $plot->municipality_branch_name }}"
-                list="municipality_branch_list" placeholder="{{__( 'Municipality Branch')}}.." required
-                onkeypress="onlyArabicString(event)" autocomplete="off">
+                list="municipality_branch_list" autocomplete="off" required
+                placeholder="{{__( 'Municipality Branch')}}.." onfocus="this.placeholder=''"
+                onblur="this.placeholder=' {{__( 'Municipality Branch')}}..'" onkeypress=" onlyArabicString(event)">
 
             @error('municipality_branch_name')
             <small class="text-danger"> {{$errors->first('municipality_branch_name')}} </small>
@@ -147,7 +148,9 @@
                 <span class="small text-muted">({{__('Optional')}})</span>
                 :</label>
 
-            <textarea name="notes" class="form-control @error ('notes') is-invalid @enderror " rows="3">
+            <textarea name="notes" class="form-control @error ('notes') is-invalid @enderror " rows="3"
+                placeholder="add your Notes.." onfocus="this.placeholder=''"
+                onblur="this.placeholder='add your Notes..'">
                 {{old('notes') ?? $plot->notes }}</textarea>
 
             @error('notes')

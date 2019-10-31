@@ -64,8 +64,22 @@
     <footer class="footer text-light h-navbar-bg mt-3 py-3 text-center">
         <div class="">
             <span class="">&copy; {{__('the_rights')}}</span>
+            <button class="btn btn-primary" type="button" onclick="abc()">Text</button>
         </div>
     </footer>
+
+
+    <script>
+        function abc (){
+            console.log('hi');
+            var inputs = document.getElementsByTagName('input');
+                for (var i = 0; i < inputs.length; ++i) {
+                    
+                    inputs[i].placeholder='';
+                }
+        }
+    
+    </script>
 </body>
 
 </html>
