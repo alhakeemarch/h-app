@@ -4,18 +4,89 @@
 	padding: 0;
 	margin: 0;
 }
-
+/* some coloring edit on the site */
 body {
 	background-image: radial-gradient(#bbc1cc, #abb6cd);
 }
 
 .h-navbar-bg {
 	background-color: #465573;
-	/* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04); */
 }
 
 .bg-thead {
 	background: #bccad6;
+}
+.text-primary {
+	color: ;
+}
+
+.btn-primary {
+	color: #fff;
+	/* background-color: #2c3e50; */
+	background-color: #465573;
+	border-color: #465573;
+}
+.btn-primary:hover {
+	background-color: #3f4c66;
+	border-color: #3f4c66;
+}
+
+.btn-secondary {
+	color: #fff;
+	background: #718096;
+	border-color: #718096;
+}
+.btn-secondary:hover {
+	color: #fff;
+	background: #4a5568;
+	border-color: #4a5568;
+}
+.btn-success {
+	color: #fff;
+	/* background: #38b2ac; */
+
+	background: #006e6d;
+	background-color: #006e6d;
+}
+.btn-success:hover {
+	/* background: #319795; */
+	background: #005a58;
+	background-color: #005a58;
+}
+
+.btn-warning {
+	color: #fff;
+	background: #615286;
+	background-color: #615286;
+}
+.btn-warning:hover {
+	color: #fff;
+	background: #564977;
+	background-color: #564977;
+}
+.btn-danger {
+	color: #fff;
+	background: #9d1d11;
+	background-color: #9d1d11;
+}
+.btn-danger:hover {
+	color: #fff;
+	background: #83180f;
+	background-color: #83180f;
+}
+.btn-info {
+	background: #335589;
+	background-color: #335589;
+}
+.btn-info:hover {
+	background: #264067;
+	background-color: #264067;
+}
+.btn-link {
+	color: #335589;
+}
+.btn-link:hover {
+	color: #264067;
 }
 
 /* ============================================================ */
@@ -39,18 +110,10 @@ textarea,
 	border: 0;
 	transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out,
 		box-shadow .15s ease-in-out;
-	padding: .84rem 2.14rem;
-	border-radius: 30px !important;
+	/* padding: .84rem 2.14rem; */
+	border-radius: 300px !important;
 }
 
-input,
-textarea {
-	min-height: 3rem !important;
-	border: none;
-	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1), 0 1px 1px 0 rgba(0, 0, 0, .1) !important;
-	/* background-color: #ebebeb !important; */
-}
-.btn,
 input,
 .navbar,
 textarea,
@@ -58,6 +121,28 @@ textarea,
 .card-header {
 	border-radius: 0 !important;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12) !important;
+}
+
+input,
+textarea {
+	min-height: 3rem !important;
+	border: none;
+	box-shadow: inset 1px 1px 10px rgba(150, 180, 200, 0.35), 2px 4px 10px rgba(150, 180, 200, 0.35) !important;
+}
+input.form-check-input {
+	min-height: 0 !important;
+	position: static;
+}
+
+.btn {
+	border-radius: 50px !important;
+	font-size: 105%;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12) !important;
+}
+.btn-link {
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 /* ============================================================ */

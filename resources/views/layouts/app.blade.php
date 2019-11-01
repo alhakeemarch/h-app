@@ -25,7 +25,6 @@
     <!-- Fonts -->
 
 
-
     {{-- crossorigin="anonymous"> --}}
     <!-- Bootstrab css -->
     @if (App::isLocale('ar'))
