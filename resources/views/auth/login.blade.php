@@ -30,8 +30,8 @@
                 <small id="helpId" class="text-muted">Email, User name, National ID OR Employee ID</small>
             </div>
             <!-- /End of user_name -->
+            <button type="submit" class="btn btn btn-primary btn-block">{{ __('Next') }}</button>
 
-            <input type="submit" class="btn btn btn-secondary btn-block my-2" value="{{ __('Next') }}">
             {{--
                         <!-- -->
                         @if (Route::has('password.request'))
@@ -82,7 +82,7 @@
                 <label class="form-check-label" for="remember">{{ __('Remember Me') }}</label>
             </div>
             <!-- //////////// -->
-            <button type="submit" class="my-2 btn btn btn-secondary btn-block">{{ __('Login') }}</button>
+            <button type="submit" class="btn btn btn-primary btn-block">{{ __('Login') }}</button>
             <!-- //////////// -->
             @if (Route::has('password.request'))
             <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>

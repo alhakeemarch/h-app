@@ -84,8 +84,25 @@ class ProjectController extends Controller
         //
     }
 
-    public function check(Project $project)
+    public function check(Request $request, Project $project)
     {
-        return 'this is check method in project controler';
+        if ($request->method() === "GET") {
+            return view('project.check');
+        }
+        // return $request;
+
+        $validatedData = $request->validate([
+            'national_id' => 'required|min:10',
+            'deed_no' => 'required',
+        ]);
+        return $validatedData;
+        // $found_deed = $plot->where('deed_no', $request->deed_no)->first();
+
+
+        // if ($found_deed) {
+        //     return redirect()->action('PlotController@show', [$found_deed]);
+        // } else {
+        //     return redirect()->action('PlotController@create', $request);
+        // }
     }
 }
