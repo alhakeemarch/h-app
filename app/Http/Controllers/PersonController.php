@@ -187,7 +187,6 @@ class PersonController extends Controller
 
         $found_person = $person->where('national_id', $request->national_id)->first();
         if ($found_person) {
-
             return redirect()->action('PersonController@show', ['id' => $found_person->id]);
         } else {
             return redirect()->action('PersonController@create', $request);

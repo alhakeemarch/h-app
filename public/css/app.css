@@ -54,7 +54,8 @@ body {
 	background-color: #005a58;
 }
 
-.btn-warning {
+.btn-warning,
+.alert-warning {
 	color: #fff;
 	background: #615286;
 	background-color: #615286;
@@ -89,6 +90,10 @@ body {
 	color: #264067;
 }
 
+.alert-warning > .btn-link {
+	color: #fff;
+}
+
 /* ============================================================ */
 /* matiral desing  */
 
@@ -118,7 +123,8 @@ input,
 .navbar,
 textarea,
 .card,
-.card-header {
+.card-header,
+.alert {
 	border-radius: 0 !important;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12) !important;
 }
@@ -142,6 +148,7 @@ input.form-check-input {
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12) !important;
 }
 .btn-link {
+	margin-top: 0;
 	border-radius: 0 !important;
 	box-shadow: none !important;
 	text-shadow: 1px 1px rgba(0, 0, 0, 0.2);

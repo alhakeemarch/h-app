@@ -30,15 +30,12 @@ Route::get('/', function () {
 
 
 Route::any('/f', function () {
-
-    //
     // // // inserts all available nationalities to db
     // return App\Nationality::all()->count();
     // return (App\Http\Controllers\NationalityController::firstInsertion()) ? App\Nationality::all() : 'some thing is worng';
 
     // // // inserts all available Municipality Branchs to db
     // return (App\Http\Controllers\MunicipalityBranchController::firstInsertion()) ? App\MunicipalityBranch::all() : 'some thing is worng';
-
 
     // // // inserts all available Districts to db
     #### must have Municipality Branchs in db
@@ -54,7 +51,6 @@ Route::any('/f', function () {
 
     // // // inserts all available streets to db
     // return (App\Http\Controllers\StreetController::firstInsertion()) ? App\Street::all() : 'some thing is worng';
-
 
     // Artisan::call('migrate:fresh');
     // Artisan::call('cache:clear');
