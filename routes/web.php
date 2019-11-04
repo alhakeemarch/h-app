@@ -30,6 +30,8 @@ Route::get('/', function () {
 
 
 Route::any('/f', function () {
+
+    //
     // // // inserts all available nationalities to db
     // return App\Nationality::all()->count();
     // return (App\Http\Controllers\NationalityController::firstInsertion()) ? App\Nationality::all() : 'some thing is worng';
