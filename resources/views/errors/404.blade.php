@@ -26,6 +26,9 @@
 
                     <h6 class="text-center mt-2">404 | Not Found </h6>
 
+                    {{-- // to see the error  --}}
+                    {{-- <h2>{{ $exception->getMessage() }}</h2> --}}
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="goBack()"

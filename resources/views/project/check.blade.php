@@ -52,9 +52,16 @@
         </div>
         @endif
         @if (\Session::has('not_customer'))
-        <div class="alert alert-info mt-3">
+        <div class="alert alert-warning mt-3">
             this person is not customer plese contact your administrator
             {{-- <a class="btn btn-link" href="{{url('/plot/check')}}">clikc heer..</a> --}}
+        </div>
+        @endif
+        @if (\Session::has('plan_have_project'))
+        <div class="alert alert-warning mt-3">
+            This plote already registered in project, cannot reuse it again, to view the project
+            <a class="btn btn-link" href="{{url('/project')}}/{{\Session::get('project_id', 'default')}}">clikc
+                heer..</a>
         </div>
         @endif
         <!-- ///////////////////////////////-->

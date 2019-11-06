@@ -54,9 +54,10 @@ Route::any('/f', function () {
 
     // Artisan::call('migrate:fresh');
     // Artisan::call('cache:clear');
-    // return makeUser('admin');
+    return makeUser('admin');
     // return makeUser('fahd');
     // factory(\App\Person::class, 100)->create();
+    # الفاكتوري يحتاج إعادة بعد تعديل حقول الجدول
     // factory(\App\Plot::class, 100)->create();
 });
 

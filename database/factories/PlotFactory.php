@@ -28,7 +28,7 @@ $factory->define(App\Plot::class, function (Faker $faker) {
         'plot_no' => function () {
             return rand(12, 386);
         },
-        'plan_name' => 'إسم مخطط', // need a fix
+        
         'area' => function () {
             return rand(600, 900);
         },

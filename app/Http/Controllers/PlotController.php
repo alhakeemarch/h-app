@@ -74,19 +74,20 @@ class PlotController extends Controller
         $add_user_name = auth()->user()->user_name;
         // dd($validatedData);
 
-        $municipality_branch_id = MunicipalityBranch::where('ar_name', $validatedData['municipality_branch_name'])->first()->id;
+        // $municipality_branch_id = MunicipalityBranch::where('ar_name', $validatedData['municipality_branch_name'])->first()->id;
 
         // return $municipality_branch_id;
-        $some_ides = [
-            'municipality_branch_id' => $municipality_branch_id
+        // $some_ides = [
+        //     'municipality_branch_id' => $municipality_branch_id
 
-        ];
+        // ];
 
         $addby = [
             'aad_user_id' =>  $aad_user_id,
             'add_user_name' => $add_user_name
         ];
-        $validatedData = array_merge($validatedData, $addby, $some_ides);
+        // $validatedData = array_merge($validatedData, $addby, $some_ides);
+        $validatedData = array_merge($validatedData, $addby);
 
         $plot = Plot::create($validatedData);
 
@@ -193,19 +194,18 @@ class PlotController extends Controller
                 'required', 'numeric',
                 // new ValidPlan
             ],
-            'plan_name' => 'required|string|regex:/\p{Arabic}/u',
-            'plan_no' => 'required|string',
+            // 'plan_name' => 'required|string|regex:/\p{Arabic}/u',
+            // 'plan_no' => 'required|string',
             'area' => 'required| numeric',
-            'district' => [
-                'required', 'string',
-                // new ValidDistrict
-            ],
-            'road_code' => 'required|numeric',
-            'road_name' => 'required|string|regex:/\p{Arabic}/u',
-            'municipality_branch_name' => [
-                'required', 'string',
-                new ValidMunicipalityBranch
-            ],
+            // 'district' => [
+            //     'required', 'string',
+            // ],
+            // 'road_code' => 'required|numeric',
+            // 'road_name' => 'required|string|regex:/\p{Arabic}/u',
+            // 'municipality_branch_name' => [
+            //     'required', 'string',
+            //     new ValidMunicipalityBranch
+            // ],
             'notes' => 'string|nullable'
         ]);
     }

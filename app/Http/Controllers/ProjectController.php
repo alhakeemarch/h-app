@@ -55,8 +55,11 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show(Project $project, Request $request)
     {
+        return 'Project show method';
+        // dd( $request);
+
         //
     }
 
@@ -100,7 +103,6 @@ class ProjectController extends Controller
             return view('project.check');
         }
         // return $request;
-
         $validatedData = $request->validate([
             'national_id' => 'required|min:10',
             'deed_no' => 'required',
@@ -109,10 +111,10 @@ class ProjectController extends Controller
         $person = new Person;
         $found_person = $person->where('national_id', $validatedData['national_id'])->first();
         // return $found_person;
-        $deed = new Plot;
-        $found_deed = $deed->where('deed_no', $validatedData['deed_no'])->first();
-        // return $found_deed;
-        // return [$found_deed, $found_person];
+        $plot = new Plot;
+        $found_plot = $plot->where('deed_no', $validatedData['deed_no'])->first();
+        // return $found_plot;
+        // return [$found_plot, $found_person];
         $msg = false;
         if (!$found_person) {
             Session::flash('no_person');
@@ -123,18 +125,24 @@ class ProjectController extends Controller
             $msg = true;
             // return redirect()->back();
         }
-        if (!$found_deed) {
+        if (!$found_plot) {
             Session::flash('no_plot');
+            $msg = true;
+        } elseif (!$found_plot->project_id == null) {
+            Session::flash('plan_have_project');
+            $request->session()->flash('project_id', $found_plot->project_id);
+
             $msg = true;
         }
         if ($msg) {
+
             return redirect()->back();
         }
-        // return [$found_deed, $found_person];
+        // return [$found_plot, $found_person];
 
         return redirect()->action(
             'ProjectController@create',
-            ['person_id' => $found_person, 'plot_id' => $found_deed]
+            ['person_id' => $found_person, 'plot_id' => $found_plot]
         );
     }
 }

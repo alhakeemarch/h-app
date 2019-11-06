@@ -49,7 +49,6 @@ class CreateProjectsTable extends Migration
             $table->string('project_type')->nullable();
             $table->string('project_arch_hight')->nullable();
             $table->string('project_str_hight')->nullable();
-            $table->string('project_str_hight')->nullable();
             // -----------------------------
             $table->string('byanat_almawqi_no')->nullable();
             $table->string('byanat_almawqi_issue_date')->nullable();
@@ -131,7 +130,6 @@ class CreateProjectsTable extends Migration
 
             // -----------------------------
             $table->timestamp('deleted_at')->nullable();
-            $table->timestamps();
             $table->timestamps();
         });
     }
