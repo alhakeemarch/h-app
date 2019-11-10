@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark h-navbar-bg">
     <!-- navlogo -->
-    <div class="navlogo col-lg-2 d-none d-lg-inline-block text-justify">
-        <a class="navbar-brand mr-0" href="{{ url('/') }}">
-            <img src="{{ asset('img/logo-3.png') }}" width="35" height="35" class="d-inline-block align-top d-md-inline"
+    <div class="d-none d-lg-inline-block navlogo col-lg-2  text-justify">
+
+        <a class="d-flex align-items-center navbar-brand" href="{{ url('/') }}">
+            <img src="{{ asset('img/logo-3.png') }}" width="35" height="35" class="d-inline-block align-top m-1"
                 alt="LOGO">
             <span class=" font-weight-bold">{{__('app name')}}</span>
         </a>
@@ -122,10 +123,10 @@
             <div class="">
                 @if (App::isLocale('ar'))
                 <a href="{{ url('locale/en') }}" class="nav-item nav-link">
-                    <i class="fas fa-globe-asia fa-2x"></i>
+                    <i class="fas fa-globe-asia fa-1x"></i>
                 </a> @else
                 <a href="{{ url('locale/ar') }}" class="nav-item nav-link">
-                    <i class="fas fa-globe-asia fa-2x"></i>
+                    <i class="fas fa-globe-asia fa-1x"></i>
                 </a> @endif
             </div>
             <!-- /End language icon -->

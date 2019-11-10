@@ -38,4 +38,5 @@
     </div>
     <!-- end card-body -->
 
-    @endsection
+</div>
+@endsection

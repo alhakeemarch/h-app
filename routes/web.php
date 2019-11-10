@@ -54,11 +54,36 @@ Route::any('/f', function () {
 
     // Artisan::call('migrate:fresh');
     // Artisan::call('cache:clear');
-    return makeUser('admin');
+    // return makeUser('admin');
     // return makeUser('fahd');
     // factory(\App\Person::class, 100)->create();
     # الفاكتوري يحتاج إعادة بعد تعديل حقول الجدول
     // factory(\App\Plot::class, 100)->create();
+
+
+
+    ########################################################################################################################
+    // dd(scandir('D:/privet'));
+    $directory = 'D:/privet';
+    $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+
+    return (glob('*'));
+
+    $dirs = array_filter(glob('*'), 'is_dir');
+    print_r($dirs);
+    // return $scanned_directory;
+
+    // chdir
+    // chroot
+    // closedir
+    // dir
+    // getcwd
+    // opendir
+    // readdir
+    // rewinddir
+    // scandir
+
+
 });
 
 
