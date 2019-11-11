@@ -64,13 +64,28 @@ Route::any('/f', function () {
 
     ########################################################################################################################
     // dd(scandir('D:/privet'));
-    $directory = 'D:/privet';
+    $directory = '//100.0.0.6/Finished-Projects';
     $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+    return $scanned_directory;
 
-    return (glob('*'));
+    // foreach ($scanned_directory as $key => $value) {
+    //     // $po = stristr($value, ' - ');
 
-    $dirs = array_filter(glob('*'), 'is_dir');
-    print_r($dirs);
+    //     $position = stripos($value, '-');
+    //     $sub = substr($value, 0, $position);
+    //     // is_int ( mixed $var )
+    //     if (!ctype_digit($sub)) {
+    //         // if (is_numeric($sub)) {
+    //         echo $sub;
+    //     }
+    //     echo '<br />';
+    //     // echo $po;
+    // }
+    // return $scanned_directory;
+    // return (glob('*'));
+
+    // $dirs = array_filter(glob('*'), 'is_dir');
+    // print_r($dirs);
     // return $scanned_directory;
 
     // chdir
