@@ -64,9 +64,9 @@ Route::any('/f', function () {
 
     ########################################################################################################################
     // dd(scandir('D:/privet'));
-    $directory = '//100.0.0.6/Finished-Projects';
-    $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-    return $scanned_directory;
+    // $directory = '//100.0.0.6/Finished-Projects';
+    // $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+    // return $scanned_directory;
 
     // foreach ($scanned_directory as $key => $value) {
     //     // $po = stristr($value, ' - ');
@@ -97,8 +97,7 @@ Route::any('/f', function () {
     // readdir
     // rewinddir
     // scandir
-
-
+    return App\Http\Controllers\ProjectController::test();
 });
 
 
