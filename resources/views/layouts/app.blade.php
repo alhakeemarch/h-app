@@ -45,6 +45,7 @@
     <link href="{{ asset('css/fontawesome/css/regular.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome/css/brands.css') }}" rel="stylesheet">
 
+    @yield('head')
 </head>
 
 <body>
@@ -71,7 +72,7 @@
         </footer>
     </div>
 
-
+    @yield('script')
 </body>
 
 </html>
