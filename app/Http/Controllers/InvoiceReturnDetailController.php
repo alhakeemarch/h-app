@@ -14,7 +14,7 @@ class InvoiceReturnDetailController extends Controller
      */
     public function index()
     {
-        //
+        return view('invoiceReturnDetail.index');
     }
 
     /**

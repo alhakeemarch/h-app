@@ -14,7 +14,7 @@ class SaudiCityController extends Controller
      */
     public function index()
     {
-        //
+        return view('saudiCity.index');
     }
 
     /**

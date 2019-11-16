@@ -218,6 +218,9 @@ php artisan make:model Neighbor -a  // الأحياء
 php artisan make:model Plan -a  // المخططات
 php artisan make:model street -a  // الشوارع
 php artisan make:model MunicipalityBranch -a  // البلدية الفرعية
+php artisan make:model AllowedBuildingRatio -a  // نسبة البناء
+php artisan make:model AllowedBuildingHeight -a  // الإرتفاعات
+php artisan make:model AllowedUsage -a  // الإستخدامات
 
 ============== 
 # to do
@@ -426,3 +429,40 @@ https://laracasts.com/discuss/channels/general-discussion/maximum-execution-time
 
 
 
+@extends('layouts.app')
+@section('title', 'Project index')
+
+@section('head')
+{{-- // for css --}}
+@endsection
+
+@section('content')
+
+
+
+
+
+<!-- ///////////////////////////////-->
+@if ($errors->any())
+@include('layouts.errors')
+@endif
+<!-- ///////////////////////////////-->
+@endsection
+
+@section('script')
+{{-- // for javascript --}}
+@endsection
+
+
+# stander input structure
+<div class="col-md">
+    <label for="area">{{__( 'Area')}} <span class="small text-danger">({{__('required')}})</span>
+        :</label>
+    <input type="text" name="area" class="form-control @error ('area') is-invalid @enderror"
+        value="{{old('area') ?? $plot->area }}" onkeypress="onlyNumber(event)" required
+        placeholder="{{__( 'Area')}}.." onfocus="this.placeholder=''"
+        onblur="this.placeholder='{{__( 'Area')}}..'">
+    @error('area')
+    <small class="text-danger"> {{$errors->first('area')}} </small>
+    @enderror
+</div>

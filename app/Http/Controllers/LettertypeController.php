@@ -14,7 +14,7 @@ class LettertypeController extends Controller
      */
     public function index()
     {
-        //
+        return view('lettertype.index');
     }
 
     /**

@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\AllowedBuildingHeight;
+use App\AllowedBuildingRatio;
+use App\AllowedUsage;
+use App\District;
 use App\plot;
 use App\Rules\ValidDistrict;
 use App\Rules\ValidMunicipalityBranch;
 use App\Rules\ValidPlan;
 use Illuminate\Http\Request;
 use App\MunicipalityBranch;
+use App\Plan;
+use App\Project;
+use App\street;
 
 class PlotController extends Controller
 {
@@ -46,15 +53,29 @@ class PlotController extends Controller
             return redirect()->action('PlotController@check');
         }
         $new_deed_no = $request->deed_no;
-        $districts = $this->getDistricts();
+        $districts = District::all();
+        // $districts = $this->getDistricts();
         $municipality_branchs = MunicipalityBranch::all();
         $plot = new Plot;
+        $project = new Project();
+        $building_ratios = AllowedBuildingRatio::all();
+        $building_heights = AllowedBuildingHeight::all();
+        $usages = AllowedUsage::all();
+        $plans = Plan::all();
+        $streets = Street::all('id', 'ar_name')->sortBy('ar_name');
+        // $project->project_no = 75;
 
         return view('plot.create')->with([
             'districts' => $districts,
             'municipality_branchs' => $municipality_branchs,
             'new_deed_no' => $new_deed_no,
             'plot' => $plot,
+            'project' => $project,
+            'building_ratios' => $building_ratios,
+            'building_heights' => $building_heights,
+            'usages' => $usages,
+            'plans' => $plans,
+            'streets' => $streets,
         ]);
     }
 
@@ -68,7 +89,8 @@ class PlotController extends Controller
     {
 
         // return $request->all();
-        $validatedData = $this->validatePlot($request);
+        // $validatedData = $this->validatePlot($request);
+        $validatedData = $request->all();
 
         $aad_user_id = auth()->user()->id;
         $add_user_name = auth()->user()->user_name;
@@ -114,16 +136,37 @@ class PlotController extends Controller
     public function edit(plot $plot)
     {
 
-        $districts = $this->getDistricts();
-        $municipality_branchs = MunicipalityBranch::all();
 
-        return view('plot.edit')->with(
-            [
-                'districts' => $districts,
-                'municipality_branchs' => $municipality_branchs,
-                'plot' => $plot
-            ]
-        );
+        $new_deed_no = false;
+        $districts = District::all();
+        // $districts = $this->getDistricts();
+        $municipality_branchs = MunicipalityBranch::all();
+        // $plot = new Plot;
+        $project = new Project();
+        $project = $project->where('id', $plot->project_id)->first();
+        if (!$project) {
+            $project = new Project();
+        }
+        // dd($project);
+        $building_ratios = AllowedBuildingRatio::all();
+        $building_heights = AllowedBuildingHeight::all();
+        $usages = AllowedUsage::all();
+        $plans = Plan::all();
+        $streets = Street::all('id', 'ar_name')->sortBy('ar_name');
+        // $project->project_no = 75;
+
+        return view('plot.create')->with([
+            'districts' => $districts,
+            'municipality_branchs' => $municipality_branchs,
+            'new_deed_no' => $new_deed_no,
+            'plot' => $plot,
+            'project' => $project,
+            'building_ratios' => $building_ratios,
+            'building_heights' => $building_heights,
+            'usages' => $usages,
+            'plans' => $plans,
+            'streets' => $streets,
+        ]);
     }
 
     /**
@@ -139,6 +182,7 @@ class PlotController extends Controller
         $validatedData = $this->validatePlot($request);
         $last_edit_user_id = auth()->user()->id;
         $last_edit_user_name  = auth()->user()->user_name;
+
 
         $editedby = [
             'last_edit_user_id' =>  $last_edit_user_id,

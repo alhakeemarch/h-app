@@ -14,7 +14,7 @@ class ReceiptOutController extends Controller
      */
     public function index()
     {
-        //
+        return view('receiptOut.index');
     }
 
     /**

@@ -14,7 +14,7 @@ class ReceiptDiscountController extends Controller
      */
     public function index()
     {
-        //
+        return view('receiptDiscount.index');
     }
 
     /**

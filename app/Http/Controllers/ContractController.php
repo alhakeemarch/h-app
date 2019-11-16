@@ -14,8 +14,8 @@ class ContractController extends Controller
      */
     public function index()
     {
-        return 'this is contract controller / index method';
-        //
+        return view('contract.index');
+        // return 'this is contract controller / index method';
     }
 
     /**

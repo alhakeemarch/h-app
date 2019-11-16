@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark h-navbar-bg">
+<nav class="navbar navbar-expand-lg navbar-dark h-navbar-bg text-capitalize">
     <!-- navlogo -->
     <div class="d-none d-lg-inline-block navlogo col-lg-2  text-justify">
 
@@ -36,80 +36,92 @@
                 <!-- dropdown for New -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('New')}} &nbsp;</a>
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('projects')}} &nbsp;</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route ('customer.check') }}">{{__('customer')}}</a>
-                        @if(auth()->user()->user_level >= 10)
-                        <a class="dropdown-item" href="{{ route ('employee.check') }}">{{__('Employee')}}</a>
+                        <a class="dropdown-item" href="{{ route ('project.index') }}">{{__('projects')}}</a>
+                        @if(auth()->user()->user_level >= 10 or true)
+                        <a class="dropdown-item" href="{{ route ('plot.index') }}">{{__('plots')}}</a>
                         @endif
-                        <a class="dropdown-item" href="{{ route ('plot.check') }}">{{__('Plot')}}</a>
+                        <a class="dropdown-item" href="{{ route ('contract.index') }}">{{__('contracts')}}</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route ('project.check') }}">{{__('Project')}}</a>
-                        <a class="dropdown-item" href="{{ route ('contract.check') }}">{{__('contract')}}</a>
-                        <a class="dropdown-item" href="{{ route ('task.check') }}">{{__('task')}}</a>
+                        <a class="dropdown-item" href="{{ route ('home') }}">{{__('attachments')}}----</a>
+                        <a class="dropdown-item" href="{{ route ('customer.index') }}">{{__('custromars')}}</a>
+                        <a class="dropdown-item" href="{{ route ('task.index') }}">{{__('tasks')}}</a>
                     </div>
                 </li>
                 <!--/End of dropdown for New -->
                 <!-- dropdown for Edit -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('Edit')}} &nbsp;</a>
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('data')}} &nbsp;</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {{-- <a class="dropdown-item" href="{{ route ('customer.edit') }}">{{__('customer')}}</a>
-                        --}}
-                        @if (auth()->user()->user_level >= 10)
-                        {{-- <a class="dropdown-item" href="{{ route ('employee.edit') }}">{{__('employee')}}</a>
-                        --}}
+                        <a class="dropdown-item" href="{{ route ('country.index') }}">{{__('countries')}}</a>
+                        @if (auth()->user()->user_level >= 10 or true)
+                        <a class="dropdown-item" href="{{ route ('nationality.index') }}">{{__('nationalities')}}</a>
                         @endif
-                        {{-- <a class="dropdown-item" href="{{ route ('plote.edit') }}">{{__('plot')}}</a> --}}
+                        <a class="dropdown-item" href="{{ route ('saudiCity.index') }}">{{__('saudi cities')}}</a>
                         <div class="dropdown-divider"></div>
-                        {{-- <a class="dropdown-item" href="{{ route ('project.edit') }}">{{__('project')}}</a> --}}
-                        {{-- <a class="dropdown-item" href="{{ route ('contract.edit') }}">{{__('contract')}}</a>
-                        --}}
-                        {{-- <a class="dropdown-item" href="{{ route ('task.edit') }}">{{__('task')}}</a> --}}
+                        <a class="dropdown-item"
+                            href="{{ route ('municipalityBranch.index') }}">{{__('municipalities')}}</a>
+                        <a class="dropdown-item" href="{{ route ('district.index') }}">{{__('districts')}}</a>
+                        <a class="dropdown-item" href="{{ route ('plan.index') }}">{{__('plans')}}</a>
+                        <a class="dropdown-item" href="{{ route ('home') }}">{{__('streets')}}----</a>
+                        <a class="dropdown-item"
+                            href="{{ route ('allowedBuildingRatio.index') }}">{{__('building ratio')}}</a>
+                        <a class="dropdown-item"
+                            href="{{ route ('allowedBuildingHeight.index') }}">{{__('building height')}}</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route ('person.index') }}">{{__('persons')}}</a>
+                        <a class="dropdown-item" href="{{ route ('home') }}">{{__('companies')}}---</a>
+                        <a class="dropdown-item" href="{{ route ('home') }}">{{__('organizations')}}---</a>
+                        <a class="dropdown-item" href="{{ route ('home') }}">{{__('endowments')}}---</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route ('major.index') }}">{{__('majors')}}</a>
+                        <a class="dropdown-item"
+                            href="{{ route ('contractfield.index') }}">{{__('contract fields')}}</a>
+                        <a class="dropdown-item" href="{{ route ('lettertype.index') }}">{{__('letter type')}}</a>
                     </div>
                 </li>
                 <!--/End of dropdown for Edit -->
                 <!-- dropdown for show -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('Show')}} &nbsp;</a>
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('accounting')}}
+                        &nbsp;</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
+                        <a class="dropdown-item" href="{{ route ('account.index') }}">{{__('acunts')}}</a>
+                        <a class="dropdown-item" href="{{ route ('receiptIn.index') }}">{{__('receipt in')}}</a>
+                        {{-- // to add some rouls
                         @can('viewAny', App\person::class)
-                        <a class="dropdown-item" href="{{ route ('person.index') }}">{{__('Persons')}}</a>
-                        <a class="dropdown-item" href="{{ route ('employee.index') }}">{{__('Employee')}}</a>
-                        @endcan
+                        @endcan --}}
 
-                        <a class="dropdown-item" href="{{ route ('customer.index') }}">{{__('customer')}}</a>
+                        <a class="dropdown-item" href="{{ route ('receiptOut.index') }}">{{__('receipt out')}}</a>
 
-                        <a class="dropdown-item" href="{{ route ('plot.index') }}">{{__('plot')}}</a>
+                        <a class="dropdown-item"
+                            href="{{ route ('receiptDiscount.index') }}">{{__('receipt discount')}}</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route ('project.index') }}">{{__('Project')}}</a>
-                        <a class="dropdown-item" href="{{ route ('contract.index') }}">{{__('Contract')}}</a>
-                        <a class="dropdown-item" href="{{ route ('task.index') }}">{{__('Task')}}</a>
+                        <a class="dropdown-item" href="{{ route ('invoice.index') }}">{{__('invoice')}}</a>
+                        <a class="dropdown-item" href="{{ route ('invoiceReturn.index') }}">{{__('invoice return')}}</a>
+                        <a class="dropdown-item" href="{{ route ('home') }}">{{__('......')}}</a>
                     </div>
                 </li>
                 <!--/End of dropdown for edit -->
                 <!-- dropdown for delet -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('Delet')}}
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('administratives')}}
                         &nbsp;</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {{-- <a class="dropdown-item" href="{{ route ('customer.delet') }}">{{__('customer')}}</a>
-                        --}}
-                        @if (auth()->user()->user_level >= 10)
-                        {{-- <a class="dropdown-item" href="{{ route ('employee.delet') }}">{{__('employee')}}</a>
-                        --}}
-                        @endif
-                        {{-- <a class="dropdown-item" href="{{ route ('plot.delet') }}">{{__('plot')}}</a> --}}
+                        <a class="dropdown-item" href="{{ route ('import.index') }}">{{__('import')}}</a>
+
+                        <a class="dropdown-item" href="{{ route ('export.index') }}">{{__('export')}}</a>
+
+                        <a class="dropdown-item" href="{{ route ('home') }}">{{__('......')}}</a>
                         <div class="dropdown-divider"></div>
-                        {{-- <a class="dropdown-item" href="{{ route ('project.delet') }}">{{__('project')}}</a>
-                        --}}
-                        {{-- <a class="dropdown-item" href="{{ route ('contract.delet') }}">{{__('contract')}}</a>
-                        --}}
-                        {{-- <a class="dropdown-item" href="{{ route ('task.delet') }}">{{__('task')}}</a> --}}
+                        <a class="dropdown-item" href="{{ route ('employee.index') }}">{{__('employeese')}}</a>
+                        <a class="dropdown-item" href="{{ route ('letter.index') }}">{{__('letter')}}</a>
+                        <a class="dropdown-item" href="{{ route ('home') }}">{{__('.......')}}</a>
                     </div>
                 </li>
                 <!--/End of dropdown for delet -->

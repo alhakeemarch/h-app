@@ -16,7 +16,7 @@ class NeighborController extends Controller
      */
     public function index()
     {
-        //
+        return view('neighbor.index');
     }
 
     /**

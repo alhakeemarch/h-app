@@ -14,7 +14,7 @@ class PersonDocController extends Controller
      */
     public function index()
     {
-        //
+        return view('personDoc.index');
     }
 
     /**

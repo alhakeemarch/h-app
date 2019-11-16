@@ -14,7 +14,7 @@ class MunicipalityBranchController extends Controller
      */
     public function index()
     {
-        //
+        return view('municipalityBranch.index');
     }
 
     /**

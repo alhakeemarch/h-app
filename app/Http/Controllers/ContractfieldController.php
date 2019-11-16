@@ -14,7 +14,7 @@ class ContractfieldController extends Controller
      */
     public function index()
     {
-        //
+        return view('contractfield.index');
     }
 
     /**

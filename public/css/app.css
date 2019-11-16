@@ -122,6 +122,7 @@ textarea,
 }
 
 input,
+hr,
 .navbar,
 textarea,
 .card,
@@ -132,6 +133,7 @@ textarea,
 }
 
 input,
+select,
 textarea {
 	min-height: 3rem !important;
 	border: none;

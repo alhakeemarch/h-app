@@ -14,7 +14,7 @@ class PlotDocController extends Controller
      */
     public function index()
     {
-        //
+        return view('plotDoc.index');
     }
 
     /**

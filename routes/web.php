@@ -160,6 +160,8 @@ Route::resources([
     'district' => 'DistrictController',
     'plan' => 'PlanController',
     'municipalityBranch' => 'MunicipalityBranchController',
+    'allowedBuildingRatio' => 'AllowedBuildingRatioController',
+    'allowedBuildingHeight' => 'AllowedBuildingHeightController',
 
 ]);
 

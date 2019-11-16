@@ -14,7 +14,7 @@ class ProjectDocController extends Controller
      */
     public function index()
     {
-        //
+        return view('projectDoc.index');
     }
 
     /**
