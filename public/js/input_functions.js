@@ -95,3 +95,19 @@ function userNameString(evt) {
         theEvent.preventDefault();
     }
 }
+// ================================
+function filterNames(event) {
+    let inputID = event.target.id;
+    let inputName = event.target.name;
+    let inputValue = event.target.value;
+
+    let tds = document.querySelectorAll('.' + inputName);
+
+    tds.forEach(td => {
+        if (td.innerHTML.indexOf(inputValue) > -1) {
+            td.parentNode.style.display = '';
+        } else {
+            td.parentNode.style.display = 'none';
+        }
+    });
+}
