@@ -54,7 +54,6 @@ class PlotController extends Controller
         }
         $new_deed_no = $request->deed_no;
         $districts = District::all();
-        // $districts = $this->getDistricts();
         $municipality_branchs = MunicipalityBranch::all();
         $plot = new Plot;
         $project = new Project();
@@ -87,32 +86,18 @@ class PlotController extends Controller
      */
     public function store(Request $request)
     {
-
         // return $request->all();
-        // $validatedData = $this->validatePlot($request);
-        $validatedData = $request->all();
-
+        $validatedData = $this->validatePlot($request);
         $aad_user_id = auth()->user()->id;
         $add_user_name = auth()->user()->user_name;
-        // dd($validatedData);
-
-        // $municipality_branch_id = MunicipalityBranch::where('ar_name', $validatedData['municipality_branch_name'])->first()->id;
-
-        // return $municipality_branch_id;
-        // $some_ides = [
-        //     'municipality_branch_id' => $municipality_branch_id
-
-        // ];
 
         $addby = [
             'aad_user_id' =>  $aad_user_id,
             'add_user_name' => $add_user_name
         ];
-        // $validatedData = array_merge($validatedData, $addby, $some_ides);
+
         $validatedData = array_merge($validatedData, $addby);
-
         $plot = Plot::create($validatedData);
-
         return redirect()->action('PlotController@show', [$plot]);
     }
 
@@ -155,7 +140,7 @@ class PlotController extends Controller
         $streets = Street::all('id', 'ar_name')->sortBy('ar_name');
         // $project->project_no = 75;
 
-        return view('plot.create')->with([
+        return view('plot.update')->with([
             'districts' => $districts,
             'municipality_branchs' => $municipality_branchs,
             'new_deed_no' => $new_deed_no,
@@ -232,24 +217,58 @@ class PlotController extends Controller
     public function validatePlot($request)
     {
         return $request->validate([
+            'project_id' => 'nullable|numeric',
             'deed_no' => 'required',
             'deed_date' => 'required',
-            'plot_no' => [
-                'required', 'numeric',
-                // new ValidPlan
-            ],
-            // 'plan_name' => 'required|string|regex:/\p{Arabic}/u',
-            // 'plan_no' => 'required|string',
+            'plot_no' => ['required', 'numeric',],
             'area' => 'required| numeric',
-            // 'district' => [
-            //     'required', 'string',
-            // ],
-            // 'road_code' => 'required|numeric',
-            // 'road_name' => 'required|string|regex:/\p{Arabic}/u',
-            // 'municipality_branch_name' => [
-            //     'required', 'string',
-            //     new ValidMunicipalityBranch
-            // ],
+            'allowed_building_ratio' => ['required', 'numeric'],
+            'allowed_building_height' => ['required', 'numeric'],
+            'allowed_usage' => ['required', 'numeric'],
+            'allowed_usage' => ['required', 'numeric'],
+            'plan_id' => [
+                'required', 'numeric', //new ValidPlan
+            ],
+            'district_id' => [
+                'required', 'numeric', //new ValidDistrict
+            ],
+            'municipality_branch_id' => [
+                'required', 'numeric', //new ValidMunicipalityBranch
+            ],
+            'street_id' => [
+                'required', 'numeric', //new ValidStreet
+            ],
+            'x_coordinate' => [
+                'required', 'numeric', //new Valid_X_Coordinate
+            ],
+            'y_coordinate' => [
+                'required', 'numeric', //new Valid_Y_Coordinate
+            ],
+
+            'north_border_name' => 'required|string| regex:/\p{Arabic}/u',
+            'north_border_length' => 'required|numeric',
+            'north_border_setback' => 'required|numeric',
+            'north_border_cantilever' => 'required|numeric',
+            'north_border_chamfer' => 'required|numeric',
+
+            'south_border_name' => 'required|string| regex:/\p{Arabic}/u',
+            'south_border_length' => 'required|numeric',
+            'south_border_setback' => 'required|numeric',
+            'south_border_cantilever' => 'required|numeric',
+            'south_border_chamfer' => 'required|numeric',
+
+            'east_border_name' => 'required|string| regex:/\p{Arabic}/u',
+            'east_border_length' => 'required|numeric',
+            'east_border_setback' => 'required|numeric',
+            'east_border_cantilever' => 'required|numeric',
+            'east_border_chamfer' => 'required|numeric',
+
+            'west_border_name' => 'required|string| regex:/\p{Arabic}/u',
+            'west_border_length' => 'required|numeric',
+            'west_border_setback' => 'required|numeric',
+            'west_border_cantilever' => 'required|numeric',
+            'west_border_chamfer' => 'required|numeric',
+
             'notes' => 'string|nullable'
         ]);
     }

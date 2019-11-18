@@ -50,6 +50,7 @@
     <!-- ============================================================================================================ -->
     <h5 class="card-header text-white bg-secondary  rounded my-2">{{ __('Plot Information') }} </h5>
     <div class="form-row ">
+        {{-- ////////////////////////////////// --}}
         <div class="col-md">
             <label for="plot_no">{{__( 'Plot Number')}}
                 <span class="small text-danger">({{__('required')}})</span> :</label>
@@ -60,7 +61,7 @@
             <small class="text-danger"> {{$errors->first('plot_no')}} </small>
             @enderror
         </div>
-
+        {{-- ////////////////////////////////// --}}
         <div class="col-md">
             <label for="area">{{__( 'area')}} <span class="small text-danger">({{__('required')}})</span>
                 :</label>
@@ -72,13 +73,13 @@
             <small class="text-danger"> {{$errors->first('area')}} </small>
             @enderror
         </div>
-
+        {{-- ////////////////////////////////// --}}
         <div class="col-md form-group">
             <label for="allowed_building_ratio">{{__('building ratio')}} <span
                     class="small text-danger">({{__('required')}})</span>
                 :</label>
-            <select class="form-control" id="allowed_building_ratio">
-                {{-- //this is if this is edit and have value selected befor --}}
+            <select class="form-control" name="allowed_building_ratio">
+                {{-- //this is if this is edit and have value selected before --}}
                 @if ($plot->allowed_building_ratio)
                 @foreach ($building_ratios as $building_ratio)
                 @if ($plot->allowed_building_ratio == $building_ratio->id)
@@ -86,6 +87,15 @@
                 </option>
                 @endif
                 @endforeach
+                {{-- this is if form was not valid and returns with old value --}}
+                @elseif(old('allowed_building_ratio'))
+                @foreach ($building_ratios as $building_ratio)
+                @if (old('allowed_building_ratio') == $building_ratio->id)
+                <option selected="true" value="{{old('allowed_building_ratio')}}">{{$building_ratio->building_ratio}}
+                </option>
+                @endif
+                @endforeach
+                {{-- this is if new form only --}}
                 @else
                 <option selected="true" disabled="disabled">choose..</option>
                 @endif
@@ -96,24 +106,70 @@
                 @endforeach
             </select>
         </div>
-
+        {{-- ////////////////////////////////// --}}
         <div class="col-md form-group">
             <label for="allowed_building_height">{{__('building height')}} <span
                     class="small text-danger">({{__('required')}})</span>
                 : </label>
-            <select class="form-control" id="allowed_building_height">
+            <select class="form-control" name="allowed_building_height">
+
+                @if ($plot->building_height)
+                {{-- //this is if this is edit and have value selected before --}}
+                @foreach ($building_heights as $building_height)
+                @if ($plot->building_height == $building_height->id)
+                <option selected="true" value="{{$plot->building_height}}">{{$building_height->building_height}}
+                </option>
+                @endif
+                @endforeach
+
+                {{-- this is if form was not valid and returns with old value --}}
+                @elseif(old('allowed_building_height'))
+                @foreach ($building_heights as $building_height)
+                @if (old('allowed_building_height') == $building_height->id)
+                <option selected="true" value="{{old('allowed_building_height')}}">{{$building_height->building_height}}
+                </option>
+                @endif
+                @endforeach
+
+                @else
+                {{-- this is if new form only --}}
                 <option selected="true" disabled="disabled">choose..</option>
+                @endif
+
+                {{-- // this is  to get the list --}}
                 @foreach ($building_heights as $building_height)
                 <option value="{{$building_height->id}}">{{$building_height->building_height}}</option>
                 @endforeach
             </select>
         </div>
-
+        {{-- ////////////////////////////////// --}}
         <div class="col-md form-group">
             <label for="allowed_usage">{{__('usage')}} <span class="small text-danger">({{__('required')}})</span>
                 : </label>
-            <select class="form-control" id="allowed_usage">
+            <select class="form-control" name="allowed_usage">
+                @if ($plot->usage)
+                {{-- //this is if this is edit and have value selected before --}}
+                @foreach ($usages as $usage)
+                @if ($plot->usage == $usage->id)
+                <option selected="true" value="{{$plot->usage}}">{{$usage->useage}} </option>
+                @endif
+                @endforeach
+
+                {{-- this is if form was not valid and returns with old value --}}
+                @elseif(old('allowed_usage'))
+                @foreach ($usages as $usage)
+                @if (old('allowed_usage') == $usage->id)
+                <option selected="true" value="{{old('allowed_usage')}}">{{$usage->useage}} </option>
+                @endif
+                @endforeach
+
+                @else
+
+                {{-- this is if new form only --}}
                 <option selected="true" disabled="disabled">choose..</option>
+                @endif
+
+                {{-- // this is  to get the list --}}
                 @foreach ($usages as $usage)
                 <option value="{{$usage->id}}">{{$usage->useage}}</option>
                 @endforeach
@@ -125,52 +181,148 @@
     <!-- ============================================================================================================ -->
     <h5 class="card-header text-white bg-secondary  rounded my-2">{{ __('borders information') }} </h5>
     <div class="form-row ">
-
+        {{-- ////////////////////////////////// --}}
         <div class="col-md form-group">
             <label for="municipality_branch_id">{{__('municipality branch')}} <span
                     class="small text-danger">({{__('required')}})</span>
                 : </label>
-            <select class="form-control" id="municipality_branch_id">
+            <select class="form-control" name="municipality_branch_id">
+                @if ($plot->municipality_branch_id)
+                {{-- //this is if this is edit and have value selected before --}}
+                @foreach ($municipality_branchs as $municipality_branch)
+                @if ($plot->municipality_branch_id == $municipality_branch->id)
+                <option selected="true" value="{{$plot->municipality_branch_id}}">
+                    {{$municipality_branch->ar_name}} </option>
+                @endif
+                @endforeach
+
+                {{-- this is if form was not valid and returns with old value --}}
+                @elseif(old('municipality_branch_id'))
+                @foreach ($municipality_branchs as $municipality_branch)
+                @if (old('municipality_branch_id') == $municipality_branch->id)
+                <option selected="true" value="{{old('municipality_branch_id')}}">
+                    {{$municipality_branch->ar_name}} </option>
+                @endif
+                @endforeach
+
+                @else
+
+                {{-- this is if new form only --}}
                 <option selected="true" disabled="disabled">choose..</option>
+                @endif
+
+                {{-- // this is  to get the list --}}
                 @foreach ($municipality_branchs as $municipality_branch)
                 <option value="{{$municipality_branch->id}}">{{$municipality_branch->ar_name}}</option>
                 @endforeach
             </select>
         </div>
-
+        {{-- ////////////////////////////////// --}}
         <div class="col-md form-group">
             <label for="district_id">{{__('district')}} <span class="small text-danger">({{__('required')}})</span>
                 : </label>
-            <select class="form-control" id="district_id">
+            <select class="form-control" name="district_id">
+                @if ($plot->district_id)
+                {{-- //this is if this is edit and have value selected before --}}
+                @foreach ($districts as $district)
+                @if ($plot->district_id == $district->id)
+                <option selected="true" value="{{$plot->district_id}}">
+                    {{$district->ar_name}} </option>
+                @endif
+                @endforeach
+
+                {{-- this is if form was not valid and returns with old value --}}
+                @elseif(old('district_id'))
+                @foreach ($districts as $district)
+                @if (old('district_id') == $district->id)
+                <option selected="true" value="{{old('district_id')}}">
+                    {{$district->ar_name}} </option>
+                @endif
+                @endforeach
+
+                @else
+
+                {{-- this is if new form only --}}
                 <option selected="true" disabled="disabled">choose..</option>
+                @endif
+
+                {{-- // this is  to get the list --}}
                 @foreach ($districts as $district)
                 <option value="{{$district->id}}">{{$district->ar_name}}</option>
                 @endforeach
             </select>
         </div>
-
+        {{-- ////////////////////////////////// --}}
         <div class="col-md form-group">
             <label for="plan_id">{{__('plan')}} <span class="small text-danger">({{__('required')}})</span>
                 : </label>
-            <select class="form-control" id="plan_id">
+            <select class="form-control" name="plan_id">
+                @if ($plot->plan_id)
+                {{-- //this is if this is edit and have value selected before --}}
+                @foreach ($plans as $plan)
+                @if ($plot->plan_id == $plan->id)
+                <option selected="true" value="{{$plot->plan_id}}">
+                    {{$plan->plan_no}} </option>
+                @endif
+                @endforeach
+
+                {{-- this is if form was not valid and returns with old value --}}
+                @elseif(old('plan_id'))
+                @foreach ($plans as $plan)
+                @if (old('plan_id') == $plan->id)
+                <option selected="true" value="{{old('plan_id')}}">
+                    {{$plan->plan_no}} </option>
+                @endif
+                @endforeach
+
+                @else
+
+                {{-- this is if new form only --}}
                 <option selected="true" disabled="disabled">choose..</option>
+                @endif
+
+                {{-- // this is  to get the list --}}
                 @foreach ($plans as $plan)
                 <option value="{{$plan->id}}">{{$plan->plan_no}}</option>
                 @endforeach
             </select>
         </div>
-
+        {{-- ////////////////////////////////// --}}
         <div class="col-md form-group">
             <label for="street_id">{{__('street')}} <span class="small text-danger">({{__('required')}})</span>
                 : </label>
-            <select class="form-control" id="street_id">
+            <select class="form-control" name="street_id">
+                @if ($plot->street_id)
+                {{-- //this is if this is edit and have value selected before --}}
+                @foreach ($streets as $street)
+                @if ($plot->street_id == $street->id)
+                <option selected="true" value="{{$plot->street_id}}">
+                    {{$street->ar_name}} </option>
+                @endif
+                @endforeach
+
+                {{-- this is if form was not valid and returns with old value --}}
+                @elseif(old('street_id'))
+                @foreach ($streets as $street)
+                @if (old('street_id') == $street->id)
+                <option selected="true" value="{{old('street_id')}}">
+                    {{$street->ar_name}} </option>
+                @endif
+                @endforeach
+
+                @else
+
+                {{-- this is if new form only --}}
                 <option selected="true" disabled="disabled">choose..</option>
+                @endif
+
+                {{-- // this is  to get the list --}}
                 @foreach ($streets as $street)
                 <option value="{{$street->id}}">{{$street->ar_name}}</option>
                 @endforeach
             </select>
         </div>
-
+        {{-- ////////////////////////////////// --}}
     </div>
 
     <!-- ============================================================ -->
