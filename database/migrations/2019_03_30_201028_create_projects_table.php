@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class CreateProjectsTable extends Migration
 {
@@ -16,6 +17,7 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('project_no');
+            $table->bigInteger('project_name')->nullable();
             // -----------------------------
             $table->bigInteger('created_by_id'); // من أضاف المشروع على النظام
             $table->string('created_by_user'); // من أضاف المشروع على النظام

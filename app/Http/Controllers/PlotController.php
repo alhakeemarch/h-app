@@ -37,7 +37,6 @@ class PlotController extends Controller
     public function index(Plot $plot)
     {
         $plots = $plot->all();
-        // return view('person.index')->with('persons', $allPersons);
         return view('plot.index')->with('plots', $plots);
         //
     }
@@ -124,23 +123,19 @@ class PlotController extends Controller
 
         $new_deed_no = false;
         $districts = District::all();
-        // $districts = $this->getDistricts();
         $municipality_branchs = MunicipalityBranch::all();
-        // $plot = new Plot;
         $project = new Project();
-        $project = $project->where('id', $plot->project_id)->first();
-        if (!$project) {
-            $project = new Project();
+        if ($project->where('id', $plot->project_id)->first()) {
+            $project = $project->where('id', $plot->project_id)->first();
         }
-        // dd($project);
         $building_ratios = AllowedBuildingRatio::all();
         $building_heights = AllowedBuildingHeight::all();
         $usages = AllowedUsage::all();
         $plans = Plan::all();
         $streets = Street::all('id', 'ar_name')->sortBy('ar_name');
-        // $project->project_no = 75;
 
-        return view('plot.update')->with([
+
+        return view('plot.edit')->with([
             'districts' => $districts,
             'municipality_branchs' => $municipality_branchs,
             'new_deed_no' => $new_deed_no,
@@ -214,6 +209,11 @@ class PlotController extends Controller
         }
     }
 
+    /**
+     * validate the specified resource inputs.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
     public function validatePlot($request)
     {
         return $request->validate([
@@ -250,24 +250,28 @@ class PlotController extends Controller
             'north_border_setback' => 'required|numeric',
             'north_border_cantilever' => 'required|numeric',
             'north_border_chamfer' => 'required|numeric',
+            'north_border_note' => 'nullable',
 
             'south_border_name' => 'required|string| regex:/\p{Arabic}/u',
             'south_border_length' => 'required|numeric',
             'south_border_setback' => 'required|numeric',
             'south_border_cantilever' => 'required|numeric',
             'south_border_chamfer' => 'required|numeric',
+            'south_border_note' => 'nullable',
 
             'east_border_name' => 'required|string| regex:/\p{Arabic}/u',
             'east_border_length' => 'required|numeric',
             'east_border_setback' => 'required|numeric',
             'east_border_cantilever' => 'required|numeric',
             'east_border_chamfer' => 'required|numeric',
+            'east_border_note' => 'nullable',
 
             'west_border_name' => 'required|string| regex:/\p{Arabic}/u',
             'west_border_length' => 'required|numeric',
             'west_border_setback' => 'required|numeric',
             'west_border_cantilever' => 'required|numeric',
             'west_border_chamfer' => 'required|numeric',
+            'west_border_note' => 'nullable',
 
             'notes' => 'string|nullable'
         ]);

@@ -113,11 +113,11 @@
                 : </label>
             <select class="form-control" name="allowed_building_height">
 
-                @if ($plot->building_height)
+                @if ($plot->allowed_building_height)
                 {{-- //this is if this is edit and have value selected before --}}
                 @foreach ($building_heights as $building_height)
-                @if ($plot->building_height == $building_height->id)
-                <option selected="true" value="{{$plot->building_height}}">{{$building_height->building_height}}
+                @if ($plot->allowed_building_height == $building_height->id)
+                <option selected="true" value="{{$plot->allowed_building_height}}">{{$building_height->building_height}}
                 </option>
                 @endif
                 @endforeach
@@ -147,11 +147,11 @@
             <label for="allowed_usage">{{__('usage')}} <span class="small text-danger">({{__('required')}})</span>
                 : </label>
             <select class="form-control" name="allowed_usage">
-                @if ($plot->usage)
+                @if ($plot->allowed_usage)
                 {{-- //this is if this is edit and have value selected before --}}
                 @foreach ($usages as $usage)
-                @if ($plot->usage == $usage->id)
-                <option selected="true" value="{{$plot->usage}}">{{$usage->useage}} </option>
+                @if ($plot->allowed_usage == $usage->id)
+                <option selected="true" value="{{$plot->allowed_usage}}">{{$usage->usage}} </option>
                 @endif
                 @endforeach
 
@@ -159,7 +159,7 @@
                 @elseif(old('allowed_usage'))
                 @foreach ($usages as $usage)
                 @if (old('allowed_usage') == $usage->id)
-                <option selected="true" value="{{old('allowed_usage')}}">{{$usage->useage}} </option>
+                <option selected="true" value="{{old('allowed_usage')}}">{{$usage->usage}} </option>
                 @endif
                 @endforeach
 
@@ -171,7 +171,7 @@
 
                 {{-- // this is  to get the list --}}
                 @foreach ($usages as $usage)
-                <option value="{{$usage->id}}">{{$usage->useage}}</option>
+                <option value="{{$usage->id}}">{{$usage->usage}}</option>
                 @endforeach
             </select>
         </div>
@@ -431,12 +431,12 @@
         </div>
 
         <div class="col-md">
-            <label for="north_border_note">{{__( 'note')}} <span class="small text-danger">({{__('required')}})</span>
+            <label for="north_border_note">{{__( 'note')}} <span class="small text-muted">({{__('optional')}})</span>
                 :</label>
             <input type="text" name="north_border_note"
                 class="form-control @error ('north_border_note') is-invalid @enderror"
                 value="{{old('north_border_note') ?? $plot->north_border_note }}" onkeypress="onlyArabicString(event)"
-                required placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
+                placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'note')}}..'">
             @error('north_border_note')
             <small class="text-danger"> {{$errors->first('north_border_note')}} </small>
@@ -519,12 +519,12 @@
         </div>
 
         <div class="col-md">
-            <label for="south_border_note">{{__( 'note')}} <span class="small text-danger">({{__('required')}})</span>
+            <label for="south_border_note">{{__( 'note')}} <span class="small text-muted">({{__('optional')}})</span>
                 :</label>
             <input type="text" name="south_border_note"
                 class="form-control @error ('south_border_note') is-invalid @enderror"
                 value="{{old('south_border_note') ?? $plot->south_border_note }}" onkeypress="onlyArabicString(event)"
-                required placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
+                placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'note')}}..'">
             @error('south_border_note')
             <small class="text-danger"> {{$errors->first('south_border_note')}} </small>
@@ -606,12 +606,12 @@
         </div>
 
         <div class="col-md">
-            <label for="east_border_note">{{__( 'note')}} <span class="small text-danger">({{__('required')}})</span>
+            <label for="east_border_note">{{__( 'note')}} <span class="small text-muted">({{__('optional')}})</span>
                 :</label>
             <input type="text" name="east_border_note"
                 class="form-control @error ('east_border_note') is-invalid @enderror"
                 value="{{old('east_border_note') ?? $plot->east_border_note }}" onkeypress="onlyArabicString(event)"
-                required placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
+                placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'note')}}..'">
             @error('east_border_note')
             <small class="text-danger"> {{$errors->first('east_border_note')}} </small>
@@ -693,12 +693,12 @@
         </div>
 
         <div class="col-md">
-            <label for="west_border_note">{{__( 'note')}} <span class="small text-danger">({{__('required')}})</span>
+            <label for="west_border_note">{{__( 'note')}} <span class="small text-muted">({{__('optional')}})</span>
                 :</label>
             <input type="text" name="west_border_note"
                 class="form-control @error ('west_border_note') is-invalid @enderror"
                 value="{{old('west_border_note') ?? $plot->west_border_note }}" onkeypress="onlyArabicString(event)"
-                required placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
+                placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'note')}}..'">
             @error('west_border_note')
             <small class="text-danger"> {{$errors->first('west_border_note')}} </small>
@@ -712,13 +712,13 @@
     <div class="form-row ">
 
         <div class="col-md">
-            <label for="fname">{{__( 'Notes')}}
-                <span class="small text-muted">({{__('Optional')}})</span>
+            <label for="fname">{{__( 'notes')}}
+                <span class="small text-muted">({{__('optional')}})</span>
                 :</label>
 
             <textarea name="notes" class="form-control @error ('notes') is-invalid @enderror " rows="3"
-                placeholder="add your Notes.." onfocus="this.placeholder=''"
-                onblur="this.placeholder='add your Notes..'">
+                placeholder="add your notes.." onfocus="this.placeholder=''"
+                onblur="this.placeholder='add your notes..'">
                 {{old('notes') ?? $plot->notes }}</textarea>
 
             @error('notes')

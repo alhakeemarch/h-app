@@ -221,6 +221,7 @@ php artisan make:model MunicipalityBranch -a  // البلدية الفرعية
 php artisan make:model AllowedBuildingRatio -a  // نسبة البناء
 php artisan make:model AllowedBuildingHeight -a  // الإرتفاعات
 php artisan make:model AllowedUsage -a  // الإستخدامات
+php artisan make:model OwnerType -a  // نوع المالك
 
 ============== 
 # to do

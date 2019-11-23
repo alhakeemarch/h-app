@@ -6,7 +6,7 @@
     <a class="btn btn-info w-75" href="{{ url('/plot/check')}}">
         {{-- <i class="far fa-add"></i>  --}}
         <i class=" fas fa-plus"></i>
-        <span class="d-none d-md-inline-block">&nbsp; add new plot</span>
+        <span class="d-none d-md-inline-block">&nbsp; {{__('add new deed')}}</span>
     </a>
     <hr>
     <div class="card">

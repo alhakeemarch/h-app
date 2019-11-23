@@ -17,10 +17,15 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $allProjects = $this->test();
-        return view('project.index')->with('projects', $allProjects);
-        return 'this is project controller / index method';
-        //
+        // $allProjects = $this->test();
+        $allProjects = Project::all();
+        $runningProjects = $this->get_running_projects();
+        $finishedProjects = $this->get_finished_projects();
+        return view('project.index')->with([
+            'projects' => $allProjects,
+            'runningProjects' => $runningProjects,
+            'finishedProjects' => $finishedProjects,
+        ]);
     }
 
     /**
@@ -194,5 +199,14 @@ class ProjectController extends Controller
             echo '<br/>';
         }
         // dd($abcd);
+    }
+
+    function get_running_projects()
+    {
+        return '';
+    }
+    function get_finished_projects()
+    {
+        return '';
     }
 }

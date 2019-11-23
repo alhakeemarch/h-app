@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\AllowedBuildingRatio;
+use App\OwnerType;
 use Illuminate\Http\Request;
 
-class AllowedBuildingRatioController extends Controller
+class OwnerTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AllowedBuildingRatioController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\AllowedBuildingRatio  $allowedBuildingRatio
+     * @param  \App\OwnerType  $ownerType
      * @return \Illuminate\Http\Response
      */
-    public function show(AllowedBuildingRatio $allowedBuildingRatio)
+    public function show(OwnerType $ownerType)
     {
         //
     }
@@ -52,10 +52,10 @@ class AllowedBuildingRatioController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\AllowedBuildingRatio  $allowedBuildingRatio
+     * @param  \App\OwnerType  $ownerType
      * @return \Illuminate\Http\Response
      */
-    public function edit(AllowedBuildingRatio $allowedBuildingRatio)
+    public function edit(OwnerType $ownerType)
     {
         //
     }
@@ -64,10 +64,10 @@ class AllowedBuildingRatioController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\AllowedBuildingRatio  $allowedBuildingRatio
+     * @param  \App\OwnerType  $ownerType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AllowedBuildingRatio $allowedBuildingRatio)
+    public function update(Request $request, OwnerType $ownerType)
     {
         //
     }
@@ -75,38 +75,39 @@ class AllowedBuildingRatioController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\AllowedBuildingRatio  $allowedBuildingRatio
+     * @param  \App\OwnerType  $ownerType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AllowedBuildingRatio $allowedBuildingRatio)
+    public function destroy(OwnerType $ownerType)
     {
         //
     }
+
     /**
-     * insert inital allowed building ratios data to db.
+     * insert inital allowed usage data to db.
      */
     public static function firstInsertion()
     {
-        $buildingRatios = [
-            '10',
-            '20',
-            '30',
-            '40',
-            '50',
-            '60',
-            '70',
-            '80',
-            '90',
-            '100',
+        $ownerTypes = [
+            'person' => 'شخص',
+            'partners' => 'شركاء',
+            'inheritor' => 'ورثة',
+            'company' => 'شركة',
+            'institution' => 'مؤسسة',
+            'endowment' => 'وقف',
+            'governmental organizations' => 'جهة حكومية',
+            'organizations' => 'جهة',
+            'ministry of endowments' => 'وزارة الأوقاف',
         ];
 
-        if (AllowedBuildingRatio::all()->count() >= count($buildingRatios)) {
+        if (OwnerType::all()->count() >= count($ownerTypes)) {
             return false;
         }
-        foreach ($buildingRatios as $key => $value) {
-            $allowedbuildingRatio = new AllowedBuildingRatio();
-            $allowedbuildingRatio->building_ratio = $value;
-            $allowedbuildingRatio->save();
+        foreach ($ownerTypes as $key => $value) {
+            $ownerType = new OwnerType();
+            $ownerType->type_en = $key;
+            $ownerType->type_ar = $value;
+            $ownerType->save();
         }
         return true;
     }

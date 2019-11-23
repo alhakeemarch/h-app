@@ -82,4 +82,33 @@ class AllowedUsageController extends Controller
     {
         //
     }
+    /**
+     * insert inital allowed usage data to db.
+     */
+    public static function firstInsertion()
+    {
+        $usages = [
+            'سكني',
+            'سكني تجاري',
+            'تجاري',
+            'إداري',
+            'تعليمي',
+            'محطة محروقات',
+            'صحي',
+            'مستشفى',
+            'حكومي',
+            'مسجد',
+            'خيري',
+        ];
+
+        if (AllowedUsage::all()->count() >= count($usages)) {
+            return false;
+        }
+        foreach ($usages as $key => $value) {
+            $allowedUsage = new AllowedUsage();
+            $allowedUsage->usage = $value;
+            $allowedUsage->save();
+        }
+        return true;
+    }
 }

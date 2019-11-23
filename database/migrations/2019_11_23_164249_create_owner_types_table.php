@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAllowedUsagesTable extends Migration
+class CreateOwnerTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateAllowedUsagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('allowed_usages', function (Blueprint $table) {
+        Schema::create('owner_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('usage');
+            $table->string('type_ar');
+            $table->string('type_en')->nullable();
 
 
 
@@ -35,6 +36,6 @@ class CreateAllowedUsagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('allowed_usages');
+        Schema::dropIfExists('owner_types');
     }
 }

@@ -82,4 +82,64 @@ class AllowedBuildingHeightController extends Controller
     {
         //
     }
+    /**
+     * insert inital allowed building heights data to db.
+     */
+    public static function firstInsertion()
+    {
+        $buildingHeights = [
+            'سور فقط',
+            'سور و ملحق أرضي',
+            'دور واحد فقط',
+            'دور واحد ملحق',
+            '2 دور فقط',
+            '2 دور وملحق',
+            '3 دور فقط',
+            '3 دور وملحق',
+            '4 دور فقط',
+            '4 دور وملحق',
+            '5 دور فقط',
+            '5 دور وملحق',
+            '6 دور فقط',
+            '6 دور وملحق',
+            '7 دور فقط',
+            '7 دور وملحق',
+            '8 دور فقط',
+            '8 دور وملحق',
+            '9 دور فقط',
+            '9 دور وملحق',
+            '10 دور فقط',
+            '10 دور وملحق',
+            '11 دور فقط',
+            '11 دور وملحق',
+            '12 دور فقط',
+            '12 دور وملحق',
+            '13 دور فقط',
+            '13 دور وملحق',
+            '14 دور فقط',
+            '14 دور وملحق',
+            '15 دور فقط',
+            '15 دور وملحق',
+            '16 دور فقط',
+            '16 دور وملحق',
+            '17 دور فقط',
+            '17 دور وملحق',
+            '18 دور فقط',
+            '18 دور وملحق',
+            '19 دور فقط',
+            '19 دور وملحق',
+            '20 دور فقط',
+            '20 دور وملحق',
+        ];
+
+        if (AllowedBuildingHeight::all()->count() >= count($buildingHeights)) {
+            return false;
+        }
+        foreach ($buildingHeights as $key => $value) {
+            $allowedbuildingHeight = new AllowedBuildingHeight();
+            $allowedbuildingHeight->building_Height = $value;
+            $allowedbuildingHeight->save();
+        }
+        return true;
+    }
 }

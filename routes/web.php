@@ -52,6 +52,18 @@ Route::any('/f', function () {
     // // // inserts all available streets to db
     // return (App\Http\Controllers\StreetController::firstInsertion()) ? App\Street::all() : 'some thing is worng';
 
+    // // // inserts all allowedUsages to db
+    // return (App\Http\Controllers\AllowedUsageController::firstInsertion()) ? App\AllowedUsage::all() : 'some thing is worng';
+
+    // // // inserts all AllowedBuildingRatios to db
+    // return (App\Http\Controllers\AllowedBuildingRatioController::firstInsertion()) ? App\AllowedBuildingRatio::all() : 'some thing is worng';
+
+    // // // inserts all AllowedBuildingHeight to db
+    // return (App\Http\Controllers\AllowedBuildingHeightController::firstInsertion()) ? App\AllowedBuildingHeight::all() : 'some thing is worng';
+
+    // // // inserts all OwnerTypes to db
+    // return (App\Http\Controllers\OwnerTypeController::firstInsertion()) ? App\OwnerType::all() : 'some thing is worng';
+
     // Artisan::call('migrate:fresh');
     // Artisan::call('cache:clear');
     // return makeUser('admin');
@@ -97,7 +109,7 @@ Route::any('/f', function () {
     // readdir
     // rewinddir
     // scandir
-    return App\Http\Controllers\ProjectController::test();
+    // return App\Http\Controllers\ProjectController::test();
 });
 
 
@@ -162,6 +174,7 @@ Route::resources([
     'municipalityBranch' => 'MunicipalityBranchController',
     'allowedBuildingRatio' => 'AllowedBuildingRatioController',
     'allowedBuildingHeight' => 'AllowedBuildingHeightController',
+    'ownerType' => 'OwnerTypeController',
 
 ]);
 

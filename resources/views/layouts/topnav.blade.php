@@ -71,6 +71,7 @@
                         <a class="dropdown-item"
                             href="{{ route ('allowedBuildingHeight.index') }}">{{__('building height')}}</a>
                         <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route ('ownerType.index') }}">{{__('owner types')}}</a>
                         <a class="dropdown-item" href="{{ route ('person.index') }}">{{__('persons')}}</a>
                         <a class="dropdown-item" href="{{ route ('home') }}">{{__('companies')}}---</a>
                         <a class="dropdown-item" href="{{ route ('home') }}">{{__('organizations')}}---</a>
