@@ -24,6 +24,30 @@
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
     },
+
+
+"todohighlight.isEnable": true,
+    "todohighlight.keywords": [
+        {
+            "text": "TO:",
+            "color": "#00BFFF",
+            "border": "1px solid #F0FFFF",
+            "borderRadius": "2px", //NOTE: using borderRadius along with `border` or you will see nothing change
+            "backgroundColor": "rgba(0,0,0,.2)",
+        },
+        {
+            "text": "NOTE:",
+            "color": "Bisque",
+            "border": "1px solid #FFCE00",
+            "borderRadius": "2px", //NOTE: using borderRadius along with `border` or you will see nothing change
+            "backgroundColor": "rgba(0,0,0,.2)",
+        },
+
+    ],
+
+
+
+
 }
 
 

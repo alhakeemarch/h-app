@@ -9,6 +9,47 @@
 
 <div class="container-fluid">
     <div class="card">
+        {{-- ========================================TODO:========================================== --}}
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-running-tab" data-toggle="tab" href="#nav-running"
+                    role="tab" aria-controls="nav-running" aria-selected="true">runnig projects</a>
+                <a class="nav-item nav-link" id="nav-finshed-tab" data-toggle="tab" href="#nav-finshed" role="tab"
+                    aria-controls="nav-finshed" aria-selected="false">finshed projects</a>
+                <a class="nav-item nav-link" id="nav-all_projects-tab" data-toggle="tab" href="#nav-all_projects"
+                    role="tab" aria-controls="nav-all_projects" aria-selected="false">all projects</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-running" role="tabpanel" aria-labelledby="nav-running-tab">
+                <form action="project/index/hi" method="get">
+                    <button class="btn btn-info" type="submit">get all runnig projects</button>
+                </form>
+                this whare runnig projects go ..
+            </div>
+            <div class="tab-pane fade" id="nav-finshed" role="tabpanel" aria-labelledby="nav-finshed-tab">
+                this whare finshed projects go ..
+            </div>
+            <div class="tab-pane fade" id="nav-all_projects" role="tabpanel" aria-labelledby="nav-all_projects-tab">
+                this whare all projects go ..
+            </div>
+        </div>
+
+        <br><br><br>
+        <hr>
+        {{-- ========================================TODO:========================================== --}}
+
+
+
+
+
+
+
+
+
+
+
+
         <h4 class="card-header text-center">
             List of All projects
         </h4>
@@ -34,11 +75,12 @@
             <tbody>
 
                 @php $i=1 @endphp
-                @foreach ($projects as $project)
+
+                @foreach ($runningProjects as $project_no=>$project_name)
                 <tr>
                     <th scope="row">{{$i}}</th>
-                    <td class="project_name">{{$project}}</td>
-                    <td class="project_number"><span class="text-danger">يفترض الرقم</span> {{$project}}</td>
+                    <td class="project_name">{{$project_name}}</td>
+                    <td class="project_number"><span class="text-danger">يفترض الرقم</span> {{$project_no}}</td>
                 </tr>
                 @php $i ++ @endphp
                 </tr>

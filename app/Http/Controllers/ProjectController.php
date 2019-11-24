@@ -15,9 +15,13 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $allProjects = $this->test();
+        // if ($request) {
+        //     dd($request);
+        //     return $request;
+        // }
+
         $allProjects = Project::all();
         $runningProjects = $this->get_running_projects();
         $finishedProjects = $this->get_finished_projects();
@@ -152,7 +156,7 @@ class ProjectController extends Controller
             ['person_id' => $found_person, 'plot_id' => $found_plot]
         );
     }
-
+    // TODO: this function must deleted
     public static function test()
     {
 
@@ -203,19 +207,14 @@ class ProjectController extends Controller
 
     function get_running_projects()
     {
-        return '';
-
         $project_no = [];
         $project_name = [];
-        $project_link = [];
 
-        $directory = '//100.0.0.5/f$/data-server/02-Runing-Projects';
-        // $directory = 'c:/';
+        // $directory = '//100.0.0.5/f$/data-server/02-Runing-Projects';
+        $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/01- running projects';
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
 
-        $projects_dir = $projects_dir_arr;
-        return $projects_dir;
         foreach ($projects_dir as $key => $value) {
             $position = stripos($value, '-');
             $sub = substr($value, 0, $position);
@@ -224,45 +223,37 @@ class ProjectController extends Controller
             $sub2 = trim($sub2);
             $project_no[$sub] = $value;
             $project_name[$sub] = $sub2;
-            $project_link[$sub] = '<a href=file:' . '100.0.0.6/Finished-Projects' . '/' . $value . '">' . $sub2 . '</a>';
         }
         ksort($project_no);
         ksort($project_name);
-        ksort($project_link);
-        $a = 0;
-        foreach ($project_no as $key => $value) {
-            if ($key <> $a) {
-                echo $a . '===' . $value . '<br/>';
-            }
-            $a = $a + 1;
-        }
-        // return $project_no;
-        // return $project_link;
-        foreach ($project_link as $key => $value) {
-            echo $value;
-            echo '<br/>';
-        }
-        // dd($abcd);
 
+        // TO: check if there is a project missing
+        // $a = 0;
+        // foreach ($project_no as $key => $value) {
+        //     if ($key <> $a) {
+        //         echo $a . '===' . $value . '<br/>';
+        //     }
+        //     $a = $a + 1;
+        // }
+
+        return $project_name;
     }
 
-    // TODO this is to dooo
-    // FIXME this is for fixing 
+
     function get_finished_projects()
     {
-        return '';
+        // return '';
 
         $project_no = [];
         $project_name = [];
-        $project_link = [];
 
-        $directory = '//100.0.0.6/Finished-Projects';
-        // $directory = 'c:/';
+
+        // $directory = '//100.0.0.6/Finished-Projects';
+        $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects';
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
 
-        $projects_dir = $projects_dir_arr;
-        return $projects_dir;
+        // return $projects_dir;
         foreach ($projects_dir as $key => $value) {
             $position = stripos($value, '-');
             $sub = substr($value, 0, $position);
@@ -271,27 +262,11 @@ class ProjectController extends Controller
             $sub2 = trim($sub2);
             $project_no[$sub] = $value;
             $project_name[$sub] = $sub2;
-            $project_link[$sub] = '<a href=file:' . '100.0.0.6/Finished-Projects' . '/' . $value . '">' . $sub2 . '</a>';
         }
+
         ksort($project_no);
         ksort($project_name);
-        ksort($project_link);
-        $a = 0;
-        foreach ($project_no as $key => $value) {
-            if ($key <> $a) {
-                echo $a . '===' . $value . '<br/>';
-            }
-            $a = $a + 1;
-        }
-        // return $project_no;
-        // return $project_link;
-        foreach ($project_link as $key => $value) {
-            echo $value;
-            echo '<br/>';
-        }
-        // dd($abcd);
 
-
-
+        return $project_name;
     }
 }
