@@ -161,6 +161,35 @@ input.form-check-input {
 	text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
 }
 
+.nav-tabs {
+	position: relative;
+	z-index: 1;
+	padding: .8rem;
+	margin-right: 1rem;
+	margin-bottom: -20px;
+	margin-left: 1rem;
+	background-color: #2bbbad;
+	background-color: #3f51b5;
+	background-color: #465573;
+
+	border: 0;
+	border-radius: .25rem;
+	-webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+	box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+.nav-link {
+	color: #add8e6;
+}
+
+.nav-tabs > .nav-item > .active {
+	color: #fff;
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: .25rem;
+	-webkit-transition: all 1s;
+	transition: all 1s;
+}
+
 /* ============================================================ */
 /* grid */
 

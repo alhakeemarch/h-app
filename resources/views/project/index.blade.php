@@ -8,134 +8,163 @@
 @section('content')
 
 <div class="container-fluid">
-    <div class="card">
-        {{-- ========================================TODO:========================================== --}}
-        <nav class="mb-3 text-uppercase">
-            <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active my-2" id="nav-running-tab" data-toggle="tab" href="#nav-running"
-                    role="tab" aria-controls="nav-running" aria-selected="true">runnig projects</a>
-                <a class="nav-item nav-link my-2" id="nav-finshed-tab" data-toggle="tab" href="#nav-finshed" role="tab"
-                    aria-controls="nav-finshed" aria-selected="false">finshed projects</a>
-                <a class="nav-item nav-link my-2" id="nav-all_projects-tab" data-toggle="tab" href="#nav-all_projects"
-                    role="tab" aria-controls="nav-all_projects" aria-selected="false">all
-                    projects</a>
-            </div>
-        </nav>
-        <div class="tab-content text-capitalize" id="nav-tabContent">
 
+    <ul class="nav nav-tabs nav-justified text-uppercase" id="projects_tab_Just" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="runnig_projects-tab-just" data-toggle="tab" href="#runnig_projects-just"
+                role="tab" aria-controls="runnig_projects-just" aria-selected="true">runnig projects</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="finshed_projects-tab-just" data-toggle="tab" href="#finshed_projects-just"
+                role="tab" aria-controls="finshed_projects-just" aria-selected="false">finshed projects</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="all_projects-tab-just" data-toggle="tab" href="#all_projects-just" role="tab"
+                aria-controls="all_projects-just" aria-selected="false">all projects</a>
+        </li>
+    </ul>
+
+    <div class="tab-content card pt-5 text-capitalize" id="projects_tab_ContentJust">
+        <div class="tab-pane fade show active" id="runnig_projects-just" role="tabpanel"
+            aria-labelledby="runnig_projects-tab-just">
             {{-- ///////////////////////////////////////NOTE: running ////////////////////////////////////////////////////////// --}}
-            <div class="tab-pane fade show active" id="nav-running" role="tabpanel" aria-labelledby="nav-running-tab">
-                <h4 class="card-header text-center">
-                    list of running projects
-                </h4>
-                <table class="table table-hover table-bordered">
-                    <thead class="bg-thead">
-                        <tr>
-                            <th scope="col">sequence</th>
-                            <th scope="col">
-                                <div>project name</div>
-                                <input type="text" id='projectNameInput' name="project_name" class="form-control"
-                                    autocomplete="off" required placeholder="{{__( 'project Name')}}.."
-                                    onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
-                                    onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
-                            </th>
-                            <th scope="col">
-                                <div>project number</div>
-                                <input type="text" name="project_number" id="project_no" class="form-control"
-                                    autocomplete="off" required placeholder="{{__( 'project Number')}}.."
-                                    onfocus="this.placeholder=''"
-                                    onblur="this.placeholder=' {{__( 'project Number')}}..'"
-                                    onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
+            <h3 class="h3 text-center">
+                list of running projects
+            </h3>
+            <table class="table table-hover table-bordered">
+                <thead class="bg-thead">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            <p>project name</p>
+                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project Name')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                        </th>
+                        <th scope="col">
+                            <p>project number</p>
+                            <input type="text" name="project_number" id="project_no" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project Number')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Number')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    @php $i=1 @endphp
 
-                        @php $i=1 @endphp
-
-                        @foreach ($runningProjects as $project_no=>$project_name)
-                        <tr>
-                            <th scope="row">{{$i}}</th>
-                            <td class="project_name">{{$project_name}}</td>
-                            <td class="project_number">{{$project_no}}</td>
-                        </tr>
-                        @php $i ++ @endphp
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    @foreach ($runningProjects as $project_no=>$project_name)
+                    <tr>
+                        <th scope="row">{{$i}}</th>
+                        <td class="project_name">{{$project_name}}</td>
+                        <td class="project_number">{{$project_no}}</td>
+                    </tr>
+                    @php $i ++ @endphp
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
             {{-- ///////////////////////////////////////NOTE: end of running /////////////////////////////////////////////////// --}}
-
-            {{-- ///////////////////////////////////////NOTE: finised ////////////////////////////////////////////////////////// --}}
-            <div class="tab-pane fade" id="nav-finshed" role="tabpanel" aria-labelledby="nav-finshed-tab">
-                <h4 class="card-header text-center">
-                    list of finished projects
-                </h4>
-                <table class="table table-hover table-bordered">
-                    <thead class="bg-thead">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">
-                                <input type="text" id='projectNameInput' name="project_name" class="form-control"
-                                    autocomplete="off" required placeholder="{{__( 'project Name')}}.."
-                                    onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
-                                    onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
-                            </th>
-                            <th scope="col">
-                                <input type="text" name="project_number" id="project_no" class="form-control"
-                                    autocomplete="off" required placeholder="{{__( 'project Number')}}.."
-                                    onfocus="this.placeholder=''"
-                                    onblur="this.placeholder=' {{__( 'project Number')}}..'"
-                                    onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
-
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @php $i=1 @endphp
-
-                        @foreach ($finishedProjects as $project_no=>$project_name)
-                        <tr>
-                            <th scope="row">{{$i}}</th>
-                            <td class="project_name">{{$project_name}}</td>
-                            <td class="project_number">{{$project_no}}</td>
-                        </tr>
-                        @php $i ++ @endphp
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            {{-- ///////////////////////////////////////NOTE: end of finised ////////////////////////////////////////////////////////// --}}
-
-            {{-- ///////////////////////////////////////NOTE: all  ////////////////////////////////////////////////////////// --}}
-            <div class="tab-pane fade" id="nav-all_projects" role="tabpanel" aria-labelledby="nav-all_projects-tab">
-                this whare all projects go ..
-            </div>
-            {{-- ///////////////////////////////////////NOTE: end of all  ////////////////////////////////////////////////////////// --}}
         </div>
 
+        <div class="tab-pane fade" id="finshed_projects-just" role="tabpanel"
+            aria-labelledby="finshed_projects-tab-just">
+            {{-- ///////////////////////////////////////NOTE: finised ////////////////////////////////////////////////////////// --}}
+            <h3 class="h3 text-center">
+                list of finished projects
+            </h3>
+            <table class="table table-hover table-bordered">
+                <thead class="bg-thead">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            <p>project name</p>
+                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project Name')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                        </th>
+                        <th scope="col">
+                            <p>project number</p>
+                            <input type="text" name="project_number" id="project_no" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project Number')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Number')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
 
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
-        {{-- ========================================TODO:========================================== --}}
+                    @php $i=1 @endphp
 
+                    @foreach ($finishedProjects as $project_no=>$project_name)
+                    <tr>
+                        <th scope="row">{{$i}}</th>
+                        <td class="project_name">{{$project_name}}</td>
+                        <td class="project_number">{{$project_no}}</td>
+                    </tr>
+                    @php $i ++ @endphp
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{-- ///////////////////////////////////////NOTE: end of finised ////////////////////////////////////////////////////////// --}}
+        </div>
 
+        <div class="tab-pane fade" id="all_projects-just" role="tabpanel" aria-labelledby="all_projects-tab-just">
+            {{-- ///////////////////////////////////////NOTE: all projects ////////////////////////////////////////////////////////// --}}
+            <h3 class="h3 text-center">
+                list of all projects
+            </h3>
+            <table class="table table-hover table-bordered">
+                <thead class="bg-thead">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            <p>project name</p>
+                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project Name')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                        </th>
+                        <th scope="col">
+                            <p>project number</p>
+                            <input type="text" name="project_number" id="project_no" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project Number')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Number')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
 
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                    @php $i=1 @endphp
 
+                    @foreach ($projects as $project_no=>$project_name)
+                    <tr>
+                        <th scope="row">{{$i}}</th>
+                        <td class="project_name">{{$project_name}}</td>
+                        <td class="project_number">{{$project_no}}</td>
+                    </tr>
+                    @php $i ++ @endphp
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{-- ///////////////////////////////////////NOTE: end of all projects//////////////////////////////////////////////// --}}
+        </div>
+    </div>
 
-
-
-
-
-
-
-
-    </div><!-- /End of container-fluid  -->
 </div><!-- /End of container-fluid  -->
+<hr>
+<div class="alert alert-danger">
+    <p>ممكن نضيف المشاريع الصادر لها رخصة من ملف زايد</p>
+    <p>ممكن نضيف فولدر الأرشيف</p>
+</div>
 
 
 <!-- ///////////////////////////////-->
@@ -148,21 +177,6 @@
 
 @section('script')
 <script>
-    function filterNames(event){
-    let inputID = event.target.id;
-    let inputName = event.target.name;
-      let inputValue = event.target.value;
-
-      let tds = document.querySelectorAll('.'+inputName);
-      
-      tds.forEach(td => {
-          if(td.innerHTML.indexOf(inputValue) > -1){
-            td.parentNode.style.display = '';
-            } else {
-            td.parentNode.style.display = 'none';
-            }
-      });
-    }
 
 </script>
 @endsection
