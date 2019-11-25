@@ -85,10 +85,12 @@ body {
 	background: #264067;
 	background-color: #264067;
 }
-.btn-link {
+.btn-link,
+.nav-link {
 	color: #335589;
 }
-.btn-link:hover {
+.btn-link:hover,
+.nav-link:hover {
 	color: #264067;
 }
 
@@ -100,6 +102,7 @@ body {
 /* matiral desing  */
 
 .btn,
+.nav-tabs,
 .navbar,
 input,
 textarea,

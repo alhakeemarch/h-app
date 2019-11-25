@@ -210,8 +210,8 @@ class ProjectController extends Controller
         $project_no = [];
         $project_name = [];
 
-        // $directory = '//100.0.0.5/f$/data-server/02-Runing-Projects';
-        $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/01- running projects';
+        $directory = '//100.0.0.5/f$/data-server/02-Runing-Projects';
+        // $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/01- running projects';
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
 
@@ -248,8 +248,8 @@ class ProjectController extends Controller
         $project_name = [];
 
 
-        // $directory = '//100.0.0.6/Finished-Projects';
-        $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects';
+        $directory = '//100.0.0.6/Finished-Projects';
+        // $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects';
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
 
