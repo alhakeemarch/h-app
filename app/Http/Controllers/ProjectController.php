@@ -25,10 +25,13 @@ class ProjectController extends Controller
         $allProjects = Project::all();
         $runningProjects = $this->get_running_projects();
         $finishedProjects = $this->get_finished_projects();
+        $e_archive = $this->get_e_archive();
+
         return view('project.index')->with([
             'projects' => $allProjects,
             'runningProjects' => $runningProjects,
             'finishedProjects' => $finishedProjects,
+            'e_archive' => $e_archive,
         ]);
     }
 
@@ -162,19 +165,25 @@ class ProjectController extends Controller
         $project_no = [];
         $project_name = [];
 
-        // $directory = '//100.0.0.5/f$/data-server/02-Runing-Projects';
-        $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/01- running projects';
+        $directory = '//100.0.0.5/f$/data-server/02-Runing-Projects';
+        // $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/01- running projects';
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
 
         foreach ($projects_dir as $key => $value) {
-            $position = stripos($value, '-');
-            $sub = substr($value, 0, $position);
-            $sub = trim($sub);
-            $sub2 = substr($value, $position + 1);
-            $sub2 = trim($sub2);
-            $project_no[$sub] = $value;
-            $project_name[$sub] = $sub2;
+            $n = substr($value, 1, 1);
+            $n = trim($n);
+            if (is_numeric($n)) {
+                $position = stripos($value, '-');
+                $sub = substr($value, 0, $position);
+                $sub = trim($sub);
+                $sub2 = substr($value, $position + 1);
+                $sub2 = trim($sub2);
+                $project_no[$sub] = $value;
+                $project_name[$sub] = $sub2;
+            } else {
+                $project_name['لم يعطى رقم' . $key] = $value;
+            }
         }
         ksort($project_no);
         ksort($project_name);
@@ -197,8 +206,8 @@ class ProjectController extends Controller
         $project_no = [];
         $project_name = [];
 
-        // $directory = '//100.0.0.6/Finished-Projects';
-        $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects';
+        $directory = '//100.0.0.6/Finished-Projects';
+        // $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects';
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
 
@@ -215,6 +224,27 @@ class ProjectController extends Controller
 
         ksort($project_no);
         ksort($project_name);
+
+        return $project_name;
+    }
+
+
+    function get_e_archive()
+    {
+        $project_no = [];
+        $project_name = [];
+
+        $directory = '//100.0.0.6/E-Archive';
+        // $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects';
+        $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+        $projects_dir = $scanned_directory;
+
+        foreach ($projects_dir as $key => $value) {
+            $project_name['archive' . $key] = $value;
+        }
+
+        // ksort($project_no);
+        // ksort($project_name);
 
         return $project_name;
     }
