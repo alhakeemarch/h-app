@@ -26,12 +26,14 @@ class ProjectController extends Controller
         $runningProjects = $this->get_running_projects();
         $finishedProjects = $this->get_finished_projects();
         $e_archive = $this->get_e_archive();
+        $zaied_projects = $this->get_zaied_projects();
 
         return view('project.index')->with([
             'projects' => $allProjects,
             'runningProjects' => $runningProjects,
             'finishedProjects' => $finishedProjects,
             'e_archive' => $e_archive,
+            'zaied_projects' => $zaied_projects,
         ]);
     }
 
@@ -246,6 +248,50 @@ class ProjectController extends Controller
         // ksort($project_no);
         // ksort($project_name);
 
+        return $project_name;
+    }
+    function get_zaied_projects()
+    {
+        // return ['0|مافي شبكة' => 'من البيت'];
+        $project_no = [];
+        $project_name = [];
+        $projects_dir = [];
+
+        $directories = [
+            'ورقية' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/2- ورقية',
+            'قبل 1435' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/قبل 1435',
+            '1435' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1435',
+            '1436' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1436',
+            '1437' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1437',
+            '1438' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1438',
+            '1439' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1439',
+            '1439->بلدي' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1439/1-بلدي',
+            '1440' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1440',
+            '1440->بلدي' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1440/بلدي',
+            '1441' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1441',
+
+            // 'directory' => 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects',
+        ];
+        foreach ($directories as $directory_key => $directory) {
+            $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+            $kyed_dir = [];
+            foreach ($scanned_directory as $key => $value) {
+                $kyed_dir[$key . '|' . $directory_key] = $value;
+            }
+            array_push($projects_dir, $kyed_dir);
+        }
+
+        // $projects_dir = $scanned_directory;
+
+        foreach ($projects_dir as $key => $value) {
+            foreach ($value as $key => $value) {
+                $project_name[$key] = $value;
+            }
+        }
+
+        // ksort($project_no);
+        // ksort($project_name);
+        // return $projects_dir;
         return $project_name;
     }
 }

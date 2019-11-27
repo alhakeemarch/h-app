@@ -26,6 +26,10 @@
             <a class="nav-link" id="e_archive-tab-just" data-toggle="tab" href="#e_archive-just" role="tab"
                 aria-controls="e_archive-just" aria-selected="false">e archive</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="zaied_projects-tab-just" data-toggle="tab" href="#zaied_projects-just" role="tab"
+                aria-controls="zaied_projects-just" aria-selected="false">zaied projects</a>
+        </li>
     </ul>
 
     <div class="tab-content card pt-5 text-capitalize" id="projects_tab_ContentJust">
@@ -162,7 +166,6 @@
             {{-- ///////////////////////////////////////NOTE: end of all projects//////////////////////////////////////////////// --}}
         </div>
 
-
         <div class="tab-pane fade" id="e_archive-just" role="tabpanel" aria-labelledby="e_archive-tab-just">
             {{-- ///////////////////////////////////////NOTE: all projects ////////////////////////////////////////////////////////// --}}
             <h3 class="h3 text-center">
@@ -206,13 +209,57 @@
             </table>
             {{-- ///////////////////////////////////////NOTE: end of all projects//////////////////////////////////////////////// --}}
         </div>
+
+        <div class="tab-pane fade" id="zaied_projects-just" role="tabpanel" aria-labelledby="zaied_projects-tab-just">
+            {{-- ///////////////////////////////////////NOTE: zaied projects ////////////////////////////////////////////////////////// --}}
+            <h3 class="h3 text-center">
+                list of zaied_projects <p class="small">total = {{ count($zaied_projects) }}</p>
+            </h3>
+            <table class="table table-hover table-bordered">
+                <thead class="bg-thead">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            <p>project name</p>
+                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project Name')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                        </th>
+                        <th scope="col">
+                            <p>project location</p>
+                            <input type="text" name="project_number" id="project_no" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project location')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project location')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @php $i=1 @endphp
+
+                    @foreach ($zaied_projects as $project_no=>$project_name)
+                    <tr>
+                        @php
+                        $position = stripos($project_no, '|');
+                        $project_no = substr($project_no, $position + 1);
+                        @endphp
+                        <th scope="row">{{$i}}</th>
+                        <td class="project_name">{{$project_name}}</td>
+                        <td class="project_number">{{$project_no}}</td>
+                    </tr>
+                    @php $i ++ @endphp
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{-- ///////////////////////////////////////NOTE: end of a zaied projects//////////////////////////////////////////////// --}}
+        </div>
     </div>
 
 </div><!-- /End of container-fluid  -->
-<hr>
-<div class="alert alert-danger">
-    <p>ممكن نضيف المشاريع الصادر لها رخصة من ملف زايد</p>
-</div>
 
 
 <!-- ///////////////////////////////-->
