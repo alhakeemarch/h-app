@@ -99,12 +99,12 @@ function userNameString(evt) {
 function filterNames(event) {
     let inputID = event.target.id;
     let inputName = event.target.name;
-    let inputValue = event.target.value;
+    let inputValue = event.target.value.toLowerCase();
 
     let tds = document.querySelectorAll('.' + inputName);
 
     tds.forEach(td => {
-        if (td.innerHTML.indexOf(inputValue) > -1) {
+        if (td.innerHTML.toLowerCase().indexOf(inputValue) > -1) {
             td.parentNode.style.display = '';
         } else {
             td.parentNode.style.display = 'none';

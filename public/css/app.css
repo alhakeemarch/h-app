@@ -8,7 +8,9 @@
 }
 /* some coloring edit on the site */
 body {
-	background-image: radial-gradient(#bbc1cc, #abb6cd);
+	/* background-color: #f8fafc; */
+	background-image: radial-gradient(#abb6cc, #f8fafc);
+	/* background-image: radial-gradient(#bbc1cc, #abb6cd); */
 }
 
 .h-navbar-bg {
@@ -16,7 +18,16 @@ body {
 }
 
 .bg-thead {
-	background: #bccad6;
+	background: #334a5e;
+	color: #fff;
+}
+th {
+	vertical-align: middle !important;
+	border: 1px solid rgb(255, 255, 255) !important;
+}
+td {
+	vertical-align: middle !important;
+	border: 1px solid rgb(0, 0, 0) !important;
 }
 .text-primary {
 	color: ;

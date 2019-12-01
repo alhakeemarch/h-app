@@ -19,6 +19,7 @@ class CreateNationalitiesTable extends Migration
             $table->unsignedInteger('last_updated_by')->references('id')->on('users')->nullable();
             $table->string('en_name');
             $table->string('ar_name');
+            $table->text('notes')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

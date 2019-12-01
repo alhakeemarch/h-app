@@ -8,13 +8,24 @@ use Illuminate\Http\Request;
 class SaudiCityController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('saudiCity.index');
+        $saudi_cities = SaudiCity::all();
+        return view('saudiCity.index')->with('saudi_cities', $saudi_cities);
     }
 
     /**

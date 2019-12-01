@@ -14,7 +14,8 @@ class NationalityController extends Controller
      */
     public function index()
     {
-        return view('nationality.index');
+        $nationalities = Nationality::all();
+        return view('nationality.index')->with('nationalities', $nationalities);
     }
 
     /**
@@ -46,7 +47,17 @@ class NationalityController extends Controller
      */
     public function show(Nationality $nationality)
     {
-        //
+        $created_by = \App\User::where('id', $nationality->created_by)->first();
+        $last_updated_by = null;
+        if ($nationality->last_updated_by) {
+            $last_updated_by = \App\User::where('id', $nationality->last_updated_by)->first();
+        }
+
+        return view('nationality.show')->with([
+            'nationality' => $nationality,
+            'created_by' => $created_by,
+            'last_updated_by' => $last_updated_by,
+        ]);
     }
 
     /**
@@ -288,11 +299,12 @@ class NationalityController extends Controller
         if (Nationality::all()->count() >= count($nationalities)) {
             return false;
         }
-
+        $aad_user_id = auth()->user()->id;
+        $add_user_name = auth()->user()->user_name;
         foreach ($nationalities as $key => $value) {
             foreach ($value as $en_name => $ar_name) {
                 $newNationaliti = new Nationality;
-                $newNationaliti->created_by = '1';
+                $newNationaliti->created_by = $aad_user_id;
                 $newNationaliti->en_name = $en_name;
                 $newNationaliti->ar_name = $ar_name;
                 $newNationaliti->save();

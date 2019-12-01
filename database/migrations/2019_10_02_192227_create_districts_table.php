@@ -22,9 +22,9 @@ class CreateDistrictsTable extends Migration
             $table->string('area')->nullable();
             $table->bigInteger('mi_prinx')->nullable();
             // -----------------------------
-            $table->bigInteger('aad_user_id');
+            $table->bigInteger('aad_user_id')->references('id')->on('users');
             $table->string('add_user_name');
-            $table->bigInteger('last_edit_user_id')->nullable();
+            $table->bigInteger('last_edit_user_id')->references('id')->on('users')->nullable();
             $table->string('last_edit_user_name')->nullable();
             // -----------------------------
             $table->bigInteger('municipality_branche_id')->nullable();
