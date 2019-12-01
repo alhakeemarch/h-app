@@ -150,6 +150,9 @@ composer -v
 mv composer.phar /user/local/bin/composer
 composer global require laravel/installer
 
+<!-- مكتبة الـ PDF  اللي راح أستخدمها -->
+composer require elibyy/tcpdf-laravele
+
 //=========== End of composer commands ===============//
 
 
