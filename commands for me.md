@@ -178,6 +178,9 @@ php artisan
 php artisan make:factory PersonFactory -m Person
 php artisan migrate:fresh
 php artisan cache:clear
+$ php artisan clear-compiled 
+$ composer dump-autoload
+$ php artisan optimize
 
 ============================
 
