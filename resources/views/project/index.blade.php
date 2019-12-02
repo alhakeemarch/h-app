@@ -65,7 +65,7 @@
 
                     @foreach ($runningProjects as $project_no=>$project_name)
                     <tr>
-                        <th scope="row">{{$i}}</th>
+                        <td scope="row">{{$i}}</td>
                         <td class="project_name">{{$project_name}}</td>
                         <td class="project_number">{{$project_no}}</td>
                     </tr>
@@ -110,7 +110,7 @@
 
                     @foreach ($finishedProjects as $project_no=>$project_name)
                     <tr>
-                        <th scope="row">{{$i}}</th>
+                        <td scope="row">{{$i}}</td>
                         <td class="project_name">{{$project_name}}</td>
                         <td class="project_number">{{$project_no}}</td>
                     </tr>
@@ -154,7 +154,7 @@
 
                     @foreach ($projects as $project_no=>$project_name)
                     <tr>
-                        <th scope="row">{{$i}}</th>
+                        <td scope="row">{{$i}}</td>
                         <td class="project_name">{{$project_name}}</td>
                         <td class="project_number">{{$project_no}}</td>
                     </tr>
@@ -198,7 +198,7 @@
 
                     @foreach ($e_archive as $project_no=>$project_name)
                     <tr>
-                        <th scope="row">{{$i}}</th>
+                        <td scope="row">{{$i}}</td>
                         <td class="project_name">{{$project_name}}</td>
                         <td class="project_number">{{$project_no}}</td>
                     </tr>
@@ -246,7 +246,7 @@
                         $position = stripos($project_no, '|');
                         $project_no = substr($project_no, $position + 1);
                         @endphp
-                        <th scope="row">{{$i}}</th>
+                        <td scope="row">{{$i}}</td>
                         <td class="project_name">{{$project_name}}</td>
                         <td class="project_number">{{$project_no}}</td>
                     </tr>
