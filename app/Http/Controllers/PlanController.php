@@ -14,7 +14,8 @@ class PlanController extends Controller
      */
     public function index()
     {
-        return view('plan.index');
+        $palns=Plan::all();
+        return view('plan.index')->with('palns',$palns);
     }
 
     /**
@@ -46,7 +47,7 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        //
+        return view('plan.show')->with('plan',$plan);
     }
 
     /**

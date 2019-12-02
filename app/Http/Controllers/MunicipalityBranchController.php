@@ -14,7 +14,8 @@ class MunicipalityBranchController extends Controller
      */
     public function index()
     {
-        return view('municipalityBranch.index');
+        $municipalities = MunicipalityBranch::all();
+        return view('municipalityBranch.index')->with('municipalities', $municipalities);
     }
 
     /**
@@ -46,7 +47,7 @@ class MunicipalityBranchController extends Controller
      */
     public function show(MunicipalityBranch $municipalityBranch)
     {
-        //
+        return view('municipalityBranch.show')->with('municipalityBranch', $municipalityBranch);
     }
 
     /**
