@@ -1,0 +1,34 @@
+/* ============================================================ */
+/* grid */
+
+.wrapper {
+	min-height: 100vh;
+	display: grid;
+	grid-template-rows: max-content 1fr max-content;
+}
+
+header {
+	/* background: red; */
+	padding-bottom: 15px;
+	height: 100%;
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+main {
+	margin: 0 !important;
+	/* padding-top: 88px; */
+	padding-bottom: 12px;
+}
+	/* background: burlywood; */
+.bg-thead {
+  background: #bccad6;
+}
+
+footer {
+	/* background: green; */
+	/* margin: 0 !important; */
+}

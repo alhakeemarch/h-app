@@ -1,0 +1,97 @@
+/* ============================================================ */
+/* matiral desing  */
+
+.btn,
+.nav-tabs,
+.navbar,
+input,
+textarea,
+.card,
+.card-header {
+  border-radius: 2px !important;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+
+.btn {
+  margin: 0.375rem;
+  text-transform: uppercase;
+  word-wrap: break-word;
+  cursor: pointer;
+  border: 0;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  /* padding: .84rem 2.14rem; */
+  border-radius: 300px !important;
+}
+
+input,
+hr,
+.navbar,
+textarea,
+.card,
+.card-header,
+.alert {
+  border-radius: 0 !important;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+  //   background-color: #465573;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+input,
+select,
+textarea {
+  min-height: 3rem !important;
+  border: none;
+  box-shadow: inset 1px 1px 10px rgba(150, 180, 200, 0.35), 2px 4px 10px rgba(150, 180, 200, 0.35) !important;
+}
+input.form-check-input {
+  min-height: 0 !important;
+  position: static;
+}
+.navbar {
+  margin: 0;
+  margin-bottom: 0;
+}
+
+.btn {
+  margin-top: 1em;
+  /* margin-bottom: 0.5em; */
+  border-radius: 50px !important;
+  font-size: 105%;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.btn-link {
+  margin-top: 0;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.nav-tabs {
+  position: relative;
+  z-index: 1;
+  padding: 0.8rem;
+  margin-right: 1rem;
+  margin-bottom: -20px;
+  margin-left: 1rem;
+  // background-color: #2bbbad;
+  // background-color: #3f51b5;
+  background-color: #465573;
+
+  border: 0;
+  border-radius: 0.25rem;
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+.nav-link {
+  color: #add8e6;
+}
+
+.nav-tabs > .nav-item > .active {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
