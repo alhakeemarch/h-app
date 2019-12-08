@@ -1,4 +1,10 @@
-@import "reset.css";
-@import "normalize.css";
-@import "fonts.css";
+@font-face {
+	font-family: Markazi;
+	/* src: url("../fonts/Markazi.ttf"); */
+	src: url("../fonts/Markazi2.ttf");
+	font-weight: 500;
+}
 
+body {
+	font-family: "Markazi", sans-serif;
+}

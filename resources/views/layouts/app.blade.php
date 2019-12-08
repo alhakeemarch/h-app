@@ -38,6 +38,7 @@
     @endif
     <!-- other css -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/test.css') }}" rel="stylesheet">
     <!-- fontawesome css -->
     <link href="{{ asset('css/fontawesome/css/all.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome/css/fontawesome.css') }}" rel="stylesheet">

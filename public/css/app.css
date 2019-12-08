@@ -759,6 +759,7 @@ textarea,
   word-wrap: break-word;
   cursor: pointer;
   border: 0;
+  -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   /* padding: .84rem 2.14rem; */
   border-radius: 300px !important;
@@ -830,43 +831,17 @@ input.form-check-input {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 0.25rem;
+  -webkit-transition: all 1s;
   transition: all 1s;
 }
 
 @font-face {
-  font-family: gretArabic;
-  src: url(/fonts/greta-arabic-bold-italic.ttf?e4b325da04d55eb8a1bf9b384476db8d);
-}
-
-@font-face {
   font-family: Markazi;
-  src: url(/fonts/Markazi2.ttf?c06d50f78e8e3ed45c6342287916680d);
-  /* font-weight: 500; */
+  src: url("'../fonts/Markazi2.ttf'");
+  font-weight: 500;
 }
 
 body {
   font-family: "Markazi", sans-serif;
-  /* font-family: 'SakkalMajalla', sans-serif; */
-  /* font-family: 'Dubi', sans-serif; */
-  /* font-family: 'Reem Kufi', sans-serif; */
-  /* font-family: "Tajawal", "Prosto One", sans-serif; */
-  /* font-family: 'DroidArabicKufi', sans-serif; */
-  font-family: "gretArabic", serif;
-  /* font-family: "AlMohannad", serif !important; */
-  /* 100 */
-  /* font-family: 'Amiri', serif; */
-  /* font-family: 'Changa', sans-serif; // 100  */
-  /* font-family: 'El Messiri', sans-serif; // 100 */
-  /* font-family: 'Lateef', cursive; */
-  /* font-family: 'Mada', sans-serif; */
-  /* font-family: 'Baloo Bhaijaan', cursive; */
-  /* font-family: 'Lemonada', cursive; */
-  /* font-family: 'Markazi Text', serif; // 50 */
-  /* font-family: 'Harmattan', sans-serif; */
-  /* font-family: 'Aref Ruqaa', serif; */
-  /* font-family: 'Jomhuria', cursive; */
-  /* font-family: 'Rakkas', cursive; */
-  /* font-family: 'Katibeh', cursive; */
-  /* font-family: 'Prosto One', cursive; */
 }
 
