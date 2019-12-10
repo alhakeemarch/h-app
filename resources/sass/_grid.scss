@@ -1,34 +1,27 @@
-/* ============================================================ */
 /* grid */
 
 .wrapper {
-	min-height: 100vh;
-	display: grid;
-	grid-template-rows: max-content 1fr max-content;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
 }
 
 header {
-	/* background: red; */
-	padding-bottom: 15px;
-	height: 100%;
-}
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  height: 100%;
+  padding-bottom: 15px;
+  //   background: red;
 }
 
 main {
-	margin: 0 !important;
-	/* padding-top: 88px; */
-	padding-bottom: 12px;
-}
-	/* background: burlywood; */
-.bg-thead {
-  background: #bccad6;
+  margin: 0 !important;
+  padding-bottom: 20px;
+  //   padding-top: 88px;
 }
 
 footer {
-	/* background: green; */
-	/* margin: 0 !important; */
+  //   position: fixed;
+  //   bottom: 0;
+  //   width: 100%;
+  //   background: green;
+  //   margin: 0 !important;
 }

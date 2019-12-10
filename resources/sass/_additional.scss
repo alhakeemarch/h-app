@@ -1,183 +1,162 @@
-* {
-	padding: 0;
-	margin: 0;
-}
+// ========================VARIABLES==============================================++
+// *Body
+// $body-bg: #f8fafc; // لون أبيض فقط
+$body-bg: #abb6cc, #f8fafc; // أزرق
+// $body-bg: #d3eee0, #abc6b8; // أخضر
+// --------------------------------------------
+// *Fonts
+// $body-font: "Tajawal", "Prosto One", sans-serif; // 100
+// $body-font: 'Changa', sans-serif; // 100
+// $body-font: "El Messiri", sans-serif; // 100
+$body-font: "Markazi Text", serif; // 50
+// $body-font: "Reem Kufi", sans-serif;
+// $body-font: 'Amiri', serif;
+// $body-font: 'Lateef', cursive;
+// $body-font: 'Mada', sans-serif;
+// $body-font: 'Baloo Bhaijaan', cursive;
+// $body-font: 'Lemonada', cursive;
+// $body-font: 'Harmattan', sans-serif;
+// $body-font: 'Aref Ruqaa', serif;
+// $body-font: 'Jomhuria', cursive;
+// $body-font: 'Katibeh', cursive;
+// $body-font: "Reem Kufi", sans-serif;
+// $body-font: 'Prosto One', cursive;
+// --------------------------------------------
+// *Colors
+$nav-bg: #465573; // أزرق
+// $nav-bg: #536d60; // أخضر
+$shadow1: 0 2px 4px rgba(0, 0, 0, 0.04);
+// $tb-border:
+
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+$bg1: #bbc1cc;
+$bg1: #abb6cd;
+$test1: #5d5c61;
+$test2: #379683;
+$test3: #7395ae;
+$test4: #557a95;
+$test5: #b1a296;
+$test6: #465573;
+$test7: #394663;
+$test8: #bbc1cc;
+$test9: #738dc6;
+$test10: #657aa5;
+$test11: #bccad6;
+$g_test01: #2c473a;
+$g_test02: #536d60;
+$g_test03: #abc6b8;
+// ========================END VARIABLES==========================================++
+
+// ========================TAGS===================================================++
 body {
-	// background-image: radial-gradient(#c3c8d5, #5e6a87);
-	background-image: radial-gradient(#bbc1cc, #abb6cd); // أزرق
-	// background-image: radial-gradient(#d3eee0, #abc6b8); // أخضر
-
-	/* font-family: 'Reem Kufi', sans-serif; */
-	font-family: 'Tajawal', 'Prosto One', sans-serif;
-	/* 100 */
-	/* font-family: 'Amiri', serif; */
-	/* font-family: 'Changa', sans-serif; // 100  */
-	/* font-family: 'El Messiri', sans-serif; // 100 */
-	/* font-family: 'Lateef', cursive; */
-	/* font-family: 'Mada', sans-serif; */
-	/* font-family: 'Baloo Bhaijaan', cursive; */
-	/* font-family: 'Lemonada', cursive; */
-	/* font-family: 'Markazi Text', serif; // 50 */
-	/* font-family: 'Harmattan', sans-serif; */
-	/* font-family: 'Aref Ruqaa', serif; */
-	/* font-family: 'Jomhuria', cursive; */
-	/* font-family: 'Rakkas', cursive; */
-	/* font-family: 'Katibeh', cursive; */
-	/* font-family: 'Prosto One', cursive; */
+  background-image: radial-gradient($body-bg);
+  font-family: $body-font;
+  font-size: 1.2rem;
 }
 
-// .navbar-laravel {
-// 	background-color: #fff;
-// 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-// }
-.h-navbar-bg {
-	background-color: #465573; // أزرق
-	// background-color: #536d60; // أخضر
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-.navbar {
-	margin: 0;
-	margin-bottom: 0;
-}
-footer {
-	position: fixed;
-	// height: 100px;
-	bottom: 0;
-	width: 100%;
-}
-.bg-thead {
-	background: #bccad6; // أزرق
-	// background: #a0b6ab; // أخضر
-}
-
-
-
-
-
-
-
-* {
-	padding: 0;
-	margin: 0;
-}
-/* some coloring edit on the site */
-
-body {
-	/* background-color: #f8fafc; */
-	background-image: radial-gradient(#abb6cc, #f8fafc);
-	/* background-image: radial-gradient(#bbc1cc, #abb6cd); */
-  background-image: radial-gradient(#bbc1cc, #abb6cd);
-  /* font-family: 'Reem Kufi', sans-serif; */
-  font-family: "Tajawal", "Prosto One", sans-serif;
-  /* 100 */
-  /* font-family: 'Amiri', serif; */
-  /* font-family: 'Changa', sans-serif; // 100  */
-  /* font-family: 'El Messiri', sans-serif; // 100 */
-  /* font-family: 'Lateef', cursive; */
-  /* font-family: 'Mada', sans-serif; */
-  /* font-family: 'Baloo Bhaijaan', cursive; */
-  /* font-family: 'Lemonada', cursive; */
-  /* font-family: 'Markazi Text', serif; // 50 */
-  /* font-family: 'Harmattan', sans-serif; */
-  /* font-family: 'Aref Ruqaa', serif; */
-  /* font-family: 'Jomhuria', cursive; */
-  /* font-family: 'Rakkas', cursive; */
-  /* font-family: 'Katibeh', cursive; */
-  /* font-family: 'Prosto One', cursive; */
-}
-
-.h-navbar-bg {
-	background-color: #465573;
-}
-
-.bg-thead {
-	background: #334a5e;
-	color: #fff;
-}
 th {
-	vertical-align: middle !important;
-	border: 1px solid rgb(255, 255, 255) !important;
+  vertical-align: middle !important;
+  border: 1px solid rgb(255, 255, 255);
 }
 td {
-	vertical-align: middle !important;
-	border: 1px solid rgb(0, 0, 0) !important;
+  vertical-align: middle !important;
+  border: 1px solid rgb(0, 0, 0);
 }
-.text-primary {
-	// color: ;
+// ========================END TAGS===============================================++
+
+// ========================CLASSES================================================++
+.h-navbar-bg {
+  background-color: $nav-bg;
+  box-shadow: $shadow1;
 }
+.bg-thead {
+  background: #334a5e;
+  color: #fff;
+  text-transform: capitalize;
+}
+// *BUTTONS
 
 .btn-primary {
-	color: #fff;
-	/* background-color: #2c3e50; */
-	background-color: #465573;
-	border-color: #465573;
-}
-.btn-primary:hover {
-	background-color: #3f4c66;
-	border-color: #3f4c66;
+  color: #fff;
+  // background-color: #2c3e50;
+  background-color: #465573;
+  border-color: #465573;
+  &:hover {
+    background-color: #3f4c66;
+    border-color: #3f4c66;
+  }
 }
 
 .btn-secondary {
-	color: #fff;
-	background: #718096;
-	border-color: #718096;
+  color: #fff;
+  background: #718096;
+  border-color: #718096;
 }
 .btn-secondary:hover {
-	color: #fff;
-	background: #4a5568;
-	border-color: #4a5568;
+  color: #fff;
+  background: #4a5568;
+  border-color: #4a5568;
 }
 .btn-success {
-	color: #fff;
-	/* background: #38b2ac; */
+  color: #fff;
+  // background: #38b2ac;
 
-	background: #006e6d;
-	background-color: #006e6d;
+  background: #006e6d;
+  background-color: #006e6d;
 }
 .btn-success:hover {
-	/* background: #319795; */
-	background: #005a58;
-	background-color: #005a58;
+  // background: #319795;
+  background: #005a58;
+  background-color: #005a58;
 }
 
 .btn-warning,
 .alert-warning {
-	color: #fff;
-	background: #615286;
-	background-color: #615286;
+  color: #fff;
+  background: #615286;
+  background-color: #615286;
 }
 .btn-warning:hover {
-	color: #fff;
-	background: #564977;
-	background-color: #564977;
+  color: #fff;
+  background: #564977;
+  background-color: #564977;
 }
 .btn-danger {
-	color: #fff;
-	background: #9d1d11;
-	background-color: #9d1d11;
+  color: #fff;
+  background: #9d1d11;
+  background-color: #9d1d11;
 }
 .btn-danger:hover {
-	color: #fff;
-	background: #83180f;
-	background-color: #83180f;
+  color: #fff;
+  background: #83180f;
+  background-color: #83180f;
 }
 .btn-info {
-	background: #335589;
-	background-color: #335589;
+  background: #335589;
+  background-color: #335589;
 }
 .btn-info:hover {
-	background: #264067;
-	background-color: #264067;
+  background: #264067;
+  background-color: #264067;
 }
 .btn-link,
 .nav-link {
-	color: #335589;
+  color: #335589;
 }
 .btn-link:hover,
 .nav-link:hover {
-	color: #264067;
+  color: #264067;
 }
-
 .alert-warning > .btn-link {
-	color: #fff;
+  color: #fff;
 }
+// ========================END CLASSES============================================++
