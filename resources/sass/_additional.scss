@@ -23,6 +23,7 @@ $body-font: "Markazi Text", serif; // 50
 // $body-font: 'Prosto One', cursive;
 // --------------------------------------------
 // *Colors
+
 $nav-bg: #465573; // أزرق
 // $nav-bg: #536d60; // أخضر
 $shadow1: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -58,105 +59,108 @@ $g_test03: #abc6b8;
 
 // ========================TAGS===================================================++
 body {
-  background-image: radial-gradient($body-bg);
-  font-family: $body-font;
-  font-size: 1.2rem;
+	background-image: radial-gradient($body-bg);
+	font-family: $body-font;
+	font-size: 1.2rem;
 }
 
 th {
-  vertical-align: middle !important;
-  border: 1px solid rgb(255, 255, 255);
+	vertical-align: middle !important;
+	border: 1px solid rgb(255, 255, 255);
 }
 td {
-  vertical-align: middle !important;
-  border: 1px solid rgb(0, 0, 0);
+	vertical-align: middle !important;
+	border: 1px solid rgb(0, 0, 0);
 }
 // ========================END TAGS===============================================++
 
 // ========================CLASSES================================================++
 .h-navbar-bg {
-  background-color: $nav-bg;
-  box-shadow: $shadow1;
+	background-color: $nav-bg;
+	box-shadow: $shadow1;
 }
 .bg-thead {
-  background: #334a5e;
-  color: #fff;
-  text-transform: capitalize;
+	background: #334a5e;
+	color: #fff;
+	text-transform: capitalize;
 }
-// *BUTTONS
 
+// *BUTTONS
 .btn-primary {
-  color: #fff;
-  // background-color: #2c3e50;
-  background-color: #465573;
-  border-color: #465573;
-  &:hover {
-    background-color: #3f4c66;
-    border-color: #3f4c66;
-  }
+	color: #fff;
+	background-color: #465573;
+	border-color: #465573;
+	&:hover {
+		background-color: #3f4c66;
+		border-color: #3f4c66;
+	}
 }
 
 .btn-secondary {
-  color: #fff;
-  background: #718096;
-  border-color: #718096;
+	color: #fff;
+	background: #718096;
+	border-color: #718096;
+	&:hover {
+		color: #fff;
+		background: #4a5568;
+		border-color: #4a5568;
+	}
 }
-.btn-secondary:hover {
-  color: #fff;
-  background: #4a5568;
-  border-color: #4a5568;
-}
+
 .btn-success {
-  color: #fff;
-  // background: #38b2ac;
-
-  background: #006e6d;
-  background-color: #006e6d;
-}
-.btn-success:hover {
-  // background: #319795;
-  background: #005a58;
-  background-color: #005a58;
+	color: #fff;
+	background: #006e6d;
+	background-color: #006e6d;
+	&:hover {
+		background: #005a58;
+		background-color: #005a58;
+	}
 }
 
-.btn-warning,
-.alert-warning {
-  color: #fff;
-  background: #615286;
-  background-color: #615286;
+.btn-warning {
+	color: #fff;
+	background: #615286;
+	background-color: #615286;
+	&:hover {
+		color: #fff;
+		background: #564977;
+		background-color: #564977;
+	}
 }
-.btn-warning:hover {
-  color: #fff;
-  background: #564977;
-  background-color: #564977;
-}
+
 .btn-danger {
-  color: #fff;
-  background: #9d1d11;
-  background-color: #9d1d11;
+	color: #fff;
+	background: #9d1d11;
+	background-color: #9d1d11;
+	&:hover {
+		background: #83180f;
+		background-color: #83180f;
+	}
 }
-.btn-danger:hover {
-  color: #fff;
-  background: #83180f;
-  background-color: #83180f;
-}
+
 .btn-info {
-  background: #335589;
-  background-color: #335589;
+	background: #335589;
+	background-color: #335589;
+	&:hover {
+		background: #264067;
+		background-color: #264067;
+	}
 }
-.btn-info:hover {
-  background: #264067;
-  background-color: #264067;
-}
+
 .btn-link,
 .nav-link {
-  color: #335589;
+	color: #335589;
+	&:hover {
+		color: #264067;
+	}
 }
-.btn-link:hover,
-.nav-link:hover {
-  color: #264067;
+
+.alert-warning {
+	color: #fff;
+	background: #615286;
+	background-color: #615286;
 }
 .alert-warning > .btn-link {
-  color: #fff;
+	color: #fff;
 }
 // ========================END CLASSES============================================++

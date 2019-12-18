@@ -11,15 +11,15 @@
 
     <ul class="nav nav-tabs nav-justified text-uppercase" id="projects_tab_Just" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="runnig_projects-tab-just" data-toggle="tab" href="#runnig_projects-just"
-                role="tab" aria-controls="runnig_projects-just" aria-selected="true">runnig projects</a>
+            <a class="nav-link" id="runnig_projects-tab-just" data-toggle="tab" href="#runnig_projects-just" role="tab"
+                aria-controls="runnig_projects-just" aria-selected="true">runnig projects</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="finshed_projects-tab-just" data-toggle="tab" href="#finshed_projects-just"
                 role="tab" aria-controls="finshed_projects-just" aria-selected="false">finshed projects</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="all_projects-tab-just" data-toggle="tab" href="#all_projects-just" role="tab"
+            <a class="nav-link active" id="all_projects-tab-just" data-toggle="tab" href="#all_projects-just" role="tab"
                 aria-controls="all_projects-just" aria-selected="false">all projects</a>
         </li>
         <li class="nav-item">
@@ -33,8 +33,7 @@
     </ul>
 
     <div class="tab-content card pt-5 text-capitalize" id="projects_tab_ContentJust">
-        <div class="tab-pane fade show active" id="runnig_projects-just" role="tabpanel"
-            aria-labelledby="runnig_projects-tab-just">
+        <div class="tab-pane fade" id="runnig_projects-just" role="tabpanel" aria-labelledby="runnig_projects-tab-just">
             {{-- ///////////////////////////////////////NOTE: running ////////////////////////////////////////////////////////// --}}
             <h3 class="h3 text-center">
                 list of running projects <p class="small">total = {{ count($runningProjects) }}</p>
@@ -122,11 +121,13 @@
             {{-- ///////////////////////////////////////NOTE: end of finised ////////////////////////////////////////////////////////// --}}
         </div>
 
-        <div class="tab-pane fade" id="all_projects-just" role="tabpanel" aria-labelledby="all_projects-tab-just">
-            {{-- ///////////////////////////////////////NOTE: all projects ////////////////////////////////////////////////////////// --}}
+        {{-- ///////////////////////////////////////NOTE: all projects ////////////////////////////////////////////////////////// --}}
+        <div class="tab-pane fade show active" id="all_projects-just" role="tabpanel"
+            aria-labelledby="all_projects-tab-just">
             <h3 class="h3 text-center">
                 list of all projects <p class="small">total = {{ count($projects) }}</p>
             </h3>
+            <a class="btn btn-info btn-block w-75 mx-auto mb-4" href="{{route('project.check')}}">crate new project</a>
             <table class="table table-hover table-bordered">
                 <thead class="bg-thead">
                     <tr>

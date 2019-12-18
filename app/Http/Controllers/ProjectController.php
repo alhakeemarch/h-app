@@ -21,13 +21,16 @@ class ProjectController extends Controller
         //     dd($request);
         //     return $request;
         // }
-
         $allProjects = Project::all();
-        $runningProjects = $this->get_running_projects();
-        $finishedProjects = $this->get_finished_projects();
-        $e_archive = $this->get_e_archive();
-        $zaied_projects = $this->get_zaied_projects();
-
+        // == @home = false @ work = true ==//
+        if (true) {
+            $runningProjects = $this->get_running_projects();
+            $finishedProjects = $this->get_finished_projects();
+            $e_archive = $this->get_e_archive();
+            $zaied_projects = $this->get_zaied_projects();
+        } else {
+            $runningProjects =  $finishedProjects = $e_archive = $zaied_projects = [];
+        }
         return view('project.index')->with([
             'projects' => $allProjects,
             'runningProjects' => $runningProjects,
@@ -169,6 +172,7 @@ class ProjectController extends Controller
 
         $directory = '//100.0.0.5/f$/data-server/02-Runing-Projects';
         // $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/01- running projects';
+
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
 

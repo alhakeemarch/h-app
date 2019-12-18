@@ -45,6 +45,45 @@
 
     ],
 
+    "better-comments.tags": [
+        {
+            "tag": "!",
+            "color": "#FF2D00",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            "tag": "?",
+            "color": "#3498DB",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            "tag": "//",
+            "color": "#474747",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            "tag": "todo",
+            "color": "#FF8C00",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            "tag": "*",
+            "color": "#000000",
+            "strikethrough": false,
+            "backgroundColor": "#ffffff"
+        },
+        {
+            "tag": "==",
+            "color": "#000000",
+            "strikethrough": false,
+            "backgroundColor": "#ffff99"
+        }
+    ]
+
 
 
 

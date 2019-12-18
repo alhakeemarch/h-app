@@ -596,8 +596,7 @@ td {
   background-color: #005a58;
 }
 
-.btn-warning,
-.alert-warning {
+.btn-warning {
   color: #fff;
   background: #615286;
   background-color: #615286;
@@ -616,7 +615,6 @@ td {
 }
 
 .btn-danger:hover {
-  color: #fff;
   background: #83180f;
   background-color: #83180f;
 }
@@ -639,6 +637,12 @@ td {
 .btn-link:hover,
 .nav-link:hover {
   color: #264067;
+}
+
+.alert-warning {
+  color: #fff;
+  background: #615286;
+  background-color: #615286;
 }
 
 .alert-warning > .btn-link {
@@ -666,6 +670,7 @@ textarea,
   word-wrap: break-word;
   cursor: pointer;
   border: 0;
+  -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   /* padding: .84rem 2.14rem; */
   border-radius: 300px !important;
@@ -737,6 +742,7 @@ input.form-check-input {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 0.25rem;
+  -webkit-transition: all 1s;
   transition: all 1s;
 }
 
