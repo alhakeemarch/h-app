@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>0123456789 </h1>
+
+
+
+    <script type="text/javascript">
+        var replaceDigits = function () {
+            // var map = ["&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;", "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"]
+            // var map = ["&\#0660;", "&\#0661;", "&\#0662;", "&\#0663;", "&\#0664;", "&\#0665;", "&\#0666;", "&\#0667;", "&\#0668;", "&\#0669;"]
+            var map = ["&\#1632;", "&\#1633;", "&\#1634;", "&\#1635;", "&\#1636;", "&\#1637;", "&\#1638;", "&\#1639;", "&\#1640;", "&\#1641;"]
+            document.body.innerHTML = document.body.innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function ($0) { return map[$0] });
+        }
+        window.onload = replaceDigits;
+    </script>
+</body>
+
+</html>
