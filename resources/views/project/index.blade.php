@@ -41,20 +41,20 @@
             <table class="table table-hover table-bordered">
                 <thead class="bg-thead">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <p>project name</p>
-                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
-                                autocomplete="off" required placeholder="{{__( 'project Name')}}.."
-                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
-                                onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
-                        </th>
+                        <th class="d-none" scope="col">#</th>
                         <th scope="col">
                             <p>project number</p>
                             <input type="text" name="project_number" id="project_no" class="form-control"
                                 autocomplete="off" required placeholder="{{__( 'project Number')}}.."
                                 onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Number')}}..'"
                                 onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
+                        </th>
+                        <th scope="col">
+                            <p>project name</p>
+                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project Name')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
                         </th>
                     </tr>
                 </thead>
@@ -64,9 +64,9 @@
 
                     @foreach ($runningProjects as $project_no=>$project_name)
                     <tr>
-                        <td scope="row">{{$i}}</td>
-                        <td class="project_name">{{$project_name}}</td>
+                        <td class="d-none" scope="row">{{$i}}</td>
                         <td class="project_number">{{$project_no}}</td>
+                        <td class="project_name">{{$project_name}}</td>
                     </tr>
                     @php $i ++ @endphp
                     </tr>
@@ -85,21 +85,20 @@
             <table class="table table-hover table-bordered">
                 <thead class="bg-thead">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <p>project name</p>
-                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
-                                autocomplete="off" required placeholder="{{__( 'project Name')}}.."
-                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
-                                onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
-                        </th>
+                        <th class="d-none" scope="col">#</th>
                         <th scope="col">
                             <p>project number</p>
                             <input type="text" name="project_number" id="project_no" class="form-control"
                                 autocomplete="off" required placeholder="{{__( 'project Number')}}.."
                                 onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Number')}}..'"
                                 onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
-
+                        </th>
+                        <th scope="col">
+                            <p>project name</p>
+                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project Name')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
                         </th>
                     </tr>
                 </thead>
@@ -109,9 +108,9 @@
 
                     @foreach ($finishedProjects as $project_no=>$project_name)
                     <tr>
-                        <td scope="row">{{$i}}</td>
-                        <td class="project_name">{{$project_name}}</td>
+                        <td class="d-none" scope="row">{{$i}}</td>
                         <td class="project_number">{{$project_no}}</td>
+                        <td class="project_name">{{$project_name}}</td>
                     </tr>
                     @php $i ++ @endphp
                     </tr>
@@ -219,21 +218,20 @@
             <table class="table table-hover table-bordered">
                 <thead class="bg-thead">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <p>project name</p>
-                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
-                                autocomplete="off" required placeholder="{{__( 'project Name')}}.."
-                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
-                                onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
-                        </th>
+                        <th class="d-none" scope="col">#</th>
                         <th scope="col">
                             <p>project location</p>
                             <input type="text" name="project_number" id="project_no" class="form-control"
                                 autocomplete="off" required placeholder="{{__( 'project location')}}.."
                                 onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project location')}}..'"
                                 onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
-
+                        </th>
+                        <th scope="col">
+                            <p>project name</p>
+                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
+                                autocomplete="off" required placeholder="{{__( 'project Name')}}.."
+                                onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
+                                onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
                         </th>
                     </tr>
                 </thead>
@@ -247,9 +245,9 @@
                         $position = stripos($project_no, '|');
                         $project_no = substr($project_no, $position + 1);
                         @endphp
-                        <td scope="row">{{$i}}</td>
-                        <td class="project_name">{{$project_name}}</td>
+                        <td class="d-none" scope="row">{{$i}}</td>
                         <td class="project_number">{{$project_no}}</td>
+                        <td class="project_name">{{$project_name}}</td>
                     </tr>
                     @php $i ++ @endphp
                     </tr>
