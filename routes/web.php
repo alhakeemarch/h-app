@@ -170,6 +170,7 @@ Route::resources([
     'country' => 'CountryController',
     'saudiCity' => 'SaudiCityController',
     'district' => 'DistrictController',
+    'neighbor' => 'NeighborController',
     'plan' => 'PlanController',
     'municipalityBranch' => 'MunicipalityBranchController',
     'allowedBuildingRatio' => 'AllowedBuildingRatioController',

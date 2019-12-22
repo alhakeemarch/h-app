@@ -16,7 +16,8 @@ class NeighborController extends Controller
      */
     public function index()
     {
-        return view('neighbor.index');
+        $neighbors = Neighbor::all();
+        return view('neighbor.index')->with('neighbors', $neighbors);
     }
 
     /**
@@ -48,6 +49,8 @@ class NeighborController extends Controller
      */
     public function show(Neighbor $neighbor)
     {
+
+        return view('neighbor.show')->with('neighbor', $neighbor);
         //
     }
 
@@ -246,7 +249,7 @@ class NeighborController extends Controller
             }
             foreach ($all_districts as $district) {
                 if ($district['code']) {
-                    if ($district['code'] == $neighbor['municipality_branche_code']) {
+                    if ($district['code'] == $neighbor['district_code']) {
 
                         $district_id = $district['id'];
                         $district_ar_name = $district['ar_name'];

@@ -64,6 +64,7 @@
                         <a class="dropdown-item"
                             href="{{ route ('municipalityBranch.index') }}">{{__('municipalities')}}</a>
                         <a class="dropdown-item" href="{{ route ('district.index') }}">{{__('districts')}}</a>
+                        <a class="dropdown-item" href="{{ route ('neighbor.index') }}">{{__('neighbors')}}</a>
                         <a class="dropdown-item" href="{{ route ('plan.index') }}">{{__('plans')}}</a>
                         <a class="dropdown-item" href="{{ route ('home') }}">{{__('streets')}}----</a>
                         <a class="dropdown-item"
