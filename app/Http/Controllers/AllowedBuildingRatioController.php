@@ -14,7 +14,8 @@ class AllowedBuildingRatioController extends Controller
      */
     public function index()
     {
-        //
+        $building_ratios = AllowedBuildingRatio::all();
+        return view('allowedBuildingRatio.index')->with('building_ratios', $building_ratios);
     }
 
     /**
@@ -46,7 +47,7 @@ class AllowedBuildingRatioController extends Controller
      */
     public function show(AllowedBuildingRatio $allowedBuildingRatio)
     {
-        //
+        return view('allowedBuildingRatio.show')->with('allowedBuildingRatio', $allowedBuildingRatio);
     }
 
     /**

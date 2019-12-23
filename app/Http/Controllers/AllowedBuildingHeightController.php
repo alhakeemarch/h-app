@@ -14,7 +14,9 @@ class AllowedBuildingHeightController extends Controller
      */
     public function index()
     {
-        //
+        $allowed_building_heights = AllowedBuildingHeight::all();
+        // return $allowed_building_heights;
+        return view('allowedBuildingHeight.index')->with('allowed_building_heights', $allowed_building_heights);
     }
 
     /**
@@ -46,7 +48,7 @@ class AllowedBuildingHeightController extends Controller
      */
     public function show(AllowedBuildingHeight $allowedBuildingHeight)
     {
-        //
+        return view('allowedBuildingHeight.show')->with('allowed_building_height', $allowedBuildingHeight);
     }
 
     /**

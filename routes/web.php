@@ -172,6 +172,7 @@ Route::resources([
     'district' => 'DistrictController',
     'neighbor' => 'NeighborController',
     'plan' => 'PlanController',
+    'street' => 'StreetController',
     'municipalityBranch' => 'MunicipalityBranchController',
     'allowedBuildingRatio' => 'AllowedBuildingRatioController',
     'allowedBuildingHeight' => 'AllowedBuildingHeightController',
