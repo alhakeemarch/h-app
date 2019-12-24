@@ -14,7 +14,8 @@ class OwnerTypeController extends Controller
      */
     public function index()
     {
-        //
+        $ownerTypes = OwnerType::all();
+        return view('ownerType.index')->with('ownerTypes', $ownerTypes);
     }
 
     /**
@@ -46,7 +47,7 @@ class OwnerTypeController extends Controller
      */
     public function show(OwnerType $ownerType)
     {
-        //
+        return view('ownerType.show')->with('ownerType', $ownerType);
     }
 
     /**

@@ -49,8 +49,9 @@
     </div>
 </div>
 
-
-<div class="card my-5">
+{{-- ////// to show all person detals --}}
+{{-- ============================================ --}}
+{{-- <div class="card my-5">
     <h2 class="card-header bg-danger">
         To delet
     </h2>
@@ -61,9 +62,31 @@
         @foreach ($obj as $a=>$b )
         <li>
             {{ $a}} : {{$b}}
-        </li>
-        @endforeach
-    </ul>
+</li>
+@endforeach
+</ul>
+</div> --}}
+
+
+<hr>
+<div class="row d-flex justify-content-center">
+    <div class="col-4">
+        <a href="{{ url('/person') }}" class="btn btn-info btn-lg btn-block"> <i class="fas fa-undo"></i>
+            back</a>
+    </div>
+    <div class="col-4">
+        <a href="{{ url('/person/'.$person->id.'/edit') }}" class="btn btn-info btn-lg
+        btn-block "> <i class="fas fa-pen"></i> Edit</a>
+    </div>
+    <div class="col-4">
+        <form class="delete" action="{{ route('person.destroy', $person) }}" method="POST">
+            @method('DELETE')
+            @csrf
+            <button disabled class="btn disabled btn-danger btn-lg btn-block" onclick="return confirm('Are you sure?')">
+                <i class="fa fa-trash"></i> Delete</button>
+        </form>
+    </div>
+
 </div>
 
 

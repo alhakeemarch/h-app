@@ -51,10 +51,12 @@ class PersonController extends Controller
             $persontype = 'customer';
         }
         if ($persontype == false) {
-            return redirect('/')->withErrors(['Undefined Person type', 'please Contact the Administrator']);
+            // return redirect('/')->withErrors(['Undefined Person type', 'please Contact the Administrator']);
         }
 
-        $nationalitiesArr = Nationality::gitNationalities();
+        // $nationalitiesArr = Nationality::gitNationalities();
+        $nationalitiesArr = Nationality::all();
+        // return $nationalitiesArr;
         $national_id = $request->input('national_id');
         return view('/person/create', [
             'national_id' => $national_id,
@@ -131,12 +133,12 @@ class PersonController extends Controller
         $this->authorize('viewAny', $person);
         return view('person.show')->with('person', $person);
 
-        if ($person->is_employee) {
-            return redirect()->route('employee.show', ['employee' => $person->id]);
-        }
-        if ($person->is_customer) {
-            return redirect()->route('customer.show', ['customer' => $person->id]);
-        }
+        // if ($person->is_employee) {
+        //     return redirect()->route('employee.show', ['employee' => $person->id]);
+        // }
+        // if ($person->is_customer) {
+        //     return redirect()->route('customer.show', ['customer' => $person->id]);
+        // }
     }
 
     /**
@@ -147,7 +149,14 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
-        return 'this is edit method';
+
+        $edited_p = Person::where('id', $person)->first();
+        $national_id = $edited_p->national_id;
+
+        return view('person.edit')->with([
+            'person' => $person,
+            'national_id' => $national_id
+        ]);
     }
 
     /**
@@ -177,17 +186,20 @@ class PersonController extends Controller
     public function check(Request $request, Person $person)
     {
         if ($request->method() === "GET") {
-            return view('/person/check');
+            return view('person.check');
         }
 
         $validatedData = $request->validate([
             'national_id' => 'required|numeric|starts_with:1,2|digits:10',
             // 'body' => 'required',
         ]);
+        // return $request->all();
 
         $found_person = $person->where('national_id', $request->national_id)->first();
+        // return $found_person;
         if ($found_person) {
-            return redirect()->action('PersonController@show', ['id' => $found_person->id]);
+            return redirect()->action('PersonController@show', $found_person->id);
+            // return redirect()->action('PersonController@show', ['id' => $found_person->id]);
         } else {
             return redirect()->action('PersonController@create', $request);
         }

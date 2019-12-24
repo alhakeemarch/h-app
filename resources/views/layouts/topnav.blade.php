@@ -73,7 +73,12 @@
                             href="{{ route ('allowedBuildingHeight.index') }}">{{__('building height')}}</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route ('ownerType.index') }}">{{__('owner types')}}</a>
+                        @if(auth()->user()->user_type_id >= 100 )
+                        <a class="dropdown-item" href="{{ route ('user.index') }}">{{__('users')}}</a>
                         <a class="dropdown-item" href="{{ route ('person.index') }}">{{__('persons')}}</a>
+                        @endif
+                        <a class="dropdown-item" href="{{ route ('employee.index') }}">{{__('employees')}}</a>
+                        <a class="dropdown-item" href="{{ route ('customer.index') }}">{{__('customers')}}</a>
                         <a class="dropdown-item" href="{{ route ('home') }}">{{__('companies')}}---</a>
                         <a class="dropdown-item" href="{{ route ('home') }}">{{__('organizations')}}---</a>
                         <a class="dropdown-item" href="{{ route ('home') }}">{{__('endowments')}}---</a>

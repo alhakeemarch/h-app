@@ -131,6 +131,7 @@ Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('pe
 Route::resources([
 
     // new
+    'user' => 'UserController',
     'person' => 'PersonController',
     'personDoc' => 'PersonDocController',
 

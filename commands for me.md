@@ -280,6 +280,8 @@ php artisan make:model Export -a
 php artisan make:model Letter -a
 php artisan make:model Lettertype -a
 
+php artisan make:controller UserController -m 'User' -r
+
 # جداول لحفظ الداتا
 php artisan make:model Nationality -a  // الجنسيات
 php artisan make:model Country -a  // الدول
