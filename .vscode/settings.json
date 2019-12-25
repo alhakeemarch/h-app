@@ -37,6 +37,16 @@
             "borderRadius": "2px", //NOTE: using borderRadius along with `border` or you will see nothing change
             "backgroundColor": "rgba(0,0,0,.2)",
         },
+        {
+            "text": "START:",
+            "color": "rgb(204, 255, 255)",
+            "backgroundColor": "rgba(0, 102, 204,1)",
+        },
+        {
+            "text": "END:",
+            "color": "rgb(255, 255, 204)",
+            "backgroundColor": "rgba(153, 102, 51,1)",
+        },
     ],
     "better-comments.tags": [
         {

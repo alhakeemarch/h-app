@@ -53,7 +53,6 @@ class PersonController extends Controller
         if ($persontype == false) {
             // return redirect('/')->withErrors(['Undefined Person type', 'please Contact the Administrator']);
         }
-
         // $nationalitiesArr = Nationality::gitNationalities();
         $nationalitiesArr = Nationality::all();
         // return $nationalitiesArr;
@@ -61,7 +60,8 @@ class PersonController extends Controller
         return view('/person/create', [
             'national_id' => $national_id,
             'nationalitiesArr' => $nationalitiesArr,
-            'persontype' => $persontype
+            'persontype' => $persontype,
+            'person' => $person
         ]);
     }
 
@@ -149,13 +149,10 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
-
-        $edited_p = Person::where('id', $person)->first();
-        $national_id = $edited_p->national_id;
-
+        $nationalitiesArr = Nationality::all();
         return view('person.edit')->with([
             'person' => $person,
-            'national_id' => $national_id
+            'nationalitiesArr' => $nationalitiesArr,
         ]);
     }
 
