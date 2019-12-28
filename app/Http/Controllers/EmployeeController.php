@@ -18,8 +18,26 @@ class EmployeeController extends PersonController
     public function index(Person $person)
     {
         $this->authorize('viewAny', $person);
-        $employees = $person->all()->where('is_employee', true);
+        $employees = $person->all()->where('is_employee', true)->reverse();
         return view('employee.index')->with('employees', $employees);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request, Person $person)
+    {
+
+        $nationalitiesArr = Nationality::all();
+        // return $nationalitiesArr;
+        $national_id = $request->input('national_id');
+        return view('/employee/create', [
+            'national_id' => $national_id,
+            'nationalitiesArr' => $nationalitiesArr,
+            'person' => $person
+        ]);
     }
 
     /**
@@ -30,36 +48,27 @@ class EmployeeController extends PersonController
      */
     public function store(Request $request)
     {
-        return 'this is employee Create Method';
-        $validatedData = $request->validate([
-            'ar_name1' => 'required|string|min:2',
-            'ar_name2' => 'string|nullable',
-            'ar_name3' => 'string|nullable',
-            'ar_name4' => 'string|nullable',
-            'ar_name5' => "required|string|min:2",
-            'en_name1' => 'string|nullable|regex:/[A-Za-z]/',
-            'en_name2' => 'string|nullable',
-            'en_name3' => 'string|nullable',
-            'en_name4' => 'string|nullable',
-            'en_name5' => 'string|nullable',
-            'phone_no' => 'required|numeric|starts_with:0,9|digits:10,12,14',
-            'nationaltiy' => "required",
-            'hafizah_number' => 'numeric|nullable',
-            'national_id_issue_date' => 'nullable',
-            'national_id_issue_place' => 'string|nullable',
-            'birth_date' => 'nullable',
-            'birth_place' => 'string|nullable',
-            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
-            // 'body' => 'required',
-        ]);
-
-        return $request->all();
-
-
-
-        $person = Person::create($request->all());
-        // $person->save();
-        return redirect()->action('PersonController@index');
+        // return $request;
+        $validatedData = collect($this->validatePerson($request));
+        $nationality = Nationality::where('id', $validatedData['nationaltiy_id'])->first();
+        // dd($nationality);
+        if ($nationality) {
+            $validatedData->put('nationaltiy_ar', $nationality->ar_name);
+            $validatedData->put('nationaltiy_en', $nationality->en_name);
+        }
+        $validatedData->put('is_employee', true);
+        $validatedData->put('is_customer', false);
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
+        if (!$created_by_id and !$created_by_name) {
+            return abort(403);
+        }
+        $validatedData->put('created_by_id', $created_by_id);
+        $validatedData->put('created_by_name', $created_by_name);
+        // return $validatedData;
+        $person = Person::create($validatedData->all());
+        $person->save();
+        return redirect()->action('EmployeeController@index');
     }
 
     /**
@@ -72,14 +81,14 @@ class EmployeeController extends PersonController
     {
         $this->authorize('viewAny', Person::class);
         if ($employee->is_employee) {
-            return view('employee.show')->with('person', $employee);
+            return view('employee.show')->with('employee', $employee);
         }
         if ($employee->is_customer) {
             return view('errors.notExpected')->withErrors(['This (ID) is a Customer, You can show his details in Customers Page,
-             for more info contact your administrator.']);
+             for more info contact System Administrator.']);
         }
         return view('errors.notExpected')->withErrors(['This (ID) is already registered (!! not employee or customer),
-        contact your administrator for more details.']);
+        contact System Administrator for more details.']);
     }
 
     /**
@@ -88,9 +97,13 @@ class EmployeeController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function edit(Person $person)
+    public function edit(Person $employee)
     {
-        return 'this is edit employee method';
+        $nationalitiesArr = Nationality::all();
+        return view('employee.edit')->with([
+            'employee' => $employee,
+            'nationalitiesArr' => $nationalitiesArr,
+        ]);
     }
 
     /**
@@ -100,9 +113,31 @@ class EmployeeController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Person $person)
+    public function update(Request $request, Person $employee)
     {
-        return 'this is update employee method';
+        if (!$employee->is_employee) {
+            return abort(403);
+        }
+
+        $validatedData = collect($this->validatePerson($request));
+        $nationality = Nationality::where('id', $validatedData['nationaltiy_id'])->first();
+        if ($nationality) {
+            $validatedData->put('nationaltiy_ar', $nationality->ar_name);
+            $validatedData->put('nationaltiy_en', $nationality->en_name);
+        }
+        $validatedData->put('is_employee', true);
+        // -------------------
+        $last_edit_by_id = auth()->user()->id;
+        $last_edit_by_name = auth()->user()->user_name;
+        if (!$last_edit_by_id and !$last_edit_by_name) {
+            return abort(403);
+        }
+        $validatedData->put('last_edit_by_id', $last_edit_by_id);
+        $validatedData->put('last_edit_by_name', $last_edit_by_name);
+        // -------------------
+        $employee->update($validatedData->all());
+        $employee->save();
+        return redirect()->action('EmployeeController@show', $employee->id);
     }
 
     /**
@@ -111,30 +146,24 @@ class EmployeeController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Person $person)
+    public function destroy(Person $employee)
     {
-        return 'this is destroy employee method';
+        $employee->delete();
+        return redirect()->action('EmployeeController@index');
     }
 
 
     public function check(Request $request, Person $person)
     {
-
-        $fromeCustomer = false;
-        $fromeEmployee = true;
-
         if ($request->method() === "GET") {
-
-            return view('/person/check')->with(['fromeEmployee' => $fromeEmployee, 'fromeCustomer' => $fromeCustomer]);
+            return view('employee.check');
         }
-
-        $validatedData = $request->validate([
+        $request->validate([
             'national_id' => 'required|numeric|starts_with:1,2|digits:10',
         ]);
-
         $found_person = $person->isexist($request->national_id)->first();
         if ($found_person) {
-            return redirect()->action('EmployeeController@show', ['id' => $found_person->id]);
+            return redirect()->action('EmployeeController@show',  $found_person->id);
         } else {
             return redirect()->action('EmployeeController@create', $request);
         }

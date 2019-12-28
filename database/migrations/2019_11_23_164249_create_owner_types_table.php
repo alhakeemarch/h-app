@@ -23,6 +23,7 @@ class CreateOwnerTypesTable extends Migration
 
             // =============================
             $table->longText('notes')->nullable();
+            $table->longText('private_notes')->nullable();
             // -----------------------------
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

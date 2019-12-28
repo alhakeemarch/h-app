@@ -17,10 +17,10 @@ class CreatePlotsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('project_id')->references('id')->on('projects')->nullable();
             // -----------------------------
-            $table->bigInteger('aad_user_id')->references('id')->on('users');
-            $table->string('add_user_name')->references('user_name')->on('users');
-            $table->bigInteger('last_edit_user_id')->references('id')->on('users')->nullable();
-            $table->string('last_edit_user_name')->references('user_name')->on('users')->nullable();
+            $table->bigInteger('created_by_id')->references('id')->on('users');
+            $table->string('created_by_name')->references('user_name')->on('users');
+            $table->bigInteger('last_edit_by_id')->references('id')->on('users')->nullable();
+            $table->string('last_edit_by_name')->references('user_name')->on('users')->nullable();
             // -----------------------------
             $table->string('deed_no')->unique();
             $table->date('deed_date')->nullable();
@@ -31,13 +31,13 @@ class CreatePlotsTable extends Migration
             $table->string('allowed_building_height')->nullable();
             $table->string('allowed_usage')->nullable();
             // -----------------------------
-            $table->string('plan_id')->references('id')->on('plans')->nullable(); 
+            $table->string('plan_id')->references('id')->on('plans')->nullable();
             // -----------------------------
-            $table->string('district_id')->references('id')->on('districts')->nullable(); 
+            $table->string('district_id')->references('id')->on('districts')->nullable();
             // -----------------------------
-            $table->string('municipality_branch_id')->references('id')->on('municipality_branchs')->nullable(); 
+            $table->string('municipality_branch_id')->references('id')->on('municipality_branchs')->nullable();
             // -----------------------------
-            $table->string('street_id')->references('id')->on('streets')->nullable(); 
+            $table->string('street_id')->references('id')->on('streets')->nullable();
             // -----------------------------
             $table->string('x_coordinate')->nullable();
             $table->string('y_coordinate')->nullable();
@@ -70,7 +70,7 @@ class CreatePlotsTable extends Migration
             $table->string('west_border_chamfer')->nullable();
             $table->string('west_border_note')->nullable();
             // -----------------------------
-            
+
 
             // =============================
             $table->longText('notes')->nullable();

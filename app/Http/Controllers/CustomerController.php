@@ -9,28 +9,34 @@ use App\Nationality;
 
 class CustomerController extends PersonController
 {
-    //    /**
-    //  * Create a new controller instance.
-    //  *
-    //  * @return void
-    //  */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Person $person)
+    public function index(Person $customer)
     {
-        $customers = $person->all()->where('is_customer', true);
+        $customers = $customer->all()->where('is_customer', true)->reverse();
         return view('customer.index')->with('customers', $customers);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request, Person $customer)
+    {
+        // return $request;
+        $nationalitiesArr = Nationality::all();
+        $national_id = $request->input('national_id');
+        return view('/customer/create', [
+            'national_id' => $national_id,
+            'nationalitiesArr' => $nationalitiesArr,
+            'customer' => $customer
+        ]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -40,35 +46,27 @@ class CustomerController extends PersonController
      */
     public function store(Request $request)
     {
-        return 'this is customer Create Method';
-        // $validatedData = $request->validate([
-        //     'name1' => 'required|string|min:2',
-        //     'name2' => 'string|nullable',
-        //     'name3' => 'string|nullable',
-        //     'name4' => 'string|nullable',
-        //     'name5' => "required|string|min:2",
-        //     'en_name1' => 'string|nullable',
-        //     'en_name2' => 'string|nullable',
-        //     'en_name3' => 'string|nullable',
-        //     'en_name4' => 'string|nullable',
-        //     'en_name5' => 'string|nullable',
-        //     'phone_no' => 'required|numeric|starts_with:0,9|digits:10,12,14',
-        //     'nationaltiy' => "required",
-        //     'hafizah_number' => 'numeric|nullable',
-        //     'national_id_issue_date' => 'nullable',
-        //     'national_id_issue_place' => 'string|nullable',
-        //     'birth_date' => 'nullable',
-        //     'birth_place' => 'string|nullable',
-        //     'national_id' => 'required|numeric|starts_with:1,2|digits:10',
-        // ]);
-
-        // return $request->all();
-
-
-
-        // $person = Person::create($request->all());
-        // // $person->save();
-        // return redirect()->action('PersonController@index');
+        // return $request;
+        $validatedData = collect($this->validatePerson($request));
+        $nationality = Nationality::where('id', $validatedData['nationaltiy_id'])->first();
+        // dd($nationality);
+        if ($nationality) {
+            $validatedData->put('nationaltiy_ar', $nationality->ar_name);
+            $validatedData->put('nationaltiy_en', $nationality->en_name);
+        }
+        $validatedData->put('is_employee', false);
+        $validatedData->put('is_customer', true);
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
+        if (!$created_by_id and !$created_by_name) {
+            return abort(403);
+        }
+        $validatedData->put('created_by_id', $created_by_id);
+        $validatedData->put('created_by_name', $created_by_name);
+        // return $validatedData;
+        $person = Person::create($validatedData->all());
+        $person->save();
+        return redirect()->action('CustomerController@index');
     }
 
     /**
@@ -81,10 +79,10 @@ class CustomerController extends PersonController
     {
         // if person not found laravel (route model binding) will send us 404 page
         if ($customer->is_customer) {
-            return view('customer.show')->with('person', $customer);
+            return view('customer.show')->with('customer', $customer);
         }
         if ($customer->is_employee) {
-            $this->authorize('viewAny', Person::class);
+            // $this->authorize('viewAny', Person::class);
             return view('errors.notExpected')->withErrors(['This (ID) is already registered as employee,
             contact your administrator for more details.']);
         }
@@ -98,9 +96,13 @@ class CustomerController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function edit(Person $person)
+    public function edit(Person $customer)
     {
-        return 'this is edit customer method';
+        $nationalitiesArr = Nationality::all();
+        return view('customer.edit')->with([
+            'customer' => $customer,
+            'nationalitiesArr' => $nationalitiesArr,
+        ]);
     }
 
     /**
@@ -110,9 +112,31 @@ class CustomerController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Person $person)
+    public function update(Request $request, Person $customer)
     {
-        return 'this is update customer method';
+        if (!$customer->is_customer) {
+            return abort(403);
+        }
+
+        $validatedData = collect($this->validatePerson($request));
+        $nationality = Nationality::where('id', $validatedData['nationaltiy_id'])->first();
+        if ($nationality) {
+            $validatedData->put('nationaltiy_ar', $nationality->ar_name);
+            $validatedData->put('nationaltiy_en', $nationality->en_name);
+        }
+        $validatedData->put('is_customer', true);
+        // -------------------
+        $last_edit_by_id = auth()->user()->id;
+        $last_edit_by_name = auth()->user()->user_name;
+        if (!$last_edit_by_id and !$last_edit_by_name) {
+            return abort(403);
+        }
+        $validatedData->put('last_edit_by_id', $last_edit_by_id);
+        $validatedData->put('last_edit_by_name', $last_edit_by_name);
+        // -------------------
+        $customer->update($validatedData->all());
+        $customer->save();
+        return redirect()->action('CustomerController@show', $customer->id);
     }
 
     /**
@@ -121,18 +145,18 @@ class CustomerController extends PersonController
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Person $person)
+    public function destroy(Person $customer)
     {
-        return 'this is destroy customer method';
+        $customer->delete();
+        return redirect()->action('CustomerController@index');
     }
 
 
     public function check(Request $request, Person $person)
     {
-        $fromeCustomer = true;
-        $fromeEmployee = false;
+
         if ($request->method() === "GET") {
-            return view('/person/check')->with(['fromeEmployee' => $fromeEmployee, 'fromeCustomer' => $fromeCustomer]);
+            return view('/customer/check');
         }
 
         $validatedData = $request->validate([
@@ -140,10 +164,9 @@ class CustomerController extends PersonController
         ]);
 
         $found_person = $person->where('national_id', $request->national_id)->first();
+        // return $found_person;
         if ($found_person) {
-
             return redirect()->route('customer.show', [$found_person]);
-            return redirect()->action('CustomerController@show', ['id' => $found_person->id]);
         } else {
             return redirect()->action('CustomerController@create', $request);
         }

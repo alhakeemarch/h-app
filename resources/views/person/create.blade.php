@@ -4,13 +4,11 @@
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="card mb-3">
-            <h5 class="card-header">{{ __('Registration') }} of {{$persontype}} 2/2</h5>
+            <h5 class="card-header">{{ __('Registration') }} of {{__('person')}} 2/2</h5>
             <div class="card-body">
                 <form action="{{ url('person') }}" method="POST">
-                    @csrf
                     @include('person.form')
-                    <input type="submit" value="{{__('submit')}}"
-                        class="btn btn-secondary btn-block text-white bg-dark my-2">
+                    <button class="btn btn-info btn-block w-75 my-2 mx-auto" type="submit">{{__('submit')}}</button>
                 </form>
                 <!-- ///////////////////////////////-->
                 @if ($errors->any())

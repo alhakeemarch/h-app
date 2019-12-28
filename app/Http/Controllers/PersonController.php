@@ -30,9 +30,11 @@ class PersonController extends Controller
      */
     public function index(Person $person)
     {
-        $this->authorize('viewAny', $person);
-
-        $allPersons = Person::all();
+        // $this->authorize('viewAny', $person);
+        if (!auth()->user()->is_admin) {
+            abort(403);
+        }
+        $allPersons = Person::all()->reverse();
         return view('person.index')->with('persons', $allPersons);
     }
 
@@ -43,24 +45,13 @@ class PersonController extends Controller
      */
     public function create(Request $request, Person $person)
     {
-        $persontype = false;
-        if ($request->fromeEmployee) {
-            $persontype = 'employee';
-        }
-        if ($request->fromeCustomer) {
-            $persontype = 'customer';
-        }
-        if ($persontype == false) {
-            // return redirect('/')->withErrors(['Undefined Person type', 'please Contact the Administrator']);
-        }
-        // $nationalitiesArr = Nationality::gitNationalities();
+
         $nationalitiesArr = Nationality::all();
         // return $nationalitiesArr;
         $national_id = $request->input('national_id');
         return view('/person/create', [
             'national_id' => $national_id,
             'nationalitiesArr' => $nationalitiesArr,
-            'persontype' => $persontype,
             'person' => $person
         ]);
     }
@@ -74,50 +65,24 @@ class PersonController extends Controller
     public function store(Request $request)
     {
         // return $request;
-
-        $validatedData = $request->validate([
-
-            'ar_name1' => 'required|string|min:2',
-            'ar_name2' => 'string|nullable',
-            'ar_name3' => 'string|nullable',
-            'ar_name4' => 'string|nullable',
-            'ar_name5' => "required|string|min:2",
-            'en_name1' => 'string|nullable|regex:/[A-Za-z]/',
-            'en_name2' => 'string|nullable|regex:/[A-Za-z]/',
-            'en_name3' => 'string|nullable|regex:/[A-Za-z]/',
-            'en_name4' => 'string|nullable|regex:/[A-Za-z]/',
-            'en_name5' => 'string|nullable|regex:/[A-Za-z]/',
-            'mobile' => 'required|numeric|starts_with:0,9|digits:10,12,14',
-            'nationaltiy_id' => "required",
-            'hafizah_no' => 'numeric|nullable',
-            'national_id_issue_date' => 'nullable',
-            'national_id_expire_date' => 'nullable',
-            'national_id_issue_place' => 'string|nullable',
-            'ah_birth_date' => 'nullable',
-            'ad_birth_date' => 'nullable',
-            'birth_place' => 'string|nullable',
-            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
-        ]);
-
-        $nationalitiesArr = Nationality::gitNationalities();
-        $request_nationality_id = $request->nationaltiy_id;
-        $nationality_ar = '';
-        $nationality_en = '';
-        foreach ($nationalitiesArr as $nationality_id => $nationality) {
-            foreach ($nationality as $en_nationality => $ar_nationality) {
-                if ($request_nationality_id == $nationality_id) {
-                    $nationality_ar = $ar_nationality;
-                    $nationality_en = $en_nationality;
-                }
-            }
+        $validatedData = collect($this->validatePerson($request));
+        $nationality = Nationality::where('id', $validatedData['nationaltiy_id'])->first();
+        // dd($nationality);
+        if ($nationality) {
+            $validatedData->put('nationaltiy_ar', $nationality->ar_name);
+            $validatedData->put('nationaltiy_en', $nationality->en_name);
         }
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
+        if (!$created_by_id and !$created_by_name) {
+            return abort(403);
+        }
+        $validatedData->put('created_by_id', $created_by_id);
+        $validatedData->put('created_by_name', $created_by_name);
 
-        $input = collect($request);
-        $input->put('nationaltiy_ar', $nationality_ar);
-        $input->put('nationaltiy_en', $nationality_en);
-
-        $person = Person::create($input->all());
-        // $person->save();
+        // return $validatedData;
+        $person = Person::create($validatedData->all());
+        $person->save();
         return redirect()->action('PersonController@index');
     }
 
@@ -132,13 +97,6 @@ class PersonController extends Controller
         // if person not found laravel (route model binding) will send us 404 page
         $this->authorize('viewAny', $person);
         return view('person.show')->with('person', $person);
-
-        // if ($person->is_employee) {
-        //     return redirect()->route('employee.show', ['employee' => $person->id]);
-        // }
-        // if ($person->is_customer) {
-        //     return redirect()->route('customer.show', ['customer' => $person->id]);
-        // }
     }
 
     /**
@@ -165,7 +123,24 @@ class PersonController extends Controller
      */
     public function update(Request $request, Person $person)
     {
-        return 'this is update method';
+        $validatedData = collect($this->validatePerson($request));
+        $nationality = Nationality::where('id', $validatedData['nationaltiy_id'])->first();
+        if ($nationality) {
+            $validatedData->put('nationaltiy_ar', $nationality->ar_name);
+            $validatedData->put('nationaltiy_en', $nationality->en_name);
+        }
+        // -------------------
+        $last_edit_by_id = auth()->user()->id;
+        $last_edit_by_name = auth()->user()->user_name;
+        if (!$last_edit_by_id and !$last_edit_by_name) {
+            return abort(403);
+        }
+        $validatedData->put('last_edit_by_id', $last_edit_by_id);
+        $validatedData->put('last_edit_by_name', $last_edit_by_name);
+        // -------------------
+        $person->update($validatedData->all());
+        $person->save();
+        return redirect()->action('PersonController@show', $person->id);
     }
 
     /**
@@ -176,7 +151,8 @@ class PersonController extends Controller
      */
     public function destroy(Person $person)
     {
-        return 'this is destroy method';
+        $person->delete();
+        return redirect()->action('PersonController@index');
     }
 
 
@@ -200,5 +176,51 @@ class PersonController extends Controller
         } else {
             return redirect()->action('PersonController@create', $request);
         }
+    }
+    public static function validatePerson($request)
+    {
+        return $request->validate([
+            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+            'is_employee' => 'boolean|nullable',
+            'is_customer' => 'boolean|nullable',
+            // ----------------------------------------------------
+            'ar_name1' => 'required|string|min:2',
+            'ar_name2' => 'string|nullable',
+            'ar_name3' => 'string|nullable',
+            'ar_name4' => 'string|nullable',
+            'ar_name5' => "required|string|min:2",
+            'en_name1' => 'string|nullable|regex:/[A-Za-z]/',
+            'en_name2' => 'string|nullable|regex:/[A-Za-z]/',
+            'en_name3' => 'string|nullable|regex:/[A-Za-z]/',
+            'en_name4' => 'string|nullable|regex:/[A-Za-z]/',
+            'en_name5' => 'string|nullable|regex:/[A-Za-z]/',
+            // ----------------------------------------------------
+            'mobile' => 'required|numeric|starts_with:0,9|digits:10,12,14',
+            'phone' => 'nullable',
+            'phone_extension' => 'nullable',
+            'email' => 'nullable|email',
+            // ----------------------------------------------------
+            'nationaltiy_id' => "required",
+            'nationaltiy_ar' => "nullable",
+            'nationaltiy_en' => "nullable",
+            // ----------------------------------------------------
+            'hafizah_no' => 'numeric|nullable',
+            'national_id_issue_date' => 'nullable',
+            'national_id_expire_date' => 'nullable',
+            'national_id_issue_place' => 'string|nullable',
+            // ----------------------------------------------------
+            'pasport_no' => 'nullable',
+            'pasport_issue_date' => 'nullable',
+            'pasport_id_expire_date' => 'nullable',
+            'pasport_id_issue_place' => 'nullable',
+            // ----------------------------------------------------
+            'ah_birth_date' => 'nullable',
+            'ad_birth_date' => 'nullable',
+            'birth_place' => 'string|nullable',
+            'birth_city' => 'string|nullable',
+            // ----------------------------------------------------
+            'notes' => 'string|nullable',
+            'private_notes' => 'string|nullable',
+        ]);
     }
 }

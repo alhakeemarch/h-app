@@ -5,9 +5,14 @@
 
 <div class="container-fluid">
     <div class="card">
-        <h4 class="card-header text-primary">
-            List of Employees
-        </h4>
+        <h3 class="h3 text-center">
+            list of all emplooyees <p class="small">total = {{ count($employees) }}</p>
+        </h3>
+        <a class="btn btn-info w-75 mx-auto" href="{{ url('/employee/check')}}">
+            {{-- <i class="far fa-add"></i>  --}}
+            <i class=" fas fa-plus"></i>
+            <span class="d-none d-md-inline-block">&nbsp; {{__('add new employee')}}</span>
+        </a>
         <table class="table table-hover">
             <thead class="bg-thead">
                 <tr>
@@ -22,19 +27,19 @@
                 @php $i=1 @endphp
                 @foreach ($employees as $employee)
                 <tr>
-                    <th scope="row">{{$i}}</th>
-                    <td>{{$employee->ar_name1}} {{$employee->ar_name2}} {{$employee->ar_name3}} {{$employee->ar_name4}}
+                    <td scope="row">{{$i}}</td>
+                    <td scope="row">{{$employee->ar_name1}} {{$employee->ar_name2}} {{$employee->ar_name3}}
+                        {{$employee->ar_name4}}
                         {{$employee->ar_name5}}</td>
-                    <td>{{$employee->national_id}}</td>
-                    <td> {{$employee->mobile}}</td>
-                    <td>
+                    <td scope="row">{{$employee->national_id}}</td>
+                    <td scope="row"> {{$employee->mobile}}</td>
+                    <td scope="row">
                         <a href="{{ url('/employee/'.$employee->id) }}">
                             <i class="far fa-eye"></i>
                         </a>
                     </td>
                 </tr>
                 @php $i ++ @endphp
-                </tr>
                 @endforeach
             </tbody>
         </table>

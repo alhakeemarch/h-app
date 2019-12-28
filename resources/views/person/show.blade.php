@@ -51,7 +51,7 @@
 
 {{-- ////// to show all person detals --}}
 {{-- ============================================ --}}
-{{-- <div class="card my-5">
+<div class="card my-5">
     <h2 class="card-header bg-danger">
         To delet
     </h2>
@@ -62,10 +62,10 @@
         @foreach ($obj as $a=>$b )
         <li>
             {{ $a}} : {{$b}}
-</li>
-@endforeach
-</ul>
-</div> --}}
+        </li>
+        @endforeach
+    </ul>
+</div>
 
 
 <hr>
@@ -82,7 +82,7 @@
         <form class="delete" action="{{ route('person.destroy', $person) }}" method="POST">
             @method('DELETE')
             @csrf
-            <button disabled class="btn disabled btn-danger btn-lg btn-block" onclick="return confirm('Are you sure?')">
+            <button class="btn btn-danger btn-lg btn-block" onclick="return confirm('Are you sure?')">
                 <i class="fa fa-trash"></i> Delete</button>
         </form>
     </div>

@@ -242,6 +242,8 @@ function makeUser($user)
 {
     $fahd = [
         'national_id' => '2001846613',
+        'created_by_id' => '1',
+        'created_by_name' => 'admin',
         'is_employee' => '1',
         'is_customer' => '1',
         'ar_name1' => 'فهد',
@@ -256,6 +258,7 @@ function makeUser($user)
     $fahdUser = [
         'user_name' => 'fff',
         'password' => Hash::make('1'),
+        'is_manager' => true,
         'user_type_id' => '100',
         'user_type_name' => 'Admin',
         'user_level' => '100',
@@ -264,6 +267,8 @@ function makeUser($user)
     // ===========================================
     $admin = [
         'national_id' => '1000000000',
+        'created_by_id' => '1',
+        'created_by_name' => 'admin',
         'is_employee' => '1',
         'is_customer' => '1',
         'ar_name1' => 'المدير',
@@ -280,6 +285,8 @@ function makeUser($user)
         'password' => Hash::make('1'),
         'user_type_id' => '100',
         'user_type_name' => 'Admin',
+        'is_admin' => true,
+        'is_manager' => true,
         'user_level' => '100',
         'job_level' => '100',
     ];
