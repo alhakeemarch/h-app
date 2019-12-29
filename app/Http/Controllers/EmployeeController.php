@@ -9,7 +9,15 @@ use App\Nationality;
 
 class EmployeeController extends PersonController
 {
-
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +25,7 @@ class EmployeeController extends PersonController
      */
     public function index(Person $person)
     {
-        $this->authorize('viewAny', $person);
+        // $this->authorize('viewAny', $person);
         $employees = $person->all()->where('is_employee', true)->reverse();
         return view('employee.index')->with('employees', $employees);
     }
@@ -27,7 +35,7 @@ class EmployeeController extends PersonController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, Person $person)
+    public function create(Request $request, Person $employee)
     {
 
         $nationalitiesArr = Nationality::all();
@@ -36,7 +44,7 @@ class EmployeeController extends PersonController
         return view('/employee/create', [
             'national_id' => $national_id,
             'nationalitiesArr' => $nationalitiesArr,
-            'person' => $person
+            'employee' => $employee
         ]);
     }
 
@@ -79,7 +87,7 @@ class EmployeeController extends PersonController
      */
     public function show(Request $request, Person $employee)
     {
-        $this->authorize('viewAny', Person::class);
+        // $this->authorize('viewAny', Person::class);
         if ($employee->is_employee) {
             return view('employee.show')->with('employee', $employee);
         }

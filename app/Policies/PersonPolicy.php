@@ -18,18 +18,20 @@ class PersonPolicy
      */
     public function viewAny(User $user)
     {
+        // return true;
         // return false;
+        return $user->is_admin;
 
-        if ($user->user_level > 5) {
-            return true;
-        }
-        if ($user->user_type_id > 5) {
-            return true;
-        }
-        return in_array($user->email, [
-            'admin@hakeemarch.com',
-            'al-fahd@windowslive.com'
-        ]);
+        // if ($user->user_level > 5) {
+        //     return true;
+        // }
+        // if ($user->user_type_id > 5) {
+        //     return true;
+        // }
+        // return in_array($user->email, [
+        //     'admin@hakeemarch.com',
+        //     'al-fahd@windowslive.com'
+        // ]);
     }
 
     /**
@@ -41,6 +43,7 @@ class PersonPolicy
      */
     public function view(User $user, Person $person)
     {
+        // return $user->is_admin;
         //
     }
 

@@ -9,7 +9,6 @@ use App\Nationality;
 
 class CustomerController extends PersonController
 {
-
     /**
      * Display a listing of the resource.
      *

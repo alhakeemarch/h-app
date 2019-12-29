@@ -73,10 +73,12 @@
                             href="{{ route ('allowedBuildingHeight.index') }}">{{__('building height')}}</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route ('ownerType.index') }}">{{__('owner types')}}</a>
+                        {{-- // *طريقة لوضع الصلاحيات --}}
                         @if(auth()->user()->is_admin)
                         <a class="dropdown-item" href="{{ route ('user.index') }}">{{__('users')}}</a>
                         <a class="dropdown-item" href="{{ route ('person.index') }}">{{__('persons')}}</a>
                         @endif
+
                         @if(auth()->user()->is_admin or auth()->user()->is_manager)
                         <a class="dropdown-item" href="{{ route ('employee.index') }}">{{__('employees')}}</a>
                         @endif

@@ -3,10 +3,7 @@
 @section('content')
 
 <div class="container-fluid text-center">
-    <h1 class="h1"> جدل لعرض كل الجنسيات</h1>
-
-
-
+    <h1 class="h1"> جدل لعرض كل البلديات</h1>
     <div class="card">
         <table class="table table-hover text-capitalize">
             <thead class="bg-thead">

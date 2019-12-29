@@ -19,6 +19,8 @@ class PersonController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        // $this->authorizeResource(Person::class, 'person');
         // $this->middleware('signed')->only('verify');
         // $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
@@ -30,10 +32,7 @@ class PersonController extends Controller
      */
     public function index(Person $person)
     {
-        // $this->authorize('viewAny', $person);
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
+        $this->authorize('viewAny', $person);
         $allPersons = Person::all()->reverse();
         return view('person.index')->with('persons', $allPersons);
     }
