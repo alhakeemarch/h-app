@@ -16,7 +16,7 @@ class CountryController extends Controller
     {
         $countries = Country::all();
         // return $countries;
-        return view('country.index');
+        return view('country.index')->with('countries', $countries);
     }
 
     /**
@@ -26,7 +26,8 @@ class CountryController extends Controller
      */
     public function create()
     {
-        //
+        $country = new Country();
+        return view('country.create')->with('country', $country);
     }
 
     /**
@@ -37,6 +38,7 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
         //
     }
 
@@ -83,6 +85,28 @@ class CountryController extends Controller
     public function destroy(Country $country)
     {
         //
+    }
+
+    public function check(Request $request, Country $country)
+    {
+        if ($request->method() === "GET") {
+            return view('country.check');
+        }
+
+        $validatedData = $request->validate([
+            'code_2chracters' => 'required',
+        ]);
+        // return $request->all();
+
+        // $found_country = $country->where('code_2chracters', $request->'code_2chracters')->first();
+        // return $found_country;
+        $found_country = false;
+        if ($found_country) {
+            return redirect()->action('CountryController@show', $found_country->id);
+            // return redirect()->action('countryController@show', ['id' => $found_country->id]);
+        } else {
+            return redirect()->action('CountryController@create', $request);
+        }
     }
 
     // ======================================================================================================================

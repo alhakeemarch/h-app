@@ -124,6 +124,7 @@ Route::any('/project/check', 'ProjectController@check')->name('project.check');
 Route::any('/plot/check', 'PlotController@check')->name('plot.check');
 Route::any('/contract/check', 'ContractController@check')->name('contract.check');
 Route::any('/task/check', 'TaskController@check')->name('task.check');
+Route::any('/country/check', 'CountryController@check')->name('country.check');
 Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
 Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
@@ -168,6 +169,7 @@ Route::resources([
 
     //  جداول لحفظ الداتا
     'nationality' => 'NationalityController',
+    'country' => 'CountryController',
     'country' => 'CountryController',
     'saudiCity' => 'SaudiCityController',
     'district' => 'DistrictController',

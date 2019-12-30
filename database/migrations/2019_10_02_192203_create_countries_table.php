@@ -16,30 +16,30 @@ class CreateCountriesTable extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->bigIncrements('id');
             // -----------------------------
-            $table->string('ar_name');
             $table->string('en_name');
+            $table->string('ar_name')->nullable();
             // -----------------------------
-            $table->string('ar_capital_city');
             $table->string('en_capital_city');
+            $table->string('ar_capital_city')->nullable();
             // -----------------------------
-            $table->string('ar_nationality');
-            $table->string('en_nationality');
+            $table->string('en_nationality')->nullable();
+            $table->string('ar_nationality')->nullable();
+            $table->string('ar_nationality_male')->nullable();
+            $table->string('ar_nationality_female')->nullable();
             // -----------------------------
-            $table->string('currency_name');
-            $table->string('currency_code');
-            $table->string('currency_rate_us_dollar');
-            $table->string('currency_rate_date');
+            $table->string('currency_name')->nullable();
+            $table->string('currency_code')->nullable();
+            $table->string('currency_rate_us_dollar')->nullable();
+            $table->string('currency_rate_at')->nullable();
             // -----------------------------
-            $table->string('2w_code');
-            $table->string('3w_code');
-            $table->string('numeric_code');
+            $table->string('code_2chracters')->nullable();
+            $table->string('code_3chracters')->nullable();
+            $table->string('code_numeric')->nullable();
             // -----------------------------
-            $table->string('isd_phone_code');
-            $table->string('population_count');
-            $table->string('population_count_date');
-            $table->string('continent');
-
-
+            $table->string('isd_phone_code')->nullable();
+            $table->string('population_count')->nullable();
+            $table->string('population_count_at')->nullable();
+            $table->string('continent')->nullable();
 
 
 

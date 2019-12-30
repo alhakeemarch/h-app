@@ -3,7 +3,18 @@
 
 @section('content')
 
-<h1 class="h1"> يفترض يعرض اسماء الدول </h1>
+<div class="card">
+    <h3 class="h3 text-center">
+        list of all countries <p class="small">total = {{ count($countries) }}</p>
+    </h3>
+    <a class="btn btn-info w-75 mx-auto" href="{{ url('/country/check')}}">
+        {{-- <i class="far fa-add"></i>  --}}
+        <i class=" fas fa-plus"></i>
+        <span class="d-none d-md-inline-block">&nbsp; {{__('add new country')}}</span>
+    </a>
+
+    <h1 class="h1"> يفترض يعرض اسماء الدول </h1>
+</div>
 {{-- 
 <div class="card">
     <h4 class="card-header text-center">

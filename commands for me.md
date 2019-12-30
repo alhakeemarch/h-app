@@ -234,6 +234,7 @@ php artisan tinker
 
 ============================
 php artisan make:policy PersonPolicy -m Person
+php artisan make:policy CountryPolicy -m Country
 
 \\ in class function
 $this->authorize('viewAny', $person);
