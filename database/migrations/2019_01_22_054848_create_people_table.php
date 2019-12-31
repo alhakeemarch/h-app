@@ -45,7 +45,7 @@ class CreatePeopleTable extends Migration
             $table->string('phone_extension')->nullable();
             $table->string('email')->nullable();
             // -----------------------------
-            $table->string('nationaltiy_id')->nullable();
+            $table->string('nationaltiy_code')->nullable();
             $table->string('nationaltiy_ar')->nullable();
             $table->string('nationaltiy_en')->nullable();
             // -----------------------------

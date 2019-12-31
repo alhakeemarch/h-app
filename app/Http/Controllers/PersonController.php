@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use App\Person;
 use Illuminate\Support\Facades\Auth;
-use App\Nationality;
 use Illuminate\Http\Request;
 
 
@@ -45,12 +45,12 @@ class PersonController extends Controller
     public function create(Request $request, Person $person)
     {
 
-        $nationalitiesArr = Nationality::all();
-        // return $nationalitiesArr;
+        $countries = Country::all();
+        // return $countries;
         $national_id = $request->input('national_id');
         return view('/person/create', [
             'national_id' => $national_id,
-            'nationalitiesArr' => $nationalitiesArr,
+            'countries' => $countries,
             'person' => $person
         ]);
     }
@@ -65,7 +65,7 @@ class PersonController extends Controller
     {
         // return $request;
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Nationality::where('id', $validatedData['nationaltiy_id'])->first();
+        $nationality = Country::where('code_2chracters', $validatedData['nationaltiy_code'])->first();
         // dd($nationality);
         if ($nationality) {
             $validatedData->put('nationaltiy_ar', $nationality->ar_name);
@@ -106,10 +106,10 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
-        $nationalitiesArr = Nationality::all();
+        $countries = Country::all();
         return view('person.edit')->with([
             'person' => $person,
-            'nationalitiesArr' => $nationalitiesArr,
+            'countries' => $countries,
         ]);
     }
 
@@ -123,7 +123,7 @@ class PersonController extends Controller
     public function update(Request $request, Person $person)
     {
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Nationality::where('id', $validatedData['nationaltiy_id'])->first();
+        $nationality = Country::where('code_2chracters', $validatedData['nationaltiy_code'])->first();
         if ($nationality) {
             $validatedData->put('nationaltiy_ar', $nationality->ar_name);
             $validatedData->put('nationaltiy_en', $nationality->en_name);
@@ -199,7 +199,7 @@ class PersonController extends Controller
             'phone_extension' => 'nullable',
             'email' => 'nullable|email',
             // ----------------------------------------------------
-            'nationaltiy_id' => "required",
+            'nationaltiy_code' => "required",
             'nationaltiy_ar' => "nullable",
             'nationaltiy_en' => "nullable",
             // ----------------------------------------------------

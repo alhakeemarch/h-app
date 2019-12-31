@@ -30,13 +30,8 @@ Route::get('/', function () {
 
 
 Route::any('/f', function () {
-    // // // inserts all available nationalities to db
-    // return App\Nationality::all()->count();
-    // return (App\Http\Controllers\NationalityController::firstInsertion()) ? App\Nationality::all() : 'some thing is worng';
-
-    // return App\Country::all()->count();
-    // return (App\Http\Controllers\CountryController::firstInsertion()) ? App\Country::all() : 'some thing is worng';
-    // return App\Http\Controllers\CountryController::firstInsertion();
+    // // // inserts all available countries to db
+    return (App\Http\Controllers\CountryController::firstInsertion()) ? App\Country::all() : 'some thing is worng';
 
     // // // inserts all available Municipality Branchs to db
     // return (App\Http\Controllers\MunicipalityBranchController::firstInsertion()) ? App\MunicipalityBranch::all() : 'some thing is worng';
@@ -172,7 +167,6 @@ Route::resources([
     'lettertype' => 'LettertypeController',
 
     //  جداول لحفظ الداتا
-    'nationality' => 'NationalityController',
     'country' => 'CountryController',
     'country' => 'CountryController',
     'saudiCity' => 'SaudiCityController',
@@ -326,5 +320,6 @@ function makeUser($user)
     $person = Person::where('national_id', $the_person['national_id'])->first();
 
     $person->user()->create(array_merge($fromPerson, $the_user));
-    return redirect('/home');
+    // return redirect('/');
+    return 'user created';
 }

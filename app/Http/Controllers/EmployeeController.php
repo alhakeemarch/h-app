@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Person;
 use Illuminate\Support\Facades\Auth;
-use App\Nationality;
+
 
 class EmployeeController extends PersonController
 {
@@ -58,7 +58,7 @@ class EmployeeController extends PersonController
     {
         // return $request;
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Nationality::where('id', $validatedData['nationaltiy_id'])->first();
+        $nationality = Nationality::where('id', $validatedData['nationaltiy_code'])->first();
         // dd($nationality);
         if ($nationality) {
             $validatedData->put('nationaltiy_ar', $nationality->ar_name);
@@ -128,7 +128,7 @@ class EmployeeController extends PersonController
         }
 
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Nationality::where('id', $validatedData['nationaltiy_id'])->first();
+        $nationality = Nationality::where('id', $validatedData['nationaltiy_code'])->first();
         if ($nationality) {
             $validatedData->put('nationaltiy_ar', $nationality->ar_name);
             $validatedData->put('nationaltiy_en', $nationality->en_name);

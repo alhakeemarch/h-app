@@ -8,6 +8,7 @@
         <form action="{{ route ('person.update',$person) }}" method="POST">
 
             @method('PUT')
+            @csrf
             @include('person.form')
             <div class="row">
 

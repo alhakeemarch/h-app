@@ -55,9 +55,8 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{__('data')}} &nbsp;</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route ('country.index') }}">{{__('countries')}}</a>
                         @if (auth()->user()->user_level >= 10 or true)
-                        <a class="dropdown-item" href="{{ route ('nationality.index') }}">{{__('nationalities')}}</a>
+                        <a class="dropdown-item" href="{{ route ('country.index') }}">{{__('countries')}}</a>
                         @endif
                         <a class="dropdown-item" href="{{ route ('saudiCity.index') }}">{{__('saudi cities')}}</a>
                         <div class="dropdown-divider"></div>

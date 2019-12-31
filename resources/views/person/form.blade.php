@@ -208,7 +208,7 @@
     @php $national_id = $national_id ?? $person->national_id; @endphp
 
     @if (substr($national_id,0,1)=='1')
-    <input type="hidden" name="nationaltiy_id" value="153">
+    <input type="hidden" name="nationaltiy_code" value="153">
     {{-- START: of Sudi ID info --}}
     <div class="form-row mb-3">
         {{-- --------------------------------------------------------------------------------------------- --}}
@@ -336,19 +336,21 @@
         <div class="col-md">
             <label for="fname">{{__( 'Nationaltiy')}} <span class="small text-danger">({{__('required')}})</span>
                 :</label>
-            <select name="nationaltiy_id" class="form-control @error ('nationaltiy_id') is-invalid @enderror" required>
+            <select name="nationaltiy_code" class="form-control @error ('nationaltiy_code') is-invalid @enderror"
+                required>
                 <option selected value="">{{__( 'Nationaltiy')}}..</option>
-                @foreach ($nationalitiesArr as $natioality)
+                @foreach ($countries as $country)
+
                 @if (App::isLocale('ar'))
-                <option value="{{$natioality->id}}" @if(old('nationaltiy_id')==$natioality->id or
-                    $person->nationaltiy_id == $natioality->id )selected
+                <option value="{{$country->code_2chracters}}" @if(old('nationaltiy_code')==$country->code_2chracters or
+                    $person->nationaltiy_code == $country->code_2chracters )selected
                     @endif >
-                    {{$natioality->ar_name}} </option>
+                    {{$country->ar_name}} </option>
                 @else
-                <option value="{{$natioality->id}}" @if(old('nationaltiy_id')==$natioality->id or
-                    $person->nationaltiy_id==$natioality->id )selected
+                <option value="{{$country->code_2chracters}}" @if(old('nationaltiy_code')==$country->code_2chracters or
+                    $person->nationaltiy_code==$country->code_2chracters )selected
                     @endif>
-                    {{$natioality->en_name}}</option>
+                    {{$country->en_name}}</option>
                 @endif
                 @endforeach
             </select>

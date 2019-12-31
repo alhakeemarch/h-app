@@ -47,7 +47,7 @@ $factory->define(Person::class, function (Faker $faker) {
         'phone_extension' => '102',
         'email' => $faker->unique()->safeEmail,
 
-        'nationaltiy_id' => function () {
+        'nationaltiy_code' => function () {
             return ((rand(0, 10)) >= 5) ? '3' : '8';
         },
         'nationaltiy_ar' => function () {
