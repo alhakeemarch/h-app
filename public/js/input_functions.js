@@ -1,7 +1,4 @@
 
-
-
-
 function onlyNumber(evt) {
     var theEvent = evt || window.event;
     var key = theEvent.keyCode || theEvent.which;
@@ -56,6 +53,20 @@ function onlyEnglishString(evt) {
     }
     var ch = String.fromCharCode(theEvent.which);
     if (!(/[a-z ]/i.test(ch))) {
+        theEvent.preventDefault();
+    }
+}
+// ================================
+function onlyCapitalString(evt) {
+    var theEvent = evt || window.event;
+    var key = theEvent.keyCode || theEvent.which;
+    // Don't validate the input if below arrow, delete, tab and backspace keys were pressed 
+    // Left=37 / Up=38 / Right=39 / Down=40 Arrow, Backspace=8, Delete=46, Tab=9 keys,  Enter=13
+    if (key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46 || key == 9 || key == 13) {
+        return;
+    }
+    var ch = String.fromCharCode(theEvent.which);
+    if (!(/[A-Z]/.test(ch))) {
         theEvent.preventDefault();
     }
 }

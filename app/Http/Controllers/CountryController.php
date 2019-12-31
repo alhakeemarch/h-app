@@ -24,10 +24,15 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        // return $request;
+        $code_2chracters = $request->code_2chracters;
         $country = new Country();
-        return view('country.create')->with('country', $country);
+        return view('country.create')->with([
+            'country' => $country,
+            'code_2chracters' => $code_2chracters,
+        ]);
     }
 
     /**
@@ -50,6 +55,7 @@ class CountryController extends Controller
      */
     public function show(Country $country)
     {
+        return $country;
         //
     }
 
@@ -94,13 +100,13 @@ class CountryController extends Controller
         }
 
         $validatedData = $request->validate([
-            'code_2chracters' => 'required',
+            'code_2chracters' => 'required|regex:/[A-Z]/',
         ]);
         // return $request->all();
 
-        // $found_country = $country->where('code_2chracters', $request->'code_2chracters')->first();
+        $found_country = $country->where('code_2chracters', $request->code_2chracters)->first();
         // return $found_country;
-        $found_country = false;
+        // $found_country = false;
         if ($found_country) {
             return redirect()->action('CountryController@show', $found_country->id);
             // return redirect()->action('countryController@show', ['id' => $found_country->id]);
@@ -109,273 +115,7 @@ class CountryController extends Controller
         }
     }
 
-    // ======================================================================================================================
-    // NOTE: لازم نسوي ملف نقدر نضيف منه الدول والجنسيات
 
-    // https://github.com/umpirsky/country-list/tree/master/data/en
-
-    // https://github.com/sameer-shelavale/php-countries-array
-    /*******************************************************************************************************
-     *      1) name
-     *      2) alpha2 code, 2 characters (ISO-3166-1 alpha2)
-     *      3) alpha3 code, 3 characters (ISO-3166-1 alpha3)
-     *      4) numeric code (ISO-3166-1 numeric)
-     *      5) ISD code for country
-     *      6) continent
-     *******************************************************************************************************/
-    public static $countries = array(
-        "AF" => array('alpha2' => 'AF', 'alpha3' => 'AFG', 'num' => '004', 'isd' => '93', "name" => "Afghanistan", "continent" => "Asia",),
-        "AX" => array('alpha2' => 'AX', 'alpha3' => 'ALA', 'num' => '248', 'isd' => '358', "name" => "Åland Islands", "continent" => "Europe"),
-        "AL" => array('alpha2' => 'AL', 'alpha3' => 'ALB', 'num' => '008', 'isd' => '355', "name" => "Albania", "continent" => "Europe"),
-        "DZ" => array('alpha2' => 'DZ', 'alpha3' => 'DZA', 'num' => '012', 'isd' => '213', "name" => "Algeria", "continent" => "Africa"),
-        "AS" => array('alpha2' => 'AS', 'alpha3' => 'ASM', 'num' => '016', 'isd' => '1684', "name" => "American Samoa", "continent" => "Oceania"),
-        "AD" => array('alpha2' => 'AD', 'alpha3' => 'AND', 'num' => '020', 'isd' => '376', "name" => "Andorra", "continent" => "Europe"),
-        "AO" => array('alpha2' => 'AO', 'alpha3' => 'AGO', 'num' => '024', 'isd' => '244', "name" => "Angola", "continent" => "Africa"),
-        "AI" => array('alpha2' => 'AI', 'alpha3' => 'AIA', 'num' => '660', 'isd' => '1264', "name" => "Anguilla", "continent" => "North America"),
-        "AQ" => array('alpha2' => 'AQ', 'alpha3' => 'ATA', 'num' => '010', 'isd' => '672', "name" => "Antarctica", "continent" => "Antarctica"),
-        "AG" => array('alpha2' => 'AG', 'alpha3' => 'ATG', 'num' => '028', 'isd' => '1268', "name" => "Antigua and Barbuda", "continent" => "North America"),
-        "AR" => array('alpha2' => 'AR', 'alpha3' => 'ARG', 'num' => '032', 'isd' => '54', "name" => "Argentina", "continent" => "South America"),
-        "AM" => array('alpha2' => 'AM', 'alpha3' => 'ARM', 'num' => '051', 'isd' => '374', "name" => "Armenia", "continent" => "Asia"),
-        "AW" => array('alpha2' => 'AW', 'alpha3' => 'ABW', 'num' => '533', 'isd' => '297', "name" => "Aruba", "continent" => "North America"),
-        "AU" => array('alpha2' => 'AU', 'alpha3' => 'AUS', 'num' => '036', 'isd' => '61', "name" => "Australia", "continent" => "Oceania"),
-        "AT" => array('alpha2' => 'AT', 'alpha3' => 'AUT', 'num' => '040', 'isd' => '43', "name" => "Austria", "continent" => "Europe"),
-        "AZ" => array('alpha2' => 'AZ', 'alpha3' => 'AZE', 'num' => '031', 'isd' => '994', "name" => "Azerbaijan", "continent" => "Asia"),
-        "BS" => array('alpha2' => 'BS', 'alpha3' => 'BHS', 'num' => '044', 'isd' => '1242', "name" => "Bahamas", "continent" => "North America"),
-        "BH" => array('alpha2' => 'BH', 'alpha3' => 'BHR', 'num' => '048', 'isd' => '973', "name" => "Bahrain", "continent" => "Asia"),
-        "BD" => array('alpha2' => 'BD', 'alpha3' => 'BGD', 'num' => '050', 'isd' => '880', "name" => "Bangladesh", "continent" => "Asia"),
-        "BB" => array('alpha2' => 'BB', 'alpha3' => 'BRB', 'num' => '052', 'isd' => '1246', "name" => "Barbados", "continent" => "North America"),
-        "BY" => array('alpha2' => 'BY', 'alpha3' => 'BLR', 'num' => '112', 'isd' => '375', "name" => "Belarus", "continent" => "Europe"),
-        "BE" => array('alpha2' => 'BE', 'alpha3' => 'BEL', 'num' => '056', 'isd' => '32', "name" => "Belgium", "continent" => "Europe"),
-        "BZ" => array('alpha2' => 'BZ', 'alpha3' => 'BLZ', 'num' => '084', 'isd' => '501', "name" => "Belize", "continent" => "North America"),
-        "BJ" => array('alpha2' => 'BJ', 'alpha3' => 'BEN', 'num' => '204', 'isd' => '229', "name" => "Benin", "continent" => "Africa"),
-        "BM" => array('alpha2' => 'BM', 'alpha3' => 'BMU', 'num' => '060', 'isd' => '1441', "name" => "Bermuda", "continent" => "North America"),
-        "BT" => array('alpha2' => 'BT', 'alpha3' => 'BTN', 'num' => '064', 'isd' => '975', "name" => "Bhutan", "continent" => "Asia"),
-        "BO" => array('alpha2' => 'BO', 'alpha3' => 'BOL', 'num' => '068', 'isd' => '591', "name" => "Bolivia", "continent" => "South America"),
-        "BQ" => array('alpha2' => 'BQ', 'alpha3' => 'BES', 'num' => '535', 'isd' => '599', "name" => "Bonaire, Sint Eustatius and Saba", "continent" => "North America"),
-        "BA" => array('alpha2' => 'BA', 'alpha3' => 'BIH', 'num' => '070', 'isd' => '387', "name" => "Bosnia and Herzegovina", "continent" => "Europe"),
-        "BW" => array('alpha2' => 'BW', 'alpha3' => 'BWA', 'num' => '072', 'isd' => '267', "name" => "Botswana", "continent" => "Africa"),
-        "BV" => array('alpha2' => 'BV', 'alpha3' => 'BVT', 'num' => '074', 'isd' => '61', "name" => "Bouvet Island", "continent" => "Antarctica"),
-        "BR" => array('alpha2' => 'BR', 'alpha3' => 'BRA', 'num' => '076', 'isd' => '55', "name" => "Brazil", "continent" => "South America"),
-        "IO" => array('alpha2' => 'IO', 'alpha3' => 'IOT', 'num' => '086', 'isd' => '246', "name" => "British Indian Ocean Territory", "continent" => "Asia"),
-        "BN" => array('alpha2' => 'BN', 'alpha3' => 'BRN', 'num' => '096', 'isd' => '672', "name" => "Brunei Darussalam", "continent" => "Asia"),
-        "BG" => array('alpha2' => 'BG', 'alpha3' => 'BGR', 'num' => '100', 'isd' => '359', "name" => "Bulgaria", "continent" => "Europe"),
-        "BF" => array('alpha2' => 'BF', 'alpha3' => 'BFA', 'num' => '854', 'isd' => '226', "name" => "Burkina Faso", "continent" => "Africa"),
-        "BI" => array('alpha2' => 'BI', 'alpha3' => 'BDI', 'num' => '108', 'isd' => '257', "name" => "Burundi", "continent" => "Africa"),
-        "KH" => array('alpha2' => 'KH', 'alpha3' => 'KHM', 'num' => '116', 'isd' => '855', "name" => "Cambodia", "continent" => "Asia"),
-        "CM" => array('alpha2' => 'CM', 'alpha3' => 'CMR', 'num' => '120', 'isd' => '231', "name" => "Cameroon", "continent" => "Africa"),
-        "CA" => array('alpha2' => 'CA', 'alpha3' => 'CAN', 'num' => '124', 'isd' => '1', "name" => "Canada", "continent" => "North America"),
-        "CV" => array('alpha2' => 'CV', 'alpha3' => 'CPV', 'num' => '132', 'isd' => '238', "name" => "Cape Verde", "continent" => "Africa"),
-        "KY" => array('alpha2' => 'KY', 'alpha3' => 'CYM', 'num' => '136', 'isd' => '1345', "name" => "Cayman Islands", "continent" => "North America"),
-        "CF" => array('alpha2' => 'CF', 'alpha3' => 'CAF', 'num' => '140', 'isd' => '236', "name" => "Central African Republic", "continent" => "Africa"),
-        "TD" => array('alpha2' => 'TD', 'alpha3' => 'TCD', 'num' => '148', 'isd' => '235', "name" => "Chad", "continent" => "Africa"),
-        "CL" => array('alpha2' => 'CL', 'alpha3' => 'CHL', 'num' => '152', 'isd' => '56', "name" => "Chile", "continent" => "South America"),
-        "CN" => array('alpha2' => 'CN', 'alpha3' => 'CHN', 'num' => '156', 'isd' => '86', "name" => "China", "continent" => "Asia"),
-        "CX" => array('alpha2' => 'CX', 'alpha3' => 'CXR', 'num' => '162', 'isd' => '61', "name" => "Christmas Island", "continent" => "Asia"),
-        "CC" => array('alpha2' => 'CC', 'alpha3' => 'CCK', 'num' => '166', 'isd' => '891', "name" => "Cocos (Keeling) Islands", "continent" => "Asia"),
-        "CO" => array('alpha2' => 'CO', 'alpha3' => 'COL', 'num' => '170', 'isd' => '57', "name" => "Colombia", "continent" => "South America"),
-        "KM" => array('alpha2' => 'KM', 'alpha3' => 'COM', 'num' => '174', 'isd' => '269', "name" => "Comoros", "continent" => "Africa"),
-        "CG" => array('alpha2' => 'CG', 'alpha3' => 'COG', 'num' => '178', 'isd' => '242', "name" => "Congo", "continent" => "Africa"),
-        "CD" => array('alpha2' => 'CD', 'alpha3' => 'COD', 'num' => '180', 'isd' => '243', "name" => "The Democratic Republic of The Congo", "continent" => "Africa"),
-        "CK" => array('alpha2' => 'CK', 'alpha3' => 'COK', 'num' => '184', 'isd' => '682', "name" => "Cook Islands", "continent" => "Oceania"),
-        "CR" => array('alpha2' => 'CR', 'alpha3' => 'CRI', 'num' => '188', 'isd' => '506', "name" => "Costa Rica", "continent" => "North America"),
-        "CI" => array('alpha2' => 'CI', 'alpha3' => 'CIV', 'num' => '384', 'isd' => '225', "name" => "Cote D'ivoire", "continent" => "Africa"),
-        "CW" => array('alpha2' => 'CW', 'alpha3' => 'CUW', 'num' => '531', 'isd' => '599', "name" => "Curaçao", "continent" => "North America"),
-        "HR" => array('alpha2' => 'HR', 'alpha3' => 'HRV', 'num' => '191', 'isd' => '385', "name" => "Croatia", "continent" => "Europe"),
-        "CU" => array('alpha2' => 'CU', 'alpha3' => 'CUB', 'num' => '192', 'isd' => '53', "name" => "Cuba", "continent" => "North America"),
-        "CY" => array('alpha2' => 'CY', 'alpha3' => 'CYP', 'num' => '196', 'isd' => '357', "name" => "Cyprus", "continent" => "Asia"),
-        "CZ" => array('alpha2' => 'CZ', 'alpha3' => 'CZE', 'num' => '203', 'isd' => '420', "name" => "Czech Republic", "continent" => "Europe"),
-        "DK" => array('alpha2' => 'DK', 'alpha3' => 'DNK', 'num' => '208', 'isd' => '45', "name" => "Denmark", "continent" => "Europe"),
-        "DJ" => array('alpha2' => 'DJ', 'alpha3' => 'DJI', 'num' => '262', 'isd' => '253', "name" => "Djibouti", "continent" => "Africa"),
-        "DM" => array('alpha2' => 'DM', 'alpha3' => 'DMA', 'num' => '212', 'isd' => '1767', "name" => "Dominica", "continent" => "North America"),
-        "DO" => array('alpha2' => 'DO', 'alpha3' => 'DOM', 'num' => '214', 'isd' => '1809', "name" => "Dominican Republic", "continent" => "North America"),
-        "EC" => array('alpha2' => 'EC', 'alpha3' => 'ECU', 'num' => '218', 'isd' => '593', "name" => "Ecuador", "continent" => "South America"),
-        "EG" => array('alpha2' => 'EG', 'alpha3' => 'EGY', 'num' => '818', 'isd' => '20', "name" => "Egypt", "continent" => "Africa"),
-        "SV" => array('alpha2' => 'SV', 'alpha3' => 'SLV', 'num' => '222', 'isd' => '503', "name" => "El Salvador", "continent" => "North America"),
-        "GQ" => array('alpha2' => 'GQ', 'alpha3' => 'GNQ', 'num' => '226', 'isd' => '240', "name" => "Equatorial Guinea", "continent" => "Africa"),
-        "ER" => array('alpha2' => 'ER', 'alpha3' => 'ERI', 'num' => '232', 'isd' => '291', "name" => "Eritrea", "continent" => "Africa"),
-        "EE" => array('alpha2' => 'EE', 'alpha3' => 'EST', 'num' => '233', 'isd' => '372', "name" => "Estonia", "continent" => "Europe"),
-        "ET" => array('alpha2' => 'ET', 'alpha3' => 'ETH', 'num' => '231', 'isd' => '251', "name" => "Ethiopia", "continent" => "Africa"),
-        "FK" => array('alpha2' => 'FK', 'alpha3' => 'FLK', 'num' => '238', 'isd' => '500', "name" => "Falkland Islands (Malvinas)", "continent" => "South America"),
-        "FO" => array('alpha2' => 'FO', 'alpha3' => 'FRO', 'num' => '234', 'isd' => '298', "name" => "Faroe Islands", "continent" => "Europe"),
-        "FJ" => array('alpha2' => 'FJ', 'alpha3' => 'FJI', 'num' => '243', 'isd' => '679', "name" => "Fiji", "continent" => "Oceania"),
-        "FI" => array('alpha2' => 'FI', 'alpha3' => 'FIN', 'num' => '246', 'isd' => '238', "name" => "Finland", "continent" => "Europe"),
-        "FR" => array('alpha2' => 'FR', 'alpha3' => 'FRA', 'num' => '250', 'isd' => '33', "name" => "France", "continent" => "Europe"),
-        "GF" => array('alpha2' => 'GF', 'alpha3' => 'GUF', 'num' => '254', 'isd' => '594', "name" => "French Guiana", "continent" => "South America"),
-        "PF" => array('alpha2' => 'PF', 'alpha3' => 'PYF', 'num' => '258', 'isd' => '689', "name" => "French Polynesia", "continent" => "Oceania"),
-        "TF" => array('alpha2' => 'TF', 'alpha3' => 'ATF', 'num' => '260', 'isd' => '262', "name" => "French Southern Territories", "continent" => "Antarctica"),
-        "GA" => array('alpha2' => 'GA', 'alpha3' => 'GAB', 'num' => '266', 'isd' => '241', "name" => "Gabon", "continent" => "Africa"),
-        "GM" => array('alpha2' => 'GM', 'alpha3' => 'GMB', 'num' => '270', 'isd' => '220', "name" => "Gambia", "continent" => "Africa"),
-        "GE" => array('alpha2' => 'GE', 'alpha3' => 'GEO', 'num' => '268', 'isd' => '995', "name" => "Georgia", "continent" => "Asia"),
-        "DE" => array('alpha2' => 'DE', 'alpha3' => 'DEU', 'num' => '276', 'isd' => '49', "name" => "Germany", "continent" => "Europe"),
-        "GH" => array('alpha2' => 'GH', 'alpha3' => 'GHA', 'num' => '288', 'isd' => '233', "name" => "Ghana", "continent" => "Africa"),
-        "GI" => array('alpha2' => 'GI', 'alpha3' => 'GIB', 'num' => '292', 'isd' => '350', "name" => "Gibraltar", "continent" => "Europe"),
-        "GR" => array('alpha2' => 'GR', 'alpha3' => 'GRC', 'num' => '300', 'isd' => '30', "name" => "Greece", "continent" => "Europe"),
-        "GL" => array('alpha2' => 'GL', 'alpha3' => 'GRL', 'num' => '304', 'isd' => '299', "name" => "Greenland", "continent" => "North America"),
-        "GD" => array('alpha2' => 'GD', 'alpha3' => 'GRD', 'num' => '308', 'isd' => '1473', "name" => "Grenada", "continent" => "North America"),
-        "GP" => array('alpha2' => 'GP', 'alpha3' => 'GLP', 'num' => '312', 'isd' => '590', "name" => "Guadeloupe", "continent" => "North America"),
-        "GU" => array('alpha2' => 'GU', 'alpha3' => 'GUM', 'num' => '316', 'isd' => '1871', "name" => "Guam", "continent" => "Oceania"),
-        "GT" => array('alpha2' => 'GT', 'alpha3' => 'GTM', 'num' => '320', 'isd' => '502', "name" => "Guatemala", "continent" => "North America"),
-        "GG" => array('alpha2' => 'GG', 'alpha3' => 'GGY', 'num' => '831', 'isd' => '44', "name" => "Guernsey", "continent" => "Europe"),
-        "GN" => array('alpha2' => 'GN', 'alpha3' => 'GIN', 'num' => '324', 'isd' => '224', "name" => "Guinea", "continent" => "Africa"),
-        "GW" => array('alpha2' => 'GW', 'alpha3' => 'GNB', 'num' => '624', 'isd' => '245', "name" => "Guinea-bissau", "continent" => "Africa"),
-        "GY" => array('alpha2' => 'GY', 'alpha3' => 'GUY', 'num' => '328', 'isd' => '592', "name" => "Guyana", "continent" => "South America"),
-        "HT" => array('alpha2' => 'HT', 'alpha3' => 'HTI', 'num' => '332', 'isd' => '509', "name" => "Haiti", "continent" => "North America"),
-        "HM" => array('alpha2' => 'HM', 'alpha3' => 'HMD', 'num' => '334', 'isd' => '672', "name" => "Heard Island and Mcdonald Islands", "continent" => "Antarctica"),
-        "VA" => array('alpha2' => 'VA', 'alpha3' => 'VAT', 'num' => '336', 'isd' => '379', "name" => "Holy See (Vatican City State)", "continent" => "Europe"),
-        "HN" => array('alpha2' => 'HN', 'alpha3' => 'HND', 'num' => '340', 'isd' => '504', "name" => "Honduras", "continent" => "North America"),
-        "HK" => array('alpha2' => 'HK', 'alpha3' => 'HKG', 'num' => '344', 'isd' => '852', "name" => "Hong Kong", "continent" => "Asia"),
-        "HU" => array('alpha2' => 'HU', 'alpha3' => 'HUN', 'num' => '348', 'isd' => '36', "name" => "Hungary", "continent" => "Europe"),
-        "IS" => array('alpha2' => 'IS', 'alpha3' => 'ISL', 'num' => '352', 'isd' => '354', "name" => "Iceland", "continent" => "Europe"),
-        "IN" => array('alpha2' => 'IN', 'alpha3' => 'IND', 'num' => '356', 'isd' => '91', "name" => "India", "continent" => "Asia"),
-        "ID" => array('alpha2' => 'ID', 'alpha3' => 'IDN', 'num' => '360', 'isd' => '62', "name" => "Indonesia", "continent" => "Asia"),
-        "IR" => array('alpha2' => 'IR', 'alpha3' => 'IRN', 'num' => '364', 'isd' => '98', "name" => "Iran", "continent" => "Asia"),
-        "IQ" => array('alpha2' => 'IQ', 'alpha3' => 'IRQ', 'num' => '368', 'isd' => '964', "name" => "Iraq", "continent" => "Asia"),
-        "IE" => array('alpha2' => 'IE', 'alpha3' => 'IRL', 'num' => '372', 'isd' => '353', "name" => "Ireland", "continent" => "Europe"),
-        "IM" => array('alpha2' => 'IM', 'alpha3' => 'IMN', 'num' => '833', 'isd' => '44', "name" => "Isle of Man", "continent" => "Europe"),
-        "IL" => array('alpha2' => 'IL', 'alpha3' => 'ISR', 'num' => '376', 'isd' => '972', "name" => "Israel", "continent" => "Asia"),
-        "IT" => array('alpha2' => 'IT', 'alpha3' => 'ITA', 'num' => '380', 'isd' => '39', "name" => "Italy", "continent" => "Europe"),
-        "JM" => array('alpha2' => 'JM', 'alpha3' => 'JAM', 'num' => '388', 'isd' => '1876', "name" => "Jamaica", "continent" => "North America"),
-        "JP" => array('alpha2' => 'JP', 'alpha3' => 'JPN', 'num' => '392', 'isd' => '81', "name" => "Japan", "continent" => "Asia"),
-        "JE" => array('alpha2' => 'JE', 'alpha3' => 'JEY', 'num' => '832', 'isd' => '44', "name" => "Jersey", "continent" => "Europe"),
-        "JO" => array('alpha2' => 'JO', 'alpha3' => 'JOR', 'num' => '400', 'isd' => '962', "name" => "Jordan", "continent" => "Asia"),
-        "KZ" => array('alpha2' => 'KZ', 'alpha3' => 'KAZ', 'num' => '398', 'isd' => '7', "name" => "Kazakhstan", "continent" => "Asia"),
-        "KE" => array('alpha2' => 'KE', 'alpha3' => 'KEN', 'num' => '404', 'isd' => '254', "name" => "Kenya", "continent" => "Africa"),
-        "KI" => array('alpha2' => 'KI', 'alpha3' => 'KIR', 'num' => '296', 'isd' => '686', "name" => "Kiribati", "continent" => "Oceania"),
-        "KP" => array('alpha2' => 'KP', 'alpha3' => 'PRK', 'num' => '408', 'isd' => '850', "name" => "Democratic People's Republic of Korea", "continent" => "Asia"),
-        "KR" => array('alpha2' => 'KR', 'alpha3' => 'KOR', 'num' => '410', 'isd' => '82', "name" => "Republic of Korea", "continent" => "Asia"),
-        "KW" => array('alpha2' => 'KW', 'alpha3' => 'KWT', 'num' => '414', 'isd' => '965', "name" => "Kuwait", "continent" => "Asia"),
-        "KG" => array('alpha2' => 'KG', 'alpha3' => 'KGZ', 'num' => '417', 'isd' => '996', "name" => "Kyrgyzstan", "continent" => "Asia"),
-        "LA" => array('alpha2' => 'LA', 'alpha3' => 'LAO', 'num' => '418', 'isd' => '856', "name" => "Lao People's Democratic Republic", "continent" => "Asia"),
-        "LV" => array('alpha2' => 'LV', 'alpha3' => 'LVA', 'num' => '428', 'isd' => '371', "name" => "Latvia", "continent" => "Europe"),
-        "LB" => array('alpha2' => 'LB', 'alpha3' => 'LBN', 'num' => '422', 'isd' => '961', "name" => "Lebanon", "continent" => "Asia"),
-        "LS" => array('alpha2' => 'LS', 'alpha3' => 'LSO', 'num' => '426', 'isd' => '266', "name" => "Lesotho", "continent" => "Africa"),
-        "LR" => array('alpha2' => 'LR', 'alpha3' => 'LBR', 'num' => '430', 'isd' => '231', "name" => "Liberia", "continent" => "Africa"),
-        "LY" => array('alpha2' => 'LY', 'alpha3' => 'LBY', 'num' => '434', 'isd' => '218', "name" => "Libya", "continent" => "Africa"),
-        "LI" => array('alpha2' => 'LI', 'alpha3' => 'LIE', 'num' => '438', 'isd' => '423', "name" => "Liechtenstein", "continent" => "Europe"),
-        "LT" => array('alpha2' => 'LT', 'alpha3' => 'LTU', 'num' => '440', 'isd' => '370', "name" => "Lithuania", "continent" => "Europe"),
-        "LU" => array('alpha2' => 'LU', 'alpha3' => 'LUX', 'num' => '442', 'isd' => '352', "name" => "Luxembourg", "continent" => "Europe"),
-        "MO" => array('alpha2' => 'MO', 'alpha3' => 'MAC', 'num' => '446', 'isd' => '853', "name" => "Macao", "continent" => "Asia"),
-        "MK" => array('alpha2' => 'MK', 'alpha3' => 'MKD', 'num' => '807', 'isd' => '389', "name" => "Macedonia", "continent" => "Europe"),
-        "MG" => array('alpha2' => 'MG', 'alpha3' => 'MDG', 'num' => '450', 'isd' => '261', "name" => "Madagascar", "continent" => "Africa"),
-        "MW" => array('alpha2' => 'MW', 'alpha3' => 'MWI', 'num' => '454', 'isd' => '265', "name" => "Malawi", "continent" => "Africa"),
-        "MY" => array('alpha2' => 'MY', 'alpha3' => 'MYS', 'num' => '458', 'isd' => '60', "name" => "Malaysia", "continent" => "Asia"),
-        "MV" => array('alpha2' => 'MV', 'alpha3' => 'MDV', 'num' => '462', 'isd' => '960', "name" => "Maldives", "continent" => "Asia"),
-        "ML" => array('alpha2' => 'ML', 'alpha3' => 'MLI', 'num' => '466', 'isd' => '223', "name" => "Mali", "continent" => "Africa"),
-        "MT" => array('alpha2' => 'MT', 'alpha3' => 'MLT', 'num' => '470', 'isd' => '356', "name" => "Malta", "continent" => "Europe"),
-        "MH" => array('alpha2' => 'MH', 'alpha3' => 'MHL', 'num' => '584', 'isd' => '692', "name" => "Marshall Islands", "continent" => "Oceania"),
-        "MQ" => array('alpha2' => 'MQ', 'alpha3' => 'MTQ', 'num' => '474', 'isd' => '596', "name" => "Martinique", "continent" => "North America"),
-        "MR" => array('alpha2' => 'MR', 'alpha3' => 'MRT', 'num' => '478', 'isd' => '222', "name" => "Mauritania", "continent" => "Africa"),
-        "MU" => array('alpha2' => 'MU', 'alpha3' => 'MUS', 'num' => '480', 'isd' => '230', "name" => "Mauritius", "continent" => "Africa"),
-        "YT" => array('alpha2' => 'YT', 'alpha3' => 'MYT', 'num' => '175', 'isd' => '262', "name" => "Mayotte", "continent" => "Africa"),
-        "MX" => array('alpha2' => 'MX', 'alpha3' => 'MEX', 'num' => '484', 'isd' => '52', "name" => "Mexico", "continent" => "North America"),
-        "FM" => array('alpha2' => 'FM', 'alpha3' => 'FSM', 'num' => '583', 'isd' => '691', "name" => "Micronesia", "continent" => "Oceania"),
-        "MD" => array('alpha2' => 'MD', 'alpha3' => 'MDA', 'num' => '498', 'isd' => '373', "name" => "Moldova", "continent" => "Europe"),
-        "MC" => array('alpha2' => 'MC', 'alpha3' => 'MCO', 'num' => '492', 'isd' => '377', "name" => "Monaco", "continent" => "Europe"),
-        "MN" => array('alpha2' => 'MN', 'alpha3' => 'MNG', 'num' => '496', 'isd' => '976', "name" => "Mongolia", "continent" => "Asia"),
-        "ME" => array('alpha2' => 'ME', 'alpha3' => 'MNE', 'num' => '499', 'isd' => '382', "name" => "Montenegro", "continent" => "Europe"),
-        "MS" => array('alpha2' => 'MS', 'alpha3' => 'MSR', 'num' => '500', 'isd' => '1664', "name" => "Montserrat", "continent" => "North America"),
-        "MA" => array('alpha2' => 'MA', 'alpha3' => 'MAR', 'num' => '504', 'isd' => '212', "name" => "Morocco", "continent" => "Africa"),
-        "MZ" => array('alpha2' => 'MZ', 'alpha3' => 'MOZ', 'num' => '508', 'isd' => '258', "name" => "Mozambique", "continent" => "Africa"),
-        "MM" => array('alpha2' => 'MM', 'alpha3' => 'MMR', 'num' => '104', 'isd' => '95', "name" => "Myanmar", "continent" => "Asia"),
-        "NA" => array('alpha2' => 'NA', 'alpha3' => 'NAM', 'num' => '516', 'isd' => '264', "name" => "Namibia", "continent" => "Africa"),
-        "NR" => array('alpha2' => 'NR', 'alpha3' => 'NRU', 'num' => '520', 'isd' => '674', "name" => "Nauru", "continent" => "Oceania"),
-        "NP" => array('alpha2' => 'NP', 'alpha3' => 'NPL', 'num' => '524', 'isd' => '977', "name" => "Nepal", "continent" => "Asia"),
-        "NL" => array('alpha2' => 'NL', 'alpha3' => 'NLD', 'num' => '528', 'isd' => '31', "name" => "Netherlands", "continent" => "Europe"),
-        "NC" => array('alpha2' => 'NC', 'alpha3' => 'NCL', 'num' => '540', 'isd' => '687', "name" => "New Caledonia", "continent" => "Oceania"),
-        "NZ" => array('alpha2' => 'NZ', 'alpha3' => 'NZL', 'num' => '554', 'isd' => '64', "name" => "New Zealand", "continent" => "Oceania"),
-        "NI" => array('alpha2' => 'NI', 'alpha3' => 'NIC', 'num' => '558', 'isd' => '505', "name" => "Nicaragua", "continent" => "North America"),
-        "NE" => array('alpha2' => 'NE', 'alpha3' => 'NER', 'num' => '562', 'isd' => '227', "name" => "Niger", "continent" => "Africa"),
-        "NG" => array('alpha2' => 'NG', 'alpha3' => 'NGA', 'num' => '566', 'isd' => '234', "name" => "Nigeria", "continent" => "Africa"),
-        "NU" => array('alpha2' => 'NU', 'alpha3' => 'NIU', 'num' => '570', 'isd' => '683', "name" => "Niue", "continent" => "Oceania"),
-        "NF" => array('alpha2' => 'NF', 'alpha3' => 'NFK', 'num' => '574', 'isd' => '672', "name" => "Norfolk Island", "continent" => "Oceania"),
-        "MP" => array('alpha2' => 'MP', 'alpha3' => 'MNP', 'num' => '580', 'isd' => '1670', "name" => "Northern Mariana Islands", "continent" => "Oceania"),
-        "NO" => array('alpha2' => 'NO', 'alpha3' => 'NOR', 'num' => '578', 'isd' => '47', "name" => "Norway", "continent" => "Europe"),
-        "OM" => array('alpha2' => 'OM', 'alpha3' => 'OMN', 'num' => '512', 'isd' => '968', "name" => "Oman", "continent" => "Asia"),
-        "PK" => array('alpha2' => 'PK', 'alpha3' => 'PAK', 'num' => '586', 'isd' => '92', "name" => "Pakistan", "continent" => "Asia"),
-        "PW" => array('alpha2' => 'PW', 'alpha3' => 'PLW', 'num' => '585', 'isd' => '680', "name" => "Palau", "continent" => "Oceania"),
-        "PS" => array('alpha2' => 'PS', 'alpha3' => 'PSE', 'num' => '275', 'isd' => '970', "name" => "Palestinia", "continent" => "Asia"),
-        "PA" => array('alpha2' => 'PA', 'alpha3' => 'PAN', 'num' => '591', 'isd' => '507', "name" => "Panama", "continent" => "North America"),
-        "PG" => array('alpha2' => 'PG', 'alpha3' => 'PNG', 'num' => '598', 'isd' => '675', "name" => "Papua New Guinea", "continent" => "Oceania"),
-        "PY" => array('alpha2' => 'PY', 'alpha3' => 'PRY', 'num' => '600', 'isd' => '595', "name" => "Paraguay", "continent" => "South America"),
-        "PE" => array('alpha2' => 'PE', 'alpha3' => 'PER', 'num' => '604', 'isd' => '51', "name" => "Peru", "continent" => "South America"),
-        "PH" => array('alpha2' => 'PH', 'alpha3' => 'PHL', 'num' => '608', 'isd' => '63', "name" => "Philippines", "continent" => "Asia"),
-        "PN" => array('alpha2' => 'PN', 'alpha3' => 'PCN', 'num' => '612', 'isd' => '870', "name" => "Pitcairn", "continent" => "Oceania"),
-        "PL" => array('alpha2' => 'PL', 'alpha3' => 'POL', 'num' => '616', 'isd' => '48', "name" => "Poland", "continent" => "Europe"),
-        "PT" => array('alpha2' => 'PT', 'alpha3' => 'PRT', 'num' => '620', 'isd' => '351', "name" => "Portugal", "continent" => "Europe"),
-        "PR" => array('alpha2' => 'PR', 'alpha3' => 'PRI', 'num' => '630', 'isd' => '1', "name" => "Puerto Rico", "continent" => "North America"),
-        "QA" => array('alpha2' => 'QA', 'alpha3' => 'QAT', 'num' => '634', 'isd' => '974', "name" => "Qatar", "continent" => "Asia"),
-        "RE" => array('alpha2' => 'RE', 'alpha3' => 'REU', 'num' => '638', 'isd' => '262', "name" => "Reunion", "continent" => "Africa"),
-        "RO" => array('alpha2' => 'RO', 'alpha3' => 'ROU', 'num' => '642', 'isd' => '40', "name" => "Romania", "continent" => "Europe"),
-        "RU" => array('alpha2' => 'RU', 'alpha3' => 'RUS', 'num' => '643', 'isd' => '7', "name" => "Russian Federation", "continent" => "Europe"),
-        "RW" => array('alpha2' => 'RW', 'alpha3' => 'RWA', 'num' => '646', 'isd' => '250', "name" => "Rwanda", "continent" => "Africa"),
-        "BL" => array('alpha2' => 'BL', 'alpha3' => 'BLM', 'num' => '652', 'isd' => '590', "name" => "Saint Barthélemy", "continent" => "North America"),
-        "SH" => array('alpha2' => 'SH', 'alpha3' => 'SHN', 'num' => '654', 'isd' => '290', "name" => "Saint Helena", "continent" => "Africa"),
-        "KN" => array('alpha2' => 'KN', 'alpha3' => 'KNA', 'num' => '659', 'isd' => '1869', "name" => "Saint Kitts and Nevis", "continent" => "North America"),
-        "LC" => array('alpha2' => 'LC', 'alpha3' => 'LCA', 'num' => '662', 'isd' => '1758', "name" => "Saint Lucia", "continent" => "North America"),
-        "MF" => array('alpha2' => 'MF', 'alpha3' => 'MAF', 'num' => '663', 'isd' => '590', "name" => "Saint Martin", "continent" => "North America"),
-        "PM" => array('alpha2' => 'PM', 'alpha3' => 'SPM', 'num' => '666', 'isd' => '508', "name" => "Saint Pierre and Miquelon", "continent" => "North America"),
-        "VC" => array('alpha2' => 'VC', 'alpha3' => 'VCT', 'num' => '670', 'isd' => '1784', "name" => "Saint Vincent and The Grenadines", "continent" => "North America"),
-        "WS" => array('alpha2' => 'WS', 'alpha3' => 'WSM', 'num' => '882', 'isd' => '685', "name" => "Samoa", "continent" => "Oceania"),
-        "SM" => array('alpha2' => 'SM', 'alpha3' => 'SMR', 'num' => '674', 'isd' => '378', "name" => "San Marino", "continent" => "Europe"),
-        "ST" => array('alpha2' => 'ST', 'alpha3' => 'STP', 'num' => '678', 'isd' => '239', "name" => "Sao Tome and Principe", "continent" => "Africa"),
-        "SA" => array('alpha2' => 'SA', 'alpha3' => 'SAU', 'num' => '682', 'isd' => '966', "name" => "Saudi Arabia", "continent" => "Asia"),
-        "SN" => array('alpha2' => 'SN', 'alpha3' => 'SEN', 'num' => '686', 'isd' => '221', "name" => "Senegal", "continent" => "Africa"),
-        "RS" => array('alpha2' => 'RS', 'alpha3' => 'SRB', 'num' => '688', 'isd' => '381', "name" => "Serbia", "continent" => "Europe"),
-        "SC" => array('alpha2' => 'SC', 'alpha3' => 'SYC', 'num' => '690', 'isd' => '248', "name" => "Seychelles", "continent" => "Africa"),
-        "SL" => array('alpha2' => 'SL', 'alpha3' => 'SLE', 'num' => '694', 'isd' => '232', "name" => "Sierra Leone", "continent" => "Africa"),
-        "SG" => array('alpha2' => 'SG', 'alpha3' => 'SGP', 'num' => '702', 'isd' => '65', "name" => "Singapore", "continent" => "Asia"),
-        "SX" => array('alpha2' => 'SX', 'alpha3' => 'SXM', 'num' => '534', 'isd' => '1721', "name" => "Sint Maarten", "continent" => "North America"),
-        "SK" => array('alpha2' => 'SK', 'alpha3' => 'SVK', 'num' => '703', 'isd' => '421', "name" => "Slovakia", "continent" => "Europe"),
-        "SI" => array('alpha2' => 'SI', 'alpha3' => 'SVN', 'num' => '705', 'isd' => '386', "name" => "Slovenia", "continent" => "Europe"),
-        "SB" => array('alpha2' => 'SB', 'alpha3' => 'SLB', 'num' => '090', 'isd' => '677', "name" => "Solomon Islands", "continent" => "Oceania"),
-        "SO" => array('alpha2' => 'SO', 'alpha3' => 'SOM', 'num' => '706', 'isd' => '252', "name" => "Somalia", "continent" => "Africa"),
-        "ZA" => array('alpha2' => 'ZA', 'alpha3' => 'ZAF', 'num' => '729', 'isd' => '27', "name" => "South Africa", "continent" => "Africa"),
-        "SS" => array('alpha2' => 'SS', 'alpha3' => 'SSD', 'num' => '710', 'isd' => '211', "name" => "South Sudan", "continent" => "Africa"),
-        "GS" => array('alpha2' => 'GS', 'alpha3' => 'SGS', 'num' => '239', 'isd' => '500', "name" => "South Georgia and The South Sandwich Islands", "continent" => "Antarctica"),
-        "ES" => array('alpha2' => 'ES', 'alpha3' => 'ESP', 'num' => '724', 'isd' => '34', "name" => "Spain", "continent" => "Europe"),
-        "LK" => array('alpha2' => 'LK', 'alpha3' => 'LKA', 'num' => '144', 'isd' => '94', "name" => "Sri Lanka", "continent" => "Asia"),
-        "SD" => array('alpha2' => 'SD', 'alpha3' => 'SDN', 'num' => '736', 'isd' => '249', "name" => "Sudan", "continent" => "Africa"),
-        "SR" => array('alpha2' => 'SR', 'alpha3' => 'SUR', 'num' => '740', 'isd' => '597', "name" => "Suriname", "continent" => "South America"),
-        "SJ" => array('alpha2' => 'SJ', 'alpha3' => 'SJM', 'num' => '744', 'isd' => '47', "name" => "Svalbard and Jan Mayen", "continent" => "Europe"),
-        "SZ" => array('alpha2' => 'SZ', 'alpha3' => 'SWZ', 'num' => '748', 'isd' => '268', "name" => "Swaziland", "continent" => "Africa"),
-        "SE" => array('alpha2' => 'SE', 'alpha3' => 'SWE', 'num' => '752', 'isd' => '46', "name" => "Sweden", "continent" => "Europe"),
-        "CH" => array('alpha2' => 'CH', 'alpha3' => 'CHE', 'num' => '756', 'isd' => '41', "name" => "Switzerland", "continent" => "Europe"),
-        "SY" => array('alpha2' => 'SY', 'alpha3' => 'SYR', 'num' => '760', 'isd' => '963', "name" => "Syrian Arab Republic", "continent" => "Asia"),
-        "TW" => array('alpha2' => 'TW', 'alpha3' => 'TWN', 'num' => '158', 'isd' => '886', "name" => "Taiwan, Province of China", "continent" => "Asia"),
-        "TJ" => array('alpha2' => 'TJ', 'alpha3' => 'TJK', 'num' => '762', 'isd' => '992', "name" => "Tajikistan", "continent" => "Asia"),
-        "TZ" => array('alpha2' => 'TZ', 'alpha3' => 'TZA', 'num' => '834', 'isd' => '255', "name" => "Tanzania, United Republic of", "continent" => "Africa"),
-        "TH" => array('alpha2' => 'TH', 'alpha3' => 'THA', 'num' => '764', 'isd' => '66', "name" => "Thailand", "continent" => "Asia"),
-        "TL" => array('alpha2' => 'TL', 'alpha3' => 'TLS', 'num' => '626', 'isd' => '670', "name" => "Timor-leste", "continent" => "Asia"),
-        "TG" => array('alpha2' => 'TG', 'alpha3' => 'TGO', 'num' => '768', 'isd' => '228', "name" => "Togo", "continent" => "Africa"),
-        "TK" => array('alpha2' => 'TK', 'alpha3' => 'TKL', 'num' => '772', 'isd' => '690', "name" => "Tokelau", "continent" => "Oceania"),
-        "TO" => array('alpha2' => 'TO', 'alpha3' => 'TON', 'num' => '776', 'isd' => '676', "name" => "Tonga", "continent" => "Oceania"),
-        "TT" => array('alpha2' => 'TT', 'alpha3' => 'TTO', 'num' => '780', 'isd' => '1868', "name" => "Trinidad and Tobago", "continent" => "North America"),
-        "TN" => array('alpha2' => 'TN', 'alpha3' => 'TUN', 'num' => '788', 'isd' => '216', "name" => "Tunisia", "continent" => "Africa"),
-        "TR" => array('alpha2' => 'TR', 'alpha3' => 'TUR', 'num' => '792', 'isd' => '90', "name" => "Turkey", "continent" => "Asia"),
-        "TM" => array('alpha2' => 'TM', 'alpha3' => 'TKM', 'num' => '795', 'isd' => '993', "name" => "Turkmenistan", "continent" => "Asia"),
-        "TC" => array('alpha2' => 'TC', 'alpha3' => 'TCA', 'num' => '796', 'isd' => '1649', "name" => "Turks and Caicos Islands", "continent" => "North America"),
-        "TV" => array('alpha2' => 'TV', 'alpha3' => 'TUV', 'num' => '798', 'isd' => '688', "name" => "Tuvalu", "continent" => "Oceania"),
-        "UG" => array('alpha2' => 'UG', 'alpha3' => 'UGA', 'num' => '800', 'isd' => '256', "name" => "Uganda", "continent" => "Africa"),
-        "UA" => array('alpha2' => 'UA', 'alpha3' => 'UKR', 'num' => '804', 'isd' => '380', "name" => "Ukraine", "continent" => "Europe"),
-        "AE" => array('alpha2' => 'AE', 'alpha3' => 'ARE', 'num' => '784', 'isd' => '971', "name" => "United Arab Emirates", "continent" => "Asia"),
-        "GB" => array('alpha2' => 'GB', 'alpha3' => 'GBR', 'num' => '826', 'isd' => '44', "name" => "United Kingdom", "continent" => "Europe"),
-        "US" => array('alpha2' => 'US', 'alpha3' => 'USA', 'num' => '840', 'isd' => '1', "name" => "United States", "continent" => "North America"),
-        "UM" => array('alpha2' => 'UM', 'alpha3' => 'UMI', 'num' => '581', 'isd' => '1', "name" => "United States Minor Outlying Islands", "continent" => "Oceania"),
-        "UY" => array('alpha2' => 'UY', 'alpha3' => 'URY', 'num' => '858', 'isd' => '598', "name" => "Uruguay", "continent" => "South America"),
-        "UZ" => array('alpha2' => 'UZ', 'alpha3' => 'UZB', 'num' => '860', 'isd' => '998', "name" => "Uzbekistan", "continent" => "Asia"),
-        "VU" => array('alpha2' => 'VU', 'alpha3' => 'VUT', 'num' => '548', 'isd' => '678', "name" => "Vanuatu", "continent" => "Oceania"),
-        "VE" => array('alpha2' => 'VE', 'alpha3' => 'VEN', 'num' => '862', 'isd' => '58', "name" => "Venezuela", "continent" => "South America"),
-        "VN" => array('alpha2' => 'VN', 'alpha3' => 'VNM', 'num' => '704', 'isd' => '84', "name" => "Vietnam", "continent" => "Asia"),
-        "VG" => array('alpha2' => 'VG', 'alpha3' => 'VGB', 'num' => '092', 'isd' => '1284', "name" => "Virgin Islands, British", "continent" => "North America"),
-        "VI" => array('alpha2' => 'VI', 'alpha3' => 'VIR', 'num' => '850', 'isd' => '1430', "name" => "Virgin Islands, U.S.", "continent" => "North America"),
-        "WF" => array('alpha2' => 'WF', 'alpha3' => 'WLF', 'num' => '876', 'isd' => '681', "name" => "Wallis and Futuna", "continent" => "Oceania"),
-        "EH" => array('alpha2' => 'EH', 'alpha3' => 'ESH', 'num' => '732', 'isd' => '212', "name" => "Western Sahara", "continent" => "Africa"),
-        "YE" => array('alpha2' => 'YE', 'alpha3' => 'YEM', 'num' => '887', 'isd' => '967', "name" => "Yemen", "continent" => "Asia"),
-        "ZM" => array('alpha2' => 'ZM', 'alpha3' => 'ZMB', 'num' => '894', 'isd' => '260', "name" => "Zambia", "continent" => "Africa"),
-        "ZW" => array('alpha2' => 'ZW', 'alpha3' => 'ZWE', 'num' => '716', 'isd' => '263', "name" => "Zimbabwe", "continent" => "Africa"),
-        // non iso cuontry
-        "XK" => array('alpha2' => 'XK', 'alpha3' => 'KOS', 'num' => '383', 'isd' => '383', "name" => "Kosovo", "continent" => "Europe",),
-    );
 
 
 
@@ -389,215 +129,1318 @@ class CountryController extends Controller
      */
     public static function firstInsertion()
     {
-        $countries = [
-            ["Afghan" => "أفغانستان"],
-            ["Albanian" => "ألبانيا"],
-            ["Algerian" => "الجزائر"],
-            ["American" => "أمريكا"],
-            ["Andorran" => "أندورا"],
-            ["Angolan" => "أنغوليا"],
-            ["Antiguans" => "انتيغوا"],
-            ["Argentinean" => "الأرجنتين"],
-            ["Armenian" => "أرمينيا"],
-            ["Australian" => "أستراليا"],
-            ["Austrian" => "النمسا"],
-            ["Azerbaijani" => "أذربيجان"],
-            ["Bahamian" => "باهاما"],
-            ["Bahraini" => "البحرين"],
-            ["Bangladeshi" => "بنغلاديش"],
-            ["Barbadian" => "باربادوس"],
-            ["Barbudans" => "بربودا"],
-            ["Botswana" => "بوتسوانا"],
-            ["Belarusian" => "بيلاروسيا"],
-            ["Belgian" => "بلجيكا"],
-            ["Belizean" => "بليز"],
-            ["Beninese" => "بنين"],
-            ["Bhutanese" => "بوتان"],
-            ["Bolivian" => "بوليفيا"],
-            ["Bosnian" => "بوسنه"],
-            ["Brazilian" => "البرازيل"],
-            ["British" => "بريطانيا"],
-            ["Bruneian" => "بروناي"],
-            ["Bulgarian" => "بولغاريا"],
-            ["Burkinabe" => "بوركينا فاسو"],
-            ["Burmese" => "بورما"],
-            ["Burundian" => "بوروندي"],
-            ["Cambodian" => "كمبوديا"],
-            ["Cameroonian" => "الكاميرون"],
-            ["Canadian" => "كندا"],
-            ["Cape Verdean" => "الرأس الأخضر"],
-            ["Central African" => "جمهورية أفريقيا الوسطى"],
-            ["Chadian" => "تشاد"],
-            ["Chilean" => "تشيلي"],
-            ["Chinese" => "الصين"],
-            ["Colombian" => "كولومبيا"],
-            ["Comoran" => "جزر القمر"],
-            ["Congolese" => "جمهورية الكونغو الديموقراطية"],
-            ["Costa Rican" => "كوستاريكا"],
-            ["Croatian" => "كرواتيا"],
-            ["Cuban" => "كوبا"],
-            ["Cypriot" => "القبرص"],
-            ["Czech" => "تشيك"],
-            ["Danish" => "الدانمارك"],
-            ["Djibouti" => "جيبوتي"],
-            ["Dominican" => "الدومينيكان"],
-            ["Dutch" => "هولندا"],
-            ["East Timorese" => "تيمور الشرقية"],
-            ["Ecuadorean" => "الإكوادور"],
-            ["Egyptian" => "مصر"],
-            ["Emirian" => "الإمارات"],
-            ["Equatorial Guinean" => "غينيا الإستوائية"],
-            ["Eritrean" => "إريتريا"],
-            ["Estonian" => "إستونيا"],
-            ["Ethiopian" => "إثيوبيا"],
-            ["Fijian" => "فيجي"],
-            ["Filipino" => "الفلبين"],
-            ["Finnish" => "فنلندا"],
-            ["French" => "فرنسا"],
-            ["Gabonese" => "الجابون"],
-            ["Gambian" => "غامبيا"],
-            ["Georgian" => "جورجيا"],
-            ["German" => "ألمانيا"],
-            ["Ghanaian" => "غانا"],
-            ["Greek" => "اليونان"],
-            ["Grenadian" => "جرينادا"],
-            ["Guatemalan" => "غواتيمالا"],
-            ["Guinea-Bissauan" => "غينيا بيساو"],
-            ["Guinean" => "غينيا"],
-            ["Guyanese" => "غويانا"],
-            ["Haitian" => "هايتي"],
-            ["Herzegovinian" => "الهرسك"],
-            ["Honduran" => "هندوراس"],
-            ["Hungarian" => "هنغاريا"],
-            ["I-Kiribati" => "كيريباتي"],
-            ["Icelander" => "ايسلندا"],
-            ["Indian" => "الهند"],
-            ["Indonesian" => "اندونيسيا"],
-            ["Iranian" => "ايران"],
-            ["Iraqi" => "العراق"],
-            ["Irish" => "جمهورية ايرلندا"],
-            ["Israeli" => "إسرائيل"],
-            ["Italian" => "إيطاليا"],
-            ["Ivorian" => "ساحل العاج"],
-            ["Jamaican" => "جامايكا"],
-            ["Japanese" => "اليابان"],
-            ["Jordanian" => "الاردن"],
-            ["Kazakhstani" => "كازاخستان"],
-            ["Kenyan" => "كينيا"],
-            ["Kittian and Nevisian" => "سانت كيتس ونيفيس"],
-            ["Kuwaiti" => "كويت"],
-            ["Kyrgyz" => "قيرغيزستان"],
-            ["Laotian" => "لاوس"],
-            ["Latvian" => "لاتفيا"],
-            ["Lebanese" => "لبنان"],
-            ["Liberian" => "ليبيريا"],
-            ["Libyan" => "ليبيا"],
-            ["Liechtensteiner" => "ليختنشتاين"],
-            ["Lithuanian" => "لتوانيا"],
-            ["Luxembourger" => "لوكسمبورغ"],
-            ["Macedonian" => "مقدونيا"],
-            ["Malagasy" => "مدغشقر"],
-            ["Malawian" => "مالاوي"],
-            ["Malaysian" => "ماليزيا"],
-            ["Maldivan" => "المالديف"],
-            ["Malian" => "مالي"],
-            ["Maltese" => "مالطا"],
-            ["Marshallese" => "جزر المارشال"],
-            ["Mauritanian" => "موريتانيا"],
-            ["Mauritian" => "موريشيوس"],
-            ["Mexican" => "المكسيك"],
-            ["Micronesian" => "ميكرونيزيا"],
-            ["Moldovan" => "مولدوفا"],
-            ["Monacan" => "موناكو"],
-            ["Mongolian" => "منغوليا"],
-            ["Moroccan" => "المغرب"],
-            ["Mosotho" => "ليسوتو"],
-            ["Motswana" => ""],
-            ["Mozambican" => "موزمبيق"],
-            ["Namibian" => "ناميبيا"],
-            ["Nauruan" => "ناورو"],
-            ["Nepalese" => "النيبال"],
-            ["New Zealander" => "نيوزيلندا"],
-            ["Nicaraguan" => "نيكاراغوا"],
-            ["Nigerian" => "نيجيريا"],
-            ["Nigerien" => "النيجر"],
-            ["North Korean" => "كويا الشمالية"],
-            ["Northern Irish" => "ايرلندا الشمالية"],
-            ["Norwegian" => "النرويج"],
-            ["Omani" => "عمان"],
-            ["Pakistan" => "باكستان"],
-            ["Palauan" => "بالاو"],
-            ["Panamanian" => "بنما"],
-            ["Papua New Guinean" => "بابوا غينيا الجديدة"],
-            ["Paraguayan" => "باراغواي"],
-            ["Peruvian" => "بيرو"],
-            ["Polish" => "بولندا"],
-            ["Portuguese" => "البرتغال"],
-            ["Qatari" => "قطر"],
-            ["Romanian" => "رومانيا"],
-            ["Russian" => "روسيا"],
-            ["Rwandan" => "رواندا"],
-            ["Saint Lucian" => "سانت لوسيا"],
-            ["Salvadoran" => "سلفادور"],
-            ["Samoan" => "ساموا"],
-            ["San Marinese" => "سان مارينو"],
-            ["Sao Tomean" => "ساو تومي"],
-            ["Saudi Arabia" => "المملكة العربية السعودية"],
-            ["Scottish" => "اسكتلندا"],
-            ["Senegalese" => "السنغال"],
-            ["Serbian" => "صربيا"],
-            ["Seychellois" => "سيشل"],
-            ["Sierra Leonean" => "سيراليون"],
-            ["Singaporean" => "سنغافورة"],
-            ["Slovakian" => "سلوفاكيا"],
-            ["Slovenian" => "سلوفينيا"],
-            ["Solomon Islander" => "جزر سليمان"],
-            ["Somali" => "الصومال"],
-            ["South African" => "جنوب افريقيا"],
-            ["South Korean" => "كوريا الجنوبية"],
-            ["Spanish" => "اسبانيا"],
-            ["Sri Lankan" => "سريلانكا"],
-            ["Sudanese" => "السودان"],
-            ["Surinamer" => "سورينام"],
-            ["Swazi" => "سوازيلاند"],
-            ["Swedish" => "السويد"],
-            ["Swiss" => "سويسرا"],
-            ["Syrian" => "سوريا"],
-            ["Taiwanese" => "تايوان"],
-            ["Tajik" => "طاجيكستان"],
-            ["Tanzanian" => "تنزانيا"],
-            ["Thai" => "تايلاند"],
-            ["Togolese" => "توغو"],
-            ["Tongan" => "تونجا"],
-            ["Trinidadian/Tobagonian" => "ترينيداد / توباغو"],
-            ["Tunisian" => "تونس"],
-            ["Turkish" => "تركيا"],
-            ["Tuvaluan" => "توفالو"],
-            ["Ugandan" => "أوغندا"],
-            ["Ukrainian" => "اوكرانيا"],
-            ["Uruguayan" => "اوروغواي"],
-            ["Uzbekistani" => "أوزباكستان"],
-            ["Venezuelan" => "فنزويلا"],
-            ["Vietnamese" => "فيتنام"],
-            ["Welsh" => "ويلز"],
-            ["Yemenite" => "اليمن"],
-            ["Zambian" => "زامبيا"],
-            ["Zimbabwean" => "زيمبابوي"],
-        ];
+        // https://github.com/umpirsky/country-list/tree/master/data/en
+
+        // https://github.com/sameer-shelavale/php-countries-array
+        /*******************************************************************************************************
+         *      1) name
+         *      2) code_2chracters code, 2 characters (ISO-3166-1 code_2chracters)
+         *      3) code_3chracters code, 3 characters (ISO-3166-1 code_3chracters)
+         *      4) numeric code (ISO-3166-1 numeric)
+         *      5) isd_phone_code code for country
+         *      6) continent
+         *******************************************************************************************************/
+        $countries = array(
+            "AF" => array(
+                'code_2chracters' => 'AF', 'code_3chracters' => 'AFG', 'code_numeric' => '004',
+                'isd_phone_code' => '93', "en_name" => "Afghanistan", "continent" => "Asia",
+            ),
+            "AX" => array(
+                'code_2chracters' => 'AX', 'code_3chracters' => 'ALA', 'code_numeric' => '248',
+                'isd_phone_code' => '358', "en_name" => "Aland Islands", "continent" => "Europe"
+            ),
+            "AL" => array(
+                'code_2chracters' => 'AL', 'code_3chracters' => 'ALB', 'code_numeric' => '008',
+                'isd_phone_code' => '355', "en_name" => "Albania", "continent" => "Europe"
+            ),
+            "DZ" => array(
+                'code_2chracters' => 'DZ', 'code_3chracters' => 'DZA', 'code_numeric' => '012',
+                'isd_phone_code' => '213', "en_name" => "Algeria", "continent" => "Africa"
+            ),
+            "AS" => array(
+                'code_2chracters' => 'AS', 'code_3chracters' => 'ASM', 'code_numeric' => '016',
+                'isd_phone_code' => '1684', "en_name" => "American Samoa", "continent" => "Oceania"
+            ),
+            "AD" => array(
+                'code_2chracters' => 'AD', 'code_3chracters' => 'AND', 'code_numeric' => '020',
+                'isd_phone_code' => '376', "en_name" => "Andorra", "continent" => "Europe"
+            ),
+            "AO" => array(
+                'code_2chracters' => 'AO', 'code_3chracters' => 'AGO', 'code_numeric' => '024',
+                'isd_phone_code' => '244', "en_name" => "Angola", "continent" => "Africa"
+            ),
+            "AI" => array(
+                'code_2chracters' => 'AI', 'code_3chracters' => 'AIA', 'code_numeric' => '660',
+                'isd_phone_code' => '1264', "en_name" => "Anguilla", "continent" => "North America"
+            ),
+            "AQ" => array(
+                'code_2chracters' => 'AQ', 'code_3chracters' => 'ATA', 'code_numeric' => '010',
+                'isd_phone_code' => '672', "en_name" => "Antarctica", "continent" => "Antarctica"
+            ),
+            "AG" => array(
+                'code_2chracters' => 'AG', 'code_3chracters' => 'ATG', 'code_numeric' => '028',
+                'isd_phone_code' => '1268', "en_name" => "Antigua and Barbuda", "continent" => "North America"
+            ),
+            "AR" => array(
+                'code_2chracters' => 'AR', 'code_3chracters' => 'ARG', 'code_numeric' => '032',
+                'isd_phone_code' => '54', "en_name" => "Argentina", "continent" => "South America"
+            ),
+            "AM" => array(
+                'code_2chracters' => 'AM', 'code_3chracters' => 'ARM', 'code_numeric' => '051',
+                'isd_phone_code' => '374', "en_name" => "Armenia", "continent" => "Asia"
+            ),
+            "AW" => array(
+                'code_2chracters' => 'AW', 'code_3chracters' => 'ABW', 'code_numeric' => '533',
+                'isd_phone_code' => '297', "en_name" => "Aruba", "continent" => "North America"
+            ),
+            "AU" => array(
+                'code_2chracters' => 'AU', 'code_3chracters' => 'AUS', 'code_numeric' => '036',
+                'isd_phone_code' => '61', "en_name" => "Australia", "continent" => "Oceania"
+            ),
+            "AT" => array(
+                'code_2chracters' => 'AT', 'code_3chracters' => 'AUT', 'code_numeric' => '040',
+                'isd_phone_code' => '43', "en_name" => "Austria", "continent" => "Europe"
+            ),
+            "AZ" => array(
+                'code_2chracters' => 'AZ', 'code_3chracters' => 'AZE', 'code_numeric' => '031',
+                'isd_phone_code' => '994', "en_name" => "Azerbaijan", "continent" => "Asia"
+            ),
+            "BS" => array(
+                'code_2chracters' => 'BS', 'code_3chracters' => 'BHS', 'code_numeric' => '044',
+                'isd_phone_code' => '1242', "en_name" => "Bahamas", "continent" => "North America"
+            ),
+            "BH" => array(
+                'code_2chracters' => 'BH', 'code_3chracters' => 'BHR', 'code_numeric' => '048',
+                'isd_phone_code' => '973', "en_name" => "Bahrain", "continent" => "Asia"
+            ),
+            "BD" => array(
+                'code_2chracters' => 'BD', 'code_3chracters' => 'BGD', 'code_numeric' => '050',
+                'isd_phone_code' => '880', "en_name" => "Bangladesh", "continent" => "Asia"
+            ),
+            "BB" => array(
+                'code_2chracters' => 'BB', 'code_3chracters' => 'BRB', 'code_numeric' => '052',
+                'isd_phone_code' => '1246', "en_name" => "Barbados", "continent" => "North America"
+            ),
+            "BY" => array(
+                'code_2chracters' => 'BY', 'code_3chracters' => 'BLR', 'code_numeric' => '112',
+                'isd_phone_code' => '375', "en_name" => "Belarus", "continent" => "Europe"
+            ),
+            "BE" => array(
+                'code_2chracters' => 'BE', 'code_3chracters' => 'BEL', 'code_numeric' => '056',
+                'isd_phone_code' => '32', "en_name" => "Belgium", "continent" => "Europe"
+            ),
+            "BZ" => array(
+                'code_2chracters' => 'BZ', 'code_3chracters' => 'BLZ', 'code_numeric' => '084',
+                'isd_phone_code' => '501', "en_name" => "Belize", "continent" => "North America"
+            ),
+            "BJ" => array(
+                'code_2chracters' => 'BJ', 'code_3chracters' => 'BEN', 'code_numeric' => '204',
+                'isd_phone_code' => '229', "en_name" => "Benin", "continent" => "Africa"
+            ),
+            "BM" => array(
+                'code_2chracters' => 'BM', 'code_3chracters' => 'BMU', 'code_numeric' => '060',
+                'isd_phone_code' => '1441', "en_name" => "Bermuda", "continent" => "North America"
+            ),
+            "BT" => array(
+                'code_2chracters' => 'BT', 'code_3chracters' => 'BTN', 'code_numeric' => '064',
+                'isd_phone_code' => '975', "en_name" => "Bhutan", "continent" => "Asia"
+            ),
+            "BO" => array(
+                'code_2chracters' => 'BO', 'code_3chracters' => 'BOL', 'code_numeric' => '068',
+                'isd_phone_code' => '591', "en_name" => "Bolivia", "continent" => "South America"
+            ),
+            "BQ" => array(
+                'code_2chracters' => 'BQ', 'code_3chracters' => 'BES', 'code_numeric' => '535',
+                'isd_phone_code' => '599', "en_name" => "Bonaire, Sint Eustatius and Saba", "continent" => "North America"
+            ),
+            "BA" => array(
+                'code_2chracters' => 'BA', 'code_3chracters' => 'BIH', 'code_numeric' => '070',
+                'isd_phone_code' => '387', "en_name" => "Bosnia and Herzegovina", "continent" => "Europe"
+            ),
+            "BW" => array(
+                'code_2chracters' => 'BW', 'code_3chracters' => 'BWA', 'code_numeric' => '072',
+                'isd_phone_code' => '267', "en_name" => "Botswana", "continent" => "Africa"
+            ),
+            "BV" => array(
+                'code_2chracters' => 'BV', 'code_3chracters' => 'BVT', 'code_numeric' => '074',
+                'isd_phone_code' => '61', "en_name" => "Bouvet Island", "continent" => "Antarctica"
+            ),
+            "BR" => array(
+                'code_2chracters' => 'BR', 'code_3chracters' => 'BRA', 'code_numeric' => '076',
+                'isd_phone_code' => '55', "en_name" => "Brazil", "continent" => "South America"
+            ),
+            "IO" => array(
+                'code_2chracters' => 'IO', 'code_3chracters' => 'IOT', 'code_numeric' => '086',
+                'isd_phone_code' => '246', "en_name" => "British Indian Ocean Territory", "continent" => "Asia"
+            ),
+            "BN" => array(
+                'code_2chracters' => 'BN', 'code_3chracters' => 'BRN', 'code_numeric' => '096',
+                'isd_phone_code' => '672', "en_name" => "Brunei Darussalam", "continent" => "Asia"
+            ),
+            "BG" => array(
+                'code_2chracters' => 'BG', 'code_3chracters' => 'BGR', 'code_numeric' => '100',
+                'isd_phone_code' => '359', "en_name" => "Bulgaria", "continent" => "Europe"
+            ),
+            "BF" => array(
+                'code_2chracters' => 'BF', 'code_3chracters' => 'BFA', 'code_numeric' => '854',
+                'isd_phone_code' => '226', "en_name" => "Burkina Faso", "continent" => "Africa"
+            ),
+            "BI" => array(
+                'code_2chracters' => 'BI', 'code_3chracters' => 'BDI', 'code_numeric' => '108',
+                'isd_phone_code' => '257', "en_name" => "Burundi", "continent" => "Africa"
+            ),
+            "KH" => array(
+                'code_2chracters' => 'KH', 'code_3chracters' => 'KHM', 'code_numeric' => '116',
+                'isd_phone_code' => '855', "en_name" => "Cambodia", "continent" => "Asia"
+            ),
+            "CM" => array(
+                'code_2chracters' => 'CM', 'code_3chracters' => 'CMR', 'code_numeric' => '120',
+                'isd_phone_code' => '231', "en_name" => "Cameroon", "continent" => "Africa"
+            ),
+            "CA" => array(
+                'code_2chracters' => 'CA', 'code_3chracters' => 'CAN', 'code_numeric' => '124',
+                'isd_phone_code' => '1', "en_name" => "Canada", "continent" => "North America"
+            ),
+            "CV" => array(
+                'code_2chracters' => 'CV', 'code_3chracters' => 'CPV', 'code_numeric' => '132',
+                'isd_phone_code' => '238', "en_name" => "Cape Verde", "continent" => "Africa"
+            ),
+            "KY" => array(
+                'code_2chracters' => 'KY', 'code_3chracters' => 'CYM', 'code_numeric' => '136',
+                'isd_phone_code' => '1345', "en_name" => "Cayman Islands", "continent" => "North America"
+            ),
+            "CF" => array(
+                'code_2chracters' => 'CF', 'code_3chracters' => 'CAF', 'code_numeric' => '140',
+                'isd_phone_code' => '236', "en_name" => "Central African Republic", "continent" => "Africa"
+            ),
+            "TD" => array(
+                'code_2chracters' => 'TD', 'code_3chracters' => 'TCD', 'code_numeric' => '148',
+                'isd_phone_code' => '235', "en_name" => "Chad", "continent" => "Africa"
+            ),
+            "CL" => array(
+                'code_2chracters' => 'CL', 'code_3chracters' => 'CHL', 'code_numeric' => '152',
+                'isd_phone_code' => '56', "en_name" => "Chile", "continent" => "South America"
+            ),
+            "CN" => array(
+                'code_2chracters' => 'CN', 'code_3chracters' => 'CHN', 'code_numeric' => '156',
+                'isd_phone_code' => '86', "en_name" => "China", "continent" => "Asia"
+            ),
+            "CX" => array(
+                'code_2chracters' => 'CX', 'code_3chracters' => 'CXR', 'code_numeric' => '162',
+                'isd_phone_code' => '61', "en_name" => "Christmas Island", "continent" => "Asia"
+            ),
+            "CC" => array(
+                'code_2chracters' => 'CC', 'code_3chracters' => 'CCK', 'code_numeric' => '166',
+                'isd_phone_code' => '891', "en_name" => "Cocos (Keeling) Islands", "continent" => "Asia"
+            ),
+            "CO" => array(
+                'code_2chracters' => 'CO', 'code_3chracters' => 'COL', 'code_numeric' => '170',
+                'isd_phone_code' => '57', "en_name" => "Colombia", "continent" => "South America"
+            ),
+            "KM" => array(
+                'code_2chracters' => 'KM', 'code_3chracters' => 'COM', 'code_numeric' => '174',
+                'isd_phone_code' => '269', "en_name" => "Comoros", "continent" => "Africa"
+            ),
+            "CG" => array(
+                'code_2chracters' => 'CG', 'code_3chracters' => 'COG', 'code_numeric' => '178',
+                'isd_phone_code' => '242', "en_name" => "Congo", "continent" => "Africa"
+            ),
+            "CD" => array(
+                'code_2chracters' => 'CD', 'code_3chracters' => 'COD', 'code_numeric' => '180',
+                'isd_phone_code' => '243', "en_name" => "The Democratic Republic of The Congo", "continent" => "Africa"
+            ),
+            "CK" => array(
+                'code_2chracters' => 'CK', 'code_3chracters' => 'COK', 'code_numeric' => '184',
+                'isd_phone_code' => '682', "en_name" => "Cook Islands", "continent" => "Oceania"
+            ),
+            "CR" => array(
+                'code_2chracters' => 'CR', 'code_3chracters' => 'CRI', 'code_numeric' => '188',
+                'isd_phone_code' => '506', "en_name" => "Costa Rica", "continent" => "North America"
+            ),
+            "CI" => array(
+                'code_2chracters' => 'CI', 'code_3chracters' => 'CIV', 'code_numeric' => '384',
+                'isd_phone_code' => '225', "en_name" => "Cote D'ivoire", "continent" => "Africa"
+            ),
+            "CW" => array(
+                'code_2chracters' => 'CW', 'code_3chracters' => 'CUW', 'code_numeric' => '531',
+                'isd_phone_code' => '599', "en_name" => "Curaçao", "continent" => "North America"
+            ),
+            "HR" => array(
+                'code_2chracters' => 'HR', 'code_3chracters' => 'HRV', 'code_numeric' => '191',
+                'isd_phone_code' => '385', "en_name" => "Croatia", "continent" => "Europe"
+            ),
+            "CU" => array(
+                'code_2chracters' => 'CU', 'code_3chracters' => 'CUB', 'code_numeric' => '192',
+                'isd_phone_code' => '53', "en_name" => "Cuba", "continent" => "North America"
+            ),
+            "CY" => array(
+                'code_2chracters' => 'CY', 'code_3chracters' => 'CYP', 'code_numeric' => '196',
+                'isd_phone_code' => '357', "en_name" => "Cyprus", "continent" => "Asia"
+            ),
+            "CZ" => array(
+                'code_2chracters' => 'CZ', 'code_3chracters' => 'CZE', 'code_numeric' => '203',
+                'isd_phone_code' => '420', "en_name" => "Czech Republic", "continent" => "Europe"
+            ),
+            "DK" => array(
+                'code_2chracters' => 'DK', 'code_3chracters' => 'DNK', 'code_numeric' => '208',
+                'isd_phone_code' => '45', "en_name" => "Denmark", "continent" => "Europe"
+            ),
+            "DJ" => array(
+                'code_2chracters' => 'DJ', 'code_3chracters' => 'DJI', 'code_numeric' => '262',
+                'isd_phone_code' => '253', "en_name" => "Djibouti", "continent" => "Africa"
+            ),
+            "DM" => array(
+                'code_2chracters' => 'DM', 'code_3chracters' => 'DMA', 'code_numeric' => '212',
+                'isd_phone_code' => '1767', "en_name" => "Dominica", "continent" => "North America"
+            ),
+            "DO" => array(
+                'code_2chracters' => 'DO', 'code_3chracters' => 'DOM', 'code_numeric' => '214',
+                'isd_phone_code' => '1809', "en_name" => "Dominican Republic", "continent" => "North America"
+            ),
+            "EC" => array(
+                'code_2chracters' => 'EC', 'code_3chracters' => 'ECU', 'code_numeric' => '218',
+                'isd_phone_code' => '593', "en_name" => "Ecuador", "continent" => "South America"
+            ),
+            "EG" => array(
+                'code_2chracters' => 'EG', 'code_3chracters' => 'EGY', 'code_numeric' => '818',
+                'isd_phone_code' => '20', "en_name" => "Egypt", "continent" => "Africa"
+            ),
+            "SV" => array(
+                'code_2chracters' => 'SV', 'code_3chracters' => 'SLV', 'code_numeric' => '222',
+                'isd_phone_code' => '503', "en_name" => "El Salvador", "continent" => "North America"
+            ),
+            "GQ" => array(
+                'code_2chracters' => 'GQ', 'code_3chracters' => 'GNQ', 'code_numeric' => '226',
+                'isd_phone_code' => '240', "en_name" => "Equatorial Guinea", "continent" => "Africa"
+            ),
+            "ER" => array(
+                'code_2chracters' => 'ER', 'code_3chracters' => 'ERI', 'code_numeric' => '232',
+                'isd_phone_code' => '291', "en_name" => "Eritrea", "continent" => "Africa"
+            ),
+            "EE" => array(
+                'code_2chracters' => 'EE', 'code_3chracters' => 'EST', 'code_numeric' => '233',
+                'isd_phone_code' => '372', "en_name" => "Estonia", "continent" => "Europe"
+            ),
+            "ET" => array(
+                'code_2chracters' => 'ET', 'code_3chracters' => 'ETH', 'code_numeric' => '231',
+                'isd_phone_code' => '251', "en_name" => "Ethiopia", "continent" => "Africa"
+            ),
+            "FK" => array(
+                'code_2chracters' => 'FK', 'code_3chracters' => 'FLK', 'code_numeric' => '238',
+                'isd_phone_code' => '500', "en_name" => "Falkland Islands (Malvinas)", "continent" => "South America"
+            ),
+            "FO" => array(
+                'code_2chracters' => 'FO', 'code_3chracters' => 'FRO', 'code_numeric' => '234',
+                'isd_phone_code' => '298', "en_name" => "Faroe Islands", "continent" => "Europe"
+            ),
+            "FJ" => array(
+                'code_2chracters' => 'FJ', 'code_3chracters' => 'FJI', 'code_numeric' => '243',
+                'isd_phone_code' => '679', "en_name" => "Fiji", "continent" => "Oceania"
+            ),
+            "FI" => array(
+                'code_2chracters' => 'FI', 'code_3chracters' => 'FIN', 'code_numeric' => '246',
+                'isd_phone_code' => '238', "en_name" => "Finland", "continent" => "Europe"
+            ),
+            "FR" => array(
+                'code_2chracters' => 'FR', 'code_3chracters' => 'FRA', 'code_numeric' => '250',
+                'isd_phone_code' => '33', "en_name" => "France", "continent" => "Europe"
+            ),
+            "GF" => array(
+                'code_2chracters' => 'GF', 'code_3chracters' => 'GUF', 'code_numeric' => '254',
+                'isd_phone_code' => '594', "en_name" => "French Guiana", "continent" => "South America"
+            ),
+            "PF" => array(
+                'code_2chracters' => 'PF', 'code_3chracters' => 'PYF', 'code_numeric' => '258',
+                'isd_phone_code' => '689', "en_name" => "French Polynesia", "continent" => "Oceania"
+            ),
+            "TF" => array(
+                'code_2chracters' => 'TF', 'code_3chracters' => 'ATF', 'code_numeric' => '260',
+                'isd_phone_code' => '262', "en_name" => "French Southern Territories", "continent" => "Antarctica"
+            ),
+            "GA" => array(
+                'code_2chracters' => 'GA', 'code_3chracters' => 'GAB', 'code_numeric' => '266',
+                'isd_phone_code' => '241', "en_name" => "Gabon", "continent" => "Africa"
+            ),
+            "GM" => array(
+                'code_2chracters' => 'GM', 'code_3chracters' => 'GMB', 'code_numeric' => '270',
+                'isd_phone_code' => '220', "en_name" => "Gambia", "continent" => "Africa"
+            ),
+            "GE" => array(
+                'code_2chracters' => 'GE', 'code_3chracters' => 'GEO', 'code_numeric' => '268',
+                'isd_phone_code' => '995', "en_name" => "Georgia", "continent" => "Asia"
+            ),
+            "DE" => array(
+                'code_2chracters' => 'DE', 'code_3chracters' => 'DEU', 'code_numeric' => '276',
+                'isd_phone_code' => '49', "en_name" => "Germany", "continent" => "Europe"
+            ),
+            "GH" => array(
+                'code_2chracters' => 'GH', 'code_3chracters' => 'GHA', 'code_numeric' => '288',
+                'isd_phone_code' => '233', "en_name" => "Ghana", "continent" => "Africa"
+            ),
+            "GI" => array(
+                'code_2chracters' => 'GI', 'code_3chracters' => 'GIB', 'code_numeric' => '292',
+                'isd_phone_code' => '350', "en_name" => "Gibraltar", "continent" => "Europe"
+            ),
+            "GR" => array(
+                'code_2chracters' => 'GR', 'code_3chracters' => 'GRC', 'code_numeric' => '300',
+                'isd_phone_code' => '30', "en_name" => "Greece", "continent" => "Europe"
+            ),
+            "GL" => array(
+                'code_2chracters' => 'GL', 'code_3chracters' => 'GRL', 'code_numeric' => '304',
+                'isd_phone_code' => '299', "en_name" => "Greenland", "continent" => "North America"
+            ),
+            "GD" => array(
+                'code_2chracters' => 'GD', 'code_3chracters' => 'GRD', 'code_numeric' => '308',
+                'isd_phone_code' => '1473', "en_name" => "Grenada", "continent" => "North America"
+            ),
+            "GP" => array(
+                'code_2chracters' => 'GP', 'code_3chracters' => 'GLP', 'code_numeric' => '312',
+                'isd_phone_code' => '590', "en_name" => "Guadeloupe", "continent" => "North America"
+            ),
+            "GU" => array(
+                'code_2chracters' => 'GU', 'code_3chracters' => 'GUM', 'code_numeric' => '316',
+                'isd_phone_code' => '1871', "en_name" => "Guam", "continent" => "Oceania"
+            ),
+            "GT" => array(
+                'code_2chracters' => 'GT', 'code_3chracters' => 'GTM', 'code_numeric' => '320',
+                'isd_phone_code' => '502', "en_name" => "Guatemala", "continent" => "North America"
+            ),
+            "GG" => array(
+                'code_2chracters' => 'GG', 'code_3chracters' => 'GGY', 'code_numeric' => '831',
+                'isd_phone_code' => '44', "en_name" => "Guernsey", "continent" => "Europe"
+            ),
+            "GN" => array(
+                'code_2chracters' => 'GN', 'code_3chracters' => 'GIN', 'code_numeric' => '324',
+                'isd_phone_code' => '224', "en_name" => "Guinea", "continent" => "Africa"
+            ),
+            "GW" => array(
+                'code_2chracters' => 'GW', 'code_3chracters' => 'GNB', 'code_numeric' => '624',
+                'isd_phone_code' => '245', "en_name" => "Guinea-bissau", "continent" => "Africa"
+            ),
+            "GY" => array(
+                'code_2chracters' => 'GY', 'code_3chracters' => 'GUY', 'code_numeric' => '328',
+                'isd_phone_code' => '592', "en_name" => "Guyana", "continent" => "South America"
+            ),
+            "HT" => array(
+                'code_2chracters' => 'HT', 'code_3chracters' => 'HTI', 'code_numeric' => '332',
+                'isd_phone_code' => '509', "en_name" => "Haiti", "continent" => "North America"
+            ),
+            "HM" => array(
+                'code_2chracters' => 'HM', 'code_3chracters' => 'HMD', 'code_numeric' => '334',
+                'isd_phone_code' => '672', "en_name" => "Heard Island and Mcdonald Islands", "continent" => "Antarctica"
+            ),
+            "VA" => array(
+                'code_2chracters' => 'VA', 'code_3chracters' => 'VAT', 'code_numeric' => '336',
+                'isd_phone_code' => '379', "en_name" => "Holy See (Vatican City State)", "continent" => "Europe"
+            ),
+            "HN" => array(
+                'code_2chracters' => 'HN', 'code_3chracters' => 'HND', 'code_numeric' => '340',
+                'isd_phone_code' => '504', "en_name" => "Honduras", "continent" => "North America"
+            ),
+            "HK" => array(
+                'code_2chracters' => 'HK', 'code_3chracters' => 'HKG', 'code_numeric' => '344',
+                'isd_phone_code' => '852', "en_name" => "Hong Kong", "continent" => "Asia"
+            ),
+            "HU" => array(
+                'code_2chracters' => 'HU', 'code_3chracters' => 'HUN', 'code_numeric' => '348',
+                'isd_phone_code' => '36', "en_name" => "Hungary", "continent" => "Europe"
+            ),
+            "IS" => array(
+                'code_2chracters' => 'IS', 'code_3chracters' => 'ISL', 'code_numeric' => '352',
+                'isd_phone_code' => '354', "en_name" => "Iceland", "continent" => "Europe"
+            ),
+            "IN" => array(
+                'code_2chracters' => 'IN', 'code_3chracters' => 'IND', 'code_numeric' => '356',
+                'isd_phone_code' => '91', "en_name" => "India", "continent" => "Asia"
+            ),
+            "ID" => array(
+                'code_2chracters' => 'ID', 'code_3chracters' => 'IDN', 'code_numeric' => '360',
+                'isd_phone_code' => '62', "en_name" => "Indonesia", "continent" => "Asia"
+            ),
+            "IR" => array(
+                'code_2chracters' => 'IR', 'code_3chracters' => 'IRN', 'code_numeric' => '364',
+                'isd_phone_code' => '98', "en_name" => "Iran", "continent" => "Asia"
+            ),
+            "IQ" => array(
+                'code_2chracters' => 'IQ', 'code_3chracters' => 'IRQ', 'code_numeric' => '368',
+                'isd_phone_code' => '964', "en_name" => "Iraq", "continent" => "Asia"
+            ),
+            "IE" => array(
+                'code_2chracters' => 'IE', 'code_3chracters' => 'IRL', 'code_numeric' => '372',
+                'isd_phone_code' => '353', "en_name" => "Ireland", "continent" => "Europe"
+            ),
+            "IM" => array(
+                'code_2chracters' => 'IM', 'code_3chracters' => 'IMN', 'code_numeric' => '833',
+                'isd_phone_code' => '44', "en_name" => "Isle of Man", "continent" => "Europe"
+            ),
+            "IL" => array(
+                'code_2chracters' => 'IL', 'code_3chracters' => 'ISR', 'code_numeric' => '376',
+                'isd_phone_code' => '972', "en_name" => "Israel", "continent" => "Asia"
+            ),
+            "IT" => array(
+                'code_2chracters' => 'IT', 'code_3chracters' => 'ITA', 'code_numeric' => '380',
+                'isd_phone_code' => '39', "en_name" => "Italy", "continent" => "Europe"
+            ),
+            "JM" => array(
+                'code_2chracters' => 'JM', 'code_3chracters' => 'JAM', 'code_numeric' => '388',
+                'isd_phone_code' => '1876', "en_name" => "Jamaica", "continent" => "North America"
+            ),
+            "JP" => array(
+                'code_2chracters' => 'JP', 'code_3chracters' => 'JPN', 'code_numeric' => '392',
+                'isd_phone_code' => '81', "en_name" => "Japan", "continent" => "Asia"
+            ),
+            "JE" => array(
+                'code_2chracters' => 'JE', 'code_3chracters' => 'JEY', 'code_numeric' => '832',
+                'isd_phone_code' => '44', "en_name" => "Jersey", "continent" => "Europe"
+            ),
+            "JO" => array(
+                'code_2chracters' => 'JO', 'code_3chracters' => 'JOR', 'code_numeric' => '400',
+                'isd_phone_code' => '962', "en_name" => "Jordan", "continent" => "Asia"
+            ),
+            "KZ" => array(
+                'code_2chracters' => 'KZ', 'code_3chracters' => 'KAZ', 'code_numeric' => '398',
+                'isd_phone_code' => '7', "en_name" => "Kazakhstan", "continent" => "Asia"
+            ),
+            "KE" => array(
+                'code_2chracters' => 'KE', 'code_3chracters' => 'KEN', 'code_numeric' => '404',
+                'isd_phone_code' => '254', "en_name" => "Kenya", "continent" => "Africa"
+            ),
+            "KI" => array(
+                'code_2chracters' => 'KI', 'code_3chracters' => 'KIR', 'code_numeric' => '296',
+                'isd_phone_code' => '686', "en_name" => "Kiribati", "continent" => "Oceania"
+            ),
+            "KP" => array(
+                'code_2chracters' => 'KP', 'code_3chracters' => 'PRK', 'code_numeric' => '408',
+                'isd_phone_code' => '850', "en_name" => "Democratic People's Republic of Korea", "continent" => "Asia"
+            ),
+            "KR" => array(
+                'code_2chracters' => 'KR', 'code_3chracters' => 'KOR', 'code_numeric' => '410',
+                'isd_phone_code' => '82', "en_name" => "Republic of Korea", "continent" => "Asia"
+            ),
+            "KW" => array(
+                'code_2chracters' => 'KW', 'code_3chracters' => 'KWT', 'code_numeric' => '414',
+                'isd_phone_code' => '965', "en_name" => "Kuwait", "continent" => "Asia"
+            ),
+            "KG" => array(
+                'code_2chracters' => 'KG', 'code_3chracters' => 'KGZ', 'code_numeric' => '417',
+                'isd_phone_code' => '996', "en_name" => "Kyrgyzstan", "continent" => "Asia"
+            ),
+            "LA" => array(
+                'code_2chracters' => 'LA', 'code_3chracters' => 'LAO', 'code_numeric' => '418',
+                'isd_phone_code' => '856', "en_name" => "Lao People's Democratic Republic", "continent" => "Asia"
+            ),
+            "LV" => array(
+                'code_2chracters' => 'LV', 'code_3chracters' => 'LVA', 'code_numeric' => '428',
+                'isd_phone_code' => '371', "en_name" => "Latvia", "continent" => "Europe"
+            ),
+            "LB" => array(
+                'code_2chracters' => 'LB', 'code_3chracters' => 'LBN', 'code_numeric' => '422',
+                'isd_phone_code' => '961', "en_name" => "Lebanon", "continent" => "Asia"
+            ),
+            "LS" => array(
+                'code_2chracters' => 'LS', 'code_3chracters' => 'LSO', 'code_numeric' => '426',
+                'isd_phone_code' => '266', "en_name" => "Lesotho", "continent" => "Africa"
+            ),
+            "LR" => array(
+                'code_2chracters' => 'LR', 'code_3chracters' => 'LBR', 'code_numeric' => '430',
+                'isd_phone_code' => '231', "en_name" => "Liberia", "continent" => "Africa"
+            ),
+            "LY" => array(
+                'code_2chracters' => 'LY', 'code_3chracters' => 'LBY', 'code_numeric' => '434',
+                'isd_phone_code' => '218', "en_name" => "Libya", "continent" => "Africa"
+            ),
+            "LI" => array(
+                'code_2chracters' => 'LI', 'code_3chracters' => 'LIE', 'code_numeric' => '438',
+                'isd_phone_code' => '423', "en_name" => "Liechtenstein", "continent" => "Europe"
+            ),
+            "LT" => array(
+                'code_2chracters' => 'LT', 'code_3chracters' => 'LTU', 'code_numeric' => '440',
+                'isd_phone_code' => '370', "en_name" => "Lithuania", "continent" => "Europe"
+            ),
+            "LU" => array(
+                'code_2chracters' => 'LU', 'code_3chracters' => 'LUX', 'code_numeric' => '442',
+                'isd_phone_code' => '352', "en_name" => "Luxembourg", "continent" => "Europe"
+            ),
+            "MO" => array(
+                'code_2chracters' => 'MO', 'code_3chracters' => 'MAC', 'code_numeric' => '446',
+                'isd_phone_code' => '853', "en_name" => "Macao", "continent" => "Asia"
+            ),
+            "MK" => array(
+                'code_2chracters' => 'MK', 'code_3chracters' => 'MKD', 'code_numeric' => '807',
+                'isd_phone_code' => '389', "en_name" => "Macedonia", "continent" => "Europe"
+            ),
+            "MG" => array(
+                'code_2chracters' => 'MG', 'code_3chracters' => 'MDG', 'code_numeric' => '450',
+                'isd_phone_code' => '261', "en_name" => "Madagascar", "continent" => "Africa"
+            ),
+            "MW" => array(
+                'code_2chracters' => 'MW', 'code_3chracters' => 'MWI', 'code_numeric' => '454',
+                'isd_phone_code' => '265', "en_name" => "Malawi", "continent" => "Africa"
+            ),
+            "MY" => array(
+                'code_2chracters' => 'MY', 'code_3chracters' => 'MYS', 'code_numeric' => '458',
+                'isd_phone_code' => '60', "en_name" => "Malaysia", "continent" => "Asia"
+            ),
+            "MV" => array(
+                'code_2chracters' => 'MV', 'code_3chracters' => 'MDV', 'code_numeric' => '462',
+                'isd_phone_code' => '960', "en_name" => "Maldives", "continent" => "Asia"
+            ),
+            "ML" => array(
+                'code_2chracters' => 'ML', 'code_3chracters' => 'MLI', 'code_numeric' => '466',
+                'isd_phone_code' => '223', "en_name" => "Mali", "continent" => "Africa"
+            ),
+            "MT" => array(
+                'code_2chracters' => 'MT', 'code_3chracters' => 'MLT', 'code_numeric' => '470',
+                'isd_phone_code' => '356', "en_name" => "Malta", "continent" => "Europe"
+            ),
+            "MH" => array(
+                'code_2chracters' => 'MH', 'code_3chracters' => 'MHL', 'code_numeric' => '584',
+                'isd_phone_code' => '692', "en_name" => "Marshall Islands", "continent" => "Oceania"
+            ),
+            "MQ" => array(
+                'code_2chracters' => 'MQ', 'code_3chracters' => 'MTQ', 'code_numeric' => '474',
+                'isd_phone_code' => '596', "en_name" => "Martinique", "continent" => "North America"
+            ),
+            "MR" => array(
+                'code_2chracters' => 'MR', 'code_3chracters' => 'MRT', 'code_numeric' => '478',
+                'isd_phone_code' => '222', "en_name" => "Mauritania", "continent" => "Africa"
+            ),
+            "MU" => array(
+                'code_2chracters' => 'MU', 'code_3chracters' => 'MUS', 'code_numeric' => '480',
+                'isd_phone_code' => '230', "en_name" => "Mauritius", "continent" => "Africa"
+            ),
+            "YT" => array(
+                'code_2chracters' => 'YT', 'code_3chracters' => 'MYT', 'code_numeric' => '175',
+                'isd_phone_code' => '262', "en_name" => "Mayotte", "continent" => "Africa"
+            ),
+            "MX" => array(
+                'code_2chracters' => 'MX', 'code_3chracters' => 'MEX', 'code_numeric' => '484',
+                'isd_phone_code' => '52', "en_name" => "Mexico", "continent" => "North America"
+            ),
+            "FM" => array(
+                'code_2chracters' => 'FM', 'code_3chracters' => 'FSM', 'code_numeric' => '583',
+                'isd_phone_code' => '691', "en_name" => "Micronesia", "continent" => "Oceania"
+            ),
+            "MD" => array(
+                'code_2chracters' => 'MD', 'code_3chracters' => 'MDA', 'code_numeric' => '498',
+                'isd_phone_code' => '373', "en_name" => "Moldova", "continent" => "Europe"
+            ),
+            "MC" => array(
+                'code_2chracters' => 'MC', 'code_3chracters' => 'MCO', 'code_numeric' => '492',
+                'isd_phone_code' => '377', "en_name" => "Monaco", "continent" => "Europe"
+            ),
+            "MN" => array(
+                'code_2chracters' => 'MN', 'code_3chracters' => 'MNG', 'code_numeric' => '496',
+                'isd_phone_code' => '976', "en_name" => "Mongolia", "continent" => "Asia"
+            ),
+            "ME" => array(
+                'code_2chracters' => 'ME', 'code_3chracters' => 'MNE', 'code_numeric' => '499',
+                'isd_phone_code' => '382', "en_name" => "Montenegro", "continent" => "Europe"
+            ),
+            "MS" => array(
+                'code_2chracters' => 'MS', 'code_3chracters' => 'MSR', 'code_numeric' => '500',
+                'isd_phone_code' => '1664', "en_name" => "Montserrat", "continent" => "North America"
+            ),
+            "MA" => array(
+                'code_2chracters' => 'MA', 'code_3chracters' => 'MAR', 'code_numeric' => '504',
+                'isd_phone_code' => '212', "en_name" => "Morocco", "continent" => "Africa"
+            ),
+            "MZ" => array(
+                'code_2chracters' => 'MZ', 'code_3chracters' => 'MOZ', 'code_numeric' => '508',
+                'isd_phone_code' => '258', "en_name" => "Mozambique", "continent" => "Africa"
+            ),
+            "MM" => array(
+                'code_2chracters' => 'MM', 'code_3chracters' => 'MMR', 'code_numeric' => '104',
+                'isd_phone_code' => '95', "en_name" => "Myanmar", "continent" => "Asia"
+            ),
+            "NA" => array(
+                'code_2chracters' => 'NA', 'code_3chracters' => 'NAM', 'code_numeric' => '516',
+                'isd_phone_code' => '264', "en_name" => "Namibia", "continent" => "Africa"
+            ),
+            "NR" => array(
+                'code_2chracters' => 'NR', 'code_3chracters' => 'NRU', 'code_numeric' => '520',
+                'isd_phone_code' => '674', "en_name" => "Nauru", "continent" => "Oceania"
+            ),
+            "NP" => array(
+                'code_2chracters' => 'NP', 'code_3chracters' => 'NPL', 'code_numeric' => '524',
+                'isd_phone_code' => '977', "en_name" => "Nepal", "continent" => "Asia"
+            ),
+            "NL" => array(
+                'code_2chracters' => 'NL', 'code_3chracters' => 'NLD', 'code_numeric' => '528',
+                'isd_phone_code' => '31', "en_name" => "Netherlands", "continent" => "Europe"
+            ),
+            "NC" => array(
+                'code_2chracters' => 'NC', 'code_3chracters' => 'NCL', 'code_numeric' => '540',
+                'isd_phone_code' => '687', "en_name" => "New Caledonia", "continent" => "Oceania"
+            ),
+            "NZ" => array(
+                'code_2chracters' => 'NZ', 'code_3chracters' => 'NZL', 'code_numeric' => '554',
+                'isd_phone_code' => '64', "en_name" => "New Zealand", "continent" => "Oceania"
+            ),
+            "NI" => array(
+                'code_2chracters' => 'NI', 'code_3chracters' => 'NIC', 'code_numeric' => '558',
+                'isd_phone_code' => '505', "en_name" => "Nicaragua", "continent" => "North America"
+            ),
+            "NE" => array(
+                'code_2chracters' => 'NE', 'code_3chracters' => 'NER', 'code_numeric' => '562',
+                'isd_phone_code' => '227', "en_name" => "Niger", "continent" => "Africa"
+            ),
+            "NG" => array(
+                'code_2chracters' => 'NG', 'code_3chracters' => 'NGA', 'code_numeric' => '566',
+                'isd_phone_code' => '234', "en_name" => "Nigeria", "continent" => "Africa"
+            ),
+            "NU" => array(
+                'code_2chracters' => 'NU', 'code_3chracters' => 'NIU', 'code_numeric' => '570',
+                'isd_phone_code' => '683', "en_name" => "Niue", "continent" => "Oceania"
+            ),
+            "NF" => array(
+                'code_2chracters' => 'NF', 'code_3chracters' => 'NFK', 'code_numeric' => '574',
+                'isd_phone_code' => '672', "en_name" => "Norfolk Island", "continent" => "Oceania"
+            ),
+            "MP" => array(
+                'code_2chracters' => 'MP', 'code_3chracters' => 'MNP', 'code_numeric' => '580',
+                'isd_phone_code' => '1670', "en_name" => "Northern Mariana Islands", "continent" => "Oceania"
+            ),
+            "NO" => array(
+                'code_2chracters' => 'NO', 'code_3chracters' => 'NOR', 'code_numeric' => '578',
+                'isd_phone_code' => '47', "en_name" => "Norway", "continent" => "Europe"
+            ),
+            "OM" => array(
+                'code_2chracters' => 'OM', 'code_3chracters' => 'OMN', 'code_numeric' => '512',
+                'isd_phone_code' => '968', "en_name" => "Oman", "continent" => "Asia"
+            ),
+            "PK" => array(
+                'code_2chracters' => 'PK', 'code_3chracters' => 'PAK', 'code_numeric' => '586',
+                'isd_phone_code' => '92', "en_name" => "Pakistan", "continent" => "Asia"
+            ),
+            "PW" => array(
+                'code_2chracters' => 'PW', 'code_3chracters' => 'PLW', 'code_numeric' => '585',
+                'isd_phone_code' => '680', "en_name" => "Palau", "continent" => "Oceania"
+            ),
+            "PS" => array(
+                'code_2chracters' => 'PS', 'code_3chracters' => 'PSE', 'code_numeric' => '275',
+                'isd_phone_code' => '970', "en_name" => "Palestinia", "continent" => "Asia"
+            ),
+            "PA" => array(
+                'code_2chracters' => 'PA', 'code_3chracters' => 'PAN', 'code_numeric' => '591',
+                'isd_phone_code' => '507', "en_name" => "Panama", "continent" => "North America"
+            ),
+            "PG" => array(
+                'code_2chracters' => 'PG', 'code_3chracters' => 'PNG', 'code_numeric' => '598',
+                'isd_phone_code' => '675', "en_name" => "Papua New Guinea", "continent" => "Oceania"
+            ),
+            "PY" => array(
+                'code_2chracters' => 'PY', 'code_3chracters' => 'PRY', 'code_numeric' => '600',
+                'isd_phone_code' => '595', "en_name" => "Paraguay", "continent" => "South America"
+            ),
+            "PE" => array(
+                'code_2chracters' => 'PE', 'code_3chracters' => 'PER', 'code_numeric' => '604',
+                'isd_phone_code' => '51', "en_name" => "Peru", "continent" => "South America"
+            ),
+            "PH" => array(
+                'code_2chracters' => 'PH', 'code_3chracters' => 'PHL', 'code_numeric' => '608',
+                'isd_phone_code' => '63', "en_name" => "Philippines", "continent" => "Asia"
+            ),
+            "PN" => array(
+                'code_2chracters' => 'PN', 'code_3chracters' => 'PCN', 'code_numeric' => '612',
+                'isd_phone_code' => '870', "en_name" => "Pitcairn", "continent" => "Oceania"
+            ),
+            "PL" => array(
+                'code_2chracters' => 'PL', 'code_3chracters' => 'POL', 'code_numeric' => '616',
+                'isd_phone_code' => '48', "en_name" => "Poland", "continent" => "Europe"
+            ),
+            "PT" => array(
+                'code_2chracters' => 'PT', 'code_3chracters' => 'PRT', 'code_numeric' => '620',
+                'isd_phone_code' => '351', "en_name" => "Portugal", "continent" => "Europe"
+            ),
+            "PR" => array(
+                'code_2chracters' => 'PR', 'code_3chracters' => 'PRI', 'code_numeric' => '630',
+                'isd_phone_code' => '1', "en_name" => "Puerto Rico", "continent" => "North America"
+            ),
+            "QA" => array(
+                'code_2chracters' => 'QA', 'code_3chracters' => 'QAT', 'code_numeric' => '634',
+                'isd_phone_code' => '974', "en_name" => "Qatar", "continent" => "Asia"
+            ),
+            "RE" => array(
+                'code_2chracters' => 'RE', 'code_3chracters' => 'REU', 'code_numeric' => '638',
+                'isd_phone_code' => '262', "en_name" => "Reunion", "continent" => "Africa"
+            ),
+            "RO" => array(
+                'code_2chracters' => 'RO', 'code_3chracters' => 'ROU', 'code_numeric' => '642',
+                'isd_phone_code' => '40', "en_name" => "Romania", "continent" => "Europe"
+            ),
+            "RU" => array(
+                'code_2chracters' => 'RU', 'code_3chracters' => 'RUS', 'code_numeric' => '643',
+                'isd_phone_code' => '7', "en_name" => "Russian Federation", "continent" => "Europe"
+            ),
+            "RW" => array(
+                'code_2chracters' => 'RW', 'code_3chracters' => 'RWA', 'code_numeric' => '646',
+                'isd_phone_code' => '250', "en_name" => "Rwanda", "continent" => "Africa"
+            ),
+            "BL" => array(
+                'code_2chracters' => 'BL', 'code_3chracters' => 'BLM', 'code_numeric' => '652',
+                'isd_phone_code' => '590', "en_name" => "Saint Barthélemy", "continent" => "North America"
+            ),
+            "SH" => array(
+                'code_2chracters' => 'SH', 'code_3chracters' => 'SHN', 'code_numeric' => '654',
+                'isd_phone_code' => '290', "en_name" => "Saint Helena", "continent" => "Africa"
+            ),
+            "KN" => array(
+                'code_2chracters' => 'KN', 'code_3chracters' => 'KNA', 'code_numeric' => '659',
+                'isd_phone_code' => '1869', "en_name" => "Saint Kitts and Nevis", "continent" => "North America"
+            ),
+            "LC" => array(
+                'code_2chracters' => 'LC', 'code_3chracters' => 'LCA', 'code_numeric' => '662',
+                'isd_phone_code' => '1758', "en_name" => "Saint Lucia", "continent" => "North America"
+            ),
+            "MF" => array(
+                'code_2chracters' => 'MF', 'code_3chracters' => 'MAF', 'code_numeric' => '663',
+                'isd_phone_code' => '590', "en_name" => "Saint Martin", "continent" => "North America"
+            ),
+            "PM" => array(
+                'code_2chracters' => 'PM', 'code_3chracters' => 'SPM', 'code_numeric' => '666',
+                'isd_phone_code' => '508', "en_name" => "Saint Pierre and Miquelon", "continent" => "North America"
+            ),
+            "VC" => array(
+                'code_2chracters' => 'VC', 'code_3chracters' => 'VCT', 'code_numeric' => '670',
+                'isd_phone_code' => '1784', "en_name" => "Saint Vincent and The Grenadines", "continent" => "North America"
+            ),
+            "WS" => array(
+                'code_2chracters' => 'WS', 'code_3chracters' => 'WSM', 'code_numeric' => '882',
+                'isd_phone_code' => '685', "en_name" => "Samoa", "continent" => "Oceania"
+            ),
+            "SM" => array(
+                'code_2chracters' => 'SM', 'code_3chracters' => 'SMR', 'code_numeric' => '674',
+                'isd_phone_code' => '378', "en_name" => "San Marino", "continent" => "Europe"
+            ),
+            "ST" => array(
+                'code_2chracters' => 'ST', 'code_3chracters' => 'STP', 'code_numeric' => '678',
+                'isd_phone_code' => '239', "en_name" => "Sao Tome and Principe", "continent" => "Africa"
+            ),
+            "SA" => array(
+                'code_2chracters' => 'SA', 'code_3chracters' => 'SAU', 'code_numeric' => '682',
+                'isd_phone_code' => '966', "en_name" => "Saudi Arabia", "continent" => "Asia"
+            ),
+            "SN" => array(
+                'code_2chracters' => 'SN', 'code_3chracters' => 'SEN', 'code_numeric' => '686',
+                'isd_phone_code' => '221', "en_name" => "Senegal", "continent" => "Africa"
+            ),
+            "RS" => array(
+                'code_2chracters' => 'RS', 'code_3chracters' => 'SRB', 'code_numeric' => '688',
+                'isd_phone_code' => '381', "en_name" => "Serbia", "continent" => "Europe"
+            ),
+            "SC" => array(
+                'code_2chracters' => 'SC', 'code_3chracters' => 'SYC', 'code_numeric' => '690',
+                'isd_phone_code' => '248', "en_name" => "Seychelles", "continent" => "Africa"
+            ),
+            "SL" => array(
+                'code_2chracters' => 'SL', 'code_3chracters' => 'SLE', 'code_numeric' => '694',
+                'isd_phone_code' => '232', "en_name" => "Sierra Leone", "continent" => "Africa"
+            ),
+            "SG" => array(
+                'code_2chracters' => 'SG', 'code_3chracters' => 'SGP', 'code_numeric' => '702',
+                'isd_phone_code' => '65', "en_name" => "Singapore", "continent" => "Asia"
+            ),
+            "SX" => array(
+                'code_2chracters' => 'SX', 'code_3chracters' => 'SXM', 'code_numeric' => '534',
+                'isd_phone_code' => '1721', "en_name" => "Sint Maarten", "continent" => "North America"
+            ),
+            "SK" => array(
+                'code_2chracters' => 'SK', 'code_3chracters' => 'SVK', 'code_numeric' => '703',
+                'isd_phone_code' => '421', "en_name" => "Slovakia", "continent" => "Europe"
+            ),
+            "SI" => array(
+                'code_2chracters' => 'SI', 'code_3chracters' => 'SVN', 'code_numeric' => '705',
+                'isd_phone_code' => '386', "en_name" => "Slovenia", "continent" => "Europe"
+            ),
+            "SB" => array(
+                'code_2chracters' => 'SB', 'code_3chracters' => 'SLB', 'code_numeric' => '090',
+                'isd_phone_code' => '677', "en_name" => "Solomon Islands", "continent" => "Oceania"
+            ),
+            "SO" => array(
+                'code_2chracters' => 'SO', 'code_3chracters' => 'SOM', 'code_numeric' => '706',
+                'isd_phone_code' => '252', "en_name" => "Somalia", "continent" => "Africa"
+            ),
+            "ZA" => array(
+                'code_2chracters' => 'ZA', 'code_3chracters' => 'ZAF', 'code_numeric' => '729',
+                'isd_phone_code' => '27', "en_name" => "South Africa", "continent" => "Africa"
+            ),
+            "SS" => array(
+                'code_2chracters' => 'SS', 'code_3chracters' => 'SSD', 'code_numeric' => '710',
+                'isd_phone_code' => '211', "en_name" => "South Sudan", "continent" => "Africa"
+            ),
+            "GS" => array(
+                'code_2chracters' => 'GS', 'code_3chracters' => 'SGS', 'code_numeric' => '239',
+                'isd_phone_code' => '500', "en_name" => "South Georgia and The South Sandwich Islands", "continent" => "Antarctica"
+            ),
+            "ES" => array(
+                'code_2chracters' => 'ES', 'code_3chracters' => 'ESP', 'code_numeric' => '724',
+                'isd_phone_code' => '34', "en_name" => "Spain", "continent" => "Europe"
+            ),
+            "LK" => array(
+                'code_2chracters' => 'LK', 'code_3chracters' => 'LKA', 'code_numeric' => '144',
+                'isd_phone_code' => '94', "en_name" => "Sri Lanka", "continent" => "Asia"
+            ),
+            "SD" => array(
+                'code_2chracters' => 'SD', 'code_3chracters' => 'SDN', 'code_numeric' => '736',
+                'isd_phone_code' => '249', "en_name" => "Sudan", "continent" => "Africa"
+            ),
+            "SR" => array(
+                'code_2chracters' => 'SR', 'code_3chracters' => 'SUR', 'code_numeric' => '740',
+                'isd_phone_code' => '597', "en_name" => "Suriname", "continent" => "South America"
+            ),
+            "SJ" => array(
+                'code_2chracters' => 'SJ', 'code_3chracters' => 'SJM', 'code_numeric' => '744',
+                'isd_phone_code' => '47', "en_name" => "Svalbard and Jan Mayen", "continent" => "Europe"
+            ),
+            "SZ" => array(
+                'code_2chracters' => 'SZ', 'code_3chracters' => 'SWZ', 'code_numeric' => '748',
+                'isd_phone_code' => '268', "en_name" => "Swaziland", "continent" => "Africa"
+            ),
+            "SE" => array(
+                'code_2chracters' => 'SE', 'code_3chracters' => 'SWE', 'code_numeric' => '752',
+                'isd_phone_code' => '46', "en_name" => "Sweden", "continent" => "Europe"
+            ),
+            "CH" => array(
+                'code_2chracters' => 'CH', 'code_3chracters' => 'CHE', 'code_numeric' => '756',
+                'isd_phone_code' => '41', "en_name" => "Switzerland", "continent" => "Europe"
+            ),
+            "SY" => array(
+                'code_2chracters' => 'SY', 'code_3chracters' => 'SYR', 'code_numeric' => '760',
+                'isd_phone_code' => '963', "en_name" => "Syrian Arab Republic", "continent" => "Asia"
+            ),
+            "TW" => array(
+                'code_2chracters' => 'TW', 'code_3chracters' => 'TWN', 'code_numeric' => '158',
+                'isd_phone_code' => '886', "en_name" => "Taiwan, Province of China", "continent" => "Asia"
+            ),
+            "TJ" => array(
+                'code_2chracters' => 'TJ', 'code_3chracters' => 'TJK', 'code_numeric' => '762',
+                'isd_phone_code' => '992', "en_name" => "Tajikistan", "continent" => "Asia"
+            ),
+            "TZ" => array(
+                'code_2chracters' => 'TZ', 'code_3chracters' => 'TZA', 'code_numeric' => '834',
+                'isd_phone_code' => '255', "en_name" => "Tanzania, United Republic of", "continent" => "Africa"
+            ),
+            "TH" => array(
+                'code_2chracters' => 'TH', 'code_3chracters' => 'THA', 'code_numeric' => '764',
+                'isd_phone_code' => '66', "en_name" => "Thailand", "continent" => "Asia"
+            ),
+            "TL" => array(
+                'code_2chracters' => 'TL', 'code_3chracters' => 'TLS', 'code_numeric' => '626',
+                'isd_phone_code' => '670', "en_name" => "Timor-leste", "continent" => "Asia"
+            ),
+            "TG" => array(
+                'code_2chracters' => 'TG', 'code_3chracters' => 'TGO', 'code_numeric' => '768',
+                'isd_phone_code' => '228', "en_name" => "Togo", "continent" => "Africa"
+            ),
+            "TK" => array(
+                'code_2chracters' => 'TK', 'code_3chracters' => 'TKL', 'code_numeric' => '772',
+                'isd_phone_code' => '690', "en_name" => "Tokelau", "continent" => "Oceania"
+            ),
+            "TO" => array(
+                'code_2chracters' => 'TO', 'code_3chracters' => 'TON', 'code_numeric' => '776',
+                'isd_phone_code' => '676', "en_name" => "Tonga", "continent" => "Oceania"
+            ),
+            "TT" => array(
+                'code_2chracters' => 'TT', 'code_3chracters' => 'TTO', 'code_numeric' => '780',
+                'isd_phone_code' => '1868', "en_name" => "Trinidad and Tobago", "continent" => "North America"
+            ),
+            "TN" => array(
+                'code_2chracters' => 'TN', 'code_3chracters' => 'TUN', 'code_numeric' => '788',
+                'isd_phone_code' => '216', "en_name" => "Tunisia", "continent" => "Africa"
+            ),
+            "TR" => array(
+                'code_2chracters' => 'TR', 'code_3chracters' => 'TUR', 'code_numeric' => '792',
+                'isd_phone_code' => '90', "en_name" => "Turkey", "continent" => "Asia"
+            ),
+            "TM" => array(
+                'code_2chracters' => 'TM', 'code_3chracters' => 'TKM', 'code_numeric' => '795',
+                'isd_phone_code' => '993', "en_name" => "Turkmenistan", "continent" => "Asia"
+            ),
+            "TC" => array(
+                'code_2chracters' => 'TC', 'code_3chracters' => 'TCA', 'code_numeric' => '796',
+                'isd_phone_code' => '1649', "en_name" => "Turks and Caicos Islands", "continent" => "North America"
+            ),
+            "TV" => array(
+                'code_2chracters' => 'TV', 'code_3chracters' => 'TUV', 'code_numeric' => '798',
+                'isd_phone_code' => '688', "en_name" => "Tuvalu", "continent" => "Oceania"
+            ),
+            "UG" => array(
+                'code_2chracters' => 'UG', 'code_3chracters' => 'UGA', 'code_numeric' => '800',
+                'isd_phone_code' => '256', "en_name" => "Uganda", "continent" => "Africa"
+            ),
+            "UA" => array(
+                'code_2chracters' => 'UA', 'code_3chracters' => 'UKR', 'code_numeric' => '804',
+                'isd_phone_code' => '380', "en_name" => "Ukraine", "continent" => "Europe"
+            ),
+            "AE" => array(
+                'code_2chracters' => 'AE', 'code_3chracters' => 'ARE', 'code_numeric' => '784',
+                'isd_phone_code' => '971', "en_name" => "United Arab Emirates", "continent" => "Asia"
+            ),
+            "GB" => array(
+                'code_2chracters' => 'GB', 'code_3chracters' => 'GBR', 'code_numeric' => '826',
+                'isd_phone_code' => '44', "en_name" => "United Kingdom", "continent" => "Europe"
+            ),
+            "US" => array(
+                'code_2chracters' => 'US', 'code_3chracters' => 'USA', 'code_numeric' => '840',
+                'isd_phone_code' => '1', "en_name" => "United States", "continent" => "North America"
+            ),
+            "UM" => array(
+                'code_2chracters' => 'UM', 'code_3chracters' => 'UMI', 'code_numeric' => '581',
+                'isd_phone_code' => '1', "en_name" => "United States Minor Outlying Islands", "continent" => "Oceania"
+            ),
+            "UY" => array(
+                'code_2chracters' => 'UY', 'code_3chracters' => 'URY', 'code_numeric' => '858',
+                'isd_phone_code' => '598', "en_name" => "Uruguay", "continent" => "South America"
+            ),
+            "UZ" => array(
+                'code_2chracters' => 'UZ', 'code_3chracters' => 'UZB', 'code_numeric' => '860',
+                'isd_phone_code' => '998', "en_name" => "Uzbekistan", "continent" => "Asia"
+            ),
+            "VU" => array(
+                'code_2chracters' => 'VU', 'code_3chracters' => 'VUT', 'code_numeric' => '548',
+                'isd_phone_code' => '678', "en_name" => "Vanuatu", "continent" => "Oceania"
+            ),
+            "VE" => array(
+                'code_2chracters' => 'VE', 'code_3chracters' => 'VEN', 'code_numeric' => '862',
+                'isd_phone_code' => '58', "en_name" => "Venezuela", "continent" => "South America"
+            ),
+            "VN" => array(
+                'code_2chracters' => 'VN', 'code_3chracters' => 'VNM', 'code_numeric' => '704',
+                'isd_phone_code' => '84', "en_name" => "Vietnam", "continent" => "Asia"
+            ),
+            "VG" => array(
+                'code_2chracters' => 'VG', 'code_3chracters' => 'VGB', 'code_numeric' => '092',
+                'isd_phone_code' => '1284', "en_name" => "Virgin Islands, British", "continent" => "North America"
+            ),
+            "VI" => array(
+                'code_2chracters' => 'VI', 'code_3chracters' => 'VIR', 'code_numeric' => '850',
+                'isd_phone_code' => '1430', "en_name" => "Virgin Islands, U.S.", "continent" => "North America"
+            ),
+            "WF" => array(
+                'code_2chracters' => 'WF', 'code_3chracters' => 'WLF', 'code_numeric' => '876',
+                'isd_phone_code' => '681', "en_name" => "Wallis and Futuna", "continent" => "Oceania"
+            ),
+            "EH" => array(
+                'code_2chracters' => 'EH', 'code_3chracters' => 'ESH', 'code_numeric' => '732',
+                'isd_phone_code' => '212', "en_name" => "Western Sahara", "continent" => "Africa"
+            ),
+            "YE" => array(
+                'code_2chracters' => 'YE', 'code_3chracters' => 'YEM', 'code_numeric' => '887',
+                'isd_phone_code' => '967', "en_name" => "Yemen", "continent" => "Asia"
+            ),
+            "ZM" => array(
+                'code_2chracters' => 'ZM', 'code_3chracters' => 'ZMB', 'code_numeric' => '894',
+                'isd_phone_code' => '260', "en_name" => "Zambia", "continent" => "Africa"
+            ),
+            "ZW" => array(
+                'code_2chracters' => 'ZW', 'code_3chracters' => 'ZWE', 'code_numeric' => '716',
+                'isd_phone_code' => '263', "en_name" => "Zimbabwe", "continent" => "Africa"
+            ),
+            // non iso cuontry
+            "XK" => array(
+                'code_2chracters' => 'XK', 'code_3chracters' => 'KOS', 'code_numeric' => '383',
+                'isd_phone_code' => '383', "en_name" => "Kosovo", "continent" => "Europe",
+            ),
+        );
+
+
+
+        $ar_countries = array(
+            'IS' => 'آيسلندا',
+            'ET' => 'إثيوبيا',
+            'AZ' => 'أذربيجان',
+            'AM' => 'أرمينيا',
+            'AW' => 'أروبا',
+            'ER' => 'إريتريا',
+            'ES' => 'إسبانيا',
+            'AU' => 'أستراليا',
+            'EE' => 'إستونيا',
+            'IL' => 'إسرائيل',
+            'SZ' => 'إسواتيني',
+            'AF' => 'أفغانستان',
+            'PS' => 'الأراضي الفلسطينية',
+            'AR' => 'الأرجنتين',
+            'JO' => 'الأردن',
+            'TF' => 'الأقاليم الجنوبية الفرنسية',
+            'IO' => 'الإقليم البريطاني في المحيط الهندي',
+            'EC' => 'الإكوادور',
+            'AE' => 'الإمارات العربية المتحدة',
+            'AL' => 'ألبانيا',
+            'BH' => 'البحرين',
+            'BR' => 'البرازيل',
+            'PT' => 'البرتغال',
+            'BA' => 'البوسنة والهرسك',
+            'CZ' => 'التشيك',
+            'ME' => 'الجبل الأسود',
+            'DZ' => 'الجزائر',
+            'DK' => 'الدانمرك',
+            'CV' => 'الرأس الأخضر',
+            'SV' => 'السلفادور',
+            'SN' => 'السنغال',
+            'SD' => 'السودان',
+            'SE' => 'السويد',
+            'EH' => 'الصحراء الغربية',
+            'SO' => 'الصومال',
+            'CN' => 'الصين',
+            'IQ' => 'العراق',
+            'GA' => 'الغابون',
+            'VA' => 'الفاتيكان',
+            'PH' => 'الفلبين',
+            'CM' => 'الكاميرون',
+            'CG' => 'الكونغو - برازافيل',
+            'CD' => 'الكونغو - كينشاسا',
+            'KW' => 'الكويت',
+            'DE' => 'ألمانيا',
+            'MA' => 'المغرب',
+            'MX' => 'المكسيك',
+            'SA' => 'المملكة العربية السعودية',
+            'GB' => 'المملكة المتحدة',
+            'NO' => 'النرويج',
+            'AT' => 'النمسا',
+            'NE' => 'النيجر',
+            'IN' => 'الهند',
+            'US' => 'الولايات المتحدة',
+            'JP' => 'اليابان',
+            'YE' => 'اليمن',
+            'GR' => 'اليونان',
+            'AQ' => 'أنتاركتيكا',
+            'AG' => 'أنتيغوا وبربودا',
+            'AD' => 'أندورا',
+            'ID' => 'إندونيسيا',
+            'AO' => 'أنغولا',
+            'AI' => 'أنغويلا',
+            'UY' => 'أوروغواي',
+            'UZ' => 'أوزبكستان',
+            'UG' => 'أوغندا',
+            'UA' => 'أوكرانيا',
+            'IR' => 'إيران',
+            'IE' => 'أيرلندا',
+            'IT' => 'إيطاليا',
+            'PG' => 'بابوا غينيا الجديدة',
+            'PY' => 'باراغواي',
+            'PK' => 'باكستان',
+            'PW' => 'بالاو',
+            'BB' => 'بربادوس',
+            'BM' => 'برمودا',
+            'BN' => 'بروناي',
+            'BE' => 'بلجيكا',
+            'BG' => 'بلغاريا',
+            'BZ' => 'بليز',
+            'BD' => 'بنغلاديش',
+            'PA' => 'بنما',
+            'BJ' => 'بنين',
+            'BT' => 'بوتان',
+            'BW' => 'بوتسوانا',
+            'PR' => 'بورتوريكو',
+            'BF' => 'بوركينا فاسو',
+            'BI' => 'بوروندي',
+            'PL' => 'بولندا',
+            'BO' => 'بوليفيا',
+            'PF' => 'بولينيزيا الفرنسية',
+            'PE' => 'بيرو',
+            'BY' => 'بيلاروس',
+            'TH' => 'تايلاند',
+            'TW' => 'تايوان',
+            'TM' => 'تركمانستان',
+            'TR' => 'تركيا',
+            'TA' => 'تريستان دا كونا',
+            'TT' => 'ترينيداد وتوباغو',
+            'TD' => 'تشاد',
+            'CL' => 'تشيلي',
+            'TZ' => 'تنزانيا',
+            'TG' => 'توغو',
+            'TV' => 'توفالو',
+            'TK' => 'توكيلو',
+            'TN' => 'تونس',
+            'TO' => 'تونغا',
+            'TL' => 'تيمور - ليشتي',
+            'JM' => 'جامايكا',
+            'GI' => 'جبل طارق',
+            'AX' => 'جزر آلاند',
+            'BS' => 'جزر البهاما',
+            'KM' => 'جزر القمر',
+            'IC' => 'جزر الكناري',
+            'MQ' => 'جزر المارتينيك',
+            'MV' => 'جزر المالديف',
+            'UM' => 'جزر الولايات المتحدة النائية',
+            'PN' => 'جزر بيتكيرن',
+            'TC' => 'جزر توركس وكايكوس',
+            'SB' => 'جزر سليمان',
+            'FO' => 'جزر فارو',
+            'FK' => 'جزر فوكلاند',
+            'VG' => 'جزر فيرجن البريطانية',
+            'VI' => 'جزر فيرجن التابعة للولايات المتحدة',
+            'KY' => 'جزر كايمان',
+            'CK' => 'جزر كوك',
+            'CC' => 'جزر كوكوس (كيلينغ)',
+            'MH' => 'جزر مارشال',
+            'MP' => 'جزر ماريانا الشمالية',
+            'WF' => 'جزر والس وفوتونا',
+            'AC' => 'جزيرة أسينشين',
+            'CX' => 'جزيرة كريسماس',
+            'IM' => 'جزيرة مان',
+            'NF' => 'جزيرة نورفولك',
+            'CF' => 'جمهورية أفريقيا الوسطى',
+            'DO' => 'جمهورية الدومينيكان',
+            'ZA' => 'جنوب أفريقيا',
+            'SS' => 'جنوب السودان',
+            'GE' => 'جورجيا',
+            'GS' => 'جورجيا الجنوبية وجزر ساندويتش الجنوبية',
+            'DJ' => 'جيبوتي',
+            'JE' => 'جيرسي',
+            'DM' => 'دومينيكا',
+            'DG' => 'دييغو غارسيا',
+            'RW' => 'رواندا',
+            'RU' => 'روسيا',
+            'RO' => 'رومانيا',
+            'RE' => 'روينيون',
+            'ZM' => 'زامبيا',
+            'ZW' => 'زيمبابوي',
+            'CI' => 'ساحل العاج',
+            'WS' => 'ساموا',
+            'AS' => 'ساموا الأمريكية',
+            'BL' => 'سان بارتليمي',
+            'PM' => 'سان بيير ومكويلون',
+            'MF' => 'سان مارتن',
+            'SM' => 'سان مارينو',
+            'VC' => 'سانت فنسنت وجزر غرينادين',
+            'KN' => 'سانت كيتس ونيفيس',
+            'LC' => 'سانت لوسيا',
+            'SX' => 'سانت مارتن',
+            'SH' => 'سانت هيلينا',
+            'ST' => 'ساو تومي وبرينسيبي',
+            'EA' => 'سبتة ومليلية',
+            'LK' => 'سريلانكا',
+            'SJ' => 'سفالبارد وجان ماين',
+            'SK' => 'سلوفاكيا',
+            'SI' => 'سلوفينيا',
+            'SG' => 'سنغافورة',
+            'SY' => 'سوريا',
+            'SR' => 'سورينام',
+            'CH' => 'سويسرا',
+            'SL' => 'سيراليون',
+            'SC' => 'سيشل',
+            'RS' => 'صربيا',
+            'TJ' => 'طاجيكستان',
+            'OM' => 'عُمان',
+            'GM' => 'غامبيا',
+            'GH' => 'غانا',
+            'GD' => 'غرينادا',
+            'GL' => 'غرينلاند',
+            'GT' => 'غواتيمالا',
+            'GP' => 'غوادلوب',
+            'GU' => 'غوام',
+            'GF' => 'غويانا الفرنسية',
+            'GY' => 'غيانا',
+            'GG' => 'غيرنزي',
+            'GN' => 'غينيا',
+            'GQ' => 'غينيا الاستوائية',
+            'GW' => 'غينيا بيساو',
+            'VU' => 'فانواتو',
+            'FR' => 'فرنسا',
+            'VE' => 'فنزويلا',
+            'FI' => 'فنلندا',
+            'VN' => 'فيتنام',
+            'FJ' => 'فيجي',
+            'CY' => 'قبرص',
+            'QA' => 'قطر',
+            'KG' => 'قيرغيزستان',
+            'KZ' => 'كازاخستان',
+            'NC' => 'كاليدونيا الجديدة',
+            'HR' => 'كرواتيا',
+            'KH' => 'كمبوديا',
+            'CA' => 'كندا',
+            'CU' => 'كوبا',
+            'CW' => 'كوراساو',
+            'KR' => 'كوريا الجنوبية',
+            'KP' => 'كوريا الشمالية',
+            'CR' => 'كوستاريكا',
+            'XK' => 'كوسوفو',
+            'CO' => 'كولومبيا',
+            'KI' => 'كيريباتي',
+            'KE' => 'كينيا',
+            'LV' => 'لاتفيا',
+            'LA' => 'لاوس',
+            'LB' => 'لبنان',
+            'LU' => 'لوكسمبورغ',
+            'LY' => 'ليبيا',
+            'LR' => 'ليبيريا',
+            'LT' => 'ليتوانيا',
+            'LI' => 'ليختنشتاين',
+            'LS' => 'ليسوتو',
+            'MO' => 'ماكاو الصينية (منطقة إدارية خاصة)',
+            'MT' => 'مالطا',
+            'ML' => 'مالي',
+            'MY' => 'ماليزيا',
+            'YT' => 'مايوت',
+            'MG' => 'مدغشقر',
+            'EG' => 'مصر',
+            'MK' => 'مقدونيا',
+            'MW' => 'ملاوي',
+            'MN' => 'منغوليا',
+            'MR' => 'موريتانيا',
+            'MU' => 'موريشيوس',
+            'MZ' => 'موزمبيق',
+            'MD' => 'مولدوفا',
+            'MC' => 'موناكو',
+            'MS' => 'مونتيسيرات',
+            'MM' => 'ميانمار (بورما)',
+            'FM' => 'ميكرونيزيا',
+            'NA' => 'ناميبيا',
+            'NR' => 'ناورو',
+            'NP' => 'نيبال',
+            'NG' => 'نيجيريا',
+            'NI' => 'نيكاراغوا',
+            'NZ' => 'نيوزيلندا',
+            'NU' => 'نيوي',
+            'HT' => 'هايتي',
+            'HN' => 'هندوراس',
+            'HU' => 'هنغاريا',
+            'NL' => 'هولندا',
+            'BQ' => 'هولندا الكاريبية',
+            'HK' => 'هونغ كونغ الصينية (منطقة إدارية خاصة)',
+            'XB' => 'Pseudo-Bidi',
+            'XA' => 'XA',
+        );
+
+
+
+
+
+        /*******************************************************************************************************/
         if (Country::all()->count() >= count($countries)) {
             return false;
         }
+        // -------------------------------------
         $aad_user_id = auth()->user()->id;
         $add_user_name = auth()->user()->user_name;
+        // -------------------------------------
         foreach ($countries as $key => $value) {
-            foreach ($value as $en_name => $ar_name) {
-                $country = new Country;
-                $country->created_by = $aad_user_id;
-                $country->en_name = $en_name;
-                $country->ar_name = $ar_name;
-                $country->save();
+            $country = new Country();
+            $country->created_by_id = $aad_user_id;
+            $country->created_by_name = $add_user_name;
+            // -------------------------------------
+            $country->code_2chracters = $value['code_2chracters'];
+            $country->code_3chracters = $value['code_3chracters'];
+            $country->code_numeric = $value['code_numeric'];
+            $country->isd_phone_code = $value['isd_phone_code'];
+            $country->en_name = $value['en_name'];
+            $country->continent = $value['continent'];
+            // -------------------------------------
+            $code2 = $value['code_2chracters'];
+            $ar_country_name = '';
+            // -------------------------------------
+            foreach ($ar_countries as $ar_key => $ar_value) {
+                if ($code2 == $ar_key) {
+                    $ar_country_name = $ar_value;
+                }
             }
+            $country->ar_name = $ar_country_name;
+            // -------------------------------------
+            $country->save();
         }
+
         return true;
     }
 }

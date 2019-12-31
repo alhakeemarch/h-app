@@ -34,6 +34,10 @@ Route::any('/f', function () {
     // return App\Nationality::all()->count();
     // return (App\Http\Controllers\NationalityController::firstInsertion()) ? App\Nationality::all() : 'some thing is worng';
 
+    // return App\Country::all()->count();
+    // return (App\Http\Controllers\CountryController::firstInsertion()) ? App\Country::all() : 'some thing is worng';
+    // return App\Http\Controllers\CountryController::firstInsertion();
+
     // // // inserts all available Municipality Branchs to db
     // return (App\Http\Controllers\MunicipalityBranchController::firstInsertion()) ? App\MunicipalityBranch::all() : 'some thing is worng';
 

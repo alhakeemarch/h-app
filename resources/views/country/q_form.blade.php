@@ -38,11 +38,8 @@
         {{-- --------------------------------------------------------------------------------------------- --}}
         <div class="col-md">
             <input type="text" name="code_2chracters"
-                class="form-control @error ('code_2chracters') is-invalid @enderror"
-                placeholder="{{ __('code 2 characters') }}.." onfocus="this.placeholder=''"
-                onblur="this.placeholder='{{ __('code 2 characters') }}..'" onkeypress="onlyEnglishString(event)"
-                value="{{ old('code_2chracters') ?? $country->code_2chracters }}" required pattern=".{2,}"
-                title="{{__('minimum 2 letters')}}">
+                class="form-control @error ('code_2chracters') is-invalid @enderror" value="{{ $code_2chracters }}"
+                required readonly>
             @error('code_2chracters')
             <small class="text-danger"> {{$errors->first('code_2chracters')}} </small>
             @enderror

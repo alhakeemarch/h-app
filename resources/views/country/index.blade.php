@@ -13,45 +13,51 @@
         <span class="d-none d-md-inline-block">&nbsp; {{__('add new country')}}</span>
     </a>
 
-    <h1 class="h1"> يفترض يعرض اسماء الدول </h1>
-</div>
-{{-- 
-<div class="card">
-    <h4 class="card-header text-center">
-        List of Customers
-    </h4>
     <table class="table table-hover">
         <thead class="bg-thead">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Customer Name</th>
-                <th scope="col">National ID</th>
-                <th scope="col">Mobile NO</th>
+                <th scope="col">country
+                    <input type="text" id='en_name' name="en_name_input" class="form-control" autocomplete="off"
+                        required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        onkeypress=" onlyEnglishString(event)">
+                </th>
+                <th scope="col">الدولة
+                    <input type="text" id='ar_name' name="ar_name_input" class="form-control" autocomplete="off"
+                        required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        onkeypress=" onlyArabicString(event)">
+                </th>
+                <th scope="col"> code
+                    <input type="text" id='code_2chracters' name="code_2chracters_input" class="form-control"
+                        autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        onkeypress=" onlyCapitalString(event)">
+                </th>
                 <th scope="col">Details</th>
             </tr>
         </thead>
         <tbody>
             @php $i=1 @endphp
-            @foreach ($customers as $customer)
+            @foreach ($countries as $country)
             <tr>
-                <th scope="row">{{$i}}</th>
-<td>{{$customer->ar_name1}} {{$customer->ar_name2}} {{$customer->ar_name3}} {{$customer->ar_name4}}
-    {{$customer->ar_name5}}</td>
-<td>{{$customer->national_id}}</td>
-<td> {{$customer->mobile}}</td>
-<td>
-    <a href="{{ url('/customer/'.$customer->id) }}">
-        <i class="far fa-eye"></i>
-    </a>
-</td>
-</tr>
-@php $i ++ @endphp
-</tr>
-@endforeach
-</tbody>
-</table>
+                <td scope="row">{{$i}}</td>
+                <td scope="row" class="en_name_input">{{$country->en_name}} </td>
+                <td scope="row" class="ar_name_input">{{$country->ar_name}}</td>
+                <td scope="row" class="code_2chracters_input"> {{$country->code_2chracters}}</td>
+                <td scope="row">
+                    <a href="{{ url('/country/'.$country->id) }}">
+                        <i class="far fa-eye"></i>
+                    </a>
+                </td>
+            </tr>
+            @php $i ++ @endphp
+            @endforeach
+        </tbody>
+    </table>
 </div><!-- /End of card  -->
---}}
+
 
 
 

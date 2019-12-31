@@ -1,5 +1,5 @@
 @csrf
-
+<h1 class="h1 text-danger">Gender</h1>
 <div class="card-header text-white bg-dark mb-3">
     {{__('person').' '.__('type')}}:
 </div>

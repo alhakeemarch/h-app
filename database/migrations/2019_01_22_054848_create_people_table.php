@@ -37,6 +37,9 @@ class CreatePeopleTable extends Migration
             $table->string('en_name4')->nullable();
             $table->string('en_name5')->nullable();
             // -----------------------------
+            $table->string('gender')->nullable();
+            $table->string('relational_status')->nullable();
+            // -----------------------------
             $table->string('mobile')->nullable();
             $table->string('phone')->nullable();
             $table->string('phone_extension')->nullable();
