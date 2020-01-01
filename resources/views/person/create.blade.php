@@ -8,7 +8,8 @@
             <div class="card-body">
                 <form action="{{ url('person') }}" method="POST">
                     @csrf
-                    @include('person.q_form')
+                    {{-- @include('person.q_form') --}}
+                    @include('person.form')
                     <button class="btn btn-info btn-block w-75 my-2 mx-auto" type="submit">{{__('submit')}}</button>
                 </form>
                 <!-- ///////////////////////////////-->

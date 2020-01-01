@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use Illuminate\Http\Request;
 use App\Person;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,7 @@ class CustomerController extends PersonController
     public function create(Request $request, Person $customer)
     {
         // return $request;
-        $nationalitiesArr = Nationality::all();
+        $nationalitiesArr = Country::all();
         $national_id = $request->input('national_id');
         return view('/customer/create', [
             'national_id' => $national_id,
@@ -47,7 +48,7 @@ class CustomerController extends PersonController
     {
         // return $request;
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Nationality::where('id', $validatedData['nationaltiy_code'])->first();
+        $nationality = Country::where('code_2chracters', $validatedData['code_2chracters'])->first();
         // dd($nationality);
         if ($nationality) {
             $validatedData->put('nationaltiy_ar', $nationality->ar_name);
@@ -97,7 +98,7 @@ class CustomerController extends PersonController
      */
     public function edit(Person $customer)
     {
-        $nationalitiesArr = Nationality::all();
+        $nationalitiesArr = Country::all();
         return view('customer.edit')->with([
             'customer' => $customer,
             'nationalitiesArr' => $nationalitiesArr,
@@ -118,7 +119,7 @@ class CustomerController extends PersonController
         }
 
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Nationality::where('id', $validatedData['nationaltiy_code'])->first();
+        $nationality = Country::where('code_2chracters', $validatedData['code_2chracters'])->first();
         if ($nationality) {
             $validatedData->put('nationaltiy_ar', $nationality->ar_name);
             $validatedData->put('nationaltiy_en', $nationality->en_name);
