@@ -79,12 +79,7 @@
         btn-block "> <i class="fas fa-pen"></i> Edit</a>
     </div>
     <div class="col-4">
-        <form class="delete" action="{{ route('person.destroy', $person) }}" method="POST">
-            @method('DELETE')
-            @csrf
-            <button class="btn btn-danger btn-lg btn-block" onclick="return confirm('Are you sure?')">
-                <i class="fa fa-trash"></i> Delete</button>
-        </form>
+        @include('person.destroy')
     </div>
 
 </div>

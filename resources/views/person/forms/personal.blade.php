@@ -45,7 +45,7 @@
         <div class="col-md">
             <label for="gender">{{__( 'gender')}}
                 <span class="small text-muted">({{__('optional')}})</span>:</label>
-            <select name="gender" class="form-control @error ('gender') is-invalid @enderror" required>
+            <select name="gender" class="form-control @error ('gender') is-invalid @enderror">
                 <option selected value="">{{__( 'gender')}}..</option>
                 @if (App::isLocale('ar'))
                 <option value="M" @if ($person->gender == 'M') selected @endif>ذكر</option>
@@ -65,8 +65,7 @@
         <div class="col-md">
             <label for="relational_status">{{__( 'relational status')}}
                 <span class="small text-muted">({{__('optional')}})</span>:</label>
-            <select name="relational_status" class="form-control @error ('relational_status') is-invalid @enderror"
-                required>
+            <select name="relational_status" class="form-control @error ('relational_status') is-invalid @enderror">
                 <option selected value="">{{__( 'relational status')}}..</option>
                 @if (App::isLocale('ar'))
                 <option value="M" @if ($person->relational_status == 'M') selected @endif>متزوج</option>

@@ -2,7 +2,7 @@
 <div class="card-header text-white bg-dark mb-3">
     Identity Information:
 </div>
-<div class="form-group">
+<div class="form-group row">
     @php $national_id = $national_id ?? $person->national_id; @endphp
 
     @if (substr($national_id,0,1)=='1')
@@ -68,8 +68,6 @@
 {{-- START: of Non Sudi ID info --}}
 <div class="form-row mb-3">
     {{-- --------------------------------------------------------------------------------------------- --}}
-
-    {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
         <label for="fname">{{__( 'Muqeem ID Issue Date')}}
             <span class="small text-muted">({{__('optional')}})</span> :</label>
@@ -114,4 +112,3 @@
     {{-- --------------------------------------------------------------------------------------------- --}}
 </div>{{-- END: of Non Sudi ID info --}}
 @endif
-</div>

@@ -6,12 +6,10 @@
     <h5 class="card-header">{{ __('Edit a persone') }}</h5>
     <div class="card-body">
         <form action="{{ route ('person.update',$person) }}" method="POST">
-
             @method('PUT')
             @csrf
-            @include('person.form')
+            @include('person.forms.form')
             <div class="row">
-
                 <div class="col-6">
                     <button type="submet" name="submet" id="submet" class="btn btn-info btn-block">Update</button>
                 </div>

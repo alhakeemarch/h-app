@@ -10,7 +10,7 @@
             <h5 class="card-header">{{ __('Registration') }} of {{__('customer')}} 2/2</h5>
             <div class="card-body">
                 <form action="{{ url('customer') }}" method="POST">
-                    @include('person.form')
+                    @include('person.forms.q_form')
                     <button class="btn btn-info btn-block w-75 my-2 mx-auto" type="submit">{{__('submit')}}</button>
                 </form>
                 <!-- ///////////////////////////////-->

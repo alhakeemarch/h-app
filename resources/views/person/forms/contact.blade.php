@@ -1,7 +1,7 @@
 <div class="card-header text-white bg-dark mb-3">
     Contact Information:
 </div>
-<div class="row">
+<div class="form-group row">
     <div class="col-md">
         <label for="email">{{__( 'email')}} <span class="small text-muted">({{__('optional')}})</span>
             :</label>
