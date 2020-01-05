@@ -46,7 +46,7 @@ class RegisterController extends Controller
             return redirect('register')->withErrors(['unauthorised access - just for employees']);
         }
         if (($found_person->id != $request->id) || ($found_person->national_id != $request->national_id) || ($found_person->email != $request->email)) {
-            
+
             return redirect()->back()->withErrors(['Data mismatch - try again or contact the system administrator']);
         }
 
@@ -60,10 +60,10 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        event(new Registered($user = $this->create($request->all())));
+        event(new Registered($user = $this->create($validatedData)));
         $this->guard()->login($user);
         return $this->registered($request, $user)
-            ? : redirect($this->redirectPath());
+            ?: redirect($this->redirectPath());
     }
 
     // protected function registered(Request $request, $user)
@@ -89,7 +89,7 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    
+
     // not used fa
     /**
      * Get a validator for an incoming registration request.
@@ -107,7 +107,7 @@ class RegisterController extends Controller
         ]);
     }
 
-    
+
 
     // edited by fa
     /**
@@ -120,8 +120,8 @@ class RegisterController extends Controller
     {
         // dd($data);
         return User::create([
-            'person_id' => (int)$data['id'],
-            'national_id' => (int)$data['national_id'],
+            'person_id' => (int) $data['id'],
+            'national_id' => (int) $data['national_id'],
             'name' => $data['the_name'],
             // 'user_name' => $data['user_name'],
             'user_name' => Str::lower($data['user_name']),
@@ -130,7 +130,7 @@ class RegisterController extends Controller
         ]);
     }
 
-// byme
+    // byme
     public function userRegister(Request $request, Person $person, User $user)
     {
         if ($request->method() === "GET") {
@@ -148,7 +148,7 @@ class RegisterController extends Controller
         }
 
         $found_person = $person->where('national_id', $request->national_id)->first();
-        
+
         if ($found_person) {
             if (!$found_person->is_employee) {
                 return redirect('register')->withErrors(['unauthorised access - just for employees']);
@@ -158,7 +158,4 @@ class RegisterController extends Controller
             return redirect('register')->withErrors(['contact the system administrator to register the initial data first']);
         }
     }
-
-
-
 }
