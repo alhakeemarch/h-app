@@ -39,6 +39,7 @@ class CreatePeopleTable extends Migration
             // -----------------------------
             $table->string('gender')->nullable();
             $table->string('relational_status')->nullable();
+            $table->string('religion')->nullable();
             // -----------------------------
             $table->string('nationaltiy_code')->nullable();
             $table->string('nationaltiy_ar')->nullable();
@@ -51,8 +52,8 @@ class CreatePeopleTable extends Migration
             // -----------------------------
             $table->string('pasport_no')->nullable();
             $table->date('pasport_issue_date')->nullable();
-            $table->date('pasport_id_expire_date')->nullable();
-            $table->string('pasport_id_issue_place')->nullable();
+            $table->date('pasport_expire_date')->nullable();
+            $table->string('pasport_issue_place')->nullable();
             // -----------------------------
             $table->date('ah_birth_date')->nullable();
             $table->date('ad_birth_date')->nullable();

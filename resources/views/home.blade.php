@@ -8,7 +8,7 @@
     </h2>
     <div class="card-body">
         @php
-        $user = Auth::user()->first();
+        $user = Auth::user();
         $obj = json_decode($user, TRUE);
         @endphp
         <ul class="">

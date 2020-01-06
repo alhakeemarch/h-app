@@ -1,10 +1,10 @@
-{{-- START: ID Information --}}
 <div class="card-header text-white bg-dark mb-3">
-    Nationaltiy Information:
+    nationaltiy information:
 </div>
-<div class="row">
-    @php $national_id = $national_id ?? $person->national_id; @endphp
 
+@php $national_id = $national_id ?? $person->national_id; @endphp
+
+<div class="row">
     @if (substr($national_id,0,1)=='1')
     {{-- START: of Sudi ID info --}}
     {{-- --------------------------------------------------------------------------------------------- --}}
@@ -23,7 +23,12 @@
             :</label>
         <input type="hidden" name="nationaltiy_code" value="SA">
         <input type="text" class="form-control mb-3 @error ('nationaltiy_code') is-invalid @enderror"
-            value="{{ $person->national_id ?? 'Saudi Arabia'}}" readonly required>
+            {{-- ..................................................................................... --}}
+            @if(App::isLocale('ar')) value="{{ $person->nationaltiy_ar ?? 'Saudi Arabia'}}"
+            {{-- ..................................................................................... --}} @else
+            value="{{ $person->nationaltiy_en ?? 'Saudi Arabia'}}"
+            {{-- ..................................................................................... --}} @endif
+            readonly required>
         @error('nationaltiy_code')
         <small class="text-danger"> {{$errors->first('nationaltiy_code')}} </small>
         @enderror
