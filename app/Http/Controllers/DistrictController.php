@@ -409,15 +409,15 @@ class DistrictController extends Controller
             return false;
         }
 
-        $aad_user_id = auth()->user()->id;
-        $add_user_name = auth()->user()->user_name;
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
         $all_municipality_branchs = MunicipalityBranch::all();
 
         foreach ($all_districts as $district) {
             $a_district = new District();
 
-            $a_district->aad_user_id = $aad_user_id;
-            $a_district->add_user_name = $add_user_name;
+            $a_district->created_by_id = $created_by_id;
+            $a_district->created_by_name = $created_by_name;
             $municipality_branche_id = '';
             $municipality_branche_ar_name = '';
             $municipality_branche_en_name = '';

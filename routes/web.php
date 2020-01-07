@@ -31,7 +31,7 @@ Route::get('/', function () {
 
 Route::any('/f', function () {
     // // // inserts all available countries to db
-    return (App\Http\Controllers\CountryController::firstInsertion()) ? App\Country::all() : 'some thing is worng';
+    // return (App\Http\Controllers\CountryController::firstInsertion()) ? App\Country::all() : 'some thing is worng';
 
     // // // inserts all available Municipality Branchs to db
     // return (App\Http\Controllers\MunicipalityBranchController::firstInsertion()) ? App\MunicipalityBranch::all() : 'some thing is worng';
@@ -63,6 +63,9 @@ Route::any('/f', function () {
     // // // inserts all OwnerTypes to db
     // return (App\Http\Controllers\OwnerTypeController::firstInsertion()) ? App\OwnerType::all() : 'some thing is worng';
 
+    // // // inserts all Majors to db
+    // return (App\Http\Controllers\MajorController::firstInsertion()) ? App\Major::all() : 'some thing is worng';
+
     // Artisan::call('migrate:fresh');
     // Artisan::call('cache:clear');
     // return makeUser('admin');
@@ -71,7 +74,7 @@ Route::any('/f', function () {
     # الفاكتوري يحتاج إعادة بعد تعديل حقول الجدول
     // factory(\App\Plot::class, 100)->create();
 
-
+    return ' whaaaat !!!';
 
     ########################################################################################################################
     // dd(scandir('D:/privet'));
@@ -320,6 +323,7 @@ function makeUser($user)
     $person = Person::where('national_id', $the_person['national_id'])->first();
 
     $person->user()->create(array_merge($fromPerson, $the_user));
+    return $person;
     // return redirect('/');
     return 'user created';
 }

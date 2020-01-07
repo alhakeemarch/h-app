@@ -125,8 +125,8 @@ class MunicipalityBranchController extends Controller
 
     public static function firstInsertion()
     {
-        $aad_user_id = auth()->user()->id;
-        $add_user_name = auth()->user()->user_name;
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
 
         $all_municipality_branchs = [
             [
@@ -361,8 +361,8 @@ class MunicipalityBranchController extends Controller
 
         foreach ($all_municipality_branchs as $key => $a_branch) {
             $municipalityBranch = new MunicipalityBranch();
-            $municipalityBranch->aad_user_id = $aad_user_id;
-            $municipalityBranch->add_user_name = $add_user_name;
+            $municipalityBranch->created_by_id = $created_by_id;
+            $municipalityBranch->created_by_name = $created_by_name;
             foreach ($a_branch as $key => $value) {
                 if ($value) {
                     $municipalityBranch->$key =  $value;

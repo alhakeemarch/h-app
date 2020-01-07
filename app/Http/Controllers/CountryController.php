@@ -1413,13 +1413,13 @@ class CountryController extends Controller
             return false;
         }
         // -------------------------------------
-        $aad_user_id = auth()->user()->id;
-        $add_user_name = auth()->user()->user_name;
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
         // -------------------------------------
         foreach ($countries as $key => $value) {
             $country = new Country();
-            $country->created_by_id = $aad_user_id;
-            $country->created_by_name = $add_user_name;
+            $country->created_by_id = $created_by_id;
+            $country->created_by_name = $created_by_name;
             // -------------------------------------
             $country->code_2chracters = $value['code_2chracters'];
             $country->code_3chracters = $value['code_3chracters'];

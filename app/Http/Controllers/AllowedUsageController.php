@@ -104,9 +104,13 @@ class AllowedUsageController extends Controller
         if (AllowedUsage::all()->count() >= count($usages)) {
             return false;
         }
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->name;
         foreach ($usages as $key => $value) {
             $allowedUsage = new AllowedUsage();
             $allowedUsage->usage = $value;
+            $allowedUsage->created_by_id = $created_by_id;
+            $allowedUsage->created_by_name = $created_by_name;
             $allowedUsage->save();
         }
         return true;

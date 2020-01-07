@@ -137,9 +137,14 @@ class AllowedBuildingHeightController extends Controller
         if (AllowedBuildingHeight::all()->count() >= count($buildingHeights)) {
             return false;
         }
+
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->name;
         foreach ($buildingHeights as $key => $value) {
             $allowedbuildingHeight = new AllowedBuildingHeight();
             $allowedbuildingHeight->building_Height = $value;
+            $allowedbuildingHeight->created_by_id = $created_by_id;
+            $allowedbuildingHeight->created_by_name = $created_by_name;
             $allowedbuildingHeight->save();
         }
         return true;

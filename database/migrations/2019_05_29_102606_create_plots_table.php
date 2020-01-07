@@ -16,11 +16,7 @@ class CreatePlotsTable extends Migration
         Schema::create('plots', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('project_id')->references('id')->on('projects')->nullable();
-            // -----------------------------
-            $table->bigInteger('created_by_id')->references('id')->on('users');
-            $table->string('created_by_name')->references('user_name')->on('users');
-            $table->bigInteger('last_edit_by_id')->references('id')->on('users')->nullable();
-            $table->string('last_edit_by_name')->references('user_name')->on('users')->nullable();
+
             // -----------------------------
             $table->string('deed_no')->unique();
             $table->date('deed_date')->nullable();
@@ -73,7 +69,14 @@ class CreatePlotsTable extends Migration
 
 
             // =============================
+            // -----------------------------
             $table->longText('notes')->nullable();
+            $table->longText('private_notes')->nullable();
+            // -----------------------------
+            $table->bigInteger('created_by_id')->references('id')->on('users');
+            $table->string('created_by_name')->references('user_name')->on('users');
+            $table->bigInteger('last_edit_by_id')->references('id')->on('users')->nullable();
+            $table->string('last_edit_by_name')->references('user_name')->on('users')->nullable();
             // -----------------------------
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

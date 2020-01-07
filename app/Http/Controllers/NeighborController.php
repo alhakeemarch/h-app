@@ -217,8 +217,8 @@ class NeighborController extends Controller
             return false;
         }
 
-        $aad_user_id = auth()->user()->id;
-        $add_user_name = auth()->user()->user_name;
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
         $all_municipality_branchs = MunicipalityBranch::all();
         $all_districts = District::all();
 
@@ -226,8 +226,8 @@ class NeighborController extends Controller
 
             $new_neighbor = new Neighbor();
 
-            $new_neighbor->aad_user_id = $aad_user_id;
-            $new_neighbor->add_user_name = $add_user_name;
+            $new_neighbor->created_by_id = $created_by_id;
+            $new_neighbor->created_by_name = $created_by_name;
             // -------------
             $municipality_branche_id = '';
             $municipality_branche_ar_name = '';

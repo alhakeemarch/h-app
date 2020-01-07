@@ -17,16 +17,24 @@ class CreateMunicipalityBranchesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('code')->nullable();
 
-            $table->bigInteger('aad_user_id');
-            $table->string('add_user_name');
-            $table->bigInteger('last_edit_user_id')->nullable();
-            $table->string('last_edit_user_name')->nullable();
 
             $table->string('en_name');
             $table->string('ar_name');
             $table->string('area')->nullable();
             $table->bigInteger('mi_prinx')->nullable();
 
+
+
+            // =============================
+            // -----------------------------
+            $table->longText('notes')->nullable();
+            $table->longText('private_notes')->nullable();
+            // -----------------------------
+            $table->bigInteger('created_by_id')->references('id')->on('users');
+            $table->string('created_by_name')->references('user_name')->on('users');
+            $table->bigInteger('last_edit_by_id')->references('id')->on('users')->nullable();
+            $table->string('last_edit_by_name')->references('user_name')->on('users')->nullable();
+            // -----------------------------
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

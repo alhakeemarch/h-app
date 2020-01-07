@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\Major;
 use App\Person;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -46,12 +47,14 @@ class PersonController extends Controller
     {
 
         $countries = Country::all();
+        $majors = Major::all();
         // return $countries;
         $national_id = $request->input('national_id');
         return view('/person/create', [
             'national_id' => $national_id,
             'countries' => $countries,
-            'person' => $person
+            'person' => $person,
+            'majors' => $majors,
         ]);
     }
 
@@ -107,9 +110,11 @@ class PersonController extends Controller
     public function edit(Person $person)
     {
         $countries = Country::all();
+        $majors = Major::all();
         return view('person.edit')->with([
             'person' => $person,
             'countries' => $countries,
+            'majors' => $majors,
         ]);
     }
 

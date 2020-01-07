@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             // -----------------------------
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_manager')->default(false);
+            $table->boolean('is_active')->default(true);
             // -----------------------------
             $table->string('name');
             $table->string('user_name')->unique();

@@ -104,10 +104,14 @@ class OwnerTypeController extends Controller
         if (OwnerType::all()->count() >= count($ownerTypes)) {
             return false;
         }
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->name;
         foreach ($ownerTypes as $key => $value) {
             $ownerType = new OwnerType();
             $ownerType->type_en = $key;
             $ownerType->type_ar = $value;
+            $ownerType->created_by_id = $created_by_id;
+            $ownerType->created_by_name = $created_by_name;
             $ownerType->save();
         }
         return true;

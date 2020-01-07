@@ -994,16 +994,16 @@ public static function firstInsertion()
             return false;
         }
 
-        $aad_user_id = auth()->user()->id;
-        $add_user_name = auth()->user()->user_name;
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
         
 
         foreach ($all_plans as $plan) {
 
             $new_plan = new Plan();
 
-            $new_plan->aad_user_id = $aad_user_id;
-            $new_plan->add_user_name = $add_user_name;
+            $new_plan->created_by_id = $created_by_id;
+            $new_plan->created_by_name = $created_by_name;
     
             foreach ($plan as $key => $value) {
                 if ($value) {

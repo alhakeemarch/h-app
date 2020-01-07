@@ -88,14 +88,17 @@ class MajorController extends Controller
         /*******************************************************************************************************
          *      1) key = name_en
          *      2) value = name_en
+         *      https://langvara.com/ar/%D8%A3%D8%B3%D9%85%D8%A7%D8%A1-%D8%A7%D9%84%D9%85%D9%87%D9%86-%D9%88%D8%AA%D8%B1%D8%AC%D9%85%D8%AA%D9%87%D8%A7-%D8%A5%D9%84%D9%89-%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%D8%A9/
          *******************************************************************************************************/
         $majors = array(
-            '' => 'هندسة معمارية',
-            '' => 'هندسة تخطيط',
-            '' => 'هندسة مدنية',
-            '' => 'هندسة ميكانيكية',
-            '' => 'هندسة كهربائية',
-            '' => '',
+            'architecture engineering' => 'هندسة معمارية',
+            'landscape engineering' => 'هندسة تخطيط',
+            'structure engineering' => 'هندسة مدنية',
+            'mechanical engineering' => 'هندسة ميكانيكية',
+            'electrical engineering' => 'هندسة كهربائية',
+            'land survey' => 'مساحة',
+            'architecture draftsman' => 'الرسم المعماري',
+            'building technician' => 'فني أبنية - مراقب أبنية',
         );
 
         /*******************************************************************************************************/
@@ -104,16 +107,16 @@ class MajorController extends Controller
         }
 
         // -------------------------------------
-        $aad_user_id = auth()->user()->id;
-        $add_user_name = auth()->user()->user_name;
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
         // -------------------------------------
         foreach ($majors as $key => $value) {
             $major = new Major();
-            $major->created_by_id = $aad_user_id;
-            $major->created_by_name = $add_user_name;
+            $major->created_by_id = $created_by_id;
+            $major->created_by_name = $created_by_name;
             // -------------------------------------
-            $major->name_en = $key;
-            $major->name_ar = $value;
+            $major->major_en = $key;
+            $major->major_ar = $value;
             // -------------------------------------
             $major->save();
         }

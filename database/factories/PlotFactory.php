@@ -17,8 +17,8 @@ $factory->define(App\Plot::class, function (Faker $faker) {
 
     return [
 
-        'aad_user_id' => $user->id,
-        'add_user_name' => $user->user_name,
+        'created_by_id' => $user->id,
+        'created_by_name' => $user->user_name,
         'last_edit_user_id' => null,
         'last_edit_user_name' => null,
         'deed_no' => function () {
@@ -28,7 +28,7 @@ $factory->define(App\Plot::class, function (Faker $faker) {
         'plot_no' => function () {
             return rand(12, 386);
         },
-        
+
         'area' => function () {
             return rand(600, 900);
         },

@@ -104,9 +104,13 @@ class AllowedBuildingRatioController extends Controller
         if (AllowedBuildingRatio::all()->count() >= count($buildingRatios)) {
             return false;
         }
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->name;
         foreach ($buildingRatios as $key => $value) {
             $allowedbuildingRatio = new AllowedBuildingRatio();
             $allowedbuildingRatio->building_ratio = $value;
+            $allowedbuildingRatio->created_by_id = $created_by_id;
+            $allowedbuildingRatio->created_by_name = $created_by_name;
             $allowedbuildingRatio->save();
         }
         return true;

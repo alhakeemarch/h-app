@@ -87,12 +87,12 @@ class PlotController extends Controller
     {
         // return $request->all();
         $validatedData = $this->validatePlot($request);
-        $aad_user_id = auth()->user()->id;
-        $add_user_name = auth()->user()->user_name;
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
 
         $addby = [
-            'aad_user_id' =>  $aad_user_id,
-            'add_user_name' => $add_user_name
+            'created_by_id' =>  $created_by_id,
+            'created_by_name' => $created_by_name
         ];
 
         $validatedData = array_merge($validatedData, $addby);

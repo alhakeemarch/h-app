@@ -19,11 +19,6 @@ class CreateProjectsTable extends Migration
             $table->bigInteger('project_no');
             $table->bigInteger('project_name')->nullable();
             // -----------------------------
-            $table->bigInteger('created_by_id'); // من أضاف المشروع على النظام
-            $table->string('created_by_user'); // من أضاف المشروع على النظام
-            $table->bigInteger('last_edit_by_id')->nullable(); // من قام بتعديل بيانات المشروع على النظام
-            $table->string('last_edit_by_user')->nullable(); // من قام بتعديل بيانات المشروع على النظام
-            // -----------------------------
             $table->bigInteger('owner_id');
             $table->bigInteger('owner_national_id');
             $table->string('owner_type'); // فرد - شركة - ورثة - وقف - جهة 
@@ -106,13 +101,6 @@ class CreateProjectsTable extends Migration
             $table->bigInteger('total_project_cost')->nullable();
 
 
-
-
-
-
-            // -----------------------------
-            $table->text('general_notes')->nullable();
-
             // -----------------------------
             $table->bigInteger('municipality_branche_id');
             $table->bigInteger('neighbor_id');
@@ -123,13 +111,18 @@ class CreateProjectsTable extends Migration
             $table->bigInteger('plot_no');
             $table->bigInteger('deed_id');
             $table->bigInteger('deed_no');
-
-
-
-
-
             $table->string('total_area')->nullable();
 
+
+            // =============================
+            // -----------------------------
+            $table->longText('notes')->nullable();
+            $table->longText('private_notes')->nullable();
+            // -----------------------------
+            $table->bigInteger('created_by_id')->references('id')->on('users');
+            $table->string('created_by_name')->references('user_name')->on('users');
+            $table->bigInteger('last_edit_by_id')->references('id')->on('users')->nullable();
+            $table->string('last_edit_by_name')->references('user_name')->on('users')->nullable();
             // -----------------------------
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
