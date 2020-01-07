@@ -40,6 +40,7 @@ class CreatePeopleTable extends Migration
             $table->string('gender')->nullable();
             $table->string('relational_status')->nullable();
             $table->string('religion')->nullable();
+            $table->string('prefer_language')->nullable();
             // -----------------------------
             $table->string('nationaltiy_code')->nullable();
             $table->string('nationaltiy_ar')->nullable();
@@ -66,17 +67,24 @@ class CreatePeopleTable extends Migration
             $table->date('ad_hiring_date')->nullable();
             $table->string('hiring_day')->nullable();
             // -----------------------------
-            $table->string('employee_no')->nullable();
+            $table->string('employment_no')->nullable();
             $table->string('fingerprint_no')->nullable();
             // -----------------------------
-            $table->string('Degree')->nullable();
-            $table->string('specialization')->nullable();
+            $table->string('degree')->nullable();
+            $table->string('major_id')->nullable()->references('id')->on('mager');
+            $table->string('graduated_from')->nullable();
+            $table->string('college_name')->nullable();
+            $table->string('graduation_year')->nullable();
+            $table->string('graduation_points')->nullable();
+            $table->string('graduation_points_of')->nullable();
+            $table->string('graduation_grade')->nullable();
             $table->string('id_job_title')->nullable();
             $table->string('job_title')->nullable();
             $table->string('division')->nullable();
             $table->string('current_project')->nullable();
             // -----------------------------
             $table->string('SCE_membership_no')->nullable(); // Saudi Council of Engineers الهيئة السعودية للمهندسين
+            $table->date('SCE_membership_grade')->nullable();
             $table->date('SCE_membership_expire_date')->nullable();
             // -----------------------------
             $table->string('mobile')->nullable();

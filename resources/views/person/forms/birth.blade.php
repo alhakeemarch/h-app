@@ -4,7 +4,7 @@
 <div class="form-group row mb-3">
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
-        <label for="ah_birth_date">{{__( 'Hijri Birth Date')}}
+        <label for="ah_birth_date">{{__( 'hijri birth date')}}
             <span class="small text-muted">({{__('optional')}})</span>
             :</label>
         <input type="text" name="ah_birth_date" class="form-control mb-3 @error ('ah_birth_date') is-invalid @enderror"
@@ -17,7 +17,7 @@
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
-        <label for="ad_birth_date">{{__( 'Gregorian Birth Date')}}
+        <label for="ad_birth_date">{{__( 'gregorian birth date')}}
             <span class="small text-muted">({{__('optional')}})</span> :</label>
         <input type="text" name="ad_birth_date" class="form-control mb-3 @error ('ad_birth_date') is-invalid @enderror"
             placeholder="{{__( 'dd/mm/yyyy')}}.." onfocus="this.placeholder=''"
@@ -29,7 +29,7 @@
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
-        <label for="birth_place">{{__( 'Birth Place')}}
+        <label for="birth_place">{{__( 'birth place')}}
             <span class="small text-muted">({{__('optional')}})</span>:</label>
 
         <select name="birth_place" class="form-control @error ('birth_place') is-invalid @enderror" required>

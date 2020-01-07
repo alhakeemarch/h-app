@@ -82,4 +82,42 @@ class MajorController extends Controller
     {
         //
     }
+
+    public static function firstInsertion()
+    {
+        /*******************************************************************************************************
+         *      1) key = name_en
+         *      2) value = name_en
+         *******************************************************************************************************/
+        $majors = array(
+            '' => 'هندسة معمارية',
+            '' => 'هندسة تخطيط',
+            '' => 'هندسة مدنية',
+            '' => 'هندسة ميكانيكية',
+            '' => 'هندسة كهربائية',
+            '' => '',
+        );
+
+        /*******************************************************************************************************/
+        if (Major::all()->count() >= count($majors)) {
+            return false;
+        }
+
+        // -------------------------------------
+        $aad_user_id = auth()->user()->id;
+        $add_user_name = auth()->user()->user_name;
+        // -------------------------------------
+        foreach ($majors as $key => $value) {
+            $major = new Major();
+            $major->created_by_id = $aad_user_id;
+            $major->created_by_name = $add_user_name;
+            // -------------------------------------
+            $major->name_en = $key;
+            $major->name_ar = $value;
+            // -------------------------------------
+            $major->save();
+        }
+
+        return true;
+    }
 }

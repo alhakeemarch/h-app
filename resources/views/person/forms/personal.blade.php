@@ -67,4 +67,22 @@
         @enderror
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
+    <div class="col-md">
+        <label for="prefer_language">{{__( 'prefer_language')}}
+            <span class="small text-muted">({{__('optional')}})</span>:</label>
+        <select name="prefer_language" class="form-control @error ('prefer_language') is-invalid @enderror">
+            <option selected value="">{{__( 'prefer_language')}}..</option>
+            @if (App::isLocale('ar'))
+            <option value="AR" @if ($person->prefer_language == 'AR') selected @endif>عربي</option>
+            <option value="EN" @if ($person->prefer_language == 'EN') selected @endif>انجليزي</option>
+            @else
+            <option value="AR" @if ($person->prefer_language == 'AR') selected @endif>Arabic</option>
+            <option value="EN" @if ($person->prefer_language == 'EN') selected @endif>English</option>
+            @endif
+        </select>
+        @error('prefer_language')
+        <small class=" text-danger"> {{$errors->first('prefer_language')}} </small>
+        @enderror
+    </div>
+    {{-- --------------------------------------------------------------------------------------------- --}}
 </div>
