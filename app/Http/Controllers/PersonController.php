@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\GradeRank;
 use App\Major;
 use App\Person;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,7 @@ class PersonController extends Controller
 
         $countries = Country::all();
         $majors = Major::all();
+        $gread_ranks = GradeRank::all();
         // return $countries;
         $national_id = $request->input('national_id');
         return view('/person/create', [
@@ -55,6 +57,7 @@ class PersonController extends Controller
             'countries' => $countries,
             'person' => $person,
             'majors' => $majors,
+            'gread_ranks' => $gread_ranks,
         ]);
     }
 
@@ -111,10 +114,12 @@ class PersonController extends Controller
     {
         $countries = Country::all();
         $majors = Major::all();
+        $gread_ranks = GradeRank::all();
         return view('person.edit')->with([
             'person' => $person,
             'countries' => $countries,
             'majors' => $majors,
+            'gread_ranks' => $gread_ranks,
         ]);
     }
 

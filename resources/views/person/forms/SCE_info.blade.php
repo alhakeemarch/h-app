@@ -1,21 +1,15 @@
 <div class="card-header text-white bg-dark mb-3">
-    profition information:
+    saudi council of engineers information:
 </div>
 <div>
-    graduation_points
-    graduation_points_of
-    graduation_grade
-    id_job_title
-    job_title
-    division
-    current_project
 
+    {{-- 
     SCE_membership_no // Saudi Council of Engineers الهيئة السعودية للمهندسين
     SCE_membership_grade
-    SCE_membership_expire_date
+    SCE_membership_expire_date --}}
 </div>
 
-
+<!--
 <div class="form-group row mb-3">
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
@@ -78,6 +72,9 @@
         @enderror
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
+</div>
+<div class="form-group row mb-3">
+    {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
         <label for="graduated_from">{{__( 'university, institute or school name')}}
             <span class="small text-muted">({{__('optional')}})</span>
@@ -120,67 +117,64 @@
         <small class=" text-danger"> {{$errors->first('graduation_year')}} </small>
         @enderror
     </div>
-    {{-- --------------------------------------------------------------------------------------------- --}}
-    {{-- <div class="col-md">
-        <label for="ad_hiring_date">{{__( 'gregorian hiring date')}}
-    <span class="small text-muted">({{__('optional')}})</span> :</label>
-    <input type="text" name="ad_hiring_date" class="form-control mb-3 @error ('ad_hiring_date') is-invalid @enderror"
-        placeholder="{{__( 'dd/mm/yyyy')}}.." onfocus="this.placeholder=''"
-        onblur="this.placeholder='{{__( 'dd/mm/yyyy')}}..'"
-        value="{{ old('ad_hiring_date') ?? $person->ad_hiring_date }}" pattern="\d{1,2}/\d{1,2}/\d{4}">
-    @error('ad_hiring_date')
-    <small class=" text-danger"> {{$errors->first('ad_hiring_date')}} </small>
-    @enderror
-</div> --}}
-{{-- --------------------------------------------------------------------------------------------- --}}
-{{-- <div class="col-md">
-        <label for="hiring_day">{{__( 'hiring day')}}
-<span class="small text-muted">({{__('optional')}})</span>:</label>
-<select name="hiring_day" class="form-control @error ('hiring_day') is-invalid @enderror">
-    <option selected value="">{{__( 'hiring day')}}..</option>
-    @if (App::isLocale('ar'))
-    <option value="sunday" @if ($person->hiring_day == 'sunday') selected @endif>الاحد</option>
-    <option value="monday" @if ($person->hiring_day == 'monday') selected @endif>الاثنين</option>
-    <option value="tuesday" @if ($person->hiring_day == 'tuesday') selected @endif>الثلاثاء</option>
-    <option value="wednesday" @if ($person->hiring_day == 'wednesday') selected @endif>الاربعاء</option>
-    <option value="thursday" @if ($person->hiring_day == 'thursday') selected @endif>الخميس</option>
-    <option value="friday" @if ($person->hiring_day == 'friday') selected @endif>الجمعة</option>
-    <option value="saturday" @if ($person->hiring_day == 'saturday') selected @endif>السبت</option>
-    @else
-    <option value="sunday" @if ($person->hiring_day == 'sunday') selected @endif>Sunday</option>
-    <option value="monday" @if ($person->hiring_day == 'monday') selected @endif>Monday</option>
-    <option value="tuesday" @if ($person->hiring_day == 'tuesday') selected @endif>Tuesday</option>
-    <option value="wednesday" @if ($person->hiring_day == 'wednesday') selected @endif>Wednesday</option>
-    <option value="thursday" @if ($person->hiring_day == 'thursday') selected @endif>Thursday</option>
-    <option value="friday" @if ($person->hiring_day == 'friday') selected @endif>Friday</option>
-    <option value="saturday" @if ($person->hiring_day == 'saturday') selected @endif>Saturday</option>
-    @endif
-</select>
-@error('hiring_day')
-<small class=" text-danger"> {{$errors->first('hiring_day')}} </small>
-@enderror
-</div> --}}
-{{-- --------------------------------------------------------------------------------------------- --}}
-{{-- <div class="col-md">
-        <label for="employment_no">{{__( 'employment number')}}
-<span class="small text-muted">({{__('optional')}})</span>:</label>
-<input type="text" name="employment_no" class="form-control mb-3" placeholder="{{__( 'employment number')}}.."
-    onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'employment number')}}..'"
-    value="{{ old('employment_no') ?? $person->employment_no }}">
-@error('employment_no')
-<small class=" text-danger"> {{$errors->first('employment_no')}} </small>
-@enderror
-</div> --}}
-{{-- --------------------------------------------------------------------------------------------- --}}
-{{-- <div class="col-md">
-        <label for="fingerprint_no">{{__( 'fingerprint number')}}
-<span class="small text-muted">({{__('optional')}})</span>:</label>
-<input type="text" name="fingerprint_no" class="form-control mb-3" placeholder="{{__( 'fingerprint number')}}.."
-    onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'fingerprint number')}}..'"
-    value="{{ old('fingerprint_no') ?? $person->fingerprint_no }}">
-@error('fingerprint_no')
-<small class=" text-danger"> {{$errors->first('fingerprint_no')}} </small>
-@enderror
-</div> --}}
-{{-- --------------------------------------------------------------------------------------------- --}}
 </div>
+{{-- --------------------------------------------------------------------------------------------- --}}
+<div class="form-group row mb-3">
+    {{-- --------------------------------------------------------------------------------------------- --}}
+    <div class="col-md">
+        <label for="graduation_points">{{__( 'graduation points')}}
+            <span class="small text-muted">({{__('optional')}})</span>
+            :</label>
+        <input type="text" name="graduation_points"
+            class="form-control mb-3 @error ('graduation_points') is-invalid @enderror"
+            placeholder="{{__( 'graduation points')}}.." onfocus="this.placeholder=''"
+            onblur="this.placeholder='{{__( 'graduation points')}}..'"
+            value="{{ old('graduation_points') ?? $person->graduation_points }}">
+        @error('graduation_points')
+        <small class=" text-danger"> {{$errors->first('graduation_points')}} </small>
+        @enderror
+    </div>
+    {{-- --------------------------------------------------------------------------------------------- --}}
+    <div class="col-md">
+        <label for="graduation_points_of">{{__( 'graduation points of')}}
+            <span class="small text-muted">({{__('optional')}})</span>:</label>
+        <select name="graduation_points_of" class="form-control @error ('graduation_points_of') is-invalid @enderror">
+            <option selected value="" disabled>{{__( 'please pick')}}..</option>
+            <option value=4 @if ($person->graduation_points_of == 4 ) selected @endif>4</option>
+            <option value=5 @if ($person->graduation_points_of == 5 ) selected @endif>5</option>
+            <option value=100 @if ($person->graduation_points_of == 100 ) selected @endif>100</option>
+        </select>
+        @error('graduation_points_of')
+        <small class=" text-danger"> {{$errors->first('graduation_points_of')}} </small>
+        @enderror
+    </div>
+    {{-- --------------------------------------------------------------------------------------------- --}}
+    <div class="col-md">
+        <label for="graduation_grade_rank_id">{{__( 'graduation grade rank')}}
+            <span class="small text-muted">({{__('optional')}})</span>:</label>
+        <select name="graduation_grade_rank_id"
+            class="form-control @error ('graduation_grade_rank_id') is-invalid @enderror">
+            <option selected value="" disabled>{{__( 'please pick')}}..</option>
+
+            @foreach ($gread_ranks as $graduation_grade_rank)
+            @if (App::isLocale('ar'))
+            <option value="{{$graduation_grade_rank->id}}" @if ($person->graduation_grade_rank_id ==
+                $graduation_grade_rank->id) selected
+                @endif>{{$graduation_grade_rank->grade_ar}}
+            </option>
+            @else
+            <option value="{{$graduation_grade_rank->id}}" @if ($person->graduation_grade_rank_id ==
+                $graduation_grade_rank->id) selected
+                @endif>{{$graduation_grade_rank->grade_en}}
+            </option>
+            @endif
+            @endforeach
+
+        </select>
+        @error('graduation_grade_rank_id')
+        <small class=" text-danger"> {{$errors->first('graduation_grade_rank_id')}} </small>
+        @enderror
+    </div>
+    {{-- --------------------------------------------------------------------------------------------- --}}
+</div>
+-->

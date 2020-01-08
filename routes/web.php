@@ -66,6 +66,9 @@ Route::any('/f', function () {
     // // // inserts all Majors to db
     // return (App\Http\Controllers\MajorController::firstInsertion()) ? App\Major::all() : 'some thing is worng';
 
+    // // // inserts all GradeRanks to db
+    // return (App\Http\Controllers\GradeRankController::firstInsertion()) ? App\GradeRank::all() : 'some thing is worng';
+
     // Artisan::call('migrate:fresh');
     // Artisan::call('cache:clear');
     // return makeUser('admin');

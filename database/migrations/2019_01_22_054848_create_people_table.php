@@ -66,13 +66,13 @@ class CreatePeopleTable extends Migration
             $table->string('fingerprint_no')->nullable();
             // -----------------------------
             $table->string('degree')->nullable();
-            $table->string('major_id')->nullable()->references('id')->on('mager');
+            $table->string('major_id')->nullable()->references('id')->on('Mager');
             $table->string('graduated_from')->nullable();
             $table->string('college_name')->nullable();
             $table->string('graduation_year')->nullable();
             $table->string('graduation_points')->nullable();
             $table->string('graduation_points_of')->nullable();
-            $table->string('graduation_grade')->nullable();
+            $table->string('graduation_grade_rank_id')->nullable()->references('id')->on('GradeRank');
             $table->string('id_job_title')->nullable();
             $table->string('job_title')->nullable();
             $table->string('division')->nullable();
