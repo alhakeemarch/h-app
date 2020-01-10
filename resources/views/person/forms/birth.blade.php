@@ -32,7 +32,7 @@
         <label for="birth_place">{{__( 'birth place')}}
             <span class="small text-muted">({{__('optional')}})</span>:</label>
 
-        <select name="birth_place" class="form-control @error ('birth_place') is-invalid @enderror" required>
+        <select name="birth_place" class="form-control @error ('birth_place') is-invalid @enderror">
             <option selected value="" disabled>{{__( 'birth place')}}..</option>
             @foreach ($countries as $country)
 

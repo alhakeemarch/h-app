@@ -296,7 +296,9 @@ php artisan make:model AllowedBuildingRatio -a  // نسبة البناء
 php artisan make:model AllowedBuildingHeight -a  // الإرتفاعات
 php artisan make:model AllowedUsage -a  // الإستخدامات
 php artisan make:model OwnerType -a  // نوع المالك
-php artisan make:model GradeRank -a  // نوع المالك
+php artisan make:model GradeRank -a  // تقدير التخرج
+php artisan make:model SceMembershipType -a  // نوع العضوية بالهيئة السعودية للمهندسين
+php artisan make:model Bank -a  // قائمة البنوك
 
 ============== 
 # to do

@@ -69,6 +69,12 @@ Route::any('/f', function () {
     // // // inserts all GradeRanks to db
     // return (App\Http\Controllers\GradeRankController::firstInsertion()) ? App\GradeRank::all() : 'some thing is worng';
 
+    // // // inserts all SceMembershipTypes to db
+    // return (App\Http\Controllers\SceMembershipTypeController::firstInsertion()) ? App\SceMembershipType::all() : 'some thing is worng';
+
+    // // // inserts all Banks to db
+    // return (App\Http\Controllers\BankController::firstInsertion()) ? App\Bank::all() : 'some thing is worng';
+
     // Artisan::call('migrate:fresh');
     // Artisan::call('cache:clear');
     // return makeUser('admin');
@@ -250,15 +256,15 @@ function makeUser($user)
         'national_id' => '2001846613',
         'created_by_id' => '1',
         'created_by_name' => 'admin',
-        'is_employee' => '1',
-        'is_customer' => '1',
+        'is_employee' => true,
+        'is_customer' => true,
         'ar_name1' => 'فهد',
         'ar_name5' => "بخش",
         'en_name1' => 'Fahd',
         'en_name5' => 'Bakhsh',
         'mobile' => '0500858415',
         'phone' => '0148650000',
-        'phone_extension' => '102',
+        'phone_extension' => '103',
         'email' => 'al-fahd@windowslive.com'
     ];
     $fahdUser = [
@@ -275,15 +281,15 @@ function makeUser($user)
         'national_id' => '1000000000',
         'created_by_id' => '1',
         'created_by_name' => 'admin',
-        'is_employee' => '1',
-        'is_customer' => '1',
+        'is_employee' => true,
+        'is_customer' => true,
         'ar_name1' => 'المدير',
         'ar_name5' => '-',
         'en_name1' => 'admin',
         'en_name5' => '-',
         'mobile' => '0500000000',
         'phone' => '0148650000',
-        'phone_extension' => '102',
+        'phone_extension' => '103',
         'email' => 'admin@hakeemarch.com'
     ];
     $adminUser = [
@@ -328,5 +334,5 @@ function makeUser($user)
     $person->user()->create(array_merge($fromPerson, $the_user));
     return $person;
     // return redirect('/');
-    return 'user created';
+    // return 'user created';
 }

@@ -72,28 +72,31 @@ class CreatePeopleTable extends Migration
             $table->string('graduation_year')->nullable();
             $table->string('graduation_points')->nullable();
             $table->string('graduation_points_of')->nullable();
-            $table->string('graduation_grade_rank_id')->nullable()->references('id')->on('GradeRank');
+            $table->string('graduation_grade_rank_id')->nullable()->references('id')->on('grade_ranks');
+            // -----------------------------
             $table->string('id_job_title')->nullable();
             $table->string('job_title')->nullable();
-            $table->string('division')->nullable();
+            $table->string('job_division')->nullable();
+            $table->string('job_position')->nullable();
             $table->string('current_project')->nullable();
             // -----------------------------
-            $table->string('SCE_membership_no')->nullable(); // Saudi Council of Engineers الهيئة السعودية للمهندسين
-            $table->date('SCE_membership_grade')->nullable();
+            $table->string('SCE_membership_no')->nullable();
+            $table->date('SCE_membership_type_id')->nullable()->references('id')->on('sce_membership_types');
             $table->date('SCE_membership_expire_date')->nullable();
+            $table->date('SCE_classification_expire_date')->nullable();
             // -----------------------------
             $table->string('mobile')->nullable();
             $table->string('phone')->nullable();
             $table->string('phone_extension')->nullable();
             $table->string('email')->nullable();
+            $table->string('personal_email')->nullable();
             $table->string('mobile2')->nullable();
             $table->string('mobile3')->nullable();
             // -----------------------------
             $table->string('foreign_phone1')->nullable();
             $table->string('foreign_phone2')->nullable();
-            $table->string('foreign_address1')->nullable();
-            $table->string('foreign_address2')->nullable();
-            $table->string('personal_email')->nullable();
+            $table->text('foreign_address1')->nullable();
+            $table->text('foreign_address2')->nullable();
             // -----------------------------
             $table->string('SNA_application_no')->nullable(); // Saudi National Address العنوان الوطني
             $table->string('SNA_service_no')->nullable();
@@ -108,11 +111,9 @@ class CreatePeopleTable extends Migration
             $table->string('SNA_residence_type')->nullable(); // شقة - بيت شعبي - فيلا - قصر - دوبليكس - فندق -
             $table->string('SNA_residence_ownership')->nullable(); // مالك - مستأجر - أخرى
             // -----------------------------
-            $table->string('bank_name')->nullable();
-            $table->string('bank_acount_no')->nullable();
+            $table->string('bank_id')->nullable()->references('id')->on('banks');
+            $table->string('bank_account_no')->nullable();
             $table->string('bank_IBAN_no')->nullable();
-            $table->string('bank_branch_name')->nullable();
-            $table->string('bank_branch_no')->nullable();
             // -----------------------------
             $table->string('emergency_contact_name1')->nullable();
             $table->string('emergency_contact_mobile1')->nullable();
