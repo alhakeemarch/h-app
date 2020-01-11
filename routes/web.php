@@ -30,59 +30,25 @@ Route::get('/', function () {
 
 
 Route::any('/f', function () {
-    // // // inserts all available countries to db
-    // return (App\Http\Controllers\CountryController::firstInsertion()) ? App\Country::all() : 'some thing is worng';
 
-    // // // inserts all available Municipality Branchs to db
-    // return (App\Http\Controllers\MunicipalityBranchController::firstInsertion()) ? App\MunicipalityBranch::all() : 'some thing is worng';
+    if (false) {
+        Artisan::call('migrate:fresh');
+        Artisan::call('cache:clear');
+        makeUser('admin');
+        makeUser('fahd');
+        return firstInsertion();
+    }
 
-    // // // inserts all available Districts to db
-    #### must have Municipality Branchs in db
-    // return (App\Http\Controllers\DistrictController::firstInsertion()) ? App\District::all() : 'some thing is worng';
 
-    // // // inserts all available Districts to db
-    #### must have Municipality Branchs in db
-    #### must have Districts in db
-    // return (App\Http\Controllers\NeighborController::firstInsertion()) ? App\Neighbor::all() : 'some thing is worng';
-
-    // // // inserts all available Plans to db
-    // return (App\Http\Controllers\PlanController::firstInsertion()) ? App\Plan::all() : 'some thing is worng';
-
-    // // // inserts all available streets to db
-    // return (App\Http\Controllers\StreetController::firstInsertion()) ? App\Street::all() : 'some thing is worng';
-
-    // // // inserts all allowedUsages to db
-    // return (App\Http\Controllers\AllowedUsageController::firstInsertion()) ? App\AllowedUsage::all() : 'some thing is worng';
-
-    // // // inserts all AllowedBuildingRatios to db
-    // return (App\Http\Controllers\AllowedBuildingRatioController::firstInsertion()) ? App\AllowedBuildingRatio::all() : 'some thing is worng';
-
-    // // // inserts all AllowedBuildingHeight to db
-    // return (App\Http\Controllers\AllowedBuildingHeightController::firstInsertion()) ? App\AllowedBuildingHeight::all() : 'some thing is worng';
-
-    // // // inserts all OwnerTypes to db
-    // return (App\Http\Controllers\OwnerTypeController::firstInsertion()) ? App\OwnerType::all() : 'some thing is worng';
-
-    // // // inserts all Majors to db
-    // return (App\Http\Controllers\MajorController::firstInsertion()) ? App\Major::all() : 'some thing is worng';
-
-    // // // inserts all GradeRanks to db
-    // return (App\Http\Controllers\GradeRankController::firstInsertion()) ? App\GradeRank::all() : 'some thing is worng';
-
-    // // // inserts all SceMembershipTypes to db
-    // return (App\Http\Controllers\SceMembershipTypeController::firstInsertion()) ? App\SceMembershipType::all() : 'some thing is worng';
-
-    // // // inserts all Banks to db
-    // return (App\Http\Controllers\BankController::firstInsertion()) ? App\Bank::all() : 'some thing is worng';
-
-    // Artisan::call('migrate:fresh');
-    // Artisan::call('cache:clear');
+    // return Artisan::call('migrate:fresh');
+    // return Artisan::call('cache:clear');
     // return makeUser('admin');
     // return makeUser('fahd');
     // factory(\App\Person::class, 100)->create();
     # الفاكتوري يحتاج إعادة بعد تعديل حقول الجدول
     // factory(\App\Plot::class, 100)->create();
 
+    // return firstInsertion();
     return ' whaaaat !!!';
 
     ########################################################################################################################
@@ -122,6 +88,113 @@ Route::any('/f', function () {
     // scandir
     // return App\Http\Controllers\ProjectController::test();
 });
+
+function firstInsertion()
+{
+    $feed_back = [];
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\CountryController::firstInsertion()) {
+        array_push($feed_back, ['Countries' => true]);
+    } else {
+        array_push($feed_back, ['Countries' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\MunicipalityBranchController::firstInsertion()) {
+        array_push($feed_back, ['MunicipalityBranchs' => true]);
+    } else {
+        array_push($feed_back, ['MunicipalityBranchs' => false]);
+    }
+    // -------------------------------------------------------------------
+    // return $feed_back;
+
+    if ($feed_back[1]['MunicipalityBranchs']) {
+        if (App\Http\Controllers\DistrictController::firstInsertion()) {
+            array_push($feed_back, ['Districts' => true]);
+        } else {
+            array_push($feed_back, ['Districts' => false]);
+        }
+    } else {
+        array_push($feed_back, ['Districts' => 'No:::MunicipalityBranchs']);
+    }
+    // -------------------------------------------------------------------
+    if ($feed_back[1]['MunicipalityBranchs'] && $feed_back[2]['Districts']) {
+        if (App\Http\Controllers\NeighborController::firstInsertion()) {
+            array_push($feed_back, ['Neighbors' => true]);
+        } else {
+            array_push($feed_back, ['Neighbors' => false]);
+        }
+    } else {
+        array_push($feed_back, ['Neighbors' => 'No:::MunicipalityBranchs or Districts']);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\PlanController::firstInsertion()) {
+        array_push($feed_back, ['Plans' => true]);
+    } else {
+        array_push($feed_back, ['Plans' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\StreetController::firstInsertion()) {
+        array_push($feed_back, ['streets' => true]);
+    } else {
+        array_push($feed_back, ['streets' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\AllowedUsageController::firstInsertion()) {
+        array_push($feed_back, ['allowedUsages' => true]);
+    } else {
+        array_push($feed_back, ['allowedUsages' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\AllowedBuildingRatioController::firstInsertion()) {
+        array_push($feed_back, ['AllowedBuildingRatios' => true]);
+    } else {
+        array_push($feed_back, ['AllowedBuildingRatios' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\AllowedBuildingHeightController::firstInsertion()) {
+        array_push($feed_back, ['AllowedBuildingHeights' => true]);
+    } else {
+        array_push($feed_back, ['AllowedBuildingHeights' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\AllowedBuildingHeightController::firstInsertion()) {
+        array_push($feed_back, ['AllowedBuildingHeights' => true]);
+    } else {
+        array_push($feed_back, ['AllowedBuildingHeights' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\OwnerTypeController::firstInsertion()) {
+        array_push($feed_back, ['OwnerTypes' => true]);
+    } else {
+        array_push($feed_back, ['OwnerTypes' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\MajorController::firstInsertion()) {
+        array_push($feed_back, ['Majors' => true]);
+    } else {
+        array_push($feed_back, ['Majors' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\GradeRankController::firstInsertion()) {
+        array_push($feed_back, ['GradeRanks' => true]);
+    } else {
+        array_push($feed_back, ['GradeRanks' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\SceMembershipTypeController::firstInsertion()) {
+        array_push($feed_back, ['SceMembershipTypes' => true]);
+    } else {
+        array_push($feed_back, ['SceMembershipTypes' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\BankController::firstInsertion()) {
+        array_push($feed_back, ['Banks' => true]);
+    } else {
+        array_push($feed_back, ['Banks' => false]);
+    }
+
+    return $feed_back;
+}
 
 
 
