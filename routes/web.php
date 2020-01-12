@@ -31,6 +31,13 @@ Route::get('/', function () {
 
 Route::any('/f', function () {
 
+    $h = new App\HijriDate();
+    // return $h->get_date(12 - 01 - 2020);
+    // return $h->get_date(12 - 01 - 2025);
+    return $h->get_date(time());
+    // return now();
+    return time();
+
     if (false) {
         Artisan::call('migrate:fresh');
         Artisan::call('cache:clear');

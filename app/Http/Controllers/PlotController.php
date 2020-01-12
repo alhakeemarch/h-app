@@ -18,8 +18,7 @@ use App\street;
 
 class PlotController extends Controller
 {
-
-
+    // ---------------------------------------------------------------------------------------------
     /**
      * Create a new controller instance.
      *
@@ -29,6 +28,7 @@ class PlotController extends Controller
     {
         $this->middleware('auth');
     }
+    // ---------------------------------------------------------------------------------------------
     /**
      * Display a listing of the resource.
      *
@@ -40,43 +40,27 @@ class PlotController extends Controller
         return view('plot.index')->with('plots', $plots);
         //
     }
-
+    // ---------------------------------------------------------------------------------------------
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, Plot $plot)
     {
         if (!$request->deed_no) {
             return redirect()->action('PlotController@check');
         }
-        $new_deed_no = $request->deed_no;
-        $districts = District::all();
-        $municipality_branchs = MunicipalityBranch::all();
-        $plot = new Plot;
-        $project = new Project();
-        $building_ratios = AllowedBuildingRatio::all();
-        $building_heights = AllowedBuildingHeight::all();
-        $usages = AllowedUsage::all();
-        $plans = Plan::all();
-        $streets = Street::all('id', 'ar_name')->sortBy('ar_name');
-        // $project->project_no = 75;
 
-        return view('plot.create')->with([
-            'districts' => $districts,
-            'municipality_branchs' => $municipality_branchs,
-            'new_deed_no' => $new_deed_no,
-            'plot' => $plot,
-            'project' => $project,
-            'building_ratios' => $building_ratios,
-            'building_heights' => $building_heights,
-            'usages' => $usages,
-            'plans' => $plans,
-            'streets' => $streets,
+        $formsData = array_merge($this->formsData(), [
+            'new_deed_no' => $request->deed_no,
+            'plot' => new Plot,
+            'project' => new Project,
         ]);
-    }
 
+        return view('plot.create')->with($formsData);
+    }
+    // ---------------------------------------------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -87,19 +71,17 @@ class PlotController extends Controller
     {
         // return $request->all();
         $validatedData = $this->validatePlot($request);
-        $created_by_id = auth()->user()->id;
-        $created_by_name = auth()->user()->user_name;
 
         $addby = [
-            'created_by_id' =>  $created_by_id,
-            'created_by_name' => $created_by_name
+            'created_by_id' =>  auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
         ];
 
         $validatedData = array_merge($validatedData, $addby);
         $plot = Plot::create($validatedData);
         return redirect()->action('PlotController@show', [$plot]);
     }
-
+    // ---------------------------------------------------------------------------------------------
     /**
      * Display the specified resource.
      *
@@ -110,7 +92,7 @@ class PlotController extends Controller
     {
         return view('plot.show')->with('plot', $plot);
     }
-
+    // ---------------------------------------------------------------------------------------------
     /**
      * Show the form for editing the specified resource.
      *
@@ -119,36 +101,20 @@ class PlotController extends Controller
      */
     public function edit(plot $plot)
     {
-
-
-        $new_deed_no = false;
-        $districts = District::all();
-        $municipality_branchs = MunicipalityBranch::all();
         $project = new Project();
         if ($project->where('id', $plot->project_id)->first()) {
             $project = $project->where('id', $plot->project_id)->first();
         }
-        $building_ratios = AllowedBuildingRatio::all();
-        $building_heights = AllowedBuildingHeight::all();
-        $usages = AllowedUsage::all();
-        $plans = Plan::all();
-        $streets = Street::all('id', 'ar_name')->sortBy('ar_name');
 
-
-        return view('plot.edit')->with([
-            'districts' => $districts,
-            'municipality_branchs' => $municipality_branchs,
-            'new_deed_no' => $new_deed_no,
+        $formsData = array_merge($this->formsData(), [
+            'new_deed_no' => false,
             'plot' => $plot,
-            'project' => $project,
-            'building_ratios' => $building_ratios,
-            'building_heights' => $building_heights,
-            'usages' => $usages,
-            'plans' => $plans,
-            'streets' => $streets,
+            'project' =>  $project,
         ]);
-    }
 
+        return view('plot.edit')->with($formsData);
+    }
+    // ---------------------------------------------------------------------------------------------
     /**
      * Update the specified resource in storage.
      *
@@ -160,13 +126,13 @@ class PlotController extends Controller
     {
 
         $validatedData = $this->validatePlot($request);
-        $last_edit_user_id = auth()->user()->id;
-        $last_edit_user_name  = auth()->user()->user_name;
+        $last_edit_by_id = auth()->user()->id;
+        $last_edit_by_name  = auth()->user()->user_name;
 
 
         $editedby = [
-            'last_edit_user_id' =>  $last_edit_user_id,
-            'last_edit_user_name' => $last_edit_user_name
+            'last_edit_by_id' =>  $last_edit_by_id,
+            'last_edit_by_name' => $last_edit_by_name,
         ];
         $validatedData = array_merge($validatedData, $editedby);
 
@@ -175,7 +141,7 @@ class PlotController extends Controller
 
         return redirect()->action('PlotController@show', [$plot]);
     }
-
+    // ---------------------------------------------------------------------------------------------
     /**
      * Remove the specified resource from storage.
      *
@@ -188,7 +154,7 @@ class PlotController extends Controller
     }
 
 
-
+    // ---------------------------------------------------------------------------------------------
     public function check(Request $request, plot $plot)
     {
         if ($request->method() === "GET") {
@@ -200,15 +166,34 @@ class PlotController extends Controller
         ]);
 
         $found_deed = $plot->where('deed_no', $request->deed_no)->first();
-
-
         if ($found_deed) {
             return redirect()->action('PlotController@show', [$found_deed]);
         } else {
             return redirect()->action('PlotController@create', $request);
         }
     }
-
+    // ---------------------------------------------------------------------------------------------
+    public function formsData()
+    {
+        $districts = District::all();
+        $municipality_branchs = MunicipalityBranch::all();
+        $building_ratios = AllowedBuildingRatio::all();
+        $building_heights = AllowedBuildingHeight::all();
+        $usages = AllowedUsage::all();
+        $plans = Plan::all();
+        $streets = Street::all('id', 'ar_name')->sortBy('ar_name');
+        return [
+            'districts' => $districts,
+            'municipality_branchs' => $municipality_branchs,
+            'building_ratios' => $building_ratios,
+            'building_heights' => $building_heights,
+            'usages' => $usages,
+            'plans' => $plans,
+            'plans' => $plans,
+            'streets' => $streets,
+        ];
+    }
+    // ---------------------------------------------------------------------------------------------
     /**
      * validate the specified resource inputs.
      *
@@ -219,233 +204,63 @@ class PlotController extends Controller
         return $request->validate([
             'project_id' => 'nullable|numeric',
             'deed_no' => 'required',
-            'deed_date' => 'required',
+            'deed_date' => 'required|date|before:' . date("d-m-Y", strtotime("+1 days")) . '|date_format:d-m-Y',
             'plot_no' => ['required', 'numeric',],
-            'area' => 'required| numeric',
-            'allowed_building_ratio' => ['required', 'numeric'],
-            'allowed_building_height' => ['required', 'numeric'],
-            'allowed_usage' => ['required', 'numeric'],
-            'allowed_usage' => ['required', 'numeric'],
+            'area' => 'nullable| numeric',
+            'allowed_building_ratio' => ['nullable', 'numeric'],
+            'allowed_building_height' => ['nullable', 'numeric'],
+            'allowed_usage' => ['nullable', 'numeric'],
+            'allowed_usage' => ['nullable', 'numeric'],
             'plan_id' => [
-                'required', 'numeric', //new ValidPlan
+                'nullable', 'numeric', //new ValidPlan
             ],
             'district_id' => [
-                'required', 'numeric', //new ValidDistrict
+                'nullable', 'numeric', //new ValidDistrict
             ],
             'municipality_branch_id' => [
-                'required', 'numeric', //new ValidMunicipalityBranch
+                'nullable', 'numeric', //new ValidMunicipalityBranch
             ],
             'street_id' => [
-                'required', 'numeric', //new ValidStreet
+                'nullable', 'numeric', //new ValidStreet
             ],
             'x_coordinate' => [
-                'required', 'numeric', //new Valid_X_Coordinate
+                'nullable', 'numeric', //new Valid_X_Coordinate
             ],
             'y_coordinate' => [
-                'required', 'numeric', //new Valid_Y_Coordinate
+                'nullable', 'numeric', //new Valid_Y_Coordinate
             ],
 
-            'north_border_name' => 'required|string| regex:/\p{Arabic}/u',
-            'north_border_length' => 'required|numeric',
-            'north_border_setback' => 'required|numeric',
-            'north_border_cantilever' => 'required|numeric',
-            'north_border_chamfer' => 'required|numeric',
+            'north_border_name' => 'nullable|string| regex:/\p{Arabic}/u',
+            'north_border_length' => 'nullable|numeric',
+            'north_border_setback' => 'nullable|numeric',
+            'north_border_cantilever' => 'nullable|numeric',
+            'north_border_chamfer' => 'nullable|numeric',
             'north_border_note' => 'nullable',
 
-            'south_border_name' => 'required|string| regex:/\p{Arabic}/u',
-            'south_border_length' => 'required|numeric',
-            'south_border_setback' => 'required|numeric',
-            'south_border_cantilever' => 'required|numeric',
-            'south_border_chamfer' => 'required|numeric',
+            'south_border_name' => 'nullable|string| regex:/\p{Arabic}/u',
+            'south_border_length' => 'nullable|numeric',
+            'south_border_setback' => 'nullable|numeric',
+            'south_border_cantilever' => 'nullable|numeric',
+            'south_border_chamfer' => 'nullable|numeric',
             'south_border_note' => 'nullable',
 
-            'east_border_name' => 'required|string| regex:/\p{Arabic}/u',
-            'east_border_length' => 'required|numeric',
-            'east_border_setback' => 'required|numeric',
-            'east_border_cantilever' => 'required|numeric',
-            'east_border_chamfer' => 'required|numeric',
+            'east_border_name' => 'nullable|string| regex:/\p{Arabic}/u',
+            'east_border_length' => 'nullable|numeric',
+            'east_border_setback' => 'nullable|numeric',
+            'east_border_cantilever' => 'nullable|numeric',
+            'east_border_chamfer' => 'nullable|numeric',
             'east_border_note' => 'nullable',
 
-            'west_border_name' => 'required|string| regex:/\p{Arabic}/u',
-            'west_border_length' => 'required|numeric',
-            'west_border_setback' => 'required|numeric',
-            'west_border_cantilever' => 'required|numeric',
-            'west_border_chamfer' => 'required|numeric',
+            'west_border_name' => 'nullable|string| regex:/\p{Arabic}/u',
+            'west_border_length' => 'nullable|numeric',
+            'west_border_setback' => 'nullable|numeric',
+            'west_border_cantilever' => 'nullable|numeric',
+            'west_border_chamfer' => 'nullable|numeric',
             'west_border_note' => 'nullable',
 
-            'notes' => 'string|nullable'
+            'notes' => 'string|nullable',
+            'private_notes' => 'string|nullable',
         ]);
     }
-
-    protected $plans = [];
-    protected const DISTRICTS = [
-        'ابار علي',
-        'ابيار الماشي',
-        'ارض الكردي',
-        'الاصيفرين',
-        'الاعمده',
-        'الاكحل',
-        'الاناهي',
-        'الإسكان',
-        'الأمير تركي',
-        'البركة',
-        'البقيع',
-        'البيضاء',
-        'التشليح',
-        'التلعة',
-        'الجابرة',
-        'الجامعة',
-        'الجرنافة',
-        'الجصة',
-        'الجماوات',
-        'الجمعة',
-        'الحار',
-        'الحديدي',
-        'الحديقة',
-        'الحرم الشريف',
-        'الحساء',
-        'الحفية',
-        'الحلقة',
-        'الحمنة',
-        'الحنو',
-        'الخاتم',
-        'الخالدية',
-        'الدار',
-        'الدرع',
-        'الدفاع',
-        'الدويخلة',
-        'الدويمة',
-        'الرانوناء',
-        'الراية',
-        'الرذايا',
-        'الرصيعة',
-        'الرمانة',
-        'الروابي',
-        'الريان',
-        'الريض',
-        'الزهرة',
-        'السحمان',
-        'السد',
-        'السدرة',
-        'السقيا',
-        'السكب',
-        'السم',
-        'السيح',
-        'الشافية',
-        'الشامي',
-        'الشرائع',
-        'الشريبات',
-        'الشفية',
-        'الشهباء',
-        'الشهداء',
-        'الشوامين',
-        'الصادفية',
-        'الصميمة',
-        'الصناعية',
-        'الصهلوج',
-        'الضميرية',
-        'الظاهرة',
-        'العاطفه',
-        'العاقول',
-        'العريض',
-        'العزيزية',
-        'العصبة',
-        'العطشان',
-        'العنابس',
-        'العهن',
-        'العوالي',
-        'العوينة',
-        'العيون',
-        'الغابة',
-        'الغراء',
-        'الفتح',
-        'الفقير',
-        'الفيفا',
-        'القبلتين',
-        'القبيبة',
-        'القصواء',
-        'المبعوث',
-        'المحضة',
-        'المديرا',
-        'المزايين',
-        'المضيق',
-        'المطار',
-        'المغيسلة',
-        'المفرحات',
-        'المقلب',
-        'الملك فهد',
-        'المليليح',
-        'المناخة',
-        'المندسة',
-        'المنشار',
-        'النبلاء',
-        'النبلاء',
-        'النخيل',
-        'النقا',
-        'النقمي',
-        'الهدراء',
-        'الهضبة',
-        'الهمجة',
-        'الهندية',
-        'الوبرة',
-        'اليتمة',
-        'اليسرة',
-        'ام الدوود',
-        'ام السيوف',
-        'أبو بريقاء',
-        'أبو سدر',
-        'أبو ضباع',
-        'أبو مرخة',
-        'أبوكبير',
-        'أم العيال',
-        'أم خالد',
-        'بضاعة',
-        'بني النجار',
-        'بني بياضة',
-        'بني حارثة',
-        'بني خدرة',
-        'بني خدرة',
-        'بني ظفر',
-        'بني عبدالاشهل',
-        'بني معاوية',
-        'بئر عثمان',
-        'جبل أحد',
-        'جبل عير',
-        'جشم',
-        'حارة النصر',
-        'حضوضاء',
-        'خاخ',
-        'خلص',
-        'ذو الحليفة',
-        'رهط',
-        'سد الغابة',
-        'سلطانة',
-        'شظاة',
-        'شعيب الخضره',
-        'شوران',
-        'صوري',
-        'طيبة',
-        'عروة',
-        'عين الخيف',
-        'غراب',
-        'فرشة',
-        'قربان',
-        'قريضة',
-        'كنانة',
-        'مثلث الاكحل',
-        'مذينب',
-        'ملح',
-        'مهزوز',
-        'وادي البيطان',
-        'وادي ظمة',
-        'ورقان',
-        'وعيزة',
-        'ولد محمد',
-    ];
-    public static function  getDistricts()
-    {
-        // have 162 records
-        // from index 0 to 161
-        return self::DISTRICTS;
-    }
+    // ---------------------------------------------------------------------------------------------
 }
