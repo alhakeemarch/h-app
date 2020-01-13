@@ -34,7 +34,12 @@ Route::any('/f', function () {
     $h = new App\HijriDate();
     // return $h->get_date(12 - 01 - 2020);
     // return $h->get_date(12 - 01 - 2025);
-    return $h->get_date(time());
+    // return $h->get_date(time());
+    // return strtotime($h->get_date());
+    // return strtotime(date('Y'));
+    echo  time() . '<br>';
+    return strtotime('13-01-2020 10:57:03PM');
+
     // return now();
     return time();
 

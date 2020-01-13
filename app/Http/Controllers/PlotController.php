@@ -201,6 +201,7 @@ class PlotController extends Controller
      */
     public function validatePlot($request)
     {
+
         return $request->validate([
             'project_id' => 'nullable|numeric',
             'deed_no' => 'required',
