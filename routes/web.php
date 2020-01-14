@@ -31,23 +31,25 @@ Route::get('/', function () {
 
 Route::any('/f', function () {
 
-    $h = new App\HijriDate();
+    //////////////////////////////////////////////////////////    
+    // $h = new App\HijriDate();
     // return $h->get_date(12 - 01 - 2020);
     // return $h->get_date(12 - 01 - 2025);
     // return $h->get_date(time());
     // return strtotime($h->get_date());
     // return strtotime(date('Y'));
-    echo  time() . '<br>';
-    return strtotime('13-01-2020 10:57:03PM');
-
+    // echo  time() . '<br>';
+    // return strtotime('13-01-2020 10:57:03PM');
     // return now();
-    return time();
+    // return time();
+    //////////////////////////////////////////////////////////    
 
     if (false) {
         Artisan::call('migrate:fresh');
         Artisan::call('cache:clear');
         makeUser('admin');
         makeUser('fahd');
+        makeUser('hanadi');
         return firstInsertion();
     }
 
@@ -56,6 +58,7 @@ Route::any('/f', function () {
     // return Artisan::call('cache:clear');
     // return makeUser('admin');
     // return makeUser('fahd');
+    // return makeUser('hanadi');
     // factory(\App\Person::class, 100)->create();
     # الفاكتوري يحتاج إعادة بعد تعديل حقول الجدول
     // factory(\App\Plot::class, 100)->create();
@@ -103,6 +106,9 @@ Route::any('/f', function () {
 
 function firstInsertion()
 {
+    if (!auth()->user()->id) {
+        return 'must be logged in';
+    }
     $feed_back = [];
     // -------------------------------------------------------------------
     if (App\Http\Controllers\CountryController::firstInsertion()) {
@@ -165,12 +171,7 @@ function firstInsertion()
     // -------------------------------------------------------------------
     if (App\Http\Controllers\AllowedBuildingHeightController::firstInsertion()) {
         array_push($feed_back, ['AllowedBuildingHeights' => true]);
-    } else {
-        array_push($feed_back, ['AllowedBuildingHeights' => false]);
-    }
-    // -------------------------------------------------------------------
-    if (App\Http\Controllers\AllowedBuildingHeightController::firstInsertion()) {
-        array_push($feed_back, ['AllowedBuildingHeights' => true]);
+        array_push($feed_back, ['records = ' => App\AllowedBuildingHeight::all()->count()]);
     } else {
         array_push($feed_back, ['AllowedBuildingHeights' => false]);
     }
@@ -203,6 +204,12 @@ function firstInsertion()
         array_push($feed_back, ['Banks' => true]);
     } else {
         array_push($feed_back, ['Banks' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\UserTypeController::firstInsertion()) {
+        array_push($feed_back, ['UserTypes' => true]);
+    } else {
+        array_push($feed_back, ['UserTypes' => false]);
     }
 
     return $feed_back;
@@ -275,6 +282,11 @@ Route::resources([
     'allowedBuildingRatio' => 'AllowedBuildingRatioController',
     'allowedBuildingHeight' => 'AllowedBuildingHeightController',
     'ownerType' => 'OwnerTypeController',
+    'userType' => 'UserTypeController',
+    'bank' => 'BankController',
+    'sceMembershipType' => 'SceMembershipTypeController',
+    'gradeRank' => 'GradeRankController',
+    'major' => 'MajorController',
 
 ]);
 
@@ -388,6 +400,34 @@ function makeUser($user)
         'job_level' => '100',
     ];
 
+    // ===========================================
+    $hanadi = [
+        'national_id' => '1077844478',
+        'created_by_id' => '1',
+        'created_by_name' => 'admin',
+        'is_employee' => true,
+        'is_customer' => true,
+        'ar_name1' => 'المدير',
+        'ar_name5' => '-',
+        'en_name1' => 'admin',
+        'en_name5' => '-',
+        'mobile' => '0500000000',
+        'phone' => '0148650000',
+        'phone_extension' => '133',
+        'email' => '1412hano@gmail.com'
+    ];
+    $hanadiUser = [
+        'user_name' => 'hhh',
+        'password' => Hash::make('1'),
+        'user_type_id' => '100',
+        'user_type_name' => 'Admin',
+        'is_admin' => true,
+        'is_manager' => true,
+        'user_level' => '100',
+        'job_level' => '100',
+    ];
+
+
 
     $the_person = [];
     $the_user = [];
@@ -398,8 +438,9 @@ function makeUser($user)
     } elseif ($user == 'admin') {
         $the_person = $admin;
         $the_user = $adminUser;
-    } elseif ($user == '') {
-        // 
+    } elseif ($user == 'hanadi') {
+        $the_person = $hanadi;
+        $the_user = $hanadiUser;
     } elseif ($user == '') {
         // 
     } else {

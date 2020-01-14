@@ -30,8 +30,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             // -----------------------------
-            $table->integer('user_type_id')->default(5);
-            $table->string('user_type_name')->default('standard_user');
+            $table->integer('user_type_id')->default(5)->references('id')->on('user_types');
+            $table->string('user_type_name')->default('standard_user')->references('type')->on('user_types');
             // -----------------------------
             $table->integer('user_level')->default(1);
             $table->integer('job_level')->default(1);

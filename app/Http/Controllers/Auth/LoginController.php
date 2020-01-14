@@ -64,31 +64,42 @@ class LoginController extends Controller
         if ($request->method() === "GET") {
             return view('/auth/login');
         }
-
         $request_user_name = $request->user_name;
-
+        // --------------------------------------------------------------------------------------------------------
         if (substr($request_user_name, 0, 1) == '1' || substr($request_user_name, 0, 1) == '2') {
             $found_user = $user->where('national_id', $request_user_name)->first();
             if (!$found_user) {
                 return redirect('login')->withErrors(['User Not found. Try Again or Contact the Administrator']);
             }
+            if (!$found_user->is_active) {
+                return redirect('login')->withErrors(['This user is NOT active. Contact the Administrator']);
+            }
             return view('/auth/login')->with('user', $found_user);
         }
+        // --------------------------------------------------------------------------------------------------------
         if (strpos($request_user_name, "@")) {
             $found_user = $user->where('email', $request_user_name)->first();
             if (!$found_user) {
                 return redirect('login')->withErrors(['User Not found. Try Again or Contact the Administrator']);
             }
+            if (!$found_user->is_active) {
+                return redirect('login')->withErrors(['This user is NOT active. Contact the Administrator']);
+            }
             return view('/auth/login')->with('user', $found_user);
         }
+        // --------------------------------------------------------------------------------------------------------
         if (preg_match('/^[a-z][a-z0-9_]+$/i', $request_user_name)) {
             $request_user_name = Str::lower($request_user_name);
             $found_user = $user->where('user_name', $request_user_name)->first();
             if (!$found_user) {
                 return redirect('login')->withErrors(['User Not found. Try Again or Contact the Administrator']);
             }
+            if (!$found_user->is_active) {
+                return redirect('login')->withErrors(['This user is NOT active. Contact the Administrator']);
+            }
             return view('/auth/login')->with('user', $found_user);
         }
+        // --------------------------------------------------------------------------------------------------------
         return redirect('login')->withErrors(['Input Must be : Email, Username, National ID OR Employee ID (ONLY)']);
     }
 }

@@ -6,7 +6,12 @@
     <h2 class="h2 text-center card-header">
         {{__('app name')}}
     </h2>
+
     <div class="card-body">
+        <p class="text-center">
+            هنا راح يكون الداش بورد للموظف
+        </p>
+        {{-- 
         @php
         $user = Auth::user();
         $obj = json_decode($user, TRUE);
@@ -15,16 +20,16 @@
             @foreach ($obj as $a=>$b )
             <li>
                 {{ $a}} : {{$b}}
-            </li>
-            @endforeach
-            <hr>
-            <li>
-                {{__('your Password is : ')}} {{Auth::user()->password}}
-            </li>
-            <li>
-                {{__('your user Remember Token is : ')}}{{Auth::user()->remember_token}}
-            </li>
-        </ul>
+        </li>
+        @endforeach
+        <hr>
+        <li>
+            {{__('your Password is : ')}} {{Auth::user()->password}}
+        </li>
+        <li>
+            {{__('your user Remember Token is : ')}}{{Auth::user()->remember_token}}
+        </li>
+        </ul> --}}
     </div>
 
 

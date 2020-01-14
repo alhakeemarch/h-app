@@ -299,6 +299,7 @@ php artisan make:model OwnerType -a  // نوع المالك
 php artisan make:model GradeRank -a  // تقدير التخرج
 php artisan make:model SceMembershipType -a  // نوع العضوية بالهيئة السعودية للمهندسين
 php artisan make:model Bank -a  // قائمة البنوك
+php artisan make:model UserType -a  // قائمة انواع المستخدمين
 
 ============== 
 # to do

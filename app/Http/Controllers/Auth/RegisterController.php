@@ -49,16 +49,9 @@ class RegisterController extends Controller
 
             return redirect()->back()->withErrors(['Data mismatch - try again or contact the system administrator']);
         }
-
-        $validatedData = $request->validate([
-            'id' => 'required|numeric|min:1',
-            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
-            'email' => 'required|email',
-            'is_employee' => 'required|boolean',
-
-            'user_name' => 'required|string|min:3|max:10|regex:/^[a-z][a-z0-9_-]+$/',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        // return $request;
+        $validatedData = $this->validator($request);
+        return $validatedData;
 
         event(new Registered($user = $this->create($validatedData)));
         $this->guard()->login($user);
@@ -97,14 +90,27 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator($data)
     {
-        return Validator::make($data, [
-            'id' => ['required'],
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+
+        return $data->validate([
+            'id' => 'required|numeric|min:1',
+            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+            'email' => 'required|email',
+            'is_employee' => 'required|boolean',
+            'the_name' => 'required|string',
+
+            'user_name' => 'required|string|min:3|max:10|regex:/^[a-z][a-z0-9_-]+$/',
+            'password' => 'required|string|min:6|confirmed',
         ]);
+
+        //////////////////////////////////////////////////////////////////////////
+        // return Validator::make($data, [
+        //     'id' => ['required'],
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //     'password' => ['required', 'string', 'min:6', 'confirmed'],
+        // ]);
     }
 
 
