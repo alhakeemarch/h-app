@@ -1,145 +1,176 @@
 @extends('layouts.app')
+@section('title', 'registration')
+
+@section('head')
+{{-- // for css --}}
+@endsection
+
 @section('content')
-
-<div class="row justify-content-center">
-    <!-- /// -->
-    @if (Request::isMethod('get'))
-    <div class="col-md-8">
-        <div class="card">
-            <strong class="card-header">{{ __('Registration form') }}</strong>
-            <div class="card-body">
-                <h5 class="card-title">{{__('Enter national ID to check')}}</h5>
-                <form action="{{ url('user/userRegister') }}" method="post">
-                    @csrf
-                    <label for="n_id">{{__( 'nId')}}:</label>
-                    <input type="text" onkeypress="onlyNumber(event)" name="national_id" class="form-control mb-3"
-                        placeholder="{{__( 'nIdNumber')}}.." maxlength="10" pattern=".{10,}" required
-                        title="{{__('must be 10 digits')}}" autofocus>
-                    <input type="submit" value="{{__('view')}}" class="btn btn-secondary btn-block">
-                </form>
-            </div>
-            <!-- end card-body -->
-            <!-- ///////////////////////////////-->
-            @if ($errors->any())
-            @include('layouts.errors')
-            @endif
-            <!-- ///////////////////////////////-->
-        </div>
-        <!-- end card -->
-    </div>
-    <!-- col-md-8 -->
-    @endif
-
-
-
-
-    <!-- //-->
-    @if (Request::isMethod('post') && " {{$person->id}}")
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">{{ __('Register') }}</div>
-            <div class="card-body">
-                <form method="POST" action="{{ route('register') }}">
-                    @csrf
-                    <input type="hidden" name="is_employee" value="{{$person->is_employee}}">
-                    <input type="hidden" name="id" value="{{$person->id}}">
-                    @php
-                    $the_name ;
-                    if($person->ar_name1){
-                    $the_name= $person->ar_name1;
-                    }
-                    if($person->ar_name5){
-                    $the_name= $the_name .' '.$person->ar_name5;
-                    }
-                    if($person->en_name1){
-                    $the_name= $the_name .':'.$person->en_name1;
-                    }
-                    if($person->en_name5){
-                    $the_name= $the_name .' '.$person->en_name5;
-                    }
-                    @endphp
-                    <input type="hidden" name="the_name" value="{{$the_name}}">
-
-
-                    <div class="form-group row">
-                        <label for="national_id"
-                            class="col-md-2 col-form-label text-md-left">{{ __('nIdNumber') }}</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" name="national_id" value="{{$person->national_id}}"
-                                readonly required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="email"
-                            class="col-md-2 col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
-                        <div class="col-md-10">
-                            <input id="email" type="email" class="form-control @error ('email') is-invalid @enderror "
-                                name="email" value="{{$person->email}}{{ old('email') }}" readonly required> @if
-                            ($errors->has('email'))
-                            @error('email')
-                            <small class=" text-danger"> {{$errors->first('email')}} </small>
-                            @enderror
-
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="user_name"
-                            class="col-md-2 col-form-label text-md-left">{{ __('User Name') }}</label>
-                        <div class="col-md-10">
-                            <input type="text" id="user_name" class="form-control" onkeypress="userNameString(event)"
-                                onkeyup="userNameString(event)" name="user_name" value="{{ old('name') }}"
-                                placeholder="{{__( 'User Name')}}.." maxlength="10" pattern=".{3,10}" required
-                                title="{{__('between 3 and 10 characters')}}" autofocus>
-                            <small class="form-text text-muted">User name between 3 and 10 characters, start with
-                                letters and can contain only small letters, numbers, _ or - </small>
-                        </div>
-
-
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="password" class="col-md-2 col-form-label text-md-left">{{ __('Password') }}</label>
-
-                        <div class="col-md-10">
-                            <input id="password" type="password"
-                                class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
-                                required> @if ($errors->has('password'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('password') }}</strong>
-                            </span> @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="password-confirm"
-                            class="col-md-2 col-form-label text-md-left">{{ __('Confirm Password') }}</label>
-
-                        <div class="col-md-10">
-                            <input id="password-confirm" type="password" class="form-control"
-                                name="password_confirmation" required>
-                        </div>
-                    </div>
-
-                    {{--
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+<div class="card ">
+    <h5 class="card-header">{{ __('registration') }}</h5>
+    <div class="card-body">
+        {{-- --------------------------------------------------------------------------------------------- --}}
+        @if (Request::isMethod('get'))
+        <form action="{{ route ('userRegister') }}" method="POST">
+            @csrf
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            <label for="national_id">{{__( 'nId')}}:</label>
+            <input type="text" name="national_id" class="form-control mb-3 @error ('national_id') is-invalid @enderror"
+                placeholder="{{__( 'nIdNumber')}}.." onfocus="this.placeholder=''"
+                onblur="this.placeholder='{{ __('nIdNumber') }}..'" onkeypress="onlyNumber(event)" maxlength="10"
+                pattern=".{10,}" required title="{{__('must be 10 digits')}}" autofocus>
+            @error('national_id')
+            <small class="text-danger"> {{$errors->first('national_id')}} </small>
+            @enderror
+            {{-- --------------------------------------------------------- START: buttons - --}}
+            <div class="row text-center">
+                <div class="col-md-6">
+                    <button type="submet" class="btn btn-info w-75">
+                        <i class="fas fa-search"></i>
+                        {{-- <i class="fas fa-check"></i> --}}
+                        <span class="d-none d-md-inline-block">&nbsp; {{__('view')}}</span>
                     </button>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ url('/') }}" class="btn btn-info w-75">
+                        <i class="fas fa-undo-alt"></i>
+                        <span class="d-none d-md-inline-block">&nbsp; cancel</span>
+                    </a>
+                </div>
             </div>
-        </div> --}}
-
-        <input type="submit" value="{{ __('Register') }}" class="btn btn-secondary btn-block">
-
+            {{-- --------------------------------------------------------- END: buttons - --}}
         </form>
+        @endif
+        {{-- --------------------------------------------------------------------------------------------- --}}
+        @if (Request::isMethod('post') && " {{$person->id}}")
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            <input type="hidden" name="is_employee" value="{{$person->is_employee}}">
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            <input type="hidden" name="id" value="{{$person->id}}">
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            @php
+            $the_name ;
+            if($person->ar_name1){
+            $the_name= $person->ar_name1;
+            }
+            if($person->ar_name5){
+            $the_name= $the_name .' '.$person->ar_name5;
+            }
+            if($person->en_name1){
+            $the_name= $the_name .':'.$person->en_name1;
+            }
+            if($person->en_name5){
+            $the_name= $the_name .' '.$person->en_name5;
+            }
+            @endphp
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            <input type="hidden" name="the_name" value="{{$the_name}}">
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            <div class="form-group row">
+                <label for="national_id" class="col-md-2 col-form-label text-md-left">{{ __('nIdNumber') }}</label>
+                <div class="col-md-10">
+                    <input type="text" name="national_id" class="form-control @error ('email') is-invalid @enderror"
+                        value="{{$person->national_id}}" readonly required>
+                    @error('national_id')
+                    <small class=" text-danger"> {{$errors->first('national_id')}} </small>
+                    @enderror
+                </div>
+            </div>
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            <div class="form-group row">
+                <label for="email" class="col-md-2 col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
+                <div class="col-md-10">
+                    <input type="email" name="email" class="form-control @error ('email') is-invalid @enderror "
+                        value="{{$person->email}}" readonly required>
+                    @error('email')
+                    <small class=" text-danger"> {{$errors->first('email')}} </small>
+                    @enderror
+                </div>
+            </div>
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            <div class="form-group row">
+                <label for="user_name" class="col-md-2 col-form-label text-md-left">{{ __('user name') }}</label>
+                <div class="col-md-10">
+                    <input type="text" name="user_name" id="user_name"
+                        class="form-control @error ('user_name') is-invalid @enderror " value="{{ old('user_name') }}"
+                        placeholder="{{__( 'user name')}}.." onfocus="this.placeholder=''"
+                        onblur="this.placeholder='{{ __('user name') }}..'" onkeypress="userNameString(event)"
+                        onkeyup="userNameString(event)" maxlength="10" minlength="3" pattern=".{3,10}" required
+                        title="{{__('between 3 and 10 characters')}}" autofocus>
+                    <small class="form-text text-primary @error ('user_name') text-danger @enderror">
+                        User name between 3 and 10 characters, start with letters and can contain only small letters,
+                        numbers, "_" or "-" </small>
+                    @error('user_name')
+                    <small class=" text-danger"> {{$errors->first('user_name')}} </small>
+                    @enderror
+                </div>
+            </div>
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            <div class="form-group row">
+                <label for="password" class="col-md-2 col-form-label text-md-left">{{ __('Password') }}</label>
+                <div class="col-md-10">
+                    <input name="password" id="password" type="password"
+                        class="form-control @error ('password') is-invalid @enderror"
+                        placeholder="{{__( 'password')}}.." onfocus="this.placeholder=''"
+                        onblur="this.placeholder='{{ __('password') }}..'" minlength="6"
+                        title="{{__('minimum 6 characters')}}" required>
+                    @error('password')
+                    <small class=" text-danger invalid-feedback" role="alert"> {{$errors->first('password')}} </small>
+                    @enderror
+                </div>
+            </div>
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            <div class="form-group row">
+                <label for="password-confirm"
+                    class="col-md-2 col-form-label text-md-left">{{ __('Confirm Password') }}</label>
+                <div class="col-md-10">
+                    <input id="password-confirm" type="password"
+                        class="form-control @error ('password_confirmation') is-invalid @enderror"
+                        name="password_confirmation" required>
+                </div>
+                @error('password_confirmation')
+                <small class=" text-danger invalid-feedback" role="alert"> {{$errors->first('password_confirmation')}}
+                </small>
+                @enderror
+            </div>
+            {{-- --------------------------------------------------------- START: buttons - --}}
+            <div class="row text-center">
+                <div class="col-md-6">
+                    <button type="submet" class="btn btn-info w-75">
+                        <i class="fas fa-check"></i>
+                        <span class="d-none d-md-inline-block">&nbsp; {{__('Register')}}</span>
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ url('/') }}" class="btn btn-info w-75">
+                        <i class="fas fa-undo-alt"></i>
+                        <span class="d-none d-md-inline-block">&nbsp; cancel</span>
+                    </a>
+                </div>
+            </div>
+            {{-- --------------------------------------------------------- END: buttons - --}}
+        </form>
+        @endif
+        {{-- --------------------------------------------------------------------------------------------- --}}
     </div>
-    <!-- end card-body -->
+    <div class="card-footer text-muted text-center ">
+        © registring new user form..
+    </div>
 </div>
-<!-- end card -->
-</div>
-<!-- col-md-8 -->
+
+
+
+
+
+<!-- ///////////////////////////////-->
+@if ($errors->any())
+@include('layouts.errors')
 @endif
-</div>
+<!-- ///////////////////////////////-->
+@endsection
+
+@section('script')
+{{-- // for javascript --}}
 @endsection

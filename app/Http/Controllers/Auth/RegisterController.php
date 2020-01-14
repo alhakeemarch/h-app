@@ -51,7 +51,6 @@ class RegisterController extends Controller
         }
         // return $request;
         $validatedData = $this->validator($request);
-        return $validatedData;
 
         event(new Registered($user = $this->create($validatedData)));
         $this->guard()->login($user);
@@ -92,14 +91,12 @@ class RegisterController extends Controller
      */
     protected function validator($data)
     {
-
         return $data->validate([
             'id' => 'required|numeric|min:1',
             'national_id' => 'required|numeric|starts_with:1,2|digits:10',
             'email' => 'required|email',
             'is_employee' => 'required|boolean',
             'the_name' => 'required|string',
-
             'user_name' => 'required|string|min:3|max:10|regex:/^[a-z][a-z0-9_-]+$/',
             'password' => 'required|string|min:6|confirmed',
         ]);
