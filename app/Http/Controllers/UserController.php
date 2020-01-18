@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Create a new controller instance.
      *
@@ -16,6 +17,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +32,7 @@ class UserController extends Controller
         $users = User::all();
         return view('user.index')->with('users', $users);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for creating a new resource.
      *
@@ -40,7 +42,7 @@ class UserController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -51,7 +53,7 @@ class UserController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display the specified resource.
      *
@@ -62,7 +64,7 @@ class UserController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for editing the specified resource.
      *
@@ -73,7 +75,7 @@ class UserController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Update the specified resource in storage.
      *
@@ -85,7 +87,7 @@ class UserController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Remove the specified resource from storage.
      *
@@ -96,4 +98,28 @@ class UserController extends Controller
     {
         //
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    // not used yet
+    public function check(Request $request, Person $person)
+    {
+        // if ($request->method() === "GET") {
+        //     return view('person.check');
+        // }
+
+        // $validatedData = $request->validate([
+        //     'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+        //     // 'body' => 'required',
+        // ]);
+        // // return $request->all();
+
+        // $found_person = $person->where('national_id', $request->national_id)->first();
+        // // return $found_person;
+        // if ($found_person) {
+        //     return redirect()->action('PersonController@show', $found_person->id);
+        //     // return redirect()->action('PersonController@show', ['id' => $found_person->id]);
+        // } else {
+        //     return redirect()->action('PersonController@create', $request);
+        // }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 }

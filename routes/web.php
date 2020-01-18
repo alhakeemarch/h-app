@@ -17,18 +17,17 @@ use App\Auth\RegisterController;
 | contains the "web" middleware group. Now create something great!
 |
  */
-
+// -----------------------------------------------------------------------------------------------------------------
 Route::get('/locale/{locale}', function ($locale) {
     Session::put('locale', $locale);
     // return back();
     return redirect()->back();
 })->name('localeization');
-
+// -----------------------------------------------------------------------------------------------------------------
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-
-
+// -----------------------------------------------------------------------------------------------------------------
 Route::any('/f', function () {
 
     //////////////////////////////////////////////////////////    
@@ -103,7 +102,7 @@ Route::any('/f', function () {
     // scandir
     // return App\Http\Controllers\ProjectController::test();
 });
-
+// -----------------------------------------------------------------------------------------------------------------
 function firstInsertion()
 {
     if (!auth()->user()->id) {
@@ -214,12 +213,7 @@ function firstInsertion()
 
     return $feed_back;
 }
-
-
-
-
-
-
+// -----------------------------------------------------------------------------------------------------------------
 Route::any('/person/check', 'PersonController@check')->name('person.check');
 Route::any('/customer/check', 'CustomerController@check')->name('customer.check');
 Route::any('/employee/check', 'EmployeeController@check')->name('employee.check');
@@ -228,10 +222,12 @@ Route::any('/plot/check', 'PlotController@check')->name('plot.check');
 Route::any('/contract/check', 'ContractController@check')->name('contract.check');
 Route::any('/task/check', 'TaskController@check')->name('task.check');
 Route::any('/country/check', 'CountryController@check')->name('country.check');
-Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
+// -----------------------------------------------------------------------------------------------------------------
+Route::any('/user/userRegister', 'Auth\RegisterController@check')->name('register.check');
+// Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
 Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
-
+// -----------------------------------------------------------------------------------------------------------------
 Route::resources([
 
     // new
@@ -289,36 +285,11 @@ Route::resources([
     'major' => 'MajorController',
 
 ]);
-
-
-
+// -----------------------------------------------------------------------------------------------------------------
 Auth::routes();
-
+// -----------------------------------------------------------------------------------------------------------------
 Route::get('/home', 'HomeController@index')->name('home');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// -----------------------------------------------------------------------------------------------------------------
 Route::get('/test', function () {
     if (\Auth::check()) {
         if ((auth()->user()->user_level) >= 10) {
@@ -330,6 +301,7 @@ Route::get('/test', function () {
         return redirect('/login');
     }
 });
+// -----------------------------------------------------------------------------------------------------------------
 Route::get('/test2', function () {
     // return now();
     return Person::all();
@@ -343,10 +315,7 @@ Route::get('/test2', function () {
         return "you are guest";
     }
 });
-
-
-
-
+// -----------------------------------------------------------------------------------------------------------------
 function makeUser($user)
 {
     $fahd = [
@@ -462,3 +431,4 @@ function makeUser($user)
     // return redirect('/');
     // return 'user created';
 }
+// -----------------------------------------------------------------------------------------------------------------

@@ -16,39 +16,39 @@ use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
+    // -----------------------------------------------------------------------------------------------------------------
     /*
     |--------------------------------------------------------------------------
     | Register Controller
     |--------------------------------------------------------------------------
-    |
     | This controller handles the registration of new users as well as their
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
-    |
      */
-
     use RegistersUsers;
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Handle a registration request for the application.
-     * fa
+     * 
      * this method is overriding the original one in //Illuminate\Foundation\Auth\RegistersUsers
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function register(Request $request, Person $person)
     {
-        $found_person = $person->find($request->id);
-        if (!$found_person) {
-            return redirect('register')->withErrors(['contact the system administrator to register the initial data first']);
-        }
-        if (!$found_person->is_employee) {
-            return redirect('register')->withErrors(['unauthorised access - just for employees']);
-        }
-        if (($found_person->id != $request->id) || ($found_person->national_id != $request->national_id) || ($found_person->email != $request->email)) {
+        return 'hi';
+        return $request;
+        // $found_person = $person->find($request->id);
+        // if (!$found_person) {
+        //     return redirect('register')->withErrors(['contact the system administrator to register the initial data first']);
+        // }
+        // if (!$found_person->is_employee) {
+        //     return redirect('register')->withErrors(['unauthorised access - just for employees']);
+        // }
+        // if (($found_person->id != $request->id) || ($found_person->national_id != $request->national_id) || ($found_person->email != $request->email)) {
 
-            return redirect()->back()->withErrors(['Data mismatch - try again or contact the system administrator']);
-        }
+        //     return redirect()->back()->withErrors(['Data mismatch - try again or contact the system administrator']);
+        // }
         // return $request;
         $validatedData = $this->validator($request);
 
@@ -57,12 +57,20 @@ class RegisterController extends Controller
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
+    public function showRegistrationForm(Request $request)
+    {
+        // return request()->all();
+        // return $person;
+        return $request;
+        // dd($request);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     // protected function registered(Request $request, $user)
     // {
     //     //
     // }
-
+    // -----------------------------------------------------------------------------------------------------------------
 
     /**
      * Where to redirect users after registration.
@@ -70,7 +78,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Create a new controller instance.
      *
@@ -80,7 +88,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
 
     // not used fa
     /**
@@ -110,7 +118,7 @@ class RegisterController extends Controller
         // ]);
     }
 
-
+    // -----------------------------------------------------------------------------------------------------------------
 
     // edited by fa
     /**
@@ -132,33 +140,71 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     // byme
-    public function userRegister(Request $request, Person $person, User $user)
+    // public function userRegister(Request $request, Person $person, User $user)
+    // {
+    //     if ($request->method() === "GET") {
+    //         return view('/auth/register_chick');
+    //     }
+
+    //     $validatedData = $request->validate([
+    //         'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+    //     ]);
+
+
+    //     $found_user = $user->where('national_id', $request->national_id)->first();
+    //     if ($found_user) {
+    //         return redirect('login')->withErrors(['This ID already registered tray to login']);
+    //     }
+
+    //     $found_person = $person->where('national_id', $request->national_id)->first();
+
+    //     if ($found_person) {
+    //         if (!$found_person->is_employee) {
+    //             return redirect('register')->withErrors(['unauthorised access - just for employees']);
+    //         }
+    //         return view('/auth/register')->with('person', $found_person);
+    //     } else {
+    //         return redirect('register')->withErrors(['contact the system administrator to register the initial data first']);
+    //     }
+    // }
+
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public function check(Request $request, Person $person, User $user)
     {
+        // ------------------------------------------------------------------------------- //
         if ($request->method() === "GET") {
-            return view('/auth/register');
+            return view('auth.register_check');
         }
-
-        $validatedData = $request->validate([
-            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
-        ]);
-
-
+        // ------------------------------------------------------------------------------- //
         $found_user = $user->where('national_id', $request->national_id)->first();
         if ($found_user) {
-            return redirect('login')->withErrors(['This ID already registered tray to login']);
+            // return redirect()->back()->withErrors(['This person is already registered..', 'Contact the system administrator for more information']);
         }
-
+        // ------------------------------------------------------------------------------- //
         $found_person = $person->where('national_id', $request->national_id)->first();
-
-        if ($found_person) {
-            if (!$found_person->is_employee) {
-                return redirect('register')->withErrors(['unauthorised access - just for employees']);
-            }
-            return view('/auth/register')->with('person', $found_person);
-        } else {
-            return redirect('register')->withErrors(['contact the system administrator to register the initial data first']);
+        if (!$found_person) {
+            return redirect()->back()->withErrors(['contact the system administrator to register the initial data first']);
         }
+        // ------------------------------------------------------------------------------- //
+        if (!$found_person->is_employee) {
+            return redirect()->back()->withErrors(['unauthorised access - just for employees']);
+        }
+        // ------------------------------------------------------------------------------- //
+        return redirect()->action('Auth\RegisterController@register');
+        return redirect()->action('Auth\RegisterController@showRegistrationForm')->with('1');
+        // ------------------------------------------------------------------------------- //
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    protected function valid_email(string $email)
+    {
+        $email = trim($email);
+        $email = stripslashes($email);
+        $email = htmlspecialchars($email);
+        // check if e-mail address is well-formed
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 }
