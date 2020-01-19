@@ -225,8 +225,9 @@ Route::any('/country/check', 'CountryController@check')->name('country.check');
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/user/userRegister', 'Auth\RegisterController@check')->name('register.check');
 // Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
-Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
-Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
+Route::any('/user/userLogin', 'Auth\LoginController@check')->name('login.check');
+// Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
+// Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
 // -----------------------------------------------------------------------------------------------------------------
 Route::resources([
 

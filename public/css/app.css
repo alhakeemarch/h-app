@@ -555,6 +555,33 @@ label {
   text-transform: capitalize;
 }
 
+::-webkit-input-placeholder {
+  /* Edge */
+  color: #D3D3D3 !important;
+  text-transform: lowercase;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #D3D3D3 !important;
+  text-transform: lowercase;
+}
+
+::-moz-placeholder {
+  color: #D3D3D3 !important;
+  text-transform: lowercase;
+}
+
+::-ms-input-placeholder {
+  color: #D3D3D3 !important;
+  text-transform: lowercase;
+}
+
+::placeholder {
+  color: #D3D3D3 !important;
+  text-transform: lowercase;
+}
+
 .h-navbar-bg {
   background-color: #465573;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -674,6 +701,7 @@ textarea,
   word-wrap: break-word;
   cursor: pointer;
   border: 0;
+  -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   /* padding: .84rem 2.14rem; */
   border-radius: 300px !important;
@@ -745,6 +773,7 @@ input.form-check-input {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 0.25rem;
+  -webkit-transition: all 1s;
   transition: all 1s;
 }
 

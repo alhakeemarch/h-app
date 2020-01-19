@@ -77,6 +77,21 @@ label {
 }
 // ========================END TAGS===============================================++
 
+// ========================START Pseudo Selectors ================================++
+::-webkit-input-placeholder { /* Edge */
+  color: #D3D3D3 !important;
+  text-transform: lowercase;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #D3D3D3 !important;
+  text-transform: lowercase;
+}
+::placeholder {
+  color: #D3D3D3 !important;
+  text-transform: lowercase;
+}
+// ========================End Pseudo Selectors ==================================++
+
 // ========================CLASSES================================================++
 .h-navbar-bg {
   background-color: $nav-bg;

@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="card ">
-    <h5 class="card-header">{{ __('registration') }}</h5>
+    <h5 class="card-header">{{ __('registration') }} 2/2</h5>
     <div class="card-body">
         {{-- --------------------------------------------------------------------------------------------- --}}
         @if ($person->id)
@@ -39,7 +39,8 @@
             <div class="form-group row">
                 <label for="national_id" class="col-md-2 col-form-label text-md-left">{{ __('nIdNumber') }}</label>
                 <div class="col-md-10">
-                    <input type="text" name="national_id" class="form-control @error ('email') is-invalid @enderror"
+                    <input type="text" name="national_id"
+                        class="form-control @error ('national_id') is-invalid @enderror"
                         value="{{$person->national_id}}" readonly required>
                     @error('national_id')
                     <small class=" text-danger"> {{$errors->first('national_id')}} </small>
@@ -67,12 +68,14 @@
                         onblur="this.placeholder='{{ __('user name') }}..'" onkeypress="userNameString(event)"
                         onkeyup="userNameString(event)" maxlength="10" minlength="3" pattern=".{3,10}" required
                         title="{{__('between 3 and 10 characters')}}" autofocus>
-                    <small class="form-text text-primary @error ('user_name') text-danger @enderror">
-                        User name between 3 and 10 characters, start with letters and can contain only small letters,
-                        numbers, "_" or "-" </small>
                     @error('user_name')
                     <small class=" text-danger"> {{$errors->first('user_name')}} </small>
                     @enderror
+                    <small class="form-text text-primary ml-3 @error ('user_name') text-danger @enderror">
+                        <li> User name must be between 3 and 10 characters.</li>
+                        <li> User name must start with a letters.</li>
+                        <li> User name can contain only small letters, numbers, "_" or "-"</li>
+                    </small>
                 </div>
             </div>
             {{-- --------------------------------------------------------------------------------------------- --}}

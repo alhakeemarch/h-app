@@ -61,7 +61,7 @@ class RegisterController extends Controller
             return redirect()->back()->withErrors(['Contact System administrator, email mismatch']);
         }
         // ------------------------------------------------------------------------------- //
-        return 'hi';
+        // return 'hi';
         event(new Registered($user = $this->create($validatedData)));
         $this->guard()->login($user);
         return $this->registered($request, $user)
@@ -74,7 +74,6 @@ class RegisterController extends Controller
         return view('auth.register')->with(['person' => $found_person]);
     }
     // -----------------------------------------------------------------------------------------------------------------
-
     /**
      * Where to redirect users after registration.
      *
@@ -92,8 +91,6 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
     // -----------------------------------------------------------------------------------------------------------------
-
-    // not used fa
     /**
      * Get a validator for an incoming registration request.
      *
@@ -112,10 +109,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
-
     // -----------------------------------------------------------------------------------------------------------------
-
-    // edited by fa
     /**
      * Create a new user instance after a valid registration.
      *
@@ -126,9 +120,9 @@ class RegisterController extends Controller
     {
         // dd($data);
         return User::create([
-            'person_id' => (int) $data['id'],
+            'person_id' => (int) $data['person_id'],
             'national_id' => (int) $data['national_id'],
-            'name' => $data['the_name'],
+            'name' => $data['name'],
             'user_name' => Str::lower($data['user_name']),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
