@@ -10,45 +10,13 @@
     <h5 class="card-header">{{ __('registration') }}</h5>
     <div class="card-body">
         {{-- --------------------------------------------------------------------------------------------- --}}
-        @if (Request::isMethod('get'))
-        <form action="{{ route ('userRegister') }}" method="POST">
-            @csrf
-            {{-- --------------------------------------------------------------------------------------------- --}}
-            <label for="national_id">{{__( 'nId')}}:</label>
-            <input type="text" name="national_id" class="form-control mb-3 @error ('national_id') is-invalid @enderror"
-                placeholder="{{__( 'nIdNumber')}}.." onfocus="this.placeholder=''"
-                onblur="this.placeholder='{{ __('nIdNumber') }}..'" onkeypress="onlyNumber(event)" maxlength="10"
-                pattern=".{10,}" required title="{{__('must be 10 digits')}}" autofocus>
-            @error('national_id')
-            <small class="text-danger"> {{$errors->first('national_id')}} </small>
-            @enderror
-            {{-- --------------------------------------------------------- START: buttons - --}}
-            <div class="row text-center">
-                <div class="col-md-6">
-                    <button type="submet" class="btn btn-info w-75">
-                        <i class="fas fa-search"></i>
-                        {{-- <i class="fas fa-check"></i> --}}
-                        <span class="d-none d-md-inline-block">&nbsp; {{__('view')}}</span>
-                    </button>
-                </div>
-                <div class="col-md-6">
-                    <a href="{{ url('/') }}" class="btn btn-info w-75">
-                        <i class="fas fa-undo-alt"></i>
-                        <span class="d-none d-md-inline-block">&nbsp; cancel</span>
-                    </a>
-                </div>
-            </div>
-            {{-- --------------------------------------------------------- END: buttons - --}}
-        </form>
-        @endif
-        {{-- --------------------------------------------------------------------------------------------- --}}
-        @if (Request::isMethod('post') && " {{$person->id}}")
+        @if ($person->id)
         <form method="POST" action="{{ route('register') }}">
             @csrf
             {{-- --------------------------------------------------------------------------------------------- --}}
             <input type="hidden" name="is_employee" value="{{$person->is_employee}}">
             {{-- --------------------------------------------------------------------------------------------- --}}
-            <input type="hidden" name="id" value="{{$person->id}}">
+            <input type="hidden" name="person_id" value="{{$person->id}}">
             {{-- --------------------------------------------------------------------------------------------- --}}
             @php
             $the_name ;
@@ -66,7 +34,7 @@
             }
             @endphp
             {{-- --------------------------------------------------------------------------------------------- --}}
-            <input type="hidden" name="the_name" value="{{$the_name}}">
+            <input type="hidden" name="name" value="{{$the_name}}">
             {{-- --------------------------------------------------------------------------------------------- --}}
             <div class="form-group row">
                 <label for="national_id" class="col-md-2 col-form-label text-md-left">{{ __('nIdNumber') }}</label>
@@ -126,7 +94,9 @@
                 <label for="password-confirm"
                     class="col-md-2 col-form-label text-md-left">{{ __('Confirm Password') }}</label>
                 <div class="col-md-10">
-                    <input id="password-confirm" type="password"
+                    <input id="password-confirm" type="password" placeholder="{{__( 'password')}}.."
+                        onfocus="this.placeholder=''" onblur="this.placeholder='{{ __('password') }}..'" minlength="6"
+                        title="{{__('minimum 6 characters')}}"
                         class="form-control @error ('password_confirmation') is-invalid @enderror"
                         name="password_confirmation" required>
                 </div>
