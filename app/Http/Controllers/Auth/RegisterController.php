@@ -74,11 +74,6 @@ class RegisterController extends Controller
         return view('auth.register')->with(['person' => $found_person]);
     }
     // -----------------------------------------------------------------------------------------------------------------
-    // protected function registered(Request $request, $user)
-    // {
-    //     //
-    // }
-    // -----------------------------------------------------------------------------------------------------------------
 
     /**
      * Where to redirect users after registration.
@@ -116,14 +111,6 @@ class RegisterController extends Controller
             'user_name' => 'unique:users|required|string|min:3|max:10|regex:/^[a-z][a-z0-9_-]+$/',
             'password' => 'required|string|min:6|confirmed',
         ]);
-
-        //////////////////////////////////////////////////////////////////////////
-        // return Validator::make($data, [
-        //     'id' => ['required'],
-        //     'name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        //     'password' => ['required', 'string', 'min:6', 'confirmed'],
-        // ]);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -179,15 +166,6 @@ class RegisterController extends Controller
         // ------------------------------------------------------------------------------- //
         return redirect()->action('Auth\RegisterController@register', ['person_id' => $found_person->id]);
         // ------------------------------------------------------------------------------- //
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    protected function valid_email(string $email)
-    {
-        $email = trim($email);
-        $email = stripslashes($email);
-        $email = htmlspecialchars($email);
-        // check if e-mail address is well-formed
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
     // -----------------------------------------------------------------------------------------------------------------
 }
