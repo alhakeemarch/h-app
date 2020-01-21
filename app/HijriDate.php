@@ -149,8 +149,8 @@ class HijriDate
             354 * $y + 30 * $m -
             (int) (($m - 1) / 2) + $d + 1948440 - 385;
     }
-    public function (){
-        return floor((11 * $year + 3) / 30) + floor(354 * $year) + floor(30 * $month)
-            - floor(($month - 1) / 2) + $day + 1948440 - 386;
-    }
+    // public function (){
+    //     return floor((11 * $year + 3) / 30) + floor(354 * $year) + floor(30 * $month)
+    //         - floor(($month - 1) / 2) + $day + 1948440 - 386;
+    // }
 }

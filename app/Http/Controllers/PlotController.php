@@ -10,6 +10,7 @@ use App\plot;
 use App\Rules\ValidDistrict;
 use App\Rules\ValidMunicipalityBranch;
 use App\Rules\ValidPlan;
+use App\Rules\ValidDate;
 use Illuminate\Http\Request;
 use App\MunicipalityBranch;
 use App\Plan;
@@ -205,7 +206,8 @@ class PlotController extends Controller
         return $request->validate([
             'project_id' => 'nullable|numeric',
             'deed_no' => 'required',
-            'deed_date' => 'required|date|before:' . date("d-m-Y", strtotime("+1 days")) . '|date_format:d-m-Y',
+            // 'deed_date' => 'required|date|before:' . date("d-m-Y", strtotime("+1 days")) . '|date_format:d-m-Y',
+            'deed_date' => ['required', new ValidDate],
             'plot_no' => ['required', 'numeric',],
             'area' => 'nullable| numeric',
             'allowed_building_ratio' => ['nullable', 'numeric'],

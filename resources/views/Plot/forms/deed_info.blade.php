@@ -17,19 +17,12 @@
     <div class="col-md">
         <label for="deed_no">{{__( 'deed')}} {{ __('number') }}
             <span class="small text-danger">({{__('required')}})</span>:</label>
-        @if ($new_deed_no)
         <input type="text" name="deed_no" class="form-control @error ('deed_no') is-invalid @enderror"
-            value="{{$new_deed_no}}" placeholder="{{__( 'Deed Number')}}.." readonly required>
+            value="{{$new_deed_no ? $new_deed_no : $plot->deed_no }}" placeholder="{{__( 'Deed Number')}}.." readonly
+            required>
         @error('deed_no')
         <small class="text-danger"> {{$errors->first('deed_no')}} </small>
         @enderror
-        @else
-        <input type="text" name="deed_no" class="form-control @error ('deed_no') is-invalid @enderror"
-            value="{{$plot->deed_no}}" placeholder="{{__( 'Deed Number')}}.." readonly required>
-        @error('deed_no')
-        <small class="text-danger"> {{$errors->first('deed_no')}} </small>
-        @enderror
-        @endif
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
@@ -37,7 +30,8 @@
             <span class="small text-danger">({{__('required')}})</span> :</label>
         <input type="text" name="deed_date" class="form-control @error ('deed_date') is-invalid @enderror "
             value="{{old('deed_date') ?? $plot->deed_date }}" placeholder="dd-mm-yyy" onfocus="this.placeholder=''"
-            onblur="this.placeholder='dd-mm-yyy' " required>
+            onblur="this.placeholder='dd-mm-yyy'" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}"
+            title="DD-MM-YYYY" required>
         @error('deed_date')
         <small class=" text-danger"> {{$errors->first('deed_date')}} </small>
         @enderror

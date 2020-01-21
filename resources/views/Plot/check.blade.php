@@ -14,11 +14,13 @@
 
             <label for="deed_no">{{__( 'Deed Number')}} <span class="small text-danger">({{__('required')}})</span>
                 :</label>
-            <input type="text" onkeypress="onlyNumber(event)" name="deed_no" class="form-control mb-3" required
+            <input type="text" name="deed_no" class="form-control mb-3 @error ('deed_no') is-invalid @enderror" required
                 placeholder="{{__( 'deed_no')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'deed_no')}}..'">
-
-            <button type="submit" class="btn btn-secondary btn-block my-3">{{__('next')}}</button>
+            @error('deed_no')
+            <small class="text-danger"> {{$errors->first('deed_no')}} </small>
+            @enderror
+            <button type="submit" class="btn btn-info btn-block my-3">{{__('next')}}</button>
 
         </form>
 

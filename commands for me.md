@@ -323,6 +323,7 @@ php artisan make:model Project -mcrf
 php artisan make:rule ValidDistrict // حي
 php artisan make:rule ValidMunicipalityBranch // بلدية فرعية
 php artisan make:rule ValidPlan // مخطط
+php artisan make:rule ValidDate // تاريخ
 
 ==============================================================================
 for crating Localization middleware
