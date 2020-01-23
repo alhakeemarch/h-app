@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\Customer;
 use Illuminate\Http\Request;
 use App\Person;
 use Illuminate\Support\Facades\Auth;
@@ -98,11 +99,10 @@ class CustomerController extends PersonController
      */
     public function edit(Person $customer)
     {
-        $nationalitiesArr = Country::all();
-        return view('customer.edit')->with([
-            'customer' => $customer,
-            'nationalitiesArr' => $nationalitiesArr,
+        $formsData = array_merge($this->formsData(), [
+            'person' => $customer,
         ]);
+        return view('customer.edit')->with($formsData);
     }
 
     /**
@@ -119,7 +119,7 @@ class CustomerController extends PersonController
         }
 
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Country::where('code_2chracters', $validatedData['code_2chracters'])->first();
+        $nationality = Country::where('code_2chracters', $validatedData['nationaltiy_code'])->first();
         if ($nationality) {
             $validatedData->put('nationaltiy_ar', $nationality->ar_name);
             $validatedData->put('nationaltiy_en', $nationality->en_name);

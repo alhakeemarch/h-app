@@ -8,7 +8,7 @@
         {{-- --------------------------------------------------------------------------------------------- --}}
         <div class="col-md">
             <label for="is_employee">{{__( 'employee')}}
-                <span class="small text-danger">({{__('required')}})</span> :</label>
+                <span class="small text-muted">({{__('optional')}})</span>:</label>
             <select name="is_employee" class="form-control @error ('is_employee') is-invalid @enderror" required>
                 <option value=0 selected> {{__('no')}}</option>
                 <option value=1 @if(old('is_employee') or $person->is_employee )selected @endif
@@ -18,7 +18,7 @@
         {{-- --------------------------------------------------------------------------------------------- --}}
         <div class="col-md">
             <label for="is_customer">{{__( 'customer')}}
-                <span class="small text-danger">({{__('required')}})</span> :</label>
+                <span class="small text-muted">({{__('optional')}})</span>:</label>
             <select name="is_customer" class="form-control @error ('is_customer') is-invalid @enderror" required>
                 <option value=0 selected> {{__('no')}}</option>
                 <option value=1 @if ( old('is_customer') or $person->is_customer ) selected @endif
@@ -34,8 +34,8 @@
         {{-- --------------------------------------------------------------------------------------------- --}}
         <div class="col-md">
             <label for="is_employee">{{__( 'employee')}}
-                <span class="small text-danger">({{__('required')}})</span> :</label>
-            <select name="is_employee" class="form-control @error ('is_employee') is-invalid @enderror" required>
+                <span class="small text-muted">({{__('optional')}})</span>:</label>
+            <select name="is_employee" class="form-control @error ('is_employee') is-invalid @enderror">
                 <option value=0 selected disabled> {{__('no')}}</option>
                 <option value=1 @if(old('is_employee') or $person->is_employee )selected @endif disabled>
                     {{__('yes')}} </option>
@@ -44,8 +44,8 @@
         {{-- --------------------------------------------------------------------------------------------- --}}
         <div class="col-md">
             <label for="is_customer">{{__( 'customer')}}
-                <span class="small text-danger">({{__('required')}})</span> :</label>
-            <select name="is_customer" class="form-control @error ('is_customer') is-invalid @enderror" required>
+                <span class="small text-muted">({{__('optional')}})</span>:</label>
+            <select name="is_customer" class="form-control @error ('is_customer') is-invalid @enderror">
                 <option value=0 disabled> {{__('no')}}</option>
                 <option value=1 selected disabled> {{__('yes')}}</option>
             </select>

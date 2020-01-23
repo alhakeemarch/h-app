@@ -10,6 +10,9 @@ use App\Person;
 use App\SceMembershipType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Rules\ValidDate;
+use App\Rules\ValidHijriDate;
+use App\Rules\ValidGregorianDate;
 
 class PersonController extends Controller
 {
@@ -225,22 +228,22 @@ class PersonController extends Controller
             'nationaltiy_en' => "nullable",
             // ----------------------------------------------------
             'hafizah_no' => 'numeric|nullable',
-            'national_id_issue_date' => 'nullable',
-            'national_id_expire_date' => 'nullable',
+            'national_id_issue_date' => ['nullable', 'string', new ValidHijriDate],
+            'national_id_expire_date' => ['nullable', 'string', new ValidHijriDate],
             'national_id_issue_place' => 'string|nullable',
             // ----------------------------------------------------
             'pasport_no' => 'nullable',
-            'pasport_issue_date' => 'nullable',
-            'pasport_expire_date' => 'nullable',
+            'pasport_issue_date' => ['nullable', 'string', new ValidGregorianDate],
+            'pasport_expire_date' => ['nullable', 'string', new ValidGregorianDate],
             'pasport_issue_place' => 'nullable',
             // ----------------------------------------------------
-            'ah_birth_date' => 'nullable',
-            'ad_birth_date' => 'nullable',
+            'ah_birth_date' => ['nullable', 'string', new ValidHijriDate],
+            'ad_birth_date' => ['nullable', 'string', new ValidGregorianDate],
             'birth_place' => 'string|nullable',
             'birth_city' => 'string|nullable',
             // ----------------------------------------------------
-            'ah_hiring_date' => 'nullable',
-            'ad_hiring_date' => 'nullable',
+            'ah_hiring_date' => ['nullable', 'string', new ValidHijriDate],
+            'ad_hiring_date' => ['nullable', 'string', new ValidGregorianDate],
             'hiring_day' => 'string|nullable',
             // ----------------------------------------------------
             'employment_no' => 'numeric|nullable',
@@ -263,8 +266,8 @@ class PersonController extends Controller
             // ----------------------------------------------------
             'SCE_membership_no' => 'numeric|nullable',
             'SCE_membership_type_id' => 'numeric|nullable',
-            'SCE_membership_expire_date' => 'string|nullable',
-            'SCE_classification_expire_date' => 'string|nullable',
+            'SCE_membership_expire_date' => ['nullable', 'string', new ValidGregorianDate],
+            'SCE_classification_expire_date' => ['nullable', 'string', new ValidGregorianDate],
             // ----------------------------------------------------
             'mobile' => 'required|numeric|starts_with:0,9|digits:10,12,14',
             'phone' => 'nullable',

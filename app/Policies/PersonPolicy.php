@@ -18,6 +18,7 @@ class PersonPolicy
      */
     public function viewAny(User $user)
     {
+
         // return true;
         // return false;
         return $user->is_admin;

@@ -324,6 +324,8 @@ php artisan make:rule ValidDistrict // حي
 php artisan make:rule ValidMunicipalityBranch // بلدية فرعية
 php artisan make:rule ValidPlan // مخطط
 php artisan make:rule ValidDate // تاريخ
+php artisan make:rule ValidGregorianDate // تاريخ ميلادي
+php artisan make:rule ValidHijriDate // تاريخ هجري
 
 ==============================================================================
 for crating Localization middleware

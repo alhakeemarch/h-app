@@ -48,10 +48,10 @@
             <span class="small text-muted">({{__('optional')}})</span> :</label>
         <input type="text" name="SCE_membership_expire_date"
             class="form-control mb-3 @error ('SCE_membership_expire_date') is-invalid @enderror"
-            placeholder="{{__( 'dd/mm/yyyy')}}.." onfocus="this.placeholder=''"
-            onblur="this.placeholder='{{__( 'dd/mm/yyyy')}}..'"
+            placeholder="{{'dd-mm-yyyy'}}.." onfocus="this.placeholder=''"
+            onblur="this.placeholder='{{'dd-mm-yyyy'}}..'"
             value="{{ old('SCE_membership_expire_date') ?? $person->SCE_membership_expire_date }}"
-            pattern="\d{1,2}/\d{1,2}/\d{4}">
+            pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}" title="DD-MM-YYYY">
         @error('SCE_membership_expire_date')
         <small class=" text-danger"> {{$errors->first('SCE_membership_expire_date')}} </small>
         @enderror
@@ -62,10 +62,10 @@
             <span class="small text-muted">({{__('optional')}})</span> :</label>
         <input type="text" name="SCE_classification_expire_date"
             class="form-control mb-3 @error ('SCE_classification_expire_date') is-invalid @enderror"
-            placeholder="{{__( 'dd/mm/yyyy')}}.." onfocus="this.placeholder=''"
-            onblur="this.placeholder='{{__( 'dd/mm/yyyy')}}..'"
+            placeholder="{{'dd-mm-yyyy'}}.." onfocus="this.placeholder=''"
+            onblur="this.placeholder='{{'dd-mm-yyyy'}}..'"
             value="{{ old('SCE_classification_expire_date') ?? $person->SCE_classification_expire_date }}"
-            pattern="\d{1,2}/\d{1,2}/\d{4}">
+            pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}" title="DD-MM-YYYY">
         @error('SCE_classification_expire_date')
         <small class=" text-danger"> {{$errors->first('SCE_classification_expire_date')}} </small>
         @enderror

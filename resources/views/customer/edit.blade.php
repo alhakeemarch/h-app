@@ -2,23 +2,20 @@
 @section('title', 'customer edit')
 @section('content')
 
-@php
-$person = $customer;
-@endphp
 <div class="card ">
     <h5 class="card-header">{{ __('Edit a customere') }}</h5>
     <div class="card-body">
-        <form action="{{ route ('customer.update',$customer) }}" method="POST">
-
+        <form action="{{ route ('customer.update',$person) }}" method="POST">
+            @csrf
             @method('PUT')
-            @include('person.form')
-            <div class="row">
+            @include('person.forms.form')
 
+            <div class="row">
                 <div class="col-6">
                     <button type="submet" name="submet" id="submet" class="btn btn-info btn-block">Update</button>
                 </div>
                 <div class="col-6">
-                    <a href="{{ url('/customer/'.$customer->id) }}" class="btn btn-info btn-block">Cancel</a>
+                    <a href="{{ url('/customer/'.$person->id) }}" class="btn btn-info btn-block">Cancel</a>
                 </div>
             </div>
 

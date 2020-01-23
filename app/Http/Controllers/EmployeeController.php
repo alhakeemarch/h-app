@@ -17,6 +17,7 @@ class EmployeeController extends PersonController
      */
     public function __construct()
     {
+        $this->authorizeResource(Person::class, 'person');
         // $this->middleware('auth');
     }
     /**

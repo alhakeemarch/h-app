@@ -1,19 +1,6 @@
 <div class="card-header text-white bg-dark mb-3">
     educational information:
 </div>
-<div>
-
-    {{-- id_job_title
-    job_title
-    division
-    current_project
-
-    SCE_membership_no // Saudi Council of Engineers الهيئة السعودية للمهندسين
-    SCE_membership_grade
-    SCE_membership_expire_date --}}
-</div>
-
-
 <div class="form-group row mb-3">
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
