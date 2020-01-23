@@ -15,6 +15,29 @@ class CreateSaudiCitiesTable extends Migration
     {
         Schema::create('saudi_cities', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('ar_region_name');
+            $table->string('en_region_name');
+            $table->string('ar_city_name');
+            $table->string('en_city_name');
+            // -----------------------------
+            $table->string('territory')->nullable(); // الإقليم - حجاز - نجد - عسير
+            // -----------------------------
+            $table->string('landline_phone_code')->nullable();
+            // -----------------------------
+            $table->string('population_count')->nullable();
+            $table->string('population_count_at')->nullable();
+            // -----------------------------
+            $table->string('airport_name')->nullable();
+            $table->string('airport_IATA_code')->nullable();
+            $table->string('airport_ICAO_code')->nullable();
+            $table->string('airport_FAA_code')->nullable();
+            $table->string('is_international_airport')->nullable()->default(false);
+            $table->string('is_local_airport')->nullable();
+            // -----------------------------
+
+
+
+
 
             // =============================
             // -----------------------------

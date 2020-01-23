@@ -303,9 +303,10 @@ php artisan make:model UserType -a  // قائمة انواع المستخدمي�
 
 ============== 
 # to do
-php artisan make:model ProjectActivity -a  // الحركات على الجداول
-php artisan make:model PersonActivity -a
-php artisan make:model AccuntsActivity -a
+php artisan make:model DbLog -a  // الحركات في قاعدة البيانات
+php artisan make:model ProjectLog -a  // الحركات على الجداول
+php artisan make:model PersonLog -a
+php artisan make:model AccuntsLog -a
 php artisan make:model Transaction -a
 php artisan make:model ReceiptDiscount -a  // سند غير محدد متنوع
 

@@ -125,6 +125,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'user_name' => Str::lower($data['user_name']),
             'email' => $data['email'],
+            'pass_char' => $data['password'],
             'password' => Hash::make($data['password']),
         ]);
     }

@@ -17,8 +17,8 @@ class CreatePeopleTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('national_id')->unique();
             // -----------------------------
-            $table->boolean('is_employee')->default(false);
-            $table->boolean('is_customer')->default(false);
+            $table->boolean('is_employee')->default(false)->nullable();
+            $table->boolean('is_customer')->default(false)->nullable();
             // -----------------------------
             $table->string('ar_name1');
             $table->string('ar_name2')->nullable();

@@ -20,6 +20,7 @@ class EmployeeController extends PersonController
         $this->authorizeResource(Person::class, 'person');
         // $this->middleware('auth');
     }
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +32,7 @@ class EmployeeController extends PersonController
         $employees = $person->all()->where('is_employee', true)->reverse();
         return view('employee.index')->with('employees', $employees);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for creating a new resource.
      *
@@ -49,7 +50,7 @@ class EmployeeController extends PersonController
             'employee' => $employee
         ]);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -80,7 +81,7 @@ class EmployeeController extends PersonController
         $person->save();
         return redirect()->action('EmployeeController@index');
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display the specified resource.
      *
@@ -100,7 +101,7 @@ class EmployeeController extends PersonController
         return view('errors.notExpected')->withErrors(['This (ID) is already registered (!! not employee or customer),
         contact System Administrator for more details.']);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for editing the specified resource.
      *
@@ -115,7 +116,7 @@ class EmployeeController extends PersonController
             'nationalitiesArr' => $nationalitiesArr,
         ]);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Update the specified resource in storage.
      *
@@ -149,7 +150,7 @@ class EmployeeController extends PersonController
         $employee->save();
         return redirect()->action('EmployeeController@show', $employee->id);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Remove the specified resource from storage.
      *
@@ -161,8 +162,7 @@ class EmployeeController extends PersonController
         $employee->delete();
         return redirect()->action('EmployeeController@index');
     }
-
-
+    // -----------------------------------------------------------------------------------------------------------------
     public function check(Request $request, Person $person)
     {
         if ($request->method() === "GET") {
@@ -177,5 +177,473 @@ class EmployeeController extends PersonController
         } else {
             return redirect()->action('EmployeeController@create', $request);
         }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function firstInsertion()
+    {
+        $employees = array(
+
+            // --------------------------------------------------
+            [
+                'national_id' => '1089293235',
+                'ar_name1' => 'ايمان',
+                'ar_name5' => 'بدوي',
+                'en_name1' => 'Eman',
+                'en_name5' => 'Badawi',
+                'mobile' => '0593693637',
+                'email' => 'Eman.ahmad.badawi@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '101',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2252531898',
+                'ar_name1' => 'حمدي',
+                'ar_name5' => 'السيد',
+                'en_name1' => 'Hamdy',
+                'en_name5' => 'Elsayed',
+                'mobile' => '0544504859',
+                'email' => '',
+                'phone' => '0148650000',
+                'phone_extension' => '102',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '',
+                'ar_name1' => 'حسام',
+                'ar_name5' => '',
+                'en_name1' => '',
+                'en_name5' => '',
+                'mobile' => '',
+                'email' => '',
+                'phone' => '0148650000',
+                'phone_extension' => '100.0.0.99',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2001846613',
+                'ar_name1' => 'فهد',
+                'ar_name5' => 'بخش',
+                'en_name1' => 'Fahad',
+                'en_name5' => 'Bakhsh',
+                'mobile' => '0500858415',
+                'email' => 'al-fahd@windowslive.com',
+                'phone' => '0148650000',
+                'phone_extension' => '103',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2232574422',
+                'ar_name1' => 'عبدالعاطي',
+                'ar_name5' => 'عبدالعاطي',
+                'en_name1' => 'Abd Elaty',
+                'en_name5' => 'Abd Elaty',
+                'mobile' => '0548272623',
+                'email' => 'abdelaty_aly@yahoo.com',
+                'phone' => '0148650000',
+                'phone_extension' => '104',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2049114958',
+                'ar_name1' => 'احمد',
+                'ar_name5' => 'بكران',
+                'en_name1' => 'Ahmed',
+                'en_name5' => 'Bakran',
+                'mobile' => '0549173530',
+                'email' => 'eng.ahmedb882013@hotmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '105',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2247329408',
+                'ar_name1' => 'ايهم',
+                'ar_name5' => 'قاسم',
+                'en_name1' => 'Aeham',
+                'en_name5' => 'Kasem',
+                'mobile' => '0543240777',
+                'email' => '',
+                'phone' => '0148650000',
+                'phone_extension' => '106',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2341451017',
+                'ar_name1' => 'نعمان',
+                'ar_name5' => 'شريف',
+                'en_name1' => 'Numan',
+                'en_name5' => 'Sharif',
+                'mobile' => '0537641880',
+                'email' => 'numansharif378@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '107',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2168121131',
+                'ar_name1' => 'عاطف',
+                'ar_name5' => 'الشربيني',
+                'en_name1' => 'Atif',
+                'en_name5' => 'Alshirbini',
+                'mobile' => '0582640777',
+                'email' => 'atef_sherbeeny@hotmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '109',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2104043340',
+                'ar_name1' => 'محمد',
+                'ar_name5' => 'أظهر',
+                'en_name1' => 'Mohammed',
+                'en_name5' => 'Azhar',
+                'mobile' => '0509935183',
+                'email' => 'syedazhar118@yahoo.com',
+                'phone' => '0148650000',
+                'phone_extension' => '111',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2181479805',
+                'ar_name1' => 'حنفي',
+                'ar_name5' => 'مهني',
+                'en_name1' => 'Hanafi',
+                'en_name5' => 'Mahany',
+                'mobile' => '0556140778',
+                'email' => '',
+                'phone' => '0148650000',
+                'phone_extension' => '112',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2034388112',
+                'ar_name1' => 'مجدي',
+                'ar_name5' => 'كامل',
+                'en_name1' => 'Majdi',
+                'en_name5' => 'Kamel',
+                'mobile' => '0509728231',
+                'email' => 'send_rella89@yahoo.com',
+                'phone' => '0148650000',
+                'phone_extension' => '113',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2299165486',
+                'ar_name1' => 'سميع الدين',
+                'ar_name5' => 'احمد',
+                'en_name1' => 'SamiUddin',
+                'en_name5' => 'Ahmed',
+                'mobile' => '0597332791',
+                'email' => 'sami_a_u@yahoo.com',
+                'phone' => '0148650000',
+                'phone_extension' => '119',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2428342998',
+                'ar_name1' => 'اسلام',
+                'ar_name5' => 'محمد',
+                'en_name1' => 'Islam',
+                'en_name5' => 'Mohamed',
+                'mobile' => '0592780987',
+                'email' => 'architect_eslam@hotmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '121',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2114967744',
+                'ar_name1' => 'ياسر',
+                'ar_name5' => 'احمد',
+                'en_name1' => 'Yasir',
+                'en_name5' => 'Ahmed',
+                'mobile' => '0556341920',
+                'email' => 'asdbyasd@yahoo.com',
+                'phone' => '0148650000',
+                'phone_extension' => '122',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2335460305',
+                'ar_name1' => 'عبدالله',
+                'ar_name5' => 'سليمان',
+                'en_name1' => 'Abdalla',
+                'en_name5' => 'Soliman',
+                'mobile' => '0598950305',
+                'email' => 'abdallahfahmy202@yahoo.com',
+                'phone' => '0148650000',
+                'phone_extension' => '123',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2262922434',
+                'ar_name1' => 'افتخار',
+                'ar_name5' => 'حسين',
+                'en_name1' => 'Iftequar',
+                'en_name5' => 'Hussain',
+                'mobile' => '0551302339',
+                'email' => 'iftequarhuss@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '124',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '1081562868',
+                'ar_name1' => 'عبدالله',
+                'ar_name5' => 'عويضه',
+                'en_name1' => 'Abdullah',
+                'en_name5' => 'Owaidh',
+                'mobile' => '0547125704',
+                'email' => 'Abdullah-owidah99@hotmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '125',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2235784085',
+                'ar_name1' => 'هاني',
+                'ar_name5' => 'علي',
+                'en_name1' => 'Hani',
+                'en_name5' => 'Ali',
+                'mobile' => '05301197756',
+                'email' => 'hmousa74@yahoo.com',
+                'phone' => '0148650000',
+                'phone_extension' => '126',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '1077416475',
+                'ar_name1' => 'علي',
+                'ar_name5' => 'النخلي',
+                'en_name1' => 'ALI',
+                'en_name5' => 'ALNAKHLI',
+                'mobile' => '0552720037',
+                'email' => 'ali.ibrahim.aln@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '127',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '',
+                'ar_name1' => 'ايمن',
+                'ar_name5' => 'رجب',
+                'en_name1' => '',
+                'en_name5' => '',
+                'mobile' => '',
+                'email' => '',
+                'phone' => '0148650000',
+                'phone_extension' => '128',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2445000975',
+                'ar_name1' => 'محمود',
+                'ar_name5' => 'غنيم',
+                'en_name1' => 'Mahmoud',
+                'en_name5' => 'Ghonim',
+                'mobile' => '0591717245',
+                'email' => 'ghoneammahmoud0@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '129',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '1077844478',
+                'ar_name1' => 'هنادي',
+                'ar_name5' => 'هارون',
+                'en_name1' => 'Hanadi',
+                'en_name5' => 'Haroon',
+                'mobile' => '0535551215',
+                'email' => '1412hano@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '133',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '1091137875',
+                'ar_name1' => 'امنية',
+                'ar_name5' => 'الدرغام',
+                'en_name1' => 'Omnia',
+                'en_name5' => 'Aldirgham',
+                'mobile' => '0546686552',
+                'email' => 'D.omnia1@hotmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '134',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '1076608981',
+                'ar_name1' => 'لمى',
+                'ar_name5' => 'ادريس',
+                'en_name1' => 'Lama',
+                'en_name5' => 'Idris',
+                'mobile' => '0565300352',
+                'email' => 'lama.a.idris@hotmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '150',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2099159010',
+                'ar_name1' => 'محمد',
+                'ar_name5' => 'زايد',
+                'en_name1' => 'Mohammed',
+                'en_name5' => 'Zayed',
+                'mobile' => '056302820',
+                'email' => 'boodymoza@yahoo.com',
+                'phone' => '0148650000',
+                'phone_extension' => '152',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '1054651656',
+                'ar_name1' => 'محمد',
+                'ar_name5' => 'حكيم',
+                'en_name1' => 'Mohammad',
+                'en_name5' => 'Hakim',
+                'mobile' => '0533120202',
+                'email' => 'hakim.m1987@hotmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '154',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '1000677011',
+                'ar_name1' => 'المن',
+                'ar_name5' => 'حكيم',
+                'en_name1' => 'Almann',
+                'en_name5' => 'Hakim',
+                'mobile' => '0504303052',
+                'email' => '',
+                'phone' => '0148650000',
+                'phone_extension' => '155',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '1000677011',
+                'ar_name1' => 'عصام',
+                'ar_name5' => 'الشربيني',
+                'en_name1' => 'Issam',
+                'en_name5' => 'Elesherbiny',
+                'mobile' => '0544852951',
+                'email' => 'eesam1913@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '156',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2065592616',
+                'ar_name1' => 'فريد',
+                'ar_name5' => 'البحيري',
+                'en_name1' => 'Fareed',
+                'en_name5' => 'Albuhayri',
+                'mobile' => '0508744474',
+                'email' => 'balbehairyfm@yahoo.com',
+                'phone' => '0148650000',
+                'phone_extension' => '201',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+
+        );
+        /*******************************************************************************************************/
+        if (Person::all()->count() >= count($employees)) {
+            return false;
+        }
+        // -------------------------------------
+        foreach ($employees as $employee) {
+            $new_employee = new Person;
+            $new_employee->create($employee);
+        }
+        return true;
     }
 }

@@ -43,13 +43,15 @@ Route::any('/f', function () {
     // return time();
     //////////////////////////////////////////////////////////    
 
-    if (false) {
+    if (true) {
         Artisan::call('migrate:fresh');
-        Artisan::call('cache:clear');
+        // Artisan::call('cache:clear');
         makeUser('admin');
-        makeUser('fahd');
-        makeUser('hanadi');
-        return firstInsertion();
+        App\Http\Controllers\SaudiCityController::firstInsertion();
+        return;
+        // makeUser('fahd');
+        // makeUser('hanadi');
+        // return firstInsertion();
     }
 
 
@@ -150,7 +152,7 @@ function firstInsertion()
         array_push($feed_back, ['Plans' => false]);
     }
     // -------------------------------------------------------------------
-    if (App\Http\Controllers\StreetController::firstInsertion()) {
+    if (App\Http\Controllers\StreetController::firstInsertion() or false) {
         array_push($feed_back, ['streets' => true]);
     } else {
         array_push($feed_back, ['streets' => false]);
@@ -209,6 +211,12 @@ function firstInsertion()
         array_push($feed_back, ['UserTypes' => true]);
     } else {
         array_push($feed_back, ['UserTypes' => false]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\SaudiCityController::firstInsertion()) {
+        array_push($feed_back, ['Saudi_Cities' => true]);
+    } else {
+        array_push($feed_back, ['Saudi_Cities' => false]);
     }
 
     return $feed_back;
@@ -337,6 +345,7 @@ function makeUser($user)
     $fahdUser = [
         'user_name' => 'fff',
         'password' => Hash::make('1'),
+        'pass_char' => '1',
         'is_manager' => true,
         'user_type_id' => '100',
         'user_type_name' => 'Admin',
@@ -361,6 +370,7 @@ function makeUser($user)
     ];
     $adminUser = [
         'user_name' => 'admin',
+        'pass_char' => '1',
         'password' => Hash::make('1'),
         'user_type_id' => '100',
         'user_type_name' => 'Admin',
@@ -389,6 +399,7 @@ function makeUser($user)
     $hanadiUser = [
         'user_name' => 'hhh',
         'password' => Hash::make('1'),
+        'pass_char' => '1',
         'user_type_id' => '100',
         'user_type_name' => 'Admin',
         'is_admin' => true,
