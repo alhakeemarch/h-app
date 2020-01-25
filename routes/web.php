@@ -29,7 +29,6 @@ Route::get('/', function () {
 })->name('home');
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/f', function () {
-
     //////////////////////////////////////////////////////////    
     // $h = new App\HijriDate();
     // return $h->get_date(12 - 01 - 2020);
@@ -43,15 +42,14 @@ Route::any('/f', function () {
     // return time();
     //////////////////////////////////////////////////////////    
 
-    if (true) {
+    if (false) {
         Artisan::call('migrate:fresh');
-        // Artisan::call('cache:clear');
+        Artisan::call('cache:clear');
         makeUser('admin');
-        App\Http\Controllers\SaudiCityController::firstInsertion();
-        return;
-        // makeUser('fahd');
-        // makeUser('hanadi');
-        // return firstInsertion();
+        // return;
+        makeUser('fahd');
+        makeUser('hanadi');
+        return firstInsertion();
     }
 
 
@@ -114,109 +112,149 @@ function firstInsertion()
     // -------------------------------------------------------------------
     if (App\Http\Controllers\CountryController::firstInsertion()) {
         array_push($feed_back, ['Countries' => true]);
+        array_push($feed_back, ['Countries records = ' => App\Country::all()->count()]);
     } else {
         array_push($feed_back, ['Countries' => false]);
+        array_push($feed_back, ['Countries records = ' => App\Country::all()->count()]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\MunicipalityBranchController::firstInsertion()) {
         array_push($feed_back, ['MunicipalityBranchs' => true]);
+        array_push($feed_back, ['MunicipalityBranchs records = ' => App\MunicipalityBranch::all()->count()]);
     } else {
         array_push($feed_back, ['MunicipalityBranchs' => false]);
+        array_push($feed_back, ['MunicipalityBranchs records = ' => App\MunicipalityBranch::all()->count()]);
     }
     // -------------------------------------------------------------------
-    // return $feed_back;
-
-    if ($feed_back[1]['MunicipalityBranchs']) {
+    return array_search('MunicipalityBranchs', $feed_back);
+    if ($feed_back[2]['MunicipalityBranchs']) {
         if (App\Http\Controllers\DistrictController::firstInsertion()) {
             array_push($feed_back, ['Districts' => true]);
+            array_push($feed_back, ['Districts records = ' => App\District::all()->count()]);
         } else {
             array_push($feed_back, ['Districts' => false]);
+            array_push($feed_back, ['Districts records = ' => App\District::all()->count()]);
         }
     } else {
         array_push($feed_back, ['Districts' => 'No:::MunicipalityBranchs']);
+        array_push($feed_back, ['Districts records = ' => App\District::all()->count(),]);
     }
     // -------------------------------------------------------------------
-    if ($feed_back[1]['MunicipalityBranchs'] && $feed_back[2]['Districts']) {
+    if ($feed_back[2]['MunicipalityBranchs'] && $feed_back[4]['Districts']) {
         if (App\Http\Controllers\NeighborController::firstInsertion()) {
             array_push($feed_back, ['Neighbors' => true]);
+            array_push($feed_back, ['Neighbors records = ' => App\Neighbor::all()->count()]);
         } else {
             array_push($feed_back, ['Neighbors' => false]);
+            array_push($feed_back, ['Neighbors records = ' => App\Neighbor::all()->count()]);
         }
     } else {
         array_push($feed_back, ['Neighbors' => 'No:::MunicipalityBranchs or Districts']);
+        array_push($feed_back, ['Neighbors records = ' => App\Neighbor::all()->count()]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\PlanController::firstInsertion()) {
         array_push($feed_back, ['Plans' => true]);
+        array_push($feed_back, ['Plans records = ' => App\Plan::all()->count()]);
     } else {
         array_push($feed_back, ['Plans' => false]);
+        array_push($feed_back, ['Plans records = ' => App\Plan::all()->count()]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\StreetController::firstInsertion() or false) {
         array_push($feed_back, ['streets' => true]);
+        array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
     } else {
         array_push($feed_back, ['streets' => false]);
+        array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\AllowedUsageController::firstInsertion()) {
         array_push($feed_back, ['allowedUsages' => true]);
+        array_push($feed_back, ['AllowedUsages records = ' => App\AllowedUsage::all()->count(),]);
     } else {
         array_push($feed_back, ['allowedUsages' => false]);
+        array_push($feed_back, ['AllowedUsages records = ' => App\AllowedUsage::all()->count(),]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\AllowedBuildingRatioController::firstInsertion()) {
         array_push($feed_back, ['AllowedBuildingRatios' => true]);
+        array_push($feed_back, ['AllowedBuildingRatios records = ' => App\AllowedBuildingRatio::all()->count(),]);
     } else {
         array_push($feed_back, ['AllowedBuildingRatios' => false]);
+        array_push($feed_back, ['AllowedBuildingRatios records = ' => App\AllowedBuildingRatio::all()->count(),]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\AllowedBuildingHeightController::firstInsertion()) {
         array_push($feed_back, ['AllowedBuildingHeights' => true]);
-        array_push($feed_back, ['records = ' => App\AllowedBuildingHeight::all()->count()]);
+        array_push($feed_back, ['AllowedBuildingHeights records = ' => App\AllowedBuildingHeight::all()->count(),]);
     } else {
         array_push($feed_back, ['AllowedBuildingHeights' => false]);
+        array_push($feed_back, ['AllowedBuildingHeights records = ' => App\AllowedBuildingHeight::all()->count(),]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\OwnerTypeController::firstInsertion()) {
         array_push($feed_back, ['OwnerTypes' => true]);
+        array_push($feed_back, ['OwnerTypes records = ' => App\OwnerType::all()->count(),]);
     } else {
         array_push($feed_back, ['OwnerTypes' => false]);
+        array_push($feed_back, ['OwnerTypes records = ' => App\OwnerType::all()->count(),]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\MajorController::firstInsertion()) {
         array_push($feed_back, ['Majors' => true]);
+        array_push($feed_back, ['Majors records = ' => App\Major::all()->count(),]);
     } else {
         array_push($feed_back, ['Majors' => false]);
+        array_push($feed_back, ['Majors records = ' => App\Major::all()->count(),]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\GradeRankController::firstInsertion()) {
         array_push($feed_back, ['GradeRanks' => true]);
+        array_push($feed_back, ['GradeRanks records = ' => App\GradeRank::all()->count(),]);
     } else {
         array_push($feed_back, ['GradeRanks' => false]);
+        array_push($feed_back, ['GradeRanks records = ' => App\GradeRank::all()->count(),]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\SceMembershipTypeController::firstInsertion()) {
         array_push($feed_back, ['SceMembershipTypes' => true]);
+        array_push($feed_back, ['SceMembershipTypes records = ' => App\SceMembershipType::all()->count(),]);
     } else {
         array_push($feed_back, ['SceMembershipTypes' => false]);
+        array_push($feed_back, ['SceMembershipTypes records = ' => App\SceMembershipType::all()->count(),]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\BankController::firstInsertion()) {
         array_push($feed_back, ['Banks' => true]);
+        array_push($feed_back, ['Banks records = ' => App\Bank::all()->count(),]);
     } else {
         array_push($feed_back, ['Banks' => false]);
+        array_push($feed_back, ['Banks records = ' => App\Bank::all()->count(),]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\UserTypeController::firstInsertion()) {
         array_push($feed_back, ['UserTypes' => true]);
+        array_push($feed_back, ['UserTypes records = ' => App\UserType::all()->count(),]);
     } else {
         array_push($feed_back, ['UserTypes' => false]);
+        array_push($feed_back, ['UserTypes records = ' => App\UserType::all()->count(),]);
     }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\SaudiCityController::firstInsertion()) {
         array_push($feed_back, ['Saudi_Cities' => true]);
+        array_push($feed_back, ['Saudi_Cities records = ' => App\SaudiCity::all()->count(),]);
     } else {
         array_push($feed_back, ['Saudi_Cities' => false]);
+        array_push($feed_back, ['Saudi_Cities records = ' => App\SaudiCity::all()->count(),]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\EmployeeController::firstInsertion()) {
+        array_push($feed_back, ['Employees' => true]);
+        array_push($feed_back, ['Employees records = ' => App\Person::all()->where('is_employee')->count()]);
+    } else {
+        array_push($feed_back, ['Employees' => false]);
+        array_push($feed_back, ['Employees records = ' => App\Person::all()->where('is_employee')->count()]);
     }
 
     return $feed_back;
@@ -232,7 +270,7 @@ Route::any('/task/check', 'TaskController@check')->name('task.check');
 Route::any('/country/check', 'CountryController@check')->name('country.check');
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/user/userRegister', 'Auth\RegisterController@check')->name('register.check');
-// Route::any('/user/userRegister', 'Auth\RegisterController@userRegister')->name('userRegister');
+Route::any('/user/configuration', 'UserController@configuration')->name('user.configuration');
 Route::any('/user/userLogin', 'Auth\LoginController@check')->name('login.check');
 // Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 // Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
@@ -327,31 +365,6 @@ Route::get('/test2', function () {
 // -----------------------------------------------------------------------------------------------------------------
 function makeUser($user)
 {
-    $fahd = [
-        'national_id' => '2001846613',
-        'created_by_id' => '1',
-        'created_by_name' => 'admin',
-        'is_employee' => true,
-        'is_customer' => true,
-        'ar_name1' => 'فهد',
-        'ar_name5' => "بخش",
-        'en_name1' => 'Fahd',
-        'en_name5' => 'Bakhsh',
-        'mobile' => '0500858415',
-        'phone' => '0148650000',
-        'phone_extension' => '103',
-        'email' => 'al-fahd@windowslive.com'
-    ];
-    $fahdUser = [
-        'user_name' => 'fff',
-        'password' => Hash::make('1'),
-        'pass_char' => '1',
-        'is_manager' => true,
-        'user_type_id' => '100',
-        'user_type_name' => 'Admin',
-        'user_level' => '100',
-        'job_level' => '100',
-    ];
     // ===========================================
     $admin = [
         'national_id' => '1000000000',
@@ -379,27 +392,52 @@ function makeUser($user)
         'user_level' => '100',
         'job_level' => '100',
     ];
-
+    // ===========================================
+    $fahd = [
+        'national_id' => '2001846613',
+        'created_by_id' => '1',
+        'created_by_name' => 'admin',
+        'is_employee' => true,
+        'is_customer' => true,
+        'ar_name1' => 'فهد',
+        'ar_name5' => "بخش",
+        'en_name1' => 'Fahd',
+        'en_name5' => 'Bakhsh',
+        'mobile' => '0500858415',
+        'phone' => '0148650000',
+        'phone_extension' => '103',
+        'email' => 'al-fahd@windowslive.com'
+    ];
+    $fahdUser = [
+        'user_name' => 'fff',
+        'password' => Hash::make('1'),
+        'pass_char' => '1',
+        'is_manager' => true,
+        'user_type_id' => '100',
+        'user_type_name' => 'Admin',
+        'user_level' => '100',
+        'job_level' => '100',
+    ];
     // ===========================================
     $hanadi = [
         'national_id' => '1077844478',
         'created_by_id' => '1',
         'created_by_name' => 'admin',
         'is_employee' => true,
-        'is_customer' => true,
-        'ar_name1' => 'المدير',
-        'ar_name5' => '-',
-        'en_name1' => 'admin',
-        'en_name5' => '-',
-        'mobile' => '0500000000',
+        'is_customer' => false,
+        'ar_name1' => 'هنادي',
+        'ar_name5' => 'هارون',
+        'en_name1' => 'Hanadi',
+        'en_name5' => 'Haroon',
+        'mobile' => '0535551215',
         'phone' => '0148650000',
         'phone_extension' => '133',
         'email' => '1412hano@gmail.com'
     ];
     $hanadiUser = [
-        'user_name' => 'hhh',
-        'password' => Hash::make('1'),
-        'pass_char' => '1',
+        'user_name' => 'hanadi',
+        'password' => Hash::make('123456'),
+        'pass_char' => '123456',
         'user_type_id' => '100',
         'user_type_name' => 'Admin',
         'is_admin' => true,

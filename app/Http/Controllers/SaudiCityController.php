@@ -16,7 +16,7 @@ class SaudiCityController extends Controller
     {
         $this->middleware('auth');
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +27,7 @@ class SaudiCityController extends Controller
         $saudi_cities = SaudiCity::all();
         return view('saudiCity.index')->with('saudi_cities', $saudi_cities);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +37,7 @@ class SaudiCityController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -48,7 +48,7 @@ class SaudiCityController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display the specified resource.
      *
@@ -57,9 +57,10 @@ class SaudiCityController extends Controller
      */
     public function show(SaudiCity $saudiCity)
     {
-        //
+        // return $saudiCity;
+        return view('saudiCity.show')->with('saudiCity', $saudiCity);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for editing the specified resource.
      *
@@ -70,7 +71,7 @@ class SaudiCityController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Update the specified resource in storage.
      *
@@ -82,7 +83,7 @@ class SaudiCityController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Remove the specified resource from storage.
      *
@@ -93,7 +94,6 @@ class SaudiCityController extends Controller
     {
         //
     }
-
     // -----------------------------------------------------------------------------------------------------------------
     public static function firstInsertion()
     {

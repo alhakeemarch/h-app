@@ -44,6 +44,7 @@ class PersonPolicy
      */
     public function view(User $user, Person $person)
     {
+        // return true;
         // return $user->is_admin;
         //
     }

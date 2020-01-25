@@ -170,10 +170,14 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                        <i class="fas fa-sign-out-alt mx-4"></i>
+                    <a class="dropdown-item d-flex justify-content-between" href="{{ route('user.configuration') }}">
+                        <span>{{ __('configuration') }}</span>
+                        <i class="fas fa-user-cog"></i>
+                    </a>
+                    <a class="dropdown-item d-flex justify-content-between" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        <span>{{ __('Logout') }}</span>
+                        <i class="fas fa-sign-out-alt"></i>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
