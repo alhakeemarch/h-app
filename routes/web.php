@@ -271,6 +271,7 @@ Route::any('/country/check', 'CountryController@check')->name('country.check');
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/user/userRegister', 'Auth\RegisterController@check')->name('register.check');
 Route::any('/user/configuration', 'UserController@configuration')->name('user.configuration');
+Route::any('/user/changepassword', 'UserController@changePassword')->name('change.password');
 Route::any('/user/userLogin', 'Auth\LoginController@check')->name('login.check');
 // Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 // Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');

@@ -85,6 +85,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // return $user;
         //
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -125,6 +126,32 @@ class UserController extends Controller
     public function configuration(Request $request)
     {
         return view('user.configuration');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function changePassword(Request $request, User $user)
+    {
+        if ($request->method() === "GET") {
+            return redirect()->action('UserController@configuration');
+        }
+        $valed_data = $request->validate([
+            'old_password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required|string|min:6',
+        ]);
+        return redirect()->action('UserController@configuration')->with('success', ['password changed successfully', 'helow you']);
+        $current_user = auth()->user();
+        $old_password = $valed_data['old_password'];
+        $current_password = $current_user->pass_char;
+
+        if (!($old_password === $current_password)) {
+            return redirect()->action('UserController@configuration')->withErrors(['old_password' => 'old password NOT correct']);
+        }
+
+        $current_user->password =  \Hash::make($valed_data['password']);
+        $current_user->pass_char = $valed_data['password'];
+        $current_user->save();
+
+        return redirect()->action('UserController@configuration')->with('success', 'password changed successfully');
     }
     // -----------------------------------------------------------------------------------------------------------------
 }

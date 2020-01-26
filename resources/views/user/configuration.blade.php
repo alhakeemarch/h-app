@@ -8,11 +8,12 @@
 @section('content')
 <div class="card">
     <h5 class="card-header">{{ __('password change') }}</h5>
-    <form action="" method="post" class="card-body">
+    <form action="{{ route ('change.password') }}" method="post" class="card-body">
+        @csrf
         <div class="form-group row">
-            <label for="old_password" class="col-md-2 col-form-label text-md-left">{{ __('old_password') }}</label>
+            <label for="old_password" class="col-md-2 col-form-label text-md-left">{{ __('old password') }}</label>
             <div class="col-md-10">
-                <input name="old_password" id="old_password" type="old_password"
+                <input name="old_password" id="old_password" type="password"
                     class="form-control @error ('old_password') is-invalid @enderror"
                     placeholder="{{__( 'old_password')}}.." onfocus="this.placeholder=''"
                     onblur="this.placeholder='{{ __('old_password') }}..'" minlength="6"
@@ -72,6 +73,35 @@
 </div>
 
 
+
+
+@if (\Session::has('success'))
+
+<ul class="alert alert-success">
+    @php
+    $ar = ["password changed successfully", "helow you"];
+    $msgs= \Session::get('success');
+    // foreach ($ar as $key => $value) {
+    // echo $value;
+    // }
+    @endphp
+    @foreach ($ar as $success)
+    <li>{!!$success !!}</li>
+    @endforeach
+</ul>
+
+<hr>
+
+
+<div class="alert alert-success">
+
+    {{\Session::get('success') }}
+    {{-- <ul>
+        <li>{!! \Session::get('success') !!}</li>
+    </ul> --}}
+
+</div>
+@endif
 
 
 
