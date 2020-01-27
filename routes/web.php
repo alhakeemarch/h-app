@@ -42,7 +42,7 @@ Route::any('/f', function () {
     // return time();
     //////////////////////////////////////////////////////////    
 
-    if (false) {
+    if (1) {
         Artisan::call('migrate:fresh');
         Artisan::call('cache:clear');
         makeUser('admin');
@@ -126,7 +126,7 @@ function firstInsertion()
         array_push($feed_back, ['MunicipalityBranchs records = ' => App\MunicipalityBranch::all()->count()]);
     }
     // -------------------------------------------------------------------
-    return array_search('MunicipalityBranchs', $feed_back);
+
     if ($feed_back[2]['MunicipalityBranchs']) {
         if (App\Http\Controllers\DistrictController::firstInsertion()) {
             array_push($feed_back, ['Districts' => true]);
@@ -140,6 +140,7 @@ function firstInsertion()
         array_push($feed_back, ['Districts records = ' => App\District::all()->count(),]);
     }
     // -------------------------------------------------------------------
+
     if ($feed_back[2]['MunicipalityBranchs'] && $feed_back[4]['Districts']) {
         if (App\Http\Controllers\NeighborController::firstInsertion()) {
             array_push($feed_back, ['Neighbors' => true]);
@@ -161,7 +162,7 @@ function firstInsertion()
         array_push($feed_back, ['Plans records = ' => App\Plan::all()->count()]);
     }
     // -------------------------------------------------------------------
-    if (App\Http\Controllers\StreetController::firstInsertion() or false) {
+    if (App\Http\Controllers\StreetController::firstInsertion() && false) {
         array_push($feed_back, ['streets' => true]);
         array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
     } else {

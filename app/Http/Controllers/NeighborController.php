@@ -209,7 +209,7 @@ class NeighborController extends Controller
             ['ar_name' => 'المليليح', 'district_code' => '52', 'code' => '3', 'municipality_branche_code' => '12', 'area' => '2111572515', 'population' => '0', 'buliding_hight' => '0', 'mi_prinx' => '330'],
             ['ar_name' => 'المندسة', 'district_code' => '55', 'code' => '1', 'municipality_branche_code' => '13', 'area' => '1132136135', 'population' => '0', 'buliding_hight' => '0', 'mi_prinx' => '331'],
             ['ar_name' => 'الفريش', 'district_code' => '47', 'code' => '1', 'municipality_branche_code' => '15', 'area' => '1749881844', 'population' => '0', 'buliding_hight' => '0', 'mi_prinx' => '332'],
-            ['ar_name' => 'الصويدرة', 'district_code' => '53', 'code' => '1', 'municipality_branche_code' => '9', 'area' => '4372254158', 'population' => '0', 'buliding_hight' => '0', 'mi_prinx' => '333'],
+            ['ar_name' => 'الصويدرة', 'district_code' => '52', 'code' => '1', 'municipality_branche_code' => '9', 'area' => '4372254158', 'population' => '0', 'buliding_hight' => '0', 'mi_prinx' => '333'],
         ];
 
 
@@ -250,7 +250,6 @@ class NeighborController extends Controller
             foreach ($all_districts as $district) {
                 if ($district['code']) {
                     if ($district['code'] == $neighbor['district_code']) {
-
                         $district_id = $district['id'];
                         $district_ar_name = $district['ar_name'];
                         $district_en_name = $district['en_name'];

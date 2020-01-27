@@ -74,35 +74,13 @@
 
 
 
-
+{{-- /////////////////////////////// --}}
 @if (\Session::has('success'))
-
 <ul class="alert alert-success">
-    @php
-    $ar = ["password changed successfully", "helow you"];
-    $msgs= \Session::get('success');
-    // foreach ($ar as $key => $value) {
-    // echo $value;
-    // }
-    @endphp
-    @foreach ($ar as $success)
-    <li>{!!$success !!}</li>
-    @endforeach
+    <li>{{ \Session::get('success') }}</li>
 </ul>
-
-<hr>
-
-
-<div class="alert alert-success">
-
-    {{\Session::get('success') }}
-    {{-- <ul>
-        <li>{!! \Session::get('success') !!}</li>
-    </ul> --}}
-
-</div>
 @endif
-
+{{-- /////////////////////////////// --}}
 
 
 <!-- ///////////////////////////////-->

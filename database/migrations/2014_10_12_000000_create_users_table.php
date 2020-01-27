@@ -40,6 +40,11 @@ class CreateUsersTable extends Migration
             $table->longText('notes')->nullable();
             $table->longText('private_notes')->nullable();
             // -----------------------------
+            $table->bigInteger('created_by_id')->references('id')->on('users')->nullable();
+            $table->string('created_by_name')->references('user_name')->on('users')->nullable();
+            $table->bigInteger('last_edit_by_id')->references('id')->on('users')->nullable();
+            $table->string('last_edit_by_name')->references('user_name')->on('users')->nullable();
+            // -----------------------------
             $table->timestamp('deleted_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

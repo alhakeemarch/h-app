@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('title', 'owner type height show')
+@section('title', 'user show')
 @section('content')
 
-<h1> this is show owner type height view</h1>
+<h1> this is show user view</h1>
 
 @php
-$obj = json_decode($ownerType, TRUE);
+$obj = json_decode($user, TRUE);
 @endphp
 <ul class="card-body">
     @foreach ($obj as $a=>$b )
@@ -17,15 +17,20 @@ $obj = json_decode($ownerType, TRUE);
 <hr>
 <div class="row d-flex justify-content-center">
     <div class="col-4">
-        <a href="{{ url('/ownerType') }}" class="btn btn-info btn-lg btn-block"> <i class="fas fa-undo"></i>
+        <a href="{{ url('/user') }}" class="btn btn-info btn-lg btn-block"> <i class="fas fa-undo"></i>
             back</a>
     </div>
     <div class="col-4">
-        <a href="{{ url('/ownerType/'.$ownerType->id.'/edit') }}" class="btn disabled btn-info btn-lg
-        btn-block "> <i class="fas fa-pen"></i> Edit</a>
+        @if (auth()->user()->is_admin)
+        <a href="{{ url('/user/'.$user->id.'/edit') }}" class="btn btn-info btn-lg
+            btn-block "> <i class="fas fa-pen"></i> Edit</a>
+        @else
+        <a href="#" class="btn disabled btn-info btn-lg
+            btn-block "> <i class="fas fa-pen"></i> Edit</a>
+        @endif
     </div>
     <div class="col-4">
-        <form class="delete" action="{{ route('ownerType.destroy', $ownerType) }}" method="POST">
+        <form class="delete" action="{{ route('user.destroy', $user) }}" method="POST">
             @method('DELETE')
             @csrf
             <button disabled class="btn disabled btn-danger btn-lg btn-block" onclick="return confirm('Are you sure?')">
