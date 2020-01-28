@@ -15,12 +15,32 @@ class StreetController extends Controller
     public function index()
     {
         $street_cout = Street::all()->count();
-        $streets = Street::paginate(100);
+        $streets = Street::paginate(50);
         return view('street.index')->with([
             'streets' => $streets,
             'street_cout' => $street_cout,
         ]);
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function search(Request $request)
+    {
+        // return $request;
+        $street_name = $request['street_name'];
+        $all_streets = Street::all();
+        // Player::where('name', 'LIKE', "%$name%")->get();
+
+        // $all_streets = Street::where('ar_name', 'LIKE',  "%$street_name%")->get();
+        $all_streets = Street::where('ar_name', 'LIKE',  "%$street_name%");
+        // return $all_streets;
+        $street_cout = $all_streets->count();
+        // $streets = $all_streets;
+        $streets = $all_streets->paginate(50);
+        return view('street.index')->with([
+            'streets' => $streets,
+            'street_cout' => $street_cout,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 
     /**
      * Show the form for creating a new resource.

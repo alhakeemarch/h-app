@@ -1415,6 +1415,7 @@ class CountryController extends Controller
         // -------------------------------------
         $created_by_id = auth()->user()->id;
         $created_by_name = auth()->user()->user_name;
+        $records = 0;
         // -------------------------------------
         foreach ($countries as $key => $value) {
             $country = new Country();
@@ -1439,8 +1440,9 @@ class CountryController extends Controller
             $country->ar_name = $ar_country_name;
             // -------------------------------------
             $country->save();
+            $records = $records + 1;
         }
 
-        return true;
+        return $records;
     }
 }

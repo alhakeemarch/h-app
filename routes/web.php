@@ -42,9 +42,10 @@ Route::any('/f', function () {
     // return time();
     //////////////////////////////////////////////////////////    
 
-    if (1) {
+    if (false) {
         Artisan::call('migrate:fresh');
         Artisan::call('cache:clear');
+        Artisan::call('view:clear');
         makeUser('admin');
         // return;
         makeUser('fahd');
@@ -108,11 +109,14 @@ function firstInsertion()
     if (!auth()->user()->id) {
         return 'must be logged in';
     }
+    $start_time = hrtime();
     $feed_back = [];
+    $inserted_records = 0;
     // -------------------------------------------------------------------
     if (App\Http\Controllers\CountryController::firstInsertion()) {
         array_push($feed_back, ['Countries' => true]);
         array_push($feed_back, ['Countries records = ' => App\Country::all()->count()]);
+        $inserted_records = $inserted_records + App\Country::all()->count();
     } else {
         array_push($feed_back, ['Countries' => false]);
         array_push($feed_back, ['Countries records = ' => App\Country::all()->count()]);
@@ -162,7 +166,7 @@ function firstInsertion()
         array_push($feed_back, ['Plans records = ' => App\Plan::all()->count()]);
     }
     // -------------------------------------------------------------------
-    if (App\Http\Controllers\StreetController::firstInsertion() && false) {
+    if (App\Http\Controllers\StreetController::firstInsertion() || false) {
         array_push($feed_back, ['streets' => true]);
         array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
     } else {
@@ -258,6 +262,32 @@ function firstInsertion()
         array_push($feed_back, ['Employees records = ' => App\Person::all()->where('is_employee')->count()]);
     }
 
+
+    // -------------------------------------------------------------------
+    // return hrtime();
+    $end_time = hrtime();
+    $insertion_time = $end_time[0] - $start_time[0];
+    $total_records = 0;
+    foreach ($feed_back as $key => $arr) {
+        foreach ($arr as $key => $value) {
+            if (is_int($value)) {
+                $total_records = $total_records + $value;
+            }
+        }
+    }
+    array_push($feed_back, ['strart time = ' => $start_time[0]]);
+    array_push($feed_back, ['end time = ' => $end_time[0]]);
+    array_push($feed_back, ['insertion time = ' => $insertion_time . '(seconds)']);
+    array_push($feed_back, ['total_records = ' => (int) $total_records]);
+    if ($insertion_time > 60) {
+        $minutes = floor((int) $insertion_time / 60);
+        $seconds = floor((int) $insertion_time % 60);
+        array_push($feed_back, ['insertion times = ' => [
+            'minutes =' => $minutes,
+            'seconds =' => $seconds,
+        ]]);
+    }
+    // -------------------------------------------------------------------
     return $feed_back;
 }
 // -----------------------------------------------------------------------------------------------------------------
@@ -269,6 +299,8 @@ Route::any('/plot/check', 'PlotController@check')->name('plot.check');
 Route::any('/contract/check', 'ContractController@check')->name('contract.check');
 Route::any('/task/check', 'TaskController@check')->name('task.check');
 Route::any('/country/check', 'CountryController@check')->name('country.check');
+// -----------------------------------------------------------------------------------------------------------------
+Route::any('/street/search', 'StreetController@search')->name('street.search');
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/user/userRegister', 'Auth\RegisterController@check')->name('register.check');
 Route::any('/user/configuration', 'UserController@configuration')->name('user.configuration');
