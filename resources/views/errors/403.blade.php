@@ -25,11 +25,13 @@
                 <div class="modal-body">
                     @if (App::isLocale('ar'))
                     <!-- // -->
-                    <h6 class="text-center mt-2">403 | هذا الإجراء غير مصرح به. </h6>
+                    <h6 class="text-center mt-2">403 | غير مصرح بهذا الإجراء. </h6>
+                    <h6 class="text-center mt-2">403 | This action is unauthorized. </h6>
                     <!-- // -->
                     @else
                     <!-- // -->
                     <h6 class="text-center mt-2">403 | This action is unauthorized. </h6>
+                    <h6 class="text-center mt-2">403 | غير مصرح بهذا الإجراء. </h6>
                     <!-- // -->
                     @endif
                 </div>

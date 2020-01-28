@@ -14,7 +14,8 @@ class MajorController extends Controller
      */
     public function index()
     {
-        return view('major.index');
+        $majors = Major::all();
+        return view('major.index')->with('majors', $majors);
     }
 
     /**

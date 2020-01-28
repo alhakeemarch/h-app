@@ -17,9 +17,24 @@
             <thead class="bg-thead">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Employee Name</th>
-                    <th scope="col">National ID</th>
-                    <th scope="col">Mobile NO</th>
+                    <th scope="col">Employee Name
+                        <input type="text" id='ar_name' name="ar_name_input" class="form-control" autocomplete="off"
+                            required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyArabicString(event)">
+                    </th>
+                    <th scope="col">National ID
+                        <input type="text" id='national_id' name="national_id_input" class="form-control"
+                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
+                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
+                            onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
+                    </th>
+                    <th scope="col">Mobile NO
+                        <input type="text" id='mobile' name="mobile_input" class="form-control" autocomplete="off"
+                            required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyNumber(event)">
+                    </th>
                     <th scope="col">Details</th>
                 </tr>
             </thead>
@@ -28,11 +43,12 @@
                 @foreach ($employees as $employee)
                 <tr>
                     <td scope="row">{{$i}}</td>
-                    <td scope="row">{{$employee->ar_name1}} {{$employee->ar_name2}} {{$employee->ar_name3}}
+                    <td scope="row" class="ar_name_input">{{$employee->ar_name1}} {{$employee->ar_name2}}
+                        {{$employee->ar_name3}}
                         {{$employee->ar_name4}}
                         {{$employee->ar_name5}}</td>
-                    <td scope="row">{{$employee->national_id}}</td>
-                    <td scope="row"> {{$employee->mobile}}</td>
+                    <td scope="row" class="national_id_input">{{$employee->national_id}}</td>
+                    <td scope="row" class="mobile_input"> {{$employee->mobile}}</td>
                     <td scope="row">
                         <a href="{{ url('/employee/'.$employee->id) }}">
                             <i class="far fa-eye"></i>
