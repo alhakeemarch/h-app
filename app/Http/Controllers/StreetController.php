@@ -14,8 +14,9 @@ class StreetController extends Controller
      */
     public function index()
     {
+
         $street_cout = Street::all()->count();
-        $streets = Street::paginate(50);
+        $streets = Street::paginate(10);
         return view('street.index')->with([
             'streets' => $streets,
             'street_cout' => $street_cout,
@@ -24,17 +25,20 @@ class StreetController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function search(Request $request)
     {
-        // return $request;
-        $street_name = $request['street_name'];
-        $all_streets = Street::all();
-        // Player::where('name', 'LIKE', "%$name%")->get();
+        if ($request->method() === "GET") {
+            return redirect()->action('StreetController@index');
+        }
+        $request->validate([
+            'street_name' => 'required|string|regex:/[ء-ي]/',
+        ]);
 
-        // $all_streets = Street::where('ar_name', 'LIKE',  "%$street_name%")->get();
+        $street_name = $request['street_name'];
+        // $all_streets = Street::where('ar_name', 'LIKE',  "%$street_name%")->get(); // ما نقدر نعمل بيجنيشن
         $all_streets = Street::where('ar_name', 'LIKE',  "%$street_name%");
-        // return $all_streets;
+
         $street_cout = $all_streets->count();
-        // $streets = $all_streets;
-        $streets = $all_streets->paginate(50);
+        $streets = $all_streets->paginate($street_cout);
+
         return view('street.index')->with([
             'streets' => $streets,
             'street_cout' => $street_cout,
@@ -51,7 +55,7 @@ class StreetController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -62,7 +66,7 @@ class StreetController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display the specified resource.
      *
@@ -73,7 +77,7 @@ class StreetController extends Controller
     {
         return view('street.show')->with('street', $street);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for editing the specified resource.
      *
@@ -84,7 +88,7 @@ class StreetController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Update the specified resource in storage.
      *
@@ -96,7 +100,7 @@ class StreetController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Remove the specified resource from storage.
      *
@@ -107,7 +111,14 @@ class StreetController extends Controller
     {
         //
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function check(Request $request, street $street)
+    {
+        return redirect()->action('StreetController@index')->withErrors(['cannot add yet!!']);
+        // return redirect()->action('StreetController@create');
+    }
 
+    // -----------------------------------------------------------------------------------------------------------------
     public static function firstInsertion()
     {
 
@@ -141,4 +152,5 @@ class StreetController extends Controller
         }
         return 'true';
     }
+    // -----------------------------------------------------------------------------------------------------------------
 }

@@ -299,6 +299,7 @@ Route::any('/plot/check', 'PlotController@check')->name('plot.check');
 Route::any('/contract/check', 'ContractController@check')->name('contract.check');
 Route::any('/task/check', 'TaskController@check')->name('task.check');
 Route::any('/country/check', 'CountryController@check')->name('country.check');
+Route::any('/street/check', 'StreetController@check')->name('street.check');
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/street/search', 'StreetController@search')->name('street.search');
 // -----------------------------------------------------------------------------------------------------------------

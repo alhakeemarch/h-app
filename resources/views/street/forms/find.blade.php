@@ -1,5 +1,5 @@
 <form class=" container form-group form-row" action="{{ action('StreetController@search') }}" accept-charset="UTF-8"
-    method="GET">
+    method="POST">
     @csrf
     <div class="col-md-9">
         <label for="fname">{{__( 'street name in arabic')}}
