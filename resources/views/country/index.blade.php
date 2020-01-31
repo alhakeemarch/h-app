@@ -19,20 +19,20 @@
                 <th scope="col">#</th>
                 <th scope="col">country
                     <input type="text" id='en_name' name="en_name_input" class="form-control" autocomplete="off"
-                        required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" onlyEnglishString(event)">
                 </th>
                 <th scope="col">الدولة
                     <input type="text" id='ar_name' name="ar_name_input" class="form-control" autocomplete="off"
-                        required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" onlyArabicString(event)">
                 </th>
                 <th scope="col"> code
                     <input type="text" id='code_2chracters' name="code_2chracters_input" class="form-control"
-                        autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" onlyCapitalString(event)">
                 </th>
                 <th scope="col">Details</th>
@@ -43,7 +43,7 @@
             @foreach ($countries as $country)
             <tr>
                 <td scope="row">{{$i}}</td>
-                <td scope="row" class="en_name_input">{{$country->en_name}} </td>
+                <td scope=" row" class="en_name_input">{{$country->en_name}} </td>
                 <td scope="row" class="ar_name_input">{{$country->ar_name}}</td>
                 <td scope="row" class="code_2chracters_input"> {{$country->code_2chracters}}</td>
                 <td scope="row">

@@ -15,37 +15,36 @@
                     <th scope="plan_no">
                         <p class="pb-2">رقم المخطط</p>
                         <input type="text" id='plan_no_input' name="plan_no_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
-                            onkeyup="filterNames(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)">
                     </th>
                     <th scope="plan_ar_name">
                         <p class="pb-2">إسم المخطط</p>
                         <input type="text" id='plan_ar_name' name="plan_ar_name_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="plan_year">
                         <p class="pb-2">سنة المخطط</p>
                         <input type="text" id='plan_year' name="plan_year_input" class="form-control" autocomplete="off"
-                            required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyNumber(event)">
                     </th>
                     <th scope="paln_type_code">
                         <p class="pb-2">نوع المخطط</p>
                         <input type="text" id='paln_type_code' name="paln_type_code_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="gog_location">
                         <p class="pb-2">موقع المخطط</p>
                         <input type="text" id='gog_location_input' name="gog_location_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'search here')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'search here')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="link">details</th>
                 </tr>
@@ -70,7 +69,7 @@
 
                 <tr>
                     <td scope="sequence">{{$i}}</td>
-                    <td scope="plan_no" class="plan_no_input">{{$plan->plan_no }}</td>
+                    <td scope=" plan_no" class="plan_no_input">{{$plan->plan_no }}</td>
                     <td scope="plan_ar_name" class="plan_ar_name_input">{{$plan->plan_ar_name}}</td>
                     <td scope="plan_year" class="plan_year_input">{{$plan->plan_year}}</td>
                     <td scope="paln_type_code" class="paln_type_code_input">{{$plan_type}}</td>

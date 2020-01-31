@@ -10,7 +10,6 @@
     <h5 class="card-header">{{ __('Login') }} 1/2</h5>
     <form class="card-body" method="POST" action="{{ route('login.check') }}">
         @csrf
-        {{-- <input type="hidden" name="hi" value='noval'> --}}
         <div class="form-group">
             <label for="user_name">{{__('User Login')}}</label>
             <input type="text" name="user_name" class="form-control @error ('user_name') is-invalid @enderror"
@@ -38,6 +37,7 @@
         </div>
         {{-- --------------------------------------------------------- END: buttons - --}}
     </form>
+
 </div>
 
 

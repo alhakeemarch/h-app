@@ -50,10 +50,15 @@ class LoginController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function showLoginForm(Request $request, Person $person, User $user)
     {
+        if (!$request->user) {
+            return view('auth.login_check');
+        }
+        // ------------------------------------------------------------------------------- //
         $found_user = $user->find($request->user);
         if (!$found_user) {
             return redirect()->action('Auth\LoginController@check')->withErrors(['User Not found.', ' Try Again or Contact the Administrator']);
         }
+        // ------------------------------------------------------------------------------- //
         return view('auth.login')->with('user', $found_user);
     }
     // -----------------------------------------------------------------------------------------------------------------

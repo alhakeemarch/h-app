@@ -111,14 +111,32 @@ function filterNames(event) {
     let inputID = event.target.id;
     let inputName = event.target.name;
     let inputValue = event.target.value.toLowerCase();
-
     let tds = document.querySelectorAll('.' + inputName);
-
-    tds.forEach(td => {
-        if (td.innerHTML.toLowerCase().indexOf(inputValue) > -1) {
-            td.parentNode.style.display = '';
-        } else {
-            td.parentNode.style.display = 'none';
-        }
-    });
+    // ---------------------------------------------------
+    // to remove extra spaces in text
+    while (inputValue.indexOf('  ') > -1) {
+        inputValue = inputValue.replace('  ', ' ');
+    }
+    inputValue = inputValue.trim();
+    // ---------------------------------------------------
+    if (inputValue.indexOf(' ') > -1) {
+        let inputValueArr = inputValue.split(" ");
+        inputValueArr.forEach(inputValue => {
+            tds.forEach(td => {
+                if (td.innerHTML.toLowerCase().indexOf(inputValue) > -1) {
+                    td.parentNode.style.display = '';
+                } else {
+                    td.parentNode.style.display = 'none';
+                }
+            })
+        });
+    } else {
+        tds.forEach(td => {
+            if (td.innerHTML.toLowerCase().indexOf(inputValue) > -1) {
+                td.parentNode.style.display = '';
+            } else {
+                td.parentNode.style.display = 'none';
+            }
+        });
+    }
 }

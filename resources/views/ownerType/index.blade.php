@@ -15,22 +15,22 @@
                     <th scope="ownerType">
                         <p class="pb-2">نوع المالك</p>
                         <input type="text" id='ownerType' name="ownerType_input" class="form-control" autocomplete="off"
-                            required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="en_ownerType">
                         <p class="pb-2">owner Type</p>
                         <input type="text" id='en_ownerType' name="en_ownerType_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyEnglishString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyEnglishString(event)">
                     </th>
                     <th scope="notes">
                         <p class="pb-2">ملاحظات</p>
                         <input type="text" id='notes' name="notes_input" class="form-control" autocomplete="off"
-                            required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="link">details</th>
@@ -44,7 +44,7 @@
                 @foreach ($ownerTypes as $ownerType)
                 <tr>
                     <td scope="sequence">{{$i}}</td>
-                    <td scope="ownerType" class="ownerType_input">
+                    <td scope=" ownerType" class="ownerType_input">
                         {{$ownerType->type_ar}} </td>
                     <td scope="ownerType" class="en_ownerType_input">
                         {{$ownerType->type_en}} </td>

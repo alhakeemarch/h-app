@@ -15,16 +15,16 @@
                     <th scope="ar_name">
                         <p class="pb-2">district in arabic</p>
                         <input type="text" id='ar_name_input' name="ar_name_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="municipality_branche_ar_name">
                         <p class="pb-2">ضمن بلدية</p>
                         <input type="text" id='municipality_branche_ar_name_input'
                             name="municipality_branche_ar_name_input" class="form-control" autocomplete="off" required
-                            placeholder="{{__( 'search here')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'search here')}}..'" onkeyup="filterNames(event)"
+                            placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="link">details</th>
@@ -35,7 +35,7 @@
                 @foreach ($districts as $district)
                 <tr>
                     <td scope="sequence">{{$i}}</td>
-                    <td scope="ar_name" class="ar_name_input">{{$district->ar_name }}</td>
+                    <td scope=" ar_name" class="ar_name_input">{{$district->ar_name }}</td>
                     <td scope="municipality_branche_ar_name" class="municipality_branche_ar_name_input">
                         {{$district->municipality_branche_ar_name}}</td>
 

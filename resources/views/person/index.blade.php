@@ -18,20 +18,20 @@
                     <th scope="col">#</th>
                     <th scope="col">Name
                         <input type="text" id='ar_name' name="ar_name_input" class="form-control" autocomplete="off"
-                            required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="col">National ID
                         <input type="text" id='national_id' name="national_id_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyNumber(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyNumber(event)">
                     </th>
                     <th scope="col">Mobile NO
                         <input type="text" id='mobile' name="mobile_input" class="form-control" autocomplete="off"
-                            required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyNumber(event)">
                     </th>
                     <th scope="col">Details</th>
@@ -42,7 +42,7 @@
                 @foreach ($persons as $person)
                 <tr>
                     <td scope="row">{{$i}}</td>
-                    <td scope="row" class="ar_name_input">{{$person->ar_name1}} {{$person->ar_name2}}
+                    <td scope=" row" class="ar_name_input">{{$person->ar_name1}} {{$person->ar_name2}}
                         {{$person->ar_name3}} {{$person->ar_name4}}
                         {{$person->ar_name5}}</td>
                     <td scope="row" class="national_id_input">{{$person->national_id}}</td>

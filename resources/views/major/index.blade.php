@@ -14,15 +14,15 @@
                 <th scope="column">
                     <p class="pb-2">major</p>
                     <input type="text" id='major_en' name="major_en_input" class="form-control" autocomplete="off"
-                        required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" onlyEnglishString(event)">
                 </th>
                 <th scope="column">
                     <p class="pb-2">التخصص</p>
                     <input type="text" id='major_ar' name="major_ar_input" class="form-control" autocomplete="off"
-                        required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" onlyArabicString(event)">
                 </th>
 
@@ -36,7 +36,7 @@
             @foreach ($majors as $major)
             <tr>
                 <td scope="row">{{$i}}</td>
-                <td scope="row" class="major_en_input">{{$major->major_en }}</td>
+                <td scope=" row" class="major_en_input">{{$major->major_en }}</td>
                 <td scope="row" class="major_ar_input">{{$major->major_ar}}</td>
                 <td scope="link">
                     <a href="{{ url('/major/'.$major->id) }}">

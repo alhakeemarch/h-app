@@ -372,6 +372,9 @@ or
 for more details go to:
 https://laravel.com/docs/5.7/localization
 ==============================================================================
+php artisan make:middleware isUserActive
+
+==============================================================================
 
 install composer
 =====================================

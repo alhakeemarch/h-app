@@ -17,8 +17,8 @@ class EmployeeController extends PersonController
      */
     public function __construct()
     {
+        $this->middleware('auth');
         // $this->authorizeResource(Person::class, 'person'); // مشكلة لا يسمح بالعرض في SHOW
-        // $this->middleware('auth');
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -59,10 +59,8 @@ class EmployeeController extends PersonController
      */
     public function store(Request $request)
     {
-        // return $request;
         $validatedData = collect($this->validatePerson($request));
         $nationality = Country::where('code_2chracters', $validatedData['code_2chracters'])->first();
-        // dd($nationality);
         if ($nationality) {
             $validatedData->put('nationaltiy_ar', $nationality->ar_name);
             $validatedData->put('nationaltiy_en', $nationality->en_name);

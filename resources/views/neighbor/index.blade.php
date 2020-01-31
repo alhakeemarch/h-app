@@ -15,23 +15,23 @@
                     <th scope="neighbor_ar_name">
                         <p class="pb-2">إسم الحي</p>
                         <input type="text" id='neighbor_ar_name' name="neighbor_ar_name_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="district">
                         <p class="pb-2">المنطقة</p>
                         <input type="text" id='district' name="district_input" class="form-control" autocomplete="off"
-                            required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="gog_location">
                         <p class="pb-2">البلدية التابع لها</p>
                         <input type="text" id='municipality_branche' name="municipality_branche" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'search here')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'search here')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="link">details</th>
                 </tr>
@@ -44,7 +44,7 @@
                 @foreach ($neighbors as $neighbor)
                 <tr>
                     <td scope="sequence">{{$i}}</td>
-                    <td scope="neighbor_ar_name" class="neighbor_ar_name_input">{{$neighbor->ar_name}}</td>
+                    <td scope=" neighbor_ar_name" class="neighbor_ar_name_input">{{$neighbor->ar_name}}</td>
                     <td scope="district" class="district_input">{{$neighbor->district_ar_name}}</td>
                     <td scope="gog_location" class="municipality_branche">{{$neighbor->municipality_branche_ar_name}}
                     </td>

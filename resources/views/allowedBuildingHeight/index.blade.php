@@ -15,15 +15,15 @@
                     <th scope="allowed_building_height">
                         <p class="pb-2">إرتفاع المباني</p>
                         <input type="text" id='allowed_building_height' name="allowed_building_height_input"
-                            class="form-control" autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
+                            class="form-control" autocomplete="off" required placeholder="{{__( 'search..')}}"
+                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'search..')}}'"
                             onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="notes">
                         <p class="pb-2">ملاحظات</p>
                         <input type="text" id='notes' name="notes_input" class="form-control" autocomplete="off"
-                            required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="link">details</th>
@@ -37,7 +37,7 @@
                 @foreach ($allowed_building_heights as $allowed_building_height)
                 <tr>
                     <td scope="sequence">{{$i}}</td>
-                    <td scope="allowed_building_height" class="allowed_building_height_input">
+                    <td scope=" allowed_building_height" class="allowed_building_height_input">
                         {{$allowed_building_height->building_height}} </td>
                     <td scope="notes" class="notes_input">{{$allowed_building_height->notes}}</td>
                     <td scope="link">

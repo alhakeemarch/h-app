@@ -15,15 +15,15 @@
                     <th scope="building_ratio">
                         <p class="pb-2">نسبة البناء</p>
                         <input type="text" id='building_ratio' name="building_ratio_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="notes">
                         <p class="pb-2">ملاحظات</p>
                         <input type="text" id='notes' name="notes_input" class="form-control" autocomplete="off"
-                            required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="link">details</th>
@@ -37,7 +37,8 @@
                 @foreach ($building_ratios as $building_ratio)
                 <tr>
                     <td scope="sequence">{{$i}}</td>
-                    <td scope="building_ratio" class="building_ratio_input">{{$building_ratio->building_ratio}} % </td>
+                    <td scope=" building_ratio" class="building_ratio_input">{{$building_ratio->building_ratio}} %
+                    </td>
                     <td scope="notes" class="notes_input">{{$building_ratio->notes}}</td>
                     <td scope="link">
                         <a href="{{ url('/allowedBuildingRatio/'.$building_ratio->id) }}">

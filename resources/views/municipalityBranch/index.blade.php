@@ -11,15 +11,15 @@
                     <th scope="sequence">#</th>
                     <th scope="ar_name">municipality in arabic
                         <input type="text" id='ar_name_input' name="ar_name_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="en_name">municipality in english
                         <input type="text" id='en_name_input' name="en_name_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'search here')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'search here')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyEnglishString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyEnglishString(event)">
                     </th>
                     <th scope="link">details</th>
                 </tr>
@@ -29,7 +29,7 @@
                 @foreach ($municipalities as $municipality)
                 <tr>
                     <td scope="sequence">{{$i}}</td>
-                    <td scope="ar_name" class="ar_name_input">{{$municipality->ar_name }}</td>
+                    <td scope=" ar_name" class="ar_name_input">{{$municipality->ar_name }}</td>
                     <td scope="en_name" class="en_name_input">{{$municipality->en_name}}</td>
 
                     <td scope="link">

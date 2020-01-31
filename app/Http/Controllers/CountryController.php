@@ -7,6 +7,18 @@ use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->middleware('active_user');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display a listing of the resource.
      *

@@ -23,26 +23,26 @@
                 <th scope="col">#</th>
                 <th scope="col">city name
                     <input type="text" id='en_name' name="en_city_name_input" class="form-control" autocomplete="off"
-                        required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" onlyEnglishString(event)">
                 </th>
                 <th scope="col"> region
                     <input type="text" id='en_region_name' name="en_region_name_input" class="form-control"
-                        autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" onlyEnglishString(event)">
                 </th>
                 <th scope="col">اسم المدينة
                     <input type="text" id='ar_city_name' name="ar_city_name_input" class="form-control"
-                        autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" onlyArabicString(event)">
                 </th>
                 <th scope="col"> المنطقة
                     <input type="text" id='ar_region_name' name="ar_region_name_input" class="form-control"
-                        autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" onlyArabicString(event)">
                 </th>
                 <th scope="col">Details</th>
@@ -53,7 +53,7 @@
             @foreach ($saudi_cities as $city)
             <tr>
                 <td scope="row">{{$i}}</td>
-                <td scope="row" class="en_city_name_input">{{$city->en_city_name}} </td>
+                <td scope=" row" class="en_city_name_input">{{$city->en_city_name}} </td>
                 <td scope="row" class="en_region_name_input">{{$city->en_region_name}}</td>
                 <td scope="row" class="ar_city_name_input"> {{$city->ar_city_name}}</td>
                 <td scope="row" class="ar_region_name_input"> {{$city->ar_region_name}}</td>

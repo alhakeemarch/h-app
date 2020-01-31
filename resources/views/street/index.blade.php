@@ -25,22 +25,22 @@
                     <th scope="street_ar_name">
                         <p class="pb-2">إسم الشارع</p>
                         <input type="text" id='street_ar_name' name="street_ar_name_input" class="form-control"
-                            autocomplete="off" required placeholder="{{__( 'إبحث هنا')}}.."
-                            onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
+                            onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="code">
                         <p class="pb-2">كود الشارع</p>
                         <input type="text" id='code' name="code_input" class="form-control" autocomplete="off" required
-                            placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                            placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="str_width">
                         <p class="pb-2">عرض الشارع</p>
                         <input type="text" id='str_width' name="str_width" class="form-control" autocomplete="off"
-                            required placeholder="{{__( 'search here')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'search here')}}..'" onkeyup="filterNames(event)"
+                            required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                            onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                             onkeypress=" onlyArabicString(event)">
                     </th>
                     <th scope="link">details</th>
@@ -54,7 +54,7 @@
                 @foreach ($streets as $street)
                 <tr>
                     <td scope="sequence">{{$i}}</td>
-                    <td scope="street_ar_name" class="street_ar_name_input">{{$street->ar_name}}</td>
+                    <td scope=" street_ar_name" class="street_ar_name_input">{{$street->ar_name}}</td>
                     <td scope="code" class="code_input">{{$street->code}}</td>
                     <td scope="str_width" class="str_width">{{$street->str_width}}
                     </td>

@@ -14,28 +14,28 @@
                 <th scope="column">
                     <p class="pb-2">الهوية</p>
                     <input type="text" id='national_id' name="national_id_input" class="form-control" autocomplete="off"
-                        required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" onlyNumber(event)">
                 </th>
                 <th scope="column">
                     <p class="pb-2">الإسم</p>
                     <input type="text" id='name' name="name_input" class="form-control" autocomplete="off" required
-                        placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)">
+                        placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)">
                 </th>
                 <th scope="column">
                     <p class="pb-2">إسم المستخدم</p>
                     <input type="text" id='user_name' name="user_name_input" class="form-control" autocomplete="off"
-                        required placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)"
+                        required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)"
                         onkeypress=" userNameString(event)">
                 </th>
                 <th scope="column">
                     <p class="pb-2">الإيميل</p>
                     <input type="text" id='email' name="email_input" class="form-control" autocomplete="off" required
-                        placeholder="{{__( 'إبحث هنا')}}.." onfocus="this.placeholder=''"
-                        onblur="this.placeholder=' {{__( 'إبحث هنا')}}..'" onkeyup="filterNames(event)">
+                        placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)">
                 </th>
                 <th scope="link">details</th>
             </tr>
@@ -47,7 +47,7 @@
             @foreach ($users as $user)
             <tr>
                 <td scope="row">{{$i}}</td>
-                <td scope="row" class="national_id_input">{{$user->national_id }}</td>
+                <td scope=" row" class="national_id_input">{{$user->national_id}}</td>
                 <td scope="row" class="name_input">{{$user->name}}</td>
                 <td scope="row" class="user_name_input text-lowercase">{{$user->user_name}}</td>
                 <td scope="row" class="email_input">{{$user->email}}</td>

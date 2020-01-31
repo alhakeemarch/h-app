@@ -49585,14 +49585,35 @@ function filterNames(event) {
   var inputID = event.target.id;
   var inputName = event.target.name;
   var inputValue = event.target.value.toLowerCase();
-  var tds = document.querySelectorAll('.' + inputName);
-  tds.forEach(function (td) {
-    if (td.innerHTML.toLowerCase().indexOf(inputValue) > -1) {
-      td.parentNode.style.display = '';
-    } else {
-      td.parentNode.style.display = 'none';
-    }
-  });
+  var tds = document.querySelectorAll('.' + inputName); // ---------------------------------------------------
+  // to remove extra spaces in text
+
+  while (inputValue.indexOf('  ') > -1) {
+    inputValue = inputValue.replace('  ', ' ');
+  }
+
+  inputValue = inputValue.trim(); // ---------------------------------------------------
+
+  if (inputValue.indexOf(' ') > -1) {
+    var inputValueArr = inputValue.split(" ");
+    inputValueArr.forEach(function (inputValue) {
+      tds.forEach(function (td) {
+        if (td.innerHTML.toLowerCase().indexOf(inputValue) > -1) {
+          td.parentNode.style.display = '';
+        } else {
+          td.parentNode.style.display = 'none';
+        }
+      });
+    });
+  } else {
+    tds.forEach(function (td) {
+      if (td.innerHTML.toLowerCase().indexOf(inputValue) > -1) {
+        td.parentNode.style.display = '';
+      } else {
+        td.parentNode.style.display = 'none';
+      }
+    });
+  }
 }
 
 /***/ }),
