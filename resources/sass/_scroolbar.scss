@@ -1,0 +1,35 @@
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #bbc1cc;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #335589;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #465573;
+}
+
+.sidebar {
+    scrollbar-color: #335589 #bbc1cc;
+    scrollbar-width: thin;
+}
+
+.app {
+    scrollbar-color: #335589 #bbc1cc;
+    scrollbar-width: thin;
+}
+
+html,
+main {
+    scrollbar-color: #335589 #bbc1cc;
+    scrollbar-width: thin;
+}

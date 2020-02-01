@@ -49,30 +49,38 @@
 </head>
 
 <body>
-
     <div class="wrapper">
+        {{-- -------------------------------------------------------------------------------------------------- --}}
         <header class="sticky-top">
             @include('layouts.topnav')
         </header>
-
-        {{-- <main class="container-fluid "style="min-height:100%;margin-top: 4rem !important; margin-bottom: 5rem !important;"> --}}
+        {{-- -------------------------------------------------------------------------------------------------- --}}
         <main>
-            <div id="app" class="container-fluid">
+            {{-- ----------------------------------------------------------- --}}
+            <section class="sidebar" id="sidebar">
+                @auth
+                @include('layouts.sidenav')
+                @endauth
+            </section>
+            {{-- ----------------------------------------------------------- --}}
+            <section id="app" class="app container-fluid">
                 @yield('content')
-            </div>
-            <!-- /End of div id="app" -->
+            </section>
+            {{-- ----------------------------------------------------------- --}}
         </main>
-
-        {{-- fixed-bottom --}}
-
+        {{-- -------------------------------------------------------------------------------------------------- --}}
         <footer>
             <div class="footer-copyright text-center py-3 text-light h-navbar-bg">&copy; {{__('the_rights')}}
                 {{-- <a href="www.hakeemarch.com"> HakeemArch.com</a> --}}
             </div>
         </footer>
+        {{-- -------------------------------------------------------------------------------------------------- --}}
     </div>
 
+
+
     @yield('script')
+
 </body>
 
 </html>

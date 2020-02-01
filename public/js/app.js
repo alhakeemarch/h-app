@@ -49318,6 +49318,52 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+/**
+ * to add active class to sidebar buttons
+ * @author Fahad Bakhsh
+ * @returns null
+ */
+
+var sidbarItems = document.querySelectorAll('.sidebar-item');
+sidbarItems.forEach(function (item) {
+  item.addEventListener("click", function () {
+    var current = document.getElementsByClassName("active");
+
+    if (!current[0]) {
+      this.className += " active";
+    }
+
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+});
+/**
+ * to add active class to sidebar buttons
+ * @author Fahad Bakhsh
+ * @returns null
+ */
+
+var sidbarGrubs = document.querySelectorAll('.sidebar-group');
+var sidbartitles = document.querySelectorAll('.sidebar-title');
+sidbartitles.forEach(function (title) {
+  title.addEventListener("click", function () {
+    sidebarGroup = title.parentElement.parentElement;
+    iconUp = sidebarGroup.querySelector('.fa-caret-up');
+    iconDown = sidebarGroup.querySelector('.fa-caret-down');
+    items = sidebarGroup.querySelectorAll('.sidebar-item');
+    items.forEach(function (item) {
+      if (item.classList.contains('d-none')) {
+        item.classList.remove('d-none');
+        iconUp.classList.remove('d-none');
+        iconDown.classList.add('d-none');
+      } else {
+        item.classList.add('d-none');
+        iconDown.classList.remove('d-none');
+        iconUp.classList.add('d-none');
+      }
+    });
+  });
+});
 
 /***/ }),
 
