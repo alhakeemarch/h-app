@@ -320,6 +320,7 @@ Route::resources([
 
     'customer' => 'CustomerController',
     'employee' => 'EmployeeController',
+    'company' => 'CompanyController',
 
     'major' => 'MajorController',
     'contact' => 'ContactController',

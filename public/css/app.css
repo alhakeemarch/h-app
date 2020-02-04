@@ -536,17 +536,20 @@ main {
   grid-template-columns: -webkit-min-content 1fr;
   grid-template-columns: min-content 1fr;
   grid-gap: 0px;
+  grid-template-areas: "sidbar" "content";
   height: -webkit-min-content;
   height: -moz-min-content;
   height: min-content;
 }
 
 .app {
+  grid-area: "content";
   overflow-y: auto;
   padding: 1rem 1rem 1rem 1rem;
 }
 
 .sidebar {
+  grid-area: "sidbar";
   overflow-x: hidden;
   overflow-y: auto;
   min-width: 0vw;
@@ -869,15 +872,16 @@ main {
   color: #0f0f0f;
   padding: 0.6rem;
   border-bottom: solid;
+  border-color: #718096;
   border-width: 1px;
 }
 
 .sidebar-item:hover {
-  background-color: #718096;
+  background-color: #c8d5ea;
 }
 
 .sidebar-item.active {
   color: #F8F8FF;
-  background-color: #335589;
+  background-color: #4778c2;
 }
 

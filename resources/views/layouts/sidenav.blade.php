@@ -1,7 +1,7 @@
 {{-- --------------------------------------------------------------------------------------------- --}}
-<input type="text" id='national_id' name="national_id_input" class="form-control my-4 ml-3" style="width: 15vw;" autocomplete="off" required
-    placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'search..')}}'"
-    onkeyup="filterSidebar(event)" onkeypress=" onlyString(event)">
+<input type="text" id='national_id' name="national_id_input" class="form-control my-4 ml-3" style="width: 15vw;"
+    autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+    onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterSidebar(event)" onkeypress=" onlyString(event)">
 {{-- --------------------------------------------------------------------------------------------- --}}
 <div class=" sidebar-group">
     <a href="#">
@@ -137,5 +137,18 @@
             owner Type
         </div>
     </a>
+    <a href="{{route ('company.index')}}">
+        <div class="sidebar-item text-danger {{ (request()->is('companies*')) ? 'active' : '' }}">
+            companies
+        </div>
+    </a>
 </div>
 {{-- --------------------------------------------------------------------------------------------- --}}
+
+<a class="dropdown-item" href="{{ route ('home') }}">{{__('companies')}}---</a>
+<a class="dropdown-item" href="{{ route ('home') }}">{{__('organizations')}}---</a>
+<a class="dropdown-item" href="{{ route ('home') }}">{{__('endowments')}}---</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="{{ route ('major.index') }}">{{__('majors')}}</a>
+<a class="dropdown-item" href="{{ route ('contractfield.index') }}">{{__('contract fields')}}</a>
+<a class="dropdown-item" href="{{ route ('lettertype.index') }}">{{__('letter type')}}</a>

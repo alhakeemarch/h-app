@@ -59,7 +59,9 @@
             {{-- ----------------------------------------------------------- --}}
             <section class="sidebar" id="sidebar">
                 @auth
-                @include('layouts.sidenav')
+                <div class="sidnave">
+                    @include('layouts.sidenav')
+                </div>
                 @endauth
             </section>
             {{-- ----------------------------------------------------------- --}}
