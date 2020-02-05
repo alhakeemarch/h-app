@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container-fluid text-center">
-    <h1 class="h1"> جدل لعرض كل المخططات</h1>
+    <h1 class="h1"> جدول لعرض كل المخططات</h1>
 
 
 

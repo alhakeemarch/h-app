@@ -321,6 +321,8 @@ Route::resources([
     'customer' => 'CustomerController',
     'employee' => 'EmployeeController',
     'company' => 'CompanyController',
+    'organization' => 'OrganizationController',
+    'endowments' => 'EndowmentsController',
 
     'major' => 'MajorController',
     'contact' => 'ContactController',

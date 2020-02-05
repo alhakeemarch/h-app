@@ -847,7 +847,7 @@ main {
 
 .sidebar-group {
   text-align: center;
-  margin: 0.5rem 1rem 0.5rem 1rem;
+  margin: 0.5rem 1rem 1.5rem 1rem;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
   background-color: #F8F8FF;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -883,5 +883,13 @@ main {
 .sidebar-item.active {
   color: #F8F8FF;
   background-color: #4778c2;
+}
+
+.sidbar-divider {
+  background: #c4cad4;
+  padding: 0.6rem;
+  border-bottom: solid;
+  border-color: #718096;
+  border-width: 1px;
 }
 

@@ -252,6 +252,8 @@ php artisan make:model PersonDoc -a
 php artisan make:model Employee -crf
 php artisan make:model Customer -crf
 php artisan make:model Company -a
+php artisan make:model Organization -a
+php artisan make:model Endowments -a
 
 php artisan make:model Major -a
 php artisan make:model Contact -a

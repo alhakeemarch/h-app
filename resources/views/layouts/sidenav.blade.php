@@ -138,17 +138,35 @@
         </div>
     </a>
     <a href="{{route ('company.index')}}">
-        <div class="sidebar-item text-danger {{ (request()->is('companies*')) ? 'active' : '' }}">
+        <div class="sidebar-item text-danger {{ (request()->is('company*')) ? 'active' : '' }}">
             companies
+        </div>
+    </a>
+    <a href="{{route ('organization.index')}}">
+        <div class="sidebar-item text-danger {{ (request()->is('organization*')) ? 'active' : '' }}">
+            organization
+        </div>
+    </a>
+    <a href="{{route ('endowments.index')}}">
+        <div class="sidebar-item text-danger {{ (request()->is('endowments*')) ? 'active' : '' }}">
+            endowments
+        </div>
+    </a>
+    <div class="sidbar-divider"></div> {{-- ------------------------------------------- --}}
+    <a href="{{route ('major.index')}}">
+        <div class="sidebar-item {{ (request()->is('major*')) ? 'active' : '' }}">
+            major
+        </div>
+    </a>
+    <a href="{{route ('contractfield.index')}}">
+        <div class="sidebar-item text-danger {{ (request()->is('contractfield*')) ? 'active' : '' }}">
+            contract field
+        </div>
+    </a>
+    <a href="{{route ('lettertype.index')}}">
+        <div class="sidebar-item text-danger {{ (request()->is('lettertype*')) ? 'active' : '' }}">
+            letter type
         </div>
     </a>
 </div>
 {{-- --------------------------------------------------------------------------------------------- --}}
-
-<a class="dropdown-item" href="{{ route ('home') }}">{{__('companies')}}---</a>
-<a class="dropdown-item" href="{{ route ('home') }}">{{__('organizations')}}---</a>
-<a class="dropdown-item" href="{{ route ('home') }}">{{__('endowments')}}---</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item" href="{{ route ('major.index') }}">{{__('majors')}}</a>
-<a class="dropdown-item" href="{{ route ('contractfield.index') }}">{{__('contract fields')}}</a>
-<a class="dropdown-item" href="{{ route ('lettertype.index') }}">{{__('letter type')}}</a>

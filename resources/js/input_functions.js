@@ -106,6 +106,55 @@ function userNameString(evt) {
         theEvent.preventDefault();
     }
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ================================ replaced by Regxe function
+// function filterNamesss(event) {
+//     let inputID = event.target.id;
+//     let inputName = event.target.name;
+//     let inputValue = event.target.value.toLowerCase();
+//     let tds = document.querySelectorAll('.' + inputName);
+//     // ---------------------------------------------------
+//     // to remove extra spaces in text
+//     while (inputValue.indexOf('  ') > -1) {
+//         inputValue = inputValue.replace('  ', ' ');
+//     }
+//     inputValue = inputValue.trim();
+//     // ---------------------------------------------------
+//     if (inputValue.indexOf(' ') > -1) {
+//         let inputValueArr = inputValue.split(" ");
+//         tds.forEach(td => {
+//             // ------------------------------------
+//             // to remove extra spaces in text
+//             td_value = td.innerHTML.toLowerCase();
+//             while (td_value.indexOf('  ') > -1) {
+//                 td_value = td_value.replace('  ', ' ');
+//             }
+//             td_value = td_value.trim();
+
+//             // ------------------------------------
+//             td_value_arr = td_value.split(' ');
+//             // ...............................
+//             let test;
+//             test = inputValueArr.every(val => td_value_arr.includes(val));
+//             // ...............................
+
+//             if (test) {
+//                 td.parentNode.style.display = '';
+//             } else {
+//                 td.parentNode.style.display = 'none';
+//             }
+//         });
+//     } else {
+//         tds.forEach(td => {
+//             if (td.innerHTML.toLowerCase().indexOf(inputValue) > -1) {
+//                 td.parentNode.style.display = '';
+//             } else {
+//                 td.parentNode.style.display = 'none';
+//             }
+//         });
+//     }
+// }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ================================
 function filterNames(event) {
     let inputID = event.target.id;
@@ -121,18 +170,65 @@ function filterNames(event) {
     // ---------------------------------------------------
     if (inputValue.indexOf(' ') > -1) {
         let inputValueArr = inputValue.split(" ");
+        let testValue = '';
         inputValueArr.forEach(inputValue => {
-            tds.forEach(td => {
-                if (td.innerHTML.toLowerCase().indexOf(inputValue) > -1) {
-                    td.parentNode.style.display = '';
-                } else {
-                    td.parentNode.style.display = 'none';
-                }
-            })
+            // testValue += '(' + inputValue + ')' + '.*?\\w?.*?';
+            testValue += '(' + inputValue + ')' + '.*?';
         });
+        tds.forEach(td => {
+            let matchFound = new RegExp(testValue, 'gi').test(td.innerHTML.toLowerCase());
+            if (matchFound) {
+                td.parentNode.style.display = '';
+            } else {
+                td.parentNode.style.display = 'none';
+            }
+        });
+
     } else {
         tds.forEach(td => {
-            if (td.innerHTML.toLowerCase().indexOf(inputValue) > -1) {
+            let matchFound = new RegExp(inputValue, 'gi').test(td.innerHTML.toLowerCase());
+            if (matchFound) {
+                td.parentNode.style.display = '';
+            } else {
+                td.parentNode.style.display = 'none';
+            }
+        });
+    }
+}
+
+// ================================
+function filterSidebar(event) {
+    let inputID = event.target.id;
+    let inputName = event.target.name;
+    let inputValue = event.target.value.toLowerCase();
+    let tds = document.querySelectorAll('.sidebar-item');
+    // ---------------------------------------------------
+    // to remove extra spaces in text
+    while (inputValue.indexOf('  ') > -1) {
+        inputValue = inputValue.replace('  ', ' ');
+    }
+    inputValue = inputValue.trim();
+    // ---------------------------------------------------
+    if (inputValue.indexOf(' ') > -1) {
+        let inputValueArr = inputValue.split(" ");
+        let testValue = '';
+        inputValueArr.forEach(inputValue => {
+            // testValue += '(' + inputValue + ')' + '.*?\\w?.*?';
+            testValue += '(' + inputValue + ')' + '.*?';
+        });
+        tds.forEach(td => {
+            let matchFound = new RegExp(testValue, 'gi').test(td.innerHTML.toLowerCase());
+            if (matchFound) {
+                td.parentNode.style.display = '';
+            } else {
+                td.parentNode.style.display = 'none';
+            }
+        });
+
+    } else {
+        tds.forEach(td => {
+            let matchFound = new RegExp(inputValue, 'gi').test(td.innerHTML.toLowerCase());
+            if (matchFound) {
                 td.parentNode.style.display = '';
             } else {
                 td.parentNode.style.display = 'none';
