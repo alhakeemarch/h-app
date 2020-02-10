@@ -887,9 +887,6 @@ main {
 
 .sidbar-divider {
   background: #c4cad4;
-  padding: 0.6rem;
-  border-bottom: solid;
-  border-color: #718096;
-  border-width: 1px;
+  padding: 0.25rem;
 }
 

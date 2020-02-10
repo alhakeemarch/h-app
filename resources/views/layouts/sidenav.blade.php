@@ -96,6 +96,7 @@
             saudi cities
         </div>
     </a>
+    <div class="sidbar-divider"></div> {{-- ------------------------------------------- --}}
     <a href="{{route ('municipalityBranch.index')}}">
         <div class="sidebar-item {{ (request()->is('municipalityBranch*')) ? 'active' : '' }}">
             municipality
@@ -122,6 +123,7 @@
             streets
         </div>
     </a>
+    <div class="sidbar-divider"></div> {{-- ------------------------------------------- --}}
     <a href="{{route ('allowedBuildingRatio.index')}}">
         <div class="sidebar-item {{ (request()->is('allowedBuildingRatio*')) ? 'active' : '' }}">
             allowed Building Ratios
@@ -132,6 +134,12 @@
             allowed Building Height
         </div>
     </a>
+    <a href="{{route ('allowedUsage.index')}}">
+        <div class="sidebar-item {{ (request()->is('allowedUsage*')) ? 'active' : '' }}">
+            allowed usage
+        </div>
+    </a>
+    <div class="sidbar-divider"></div> {{-- ------------------------------------------- --}}
     <a href="{{route ('ownerType.index')}}">
         <div class="sidebar-item {{ (request()->is('ownerType*')) ? 'active' : '' }}">
             owner Type

@@ -313,7 +313,7 @@ Route::any('/user/userLogin', 'Auth\LoginController@check')->name('login.check')
 // -----------------------------------------------------------------------------------------------------------------
 Route::resources([
 
-    // new
+    // -- شخص أو جهة
     'user' => 'UserController',
     'person' => 'PersonController',
     'personDoc' => 'PersonDocController',
@@ -324,7 +324,6 @@ Route::resources([
     'organization' => 'OrganizationController',
     'endowments' => 'EndowmentsController',
 
-    'major' => 'MajorController',
     'contact' => 'ContactController',
     'address' => 'AddressController',
 
@@ -363,6 +362,7 @@ Route::resources([
     'municipalityBranch' => 'MunicipalityBranchController',
     'allowedBuildingRatio' => 'AllowedBuildingRatioController',
     'allowedBuildingHeight' => 'AllowedBuildingHeightController',
+    'allowedUsage' => 'AllowedUsageController',
     'ownerType' => 'OwnerTypeController',
     'userType' => 'UserTypeController',
     'bank' => 'BankController',

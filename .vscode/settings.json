@@ -1,7 +1,7 @@
 {
     "workbench.colorTheme": "Material Theme Darker High Contrast",
     "workbench.iconTheme": "material-icon-theme",
-    "editor.fontSize": 17,
+    "editor.fontSize": 16,
     "editor.minimap.enabled": false,
     "blade.format.enable": true,
     "editor.wordWrap": "on",
@@ -17,6 +17,7 @@
     },
     "[blade]": {
         "editor.defaultFormatter": "onecentlin.laravel-blade"
+        // "editor.defaultFormatter": "vscode.html-language-features"
     },
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"

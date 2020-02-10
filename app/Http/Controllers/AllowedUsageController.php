@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class AllowedUsageController extends Controller
 {
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +25,10 @@ class AllowedUsageController extends Controller
      */
     public function index()
     {
-        //
+        $usages = AllowedUsage::all();
+        return view('allowedUsage.index')->with('usages', $usages);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for creating a new resource.
      *
@@ -26,7 +38,7 @@ class AllowedUsageController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -37,7 +49,7 @@ class AllowedUsageController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display the specified resource.
      *
@@ -46,9 +58,9 @@ class AllowedUsageController extends Controller
      */
     public function show(AllowedUsage $allowedUsage)
     {
-        //
+        return view('allowedUsage.show')->with('allowedUsage', $allowedUsage);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for editing the specified resource.
      *
@@ -59,7 +71,7 @@ class AllowedUsageController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Update the specified resource in storage.
      *
@@ -71,7 +83,7 @@ class AllowedUsageController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Remove the specified resource from storage.
      *
@@ -82,6 +94,7 @@ class AllowedUsageController extends Controller
     {
         //
     }
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * insert inital allowed usage data to db.
      */
@@ -115,4 +128,5 @@ class AllowedUsageController extends Controller
         }
         return true;
     }
+    // -----------------------------------------------------------------------------------------------------------------
 }
