@@ -859,6 +859,10 @@ main {
   text-decoration: none;
 }
 
+.hide-side-bar {
+  width: 0;
+}
+
 .sidebar-title {
   background-color: #465573;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;

@@ -66,6 +66,7 @@
             </section>
             {{-- ----------------------------------------------------------- --}}
             <section id="app" class="app container-fluid">
+                <a href="#" onclick="show_side_bar(event)"><i class="fas fa-sliders-h"></i></a>
                 @yield('content')
             </section>
             {{-- ----------------------------------------------------------- --}}
@@ -84,5 +85,18 @@
     @yield('script')
 
 </body>
+
+<script>
+    function show_side_bar(event) {
+        let sidebar = document.getElementById('sidebar');
+
+        if (sidebar.classList.contains('hide-side-bar')) {
+            sidebar.classList.remove('hide-side-bar');
+        }else{
+            sidebar.classList.add('hide-side-bar');
+        }
+        // alert(sidebar);
+    }
+</script>
 
 </html>

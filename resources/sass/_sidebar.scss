@@ -17,6 +17,10 @@
     }
 }
 
+.hide-side-bar{
+    width: 0;
+}
+
 .sidebar-title {
     background-color: $main_dark;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
@@ -47,3 +51,5 @@
     background: #c4cad4;
     padding: 0.25rem;
 }
+
+
