@@ -66,15 +66,25 @@
             </section>
             {{-- ----------------------------------------------------------- --}}
             <section id="app" class="app container-fluid">
-                <a href="#" onclick="show_side_bar(event)"><i class="fas fa-sliders-h"></i></a>
+                @auth
+                <a class="show_side_bar_btn" onclick="show_side_bar(event)"><i class="fas fa-sliders-h"></i></a>
+                @endauth
                 @yield('content')
             </section>
             {{-- ----------------------------------------------------------- --}}
         </main>
         {{-- -------------------------------------------------------------------------------------------------- --}}
-        <footer>
-            <div class="footer-copyright text-center py-3 text-light h-navbar-bg">&copy; {{__('the_rights')}}
+        <footer class="footer-copyright text-light h-navbar-bg">
+            <div>
+                {{-- time --}}
+            </div>
+            <div class="text-center">
+                &copy; {{__('the_rights')}}
                 {{-- <a href="www.hakeemarch.com"> HakeemArch.com</a> --}}
+            </div>
+            <div class="text-center">
+                <a class="Scroll-up-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
+                    <i class="fas fa-angle-double-up"></i></a>
             </div>
         </footer>
         {{-- -------------------------------------------------------------------------------------------------- --}}
@@ -85,18 +95,5 @@
     @yield('script')
 
 </body>
-
-<script>
-    function show_side_bar(event) {
-        let sidebar = document.getElementById('sidebar');
-
-        if (sidebar.classList.contains('hide-side-bar')) {
-            sidebar.classList.remove('hide-side-bar');
-        }else{
-            sidebar.classList.add('hide-side-bar');
-        }
-        // alert(sidebar);
-    }
-</script>
 
 </html>

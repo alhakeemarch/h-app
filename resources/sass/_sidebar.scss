@@ -1,55 +1,63 @@
 .sidebar {
-    // background: $main_dark;
-    // width: 15vw;
+  width: 0vw;
+  transition: 300ms ease-in-out;
 }
 
 .sidebar-group {
-    text-align: center;
-    margin: 0.5rem 1rem 1.5rem 1rem;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
-    background-color: $main_white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-    width: 15vw;
-    text-transform: capitalize;
-
-    & a {
-        text-decoration: none;
-    }
+  text-align: center;
+  margin: 0.5rem 1rem 1.5rem 1rem;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+  background-color: $main_white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: 1s;
+  text-transform: capitalize;
+  & a {
+    text-decoration: none;
+  }
 }
 
-.hide-side-bar{
-    width: 0;
+.active-side-bar {
+  width: 15vw;
+  min-width: 30px;
+}
+.show_side_bar_btn {
+  cursor: pointer;
+  & :hover {
+    cursor: pointer;
+  }
+}
+
+.sidebar-serch {
+  width: calc(100% - 2rem);
 }
 
 .sidebar-title {
-    background-color: $main_dark;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-    padding: 0.6rem;
-    color: $main_white;
-    text-decoration: none;
+  background-color: $main_dark;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  padding: 0.6rem;
+  color: $main_white;
+  text-decoration: none;
 }
 
 .sidebar-item {
-    color: #0f0f0f;
-    padding: 0.6rem;
-    border-bottom: solid;
-    border-color: #718096;
-    border-width: 1px;
+  color: #0f0f0f;
+  padding: 0.6rem;
+  border-bottom: solid;
+  border-color: #718096;
+  border-width: 1px;
 
-    &:hover {
-        background-color: #c8d5ea;
-    }
+  &:hover {
+    background-color: #c8d5ea;
+  }
 
-    &.active {
-        color: $main_white;
-        background-color: #4778c2;
-    }
+  &.active {
+    color: $main_white;
+    background-color: #4778c2;
+  }
 }
 
-.sidbar-divider{
-    background: #c4cad4;
-    padding: 0.25rem;
+.sidbar-divider {
+  background: #c4cad4;
+  padding: 0.25rem;
 }
-
-

@@ -80,6 +80,7 @@ sidbartitles.forEach(title => {
                 iconUp.classList.add('d-none');
             }
         });
+
     });
 });
 

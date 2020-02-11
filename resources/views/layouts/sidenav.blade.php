@@ -1,5 +1,5 @@
 {{-- --------------------------------------------------------------------------------------------- --}}
-<input type="text" id='national_id' name="national_id_input" class="form-control my-4 ml-3" style="width: 15vw;"
+<input type="text" id='national_id' name="national_id_input" class="form-control my-4 mx-3 sidebar-serch"
     autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
     onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterSidebar(event)" onkeypress=" onlyString(event)">
 {{-- --------------------------------------------------------------------------------------------- --}}

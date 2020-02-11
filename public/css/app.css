@@ -557,6 +557,20 @@ main {
   min-height: 100vh;
 }
 
+footer {
+  padding: 1.2rem 0 1.2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.Scroll-up-btn {
+  cursor: pointer;
+}
+
+.Scroll-up-btn :hover {
+  cursor: pointer;
+}
+
 body {
   background-image: radial-gradient(#abb6cc, #f8fafc);
   font-family: "Markazi Text", serif;
@@ -845,13 +859,20 @@ main {
   scrollbar-width: thin;
 }
 
+.sidebar {
+  width: 0vw;
+  -webkit-transition: 300ms ease-in-out;
+  transition: 300ms ease-in-out;
+}
+
 .sidebar-group {
   text-align: center;
   margin: 0.5rem 1rem 1.5rem 1rem;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
   background-color: #F8F8FF;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-  width: 15vw;
+  -webkit-transition: 1s;
+  transition: 1s;
   text-transform: capitalize;
 }
 
@@ -859,8 +880,21 @@ main {
   text-decoration: none;
 }
 
-.hide-side-bar {
-  width: 0;
+.active-side-bar {
+  width: 15vw;
+  min-width: 30px;
+}
+
+.show_side_bar_btn {
+  cursor: pointer;
+}
+
+.show_side_bar_btn :hover {
+  cursor: pointer;
+}
+
+.sidebar-serch {
+  width: calc(100% - 2rem);
 }
 
 .sidebar-title {

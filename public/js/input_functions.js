@@ -236,3 +236,13 @@ function filterSidebar(event) {
         });
     }
 }
+// ================================
+function show_side_bar(event) {
+    let sidebar = document.getElementById('sidebar');
+
+    if (sidebar.classList.contains('active-side-bar')) {
+        sidebar.classList.remove('active-side-bar');
+    } else {
+        sidebar.classList.add('active-side-bar');
+    }
+}
