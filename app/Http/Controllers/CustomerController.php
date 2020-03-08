@@ -52,8 +52,8 @@ class CustomerController extends PersonController
         $nationality = Country::where('code_2chracters', $validatedData['code_2chracters'])->first();
         // dd($nationality);
         if ($nationality) {
-            $validatedData->put('nationaltiy_ar', $nationality->ar_name);
-            $validatedData->put('nationaltiy_en', $nationality->en_name);
+            $validatedData->put('nationality_ar', $nationality->ar_name);
+            $validatedData->put('nationality_en', $nationality->en_name);
         }
         $validatedData->put('is_employee', false);
         $validatedData->put('is_customer', true);
@@ -119,10 +119,10 @@ class CustomerController extends PersonController
         }
 
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Country::where('code_2chracters', $validatedData['nationaltiy_code'])->first();
+        $nationality = Country::where('code_2chracters', $validatedData['nationality_code'])->first();
         if ($nationality) {
-            $validatedData->put('nationaltiy_ar', $nationality->ar_name);
-            $validatedData->put('nationaltiy_en', $nationality->en_name);
+            $validatedData->put('nationality_ar', $nationality->ar_name);
+            $validatedData->put('nationality_en', $nationality->en_name);
         }
         $validatedData->put('is_customer', true);
         // -------------------

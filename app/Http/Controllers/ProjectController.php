@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 
 class ProjectController extends Controller
 {
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display a listing of the resource.
      *
@@ -23,13 +24,13 @@ class ProjectController extends Controller
         // }
         $allProjects = Project::all();
         // == @home = false @ work = true ==//
-        if (true) {
+        if (false) {
             $runningProjects = $this->get_running_projects();
             $finishedProjects = $this->get_finished_projects();
             $e_archive = $this->get_e_archive();
             $zaied_projects = $this->get_zaied_projects();
         } else {
-            $runningProjects =  $finishedProjects = $e_archive = $zaied_projects = [];
+            $runningProjects =  $finishedProjects = $e_archive = $zaied_projects = $this->get_home_projects();
         }
         return view('project.index')->with([
             'projects' => $allProjects,
@@ -39,7 +40,30 @@ class ProjectController extends Controller
             'zaied_projects' => $zaied_projects,
         ]);
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Project  $project
+     * @return \Illuminate\Http\Response
+     */
+    public function fileUpload(Project $project, Request $request)
+    {
+        // return $request;
+        $project_no = $request->project_no;
+        $project_name = $request->project_name;
+        $project_location = $request->project_location;
+        $user = auth()->user()->user_name;
+        $employment_no = auth()->user()->person->employment_no;
 
+        return view('project.upload')->with([
+            'project_no' => $project_no,
+            'project_name' => $project_name,
+            'project_location' => $project_location,
+            'employment_no' => $employment_no,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for creating a new resource.
      *
@@ -254,6 +278,33 @@ class ProjectController extends Controller
 
         return $project_name;
     }
+    // -------------------------------------------------------------------------------------------------------------------
+    function get_home_projects()
+    {
+        $project_no = [];
+        $project_name = [];
+
+        $directory = 'D:\projects';
+        $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+        $projects_dir = $scanned_directory;
+
+        // return $projects_dir;
+        foreach ($projects_dir as $key => $value) {
+            $position = stripos($value, '-');
+            $sub = substr($value, 0, $position);
+            $sub = trim($sub);
+            $sub2 = substr($value, $position + 1);
+            $sub2 = trim($sub2);
+            $project_no[$sub] = $value;
+            $project_name[$sub] = $sub2;
+        }
+
+        ksort($project_no);
+        ksort($project_name);
+
+        return $project_name;
+    }
+    // -------------------------------------------------------------------------------------------------------------------
     function get_zaied_projects()
     {
         // return ['0|مافي شبكة' => 'من البيت'];

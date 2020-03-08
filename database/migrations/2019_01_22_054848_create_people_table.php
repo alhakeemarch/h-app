@@ -37,9 +37,9 @@ class CreatePeopleTable extends Migration
             $table->string('religion')->nullable();
             $table->string('prefer_language')->nullable();
             // -----------------------------
-            $table->string('nationaltiy_code')->nullable();
-            $table->string('nationaltiy_ar')->nullable();
-            $table->string('nationaltiy_en')->nullable();
+            $table->string('nationality_code')->nullable();
+            $table->string('nationality_ar')->nullable();
+            $table->string('nationality_en')->nullable();
             // -----------------------------
             $table->unsignedInteger('hafizah_no')->nullable();
             $table->date('national_id_issue_date')->nullable();

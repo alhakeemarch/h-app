@@ -84,7 +84,9 @@
             </div>
             <div class="text-center">
                 <a class="Scroll-up-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
-                    <i class="fas fa-angle-double-up"></i></a>
+                    <i class="fas fa-angle-double-up"></i>
+                    <small class="px-2">UP</small>
+                </a>
             </div>
         </footer>
         {{-- -------------------------------------------------------------------------------------------------- --}}

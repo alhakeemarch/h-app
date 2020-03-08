@@ -70,11 +70,11 @@ class PersonController extends Controller
     {
         // return $request;
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Country::where('code_2chracters', $validatedData['nationaltiy_code'])->first();
+        $nationality = Country::where('code_2chracters', $validatedData['nationality_code'])->first();
         // dd($nationality);
         if ($nationality) {
-            $validatedData->put('nationaltiy_ar', $nationality->ar_name);
-            $validatedData->put('nationaltiy_en', $nationality->en_name);
+            $validatedData->put('nationality_ar', $nationality->ar_name);
+            $validatedData->put('nationality_en', $nationality->en_name);
         }
         $created_by_id = auth()->user()->id;
         $created_by_name = auth()->user()->user_name;
@@ -127,10 +127,10 @@ class PersonController extends Controller
     public function update(Request $request, Person $person)
     {
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Country::where('code_2chracters', $validatedData['nationaltiy_code'])->first();
+        $nationality = Country::where('code_2chracters', $validatedData['nationality_code'])->first();
         if ($nationality) {
-            $validatedData->put('nationaltiy_ar', $nationality->ar_name);
-            $validatedData->put('nationaltiy_en', $nationality->en_name);
+            $validatedData->put('nationality_ar', $nationality->ar_name);
+            $validatedData->put('nationality_en', $nationality->en_name);
         }
         // -------------------
         $last_edit_by_id = auth()->user()->id;
@@ -223,9 +223,9 @@ class PersonController extends Controller
             'religion' => 'string|nullable',
             'prefer_language' => 'string|nullable',
             // ----------------------------------------------------
-            'nationaltiy_code' => "required",
-            'nationaltiy_ar' => "nullable",
-            'nationaltiy_en' => "nullable",
+            'nationality_code' => "required",
+            'nationality_ar' => "nullable",
+            'nationality_en' => "nullable",
             // ----------------------------------------------------
             'hafizah_no' => 'numeric|nullable',
             'national_id_issue_date' => ['nullable', 'string', new ValidHijriDate],

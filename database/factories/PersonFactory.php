@@ -47,14 +47,14 @@ $factory->define(Person::class, function (Faker $faker) {
         'phone_extension' => '102',
         'email' => $faker->unique()->safeEmail,
 
-        'nationaltiy_code' => function () {
+        'nationality_code' => function () {
             return ((rand(0, 10)) >= 5) ? '3' : '8';
         },
-        'nationaltiy_ar' => function () {
+        'nationality_ar' => function () {
             return ((rand(0, 10)) >= 5) ? 'سعودي' : 'مصري';
         },
 
-        'nationaltiy_en' => function () {
+        'nationality_en' => function () {
             return ((rand(0, 10)) >= 5) ? 'Saudi' : 'Egybit';
         },
 

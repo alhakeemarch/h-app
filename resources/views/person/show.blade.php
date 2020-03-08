@@ -31,7 +31,7 @@
                     -
                     {{$person->en_name1.' '.$person->en_name2.' '.$person->en_name3.' '.$person->en_name4.' '.$person->en_name5}}
                     <br>
-                    Nationaltiy = {{$person->nationaltiy_ar}} - {{$person->nationaltiy_en}} <br>
+                    nationality = {{$person->nationality_ar}} - {{$person->nationality_en}} <br>
                     Person Hafizah Number = {{$person->hafizah_no}} <br>
                     National ID Issue Date = {{$person->national_id_issue_date}} <br>
                     National ID Issue Place = {{$person->national_id_issue_place}} <br>

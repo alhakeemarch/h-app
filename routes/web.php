@@ -296,6 +296,7 @@ Route::any('/person/check', 'PersonController@check')->name('person.check');
 Route::any('/customer/check', 'CustomerController@check')->name('customer.check');
 Route::any('/employee/check', 'EmployeeController@check')->name('employee.check');
 Route::any('/project/check', 'ProjectController@check')->name('project.check');
+Route::any('/project/fileUpload', 'ProjectController@fileUpload')->name('project.fileUpload');
 Route::any('/plot/check', 'PlotController@check')->name('plot.check');
 Route::any('/contract/check', 'ContractController@check')->name('contract.check');
 Route::any('/task/check', 'TaskController@check')->name('task.check');

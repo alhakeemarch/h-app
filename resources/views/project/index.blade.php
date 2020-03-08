@@ -100,6 +100,14 @@
                                 onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
                                 onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
                         </th>
+                        @auth
+                        <th scope="col">
+                            <p>upload file</p>
+                        </th>
+                        <th scope="col">
+                            <p>details</p>
+                        </th>
+                        @endauth
                     </tr>
                 </thead>
                 <tbody>
@@ -111,6 +119,26 @@
                         <td class="d-none" scope="row">{{$i}}</td>
                         <td class="project_number">{{$project_no}}</td>
                         <td class="project_name">{{$project_name}}</td>
+                        @auth
+                        <td>
+                            <br>
+                            <form action="{{ url('/project/fileUpload') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="project_no" value={{$project_no}}>
+                                <input type="hidden" name="project_name" value="{{$project_name}}">
+                                <input type="hidden" name="project_location" value="finished project">
+                                <button type="submit" class="btn btn-info">
+                                    <i class="fas fa-file-upload"></i>
+                                    <small class="mx-2">upload file</small>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <a href="#">
+                                show project details
+                            </a>
+                        </td>
+                        @endauth
                     </tr>
                     @php $i ++ @endphp
                     </tr>
