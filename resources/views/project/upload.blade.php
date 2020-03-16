@@ -70,16 +70,42 @@
             $file_types = ['drowing(dwg,dxf)','document(docx,pdf,xlsx)','image(jpeg,png,psd)','files(zip,rar)'];
 
             $main_types=['arc','str','elec','sanitary','Water_supply','mechanical','HVAC','ff','fa',
-            'evacuation','tourism','elec_load_plan', ''];
+            'evacuation','tourism - سياحة','elec_load_plan', 'print'];
 
             $sub_types=[
-            'arc'=>['details','elevation','section', 'basement', 'GF', '1stF','2endF', '3rdF','4thF', 'Typical-F',
+            'arc'=>['details','elevation','section', 'basement', 'GF', '1stF','2ndF', '3rdF','4thF', 'Typical-F',
             'roof-F'],
+
             'str'=>['details','columns','bases','ميدات','section', 'basement', 'GF', '1stF','2endF', '3rdF','4thF',
             'Typical-F',
             'roof-F'],
-            'str'=>['',],
-            'str'=>[],
+
+            'elec'=>['',],
+
+            'mic'=>[],
+
+            'mic'=>[],
+
+            'mic'=>[],
+
+            'mic'=>[],
+
+
+            ابتدائي
+            نهائي
+            فكرة
+            layout
+            mezanin
+            prespective
+            stare_roofe
+            calc_sheet
+            foundation
+            beamsss
+            فصل الشبكة
+            ميول المطر
+            التأريض earthing
+
+
             ];
 
             // 2020-06-15_12-20_arc_1003_aaaaa.dwg

@@ -24,7 +24,7 @@ class ProjectController extends Controller
         // }
         $allProjects = Project::all();
         // == @home = false @ work = true ==//
-        if (false) {
+        if (true) {
             $runningProjects = $this->get_running_projects();
             $finishedProjects = $this->get_finished_projects();
             $e_archive = $this->get_e_archive();
