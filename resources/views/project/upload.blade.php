@@ -83,22 +83,17 @@
             'elec'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'earthing','fence', 'other'],
 
-            'dr'=>[],
+            'dr'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'],
 
-            'ws'=>[],
+            'ws'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'],
 
-            'ff'=>[],
+            'ff'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'],
 
-            'fa'=>[],
-
-            // ابتدائي
-            // نهائي
-            // فكرة
-
-            // فصل الشبكة
-            // ميول المطر
-            // التأريض earthing
-
+            'fa'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'],
 
             ];
 
@@ -197,4 +192,7 @@
 
 @section('script')
 {{-- // for javascript --}}
+<script type="text/javascript">
+    alert('hi');
+</script>
 @endsection
