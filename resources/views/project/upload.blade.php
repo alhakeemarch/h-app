@@ -69,41 +69,35 @@
             @php
             $file_types = ['drowing(dwg,dxf)','document(docx,pdf,xlsx)','image(jpeg,png,psd)','files(zip,rar)'];
 
-            $main_types=['arc','str','elec','sanitary','Water_supply','mechanical','HVAC','ff','fa',
-            'evacuation','tourism - سياحة','elec_load_plan', 'print'];
+            $main_types=['concept - فكرة', 'preliminary - ابتدائي','ARC - معماري','STR - إنشائي','Elec - كهرباء','DR -
+            صرف','WS - تغذية','HVAC - تكيف','FF - اطفاء','FA - انذار', 'evacuation - اخلاء','tourism -
+            سياحة','elec-load- ورقة الكهرباء', 'survey - مساحة'];
 
             $sub_types=[
-            'arc'=>['details','elevation','section', 'basement', 'GF', '1stF','2ndF', '3rdF','4thF', 'Typical-F',
-            'roof-F'],
+            'arc'=>[ 'calc-sheet','details','elevation','section', 'layout','BF', 'GF', 'mezanin', '1stF','2ndF',
+            '3rdF','4thF', 'Typical-F', 'roof-F', 'roof-drainage', 'perspective', 'stair-roof' ,'fence','other'],
 
-            'str'=>['details','columns','bases','ميدات','section', 'basement', 'GF', '1stF','2endF', '3rdF','4thF',
-            'Typical-F',
-            'roof-F'],
+            'str'=>['details','columns','foundation','beams', 'smells','section', 'BF', 'GF','mezanin', '1stF','2endF',
+            '3rdF','4thF', 'Typical-F', 'roof-F','stair-roof','fence','other'],
 
-            'elec'=>['',],
+            'elec'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'earthing','fence', 'other'],
 
-            'mic'=>[],
+            'dr'=>[],
 
-            'mic'=>[],
+            'ws'=>[],
 
-            'mic'=>[],
+            'ff'=>[],
 
-            'mic'=>[],
+            'fa'=>[],
 
+            // ابتدائي
+            // نهائي
+            // فكرة
 
-            ابتدائي
-            نهائي
-            فكرة
-            layout
-            mezanin
-            prespective
-            stare_roofe
-            calc_sheet
-            foundation
-            beamsss
-            فصل الشبكة
-            ميول المطر
-            التأريض earthing
+            // فصل الشبكة
+            // ميول المطر
+            // التأريض earthing
 
 
             ];
@@ -131,7 +125,26 @@
             </div>
             {{-- --------------------------------------------------------------------------------------------- --}}
             <div class="col-md">
-                <label for="main_type">{{__( 'file type')}}
+                <label for="main_type">{{__( 'file specificity')}}
+                    <span class="small text-muted">({{__('optional')}})</span>:</label>
+                <select name="main_type" class="form-control @error ('main_type') is-invalid @enderror">
+                    <option selected value="" disabled>{{__( 'please pick')}}..</option>
+                    @foreach ($main_types as $main_type)
+                    @if (App::isLocale('ar'))
+                    <option value="{{$main_type}}"> {{$main_type}} </option>
+                    @endif
+                    @if (App::isLocale('en'))
+                    <option value="{{$main_type}}"> {{$main_type}} </option>
+                    @endif
+                    @endforeach
+                </select>
+                @error('main_type')
+                <small class=" text-danger"> {{$errors->first('main_type')}} </small>
+                @enderror
+            </div>
+            {{-- --------------------------------------------------------------------------------------------- --}}
+            <div class="col-md">
+                <label for="main_type">{{__( 'file extra details')}}
                     <span class="small text-muted">({{__('optional')}})</span>:</label>
                 <select name="main_type" class="form-control @error ('main_type') is-invalid @enderror">
                     <option selected value="" disabled>{{__( 'please pick')}}..</option>
