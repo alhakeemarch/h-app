@@ -66,39 +66,9 @@
                 @enderror
             </div>
             {{-- ================================================================================================================ --}}
-            @php
-            $file_types = ['drowing(dwg,dxf)','document(docx,pdf,xlsx)','image(jpeg,png,psd)','files(zip,rar)'];
 
-            $main_types=['concept - فكرة', 'preliminary - ابتدائي','ARC - معماري','STR - إنشائي','Elec - كهرباء','DR -
-            صرف','WS - تغذية','HVAC - تكيف','FF - اطفاء','FA - انذار', 'evacuation - اخلاء','tourism -
-            سياحة','elec-load- ورقة الكهرباء', 'survey - مساحة'];
+            {{-- // 2020-06-15_12-20_arc_1003_aaaaa.dwg --}}
 
-            $sub_types=[
-            'arc'=>[ 'calc-sheet','details','elevation','section', 'layout','BF', 'GF', 'mezanin', '1stF','2ndF',
-            '3rdF','4thF', 'Typical-F', 'roof-F', 'roof-drainage', 'perspective', 'stair-roof' ,'fence','other'],
-
-            'str'=>['details','columns','foundation','beams', 'smells','section', 'BF', 'GF','mezanin', '1stF','2endF',
-            '3rdF','4thF', 'Typical-F', 'roof-F','stair-roof','fence','other'],
-
-            'elec'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
-            'stair-roof', 'earthing','fence', 'other'],
-
-            'dr'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
-            'stair-roof', 'fence', 'other'],
-
-            'ws'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
-            'stair-roof', 'fence', 'other'],
-
-            'ff'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
-            'stair-roof', 'fence', 'other'],
-
-            'fa'=>['details', 'BF', 'GF','mezanin', '1stF','2endF', '3rdF','4thF', 'Typical-F', 'roof-F',
-            'stair-roof', 'fence', 'other'],
-
-            ];
-
-            // 2020-06-15_12-20_arc_1003_aaaaa.dwg
-            @endphp
             {{-- ================================================================================================================ --}}
             <div class="col-md">
                 <label for="file_type">{{__( 'file type')}}
@@ -106,12 +76,9 @@
                 <select name="file_type" class="form-control @error ('file_type') is-invalid @enderror">
                     <option selected value="" disabled>{{__( 'please pick')}}..</option>
                     @foreach ($file_types as $file_type)
-                    @if (App::isLocale('ar'))
+
                     <option value="{{$file_type}}"> {{$file_type}} </option>
-                    @endif
-                    @if (App::isLocale('en'))
-                    <option value="{{$file_type}}"> {{$file_type}} </option>
-                    @endif
+
                     @endforeach
                 </select>
                 @error('file_type')
@@ -122,15 +89,11 @@
             <div class="col-md">
                 <label for="main_type">{{__( 'file specificity')}}
                     <span class="small text-muted">({{__('optional')}})</span>:</label>
-                <select name="main_type" class="form-control @error ('main_type') is-invalid @enderror">
+                <select name="main_type" id="main_type" class="form-control @error ('main_type') is-invalid @enderror"
+                    onchange="test()">
                     <option selected value="" disabled>{{__( 'please pick')}}..</option>
-                    @foreach ($main_types as $main_type)
-                    @if (App::isLocale('ar'))
-                    <option value="{{$main_type}}"> {{$main_type}} </option>
-                    @endif
-                    @if (App::isLocale('en'))
-                    <option value="{{$main_type}}"> {{$main_type}} </option>
-                    @endif
+                    @foreach ($main_types as $main_type =>$description)
+                    <option value="{{$main_type}}"> {{$description}} </option>
                     @endforeach
                 </select>
                 @error('main_type')
@@ -180,7 +143,17 @@
         <button type="submit" class="btn btn-block btn-info">UpLoade</button>
     </form>
 </div>
-
+@php
+// dd($sub_types);
+$arc= $sub_types['ARC'];
+$str= $sub_types['STR'];
+$elec= $sub_types['ELEC'];
+$dr= $sub_types['DR'];
+$ws= $sub_types['WS'];
+$ff= $sub_types['FF'];
+$fa= $sub_types['FA'];
+// dd($fa);
+@endphp
 
 
 <!-- ///////////////////////////////-->
@@ -193,6 +166,17 @@
 @section('script')
 {{-- // for javascript --}}
 <script type="text/javascript">
-    alert('hi');
+    function test (){
+    let main_type= document.getElementById('main_type');
+        main_type_value = main_type.value;
+    console.log(main_type_value);
+    let arc = {!! json_encode($sub_types, JSON_HEX_TAG) !!};
+    for (var arr in arc){
+        arr.forEach(element => {
+                console.log(element);
+        });
+    }
+}
+    
 </script>
 @endsection

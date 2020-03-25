@@ -24,7 +24,7 @@ class ProjectController extends Controller
         // }
         $allProjects = Project::all();
         // == @home = false @ work = true ==//
-        if (false) {
+        if (true) {
             $runningProjects = $this->get_running_projects();
             $finishedProjects = $this->get_finished_projects();
             $e_archive = $this->get_e_archive();
@@ -47,7 +47,7 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function fileUpload(Project $project, Request $request)
+    public function showUplodeView(Project $project, Request $request)
     {
         // return $request;
         $project_no = $request->project_no;
@@ -56,12 +56,85 @@ class ProjectController extends Controller
         $user = auth()->user()->user_name;
         $employment_no = auth()->user()->person->employment_no;
 
+        $file_types = ['drowing(dwg,dxf)', 'document(docx,pdf,xlsx)', 'image(jpeg,png,psd)', 'files(zip,rar)'];
+
+        $main_types = [
+            'concept' => 'Concept - فكرة',
+            'preliminary' => 'preliminary - ابتدائي',
+            'ARC' => 'ARC - معماري',
+            'STR' => 'STR - إنشائي',
+            'Elec' => 'Elec - كهرباء',
+            'DR' => 'DR - صرف',
+            'WS' => 'WS - تغذية',
+            'HVAC' => 'HVAC - تكيف',
+            'FF' => 'FF - اطفاء',
+            'FA' => 'FA - انذار',
+            'evacuation' => 'evacuation - اخلاء',
+            'tourism' => 'tourism - سياحة',
+            'Elec-Paper' => 'Elec-Paper- ورقة الكهرباء',
+            'survey' => 'survey - مساحة'
+        ];
+
+        $sub_types = [
+            'ARC' => [
+                'calc-sheet', 'details', 'elevation', 'section', 'layout', 'BF', 'GF', 'mezanin', '1stF', '2ndF',
+                '3rdF', '4thF', 'Typical-F', 'roof-F', 'roof-drainage', 'perspective', 'stair-roof', 'fence', 'other'
+            ],
+
+            'STR' => [
+                'details', 'columns', 'foundation', 'beams', 'smells', 'section', 'BF', 'GF', 'mezanin', '1stF', '2endF',
+                '3rdF', '4thF', 'Typical-F', 'roof-F', 'stair-roof', 'fence', 'other'
+            ],
+
+            'ELEC' => [
+                'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+                'stair-roof', 'earthing', 'fence', 'other'
+            ],
+
+            'DR' => [
+                'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+                'stair-roof', 'fence', 'other'
+            ],
+
+            'WS' => [
+                'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+                'stair-roof', 'fence', 'other'
+            ],
+
+            'FF' => [
+                'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+                'stair-roof', 'fence', 'other'
+            ],
+
+            'FA' => [
+                'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+                'stair-roof', 'fence', 'other'
+            ],
+
+        ];
+
+
         return view('project.upload')->with([
             'project_no' => $project_no,
             'project_name' => $project_name,
             'project_location' => $project_location,
             'employment_no' => $employment_no,
+            'file_types' => $file_types,
+            'main_types' => $main_types,
+            'sub_types' => $sub_types,
         ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Project  $project
+     * @return \Illuminate\Http\Response
+     */
+    public function fileUpload(Project $project, Request $request)
+    {
+        // return $request;
+
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**

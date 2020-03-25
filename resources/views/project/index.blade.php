@@ -120,23 +120,27 @@
                         <td class="project_number">{{$project_no}}</td>
                         <td class="project_name">{{$project_name}}</td>
                         @auth
-                        <td>
-                            <br>
-                            <form action="{{ url('/project/fileUpload') }}" method="post">
+                        <td class="m-0 p-0 text-center">
+                            @if (!$project_no == 0)
+                            <form action="{{ url('/project/showUplodeView') }}" method="GET" class="m-0 p-0">
                                 @csrf
                                 <input type="hidden" name="project_no" value={{$project_no}}>
                                 <input type="hidden" name="project_name" value="{{$project_name}}">
                                 <input type="hidden" name="project_location" value="finished project">
-                                <button type="submit" class="btn btn-info">
+                                <button type="submit" class="btn btn-info m-1">
                                     <i class="fas fa-file-upload"></i>
-                                    <small class="mx-2">upload file</small>
+                                    <small class="mx-1">upload file</small>
                                 </button>
                             </form>
+                            @endif
+
                         </td>
                         <td>
+                            @if (!$project_no == 0)
                             <a href="#">
                                 show project details
                             </a>
+                            @endif
                         </td>
                         @endauth
                     </tr>
