@@ -75,43 +75,43 @@ class ProjectController extends Controller
             'survey' => 'survey - مساحة'
         ];
 
-        $sub_types = [
-            'ARC' => [
-                'calc-sheet', 'details', 'elevation', 'section', 'layout', 'BF', 'GF', 'mezanin', '1stF', '2ndF',
-                '3rdF', '4thF', 'Typical-F', 'roof-F', 'roof-drainage', 'perspective', 'stair-roof', 'fence', 'other'
-            ],
 
-            'STR' => [
-                'details', 'columns', 'foundation', 'beams', 'smells', 'section', 'BF', 'GF', 'mezanin', '1stF', '2endF',
-                '3rdF', '4thF', 'Typical-F', 'roof-F', 'stair-roof', 'fence', 'other'
-            ],
-
-            'ELEC' => [
-                'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
-                'stair-roof', 'earthing', 'fence', 'other'
-            ],
-
-            'DR' => [
-                'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
-                'stair-roof', 'fence', 'other'
-            ],
-
-            'WS' => [
-                'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
-                'stair-roof', 'fence', 'other'
-            ],
-
-            'FF' => [
-                'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
-                'stair-roof', 'fence', 'other'
-            ],
-
-            'FA' => [
-                'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
-                'stair-roof', 'fence', 'other'
-            ],
-
+        $arc = [
+            'calc-sheet', 'details', 'elevation', 'section', 'layout', 'BF', 'GF', 'mezanin', '1stF', '2ndF',
+            '3rdF', '4thF', 'Typical-F', 'roof-F', 'roof-drainage', 'perspective', 'stair-roof', 'fence', 'other'
         ];
+
+        $str = [
+            'details', 'columns', 'foundation', 'beams', 'smells', 'section', 'BF', 'GF', 'mezanin', '1stF', '2endF',
+            '3rdF', '4thF', 'Typical-F', 'roof-F', 'stair-roof', 'fence', 'other'
+        ];
+
+        $elec = [
+            'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'earthing', 'fence', 'other'
+        ];
+
+        $dr = [
+            'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'
+        ];
+
+        $ws = [
+            'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'
+        ];
+
+        $ff = [
+            'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'
+        ];
+
+        $fa = [
+            'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'
+        ];
+
+
 
 
         return view('project.upload')->with([
@@ -121,7 +121,13 @@ class ProjectController extends Controller
             'employment_no' => $employment_no,
             'file_types' => $file_types,
             'main_types' => $main_types,
-            'sub_types' => $sub_types,
+            'arc' => $arc,
+            'str' => $str,
+            'elec' => $elec,
+            'dr' => $dr,
+            'ws' => $ws,
+            'ff' => $ff,
+            'fa' => $fa,
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -131,9 +137,10 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function fileUpload(Project $project, Request $request)
+    public function uploadFile(Project $project, Request $request)
     {
-        // return $request;
+        return $request;
+        // 2020-06-15_12-20_arc_1003_aaaaa.dwg
 
     }
     // -----------------------------------------------------------------------------------------------------------------
