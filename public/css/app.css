@@ -754,6 +754,11 @@ textarea,
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+input[type=file] {
+  box-shadow: none !important;
+  min-height: 0 !important;
+}
+
 .card,
 .card-header,
 .card-body {
@@ -765,7 +770,7 @@ select,
 textarea {
   min-height: 3rem !important;
   border: none;
-  box-shadow: inset 1px 1px 10px rgba(150, 180, 200, 0.35), 2px 4px 10px rgba(150, 180, 200, 0.35) !important;
+  box-shadow: inset 1px 1px 10px rgba(150, 180, 200, 0.2), 2px 4px 10px rgba(150, 180, 200, 0.2) !important;
 }
 
 input.form-check-input {

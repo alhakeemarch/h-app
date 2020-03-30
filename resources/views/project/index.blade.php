@@ -112,20 +112,38 @@
                 </thead>
                 <tbody>
 
-                    @php $i=1 @endphp
+                    @php
+                    $i=1;
+                    $path='';
+                    @endphp
 
                     @foreach ($finishedProjects as $project_no=>$project_name)
+                    @if ($project_no == 'path')
+                    @php
+                    $path = $project_name;
+                    @endphp
+                    @endif
+                    @endforeach
+
+                    @foreach ($finishedProjects as $project_no=>$project_name)
+                    @if ($project_no == 'path')
+                    @php
+                    // $path = $project_name;
+                    continue;
+                    @endphp
+                    @endif
                     <tr>
                         <td class="d-none" scope="row">{{$i}}</td>
                         <td class="project_number">{{$project_no}}</td>
                         <td class="project_name">{{$project_name}}</td>
                         @auth
                         <td class="m-0 p-0 text-center">
-                            @if (!$project_no == 0)
+                            @if (!$project_no == 0 )
                             <form action="{{ url('/project/showUplodeView') }}" method="GET" class="m-0 p-0">
                                 @csrf
                                 <input type="hidden" name="project_no" value={{$project_no}}>
                                 <input type="hidden" name="project_name" value="{{$project_name}}">
+                                <input type="hidden" name="path" value="{{$path}}">
                                 <input type="hidden" name="project_location" value="finished project">
                                 <button type="submit" class="btn btn-info m-1">
                                     <i class="fas fa-file-upload"></i>
@@ -133,7 +151,6 @@
                                 </button>
                             </form>
                             @endif
-
                         </td>
                         <td>
                             @if (!$project_no == 0)
@@ -143,8 +160,8 @@
                             @endif
                         </td>
                         @endauth
-                    </tr>
-                    @php $i ++ @endphp
+                        {{-- </tr> --}}
+                        @php $i ++ @endphp
                     </tr>
                     @endforeach
                 </tbody>

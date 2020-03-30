@@ -18,13 +18,9 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        // if ($request) {
-        //     dd($request);
-        //     return $request;
-        // }
         $allProjects = Project::all();
         // == @home = false @ work = true ==//
-        if (true) {
+        if (false) {
             $runningProjects = $this->get_running_projects();
             $finishedProjects = $this->get_finished_projects();
             $e_archive = $this->get_e_archive();
@@ -49,12 +45,14 @@ class ProjectController extends Controller
      */
     public function showUplodeView(Project $project, Request $request)
     {
-        // return $request;
+        return $request;
         $project_no = $request->project_no;
         $project_name = $request->project_name;
+        $project_path = $request->path;
         $project_location = $request->project_location;
         $user = auth()->user()->user_name;
         $employment_no = auth()->user()->person->employment_no;
+
 
         $file_types = ['drowing(dwg,dxf)', 'document(docx,pdf,xlsx)', 'image(jpeg,png,psd)', 'files(zip,rar)'];
 
@@ -111,12 +109,10 @@ class ProjectController extends Controller
             'stair-roof', 'fence', 'other'
         ];
 
-
-
-
         return view('project.upload')->with([
             'project_no' => $project_no,
             'project_name' => $project_name,
+            'project_path' => $project_path,
             'project_location' => $project_location,
             'employment_no' => $employment_no,
             'file_types' => $file_types,
@@ -139,7 +135,9 @@ class ProjectController extends Controller
      */
     public function uploadFile(Project $project, Request $request)
     {
+        // dd($request->file());
         return $request;
+
         // 2020-06-15_12-20_arc_1003_aaaaa.dwg
 
     }
@@ -279,7 +277,7 @@ class ProjectController extends Controller
 
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
-
+        $project_name['path'] = $directory;
         foreach ($projects_dir as $key => $value) {
             $n = substr($value, 1, 1);
             $n = trim($n);
@@ -322,6 +320,7 @@ class ProjectController extends Controller
         $projects_dir = $scanned_directory;
 
         // return $projects_dir;
+        $project_name['path'] = $directory;
         foreach ($projects_dir as $key => $value) {
             $position = stripos($value, '-');
             $sub = substr($value, 0, $position);
@@ -348,7 +347,7 @@ class ProjectController extends Controller
         // $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects';
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
-
+        $project_name['path'] = $directory;
         foreach ($projects_dir as $key => $value) {
             $project_name['archive' . $key] = $value;
         }
@@ -369,6 +368,7 @@ class ProjectController extends Controller
         $projects_dir = $scanned_directory;
 
         // return $projects_dir;
+        $project_name['path'] = $directory;
         foreach ($projects_dir as $key => $value) {
             $position = stripos($value, '-');
             $sub = substr($value, 0, $position);
@@ -407,6 +407,7 @@ class ProjectController extends Controller
 
             // 'directory' => 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects',
         ];
+        $project_name['path'] = '100.0.0.5/f$/data-server/Zaied';
         foreach ($directories as $directory_key => $directory) {
             $scanned_directory = array_diff(scandir($directory), array('..', '.'));
             $kyed_dir = [];

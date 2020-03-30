@@ -12,8 +12,9 @@
         Upload File To Server
     </div>
 
-    <form action="{{ route('project.uploadFile') }}" method="post" enctype="multipart/form-data" class="container">
+    <form action="{{ route('project.uploadFile') }}" method="POST" enctype="multipart/form-data" class="container">
         @csrf
+        <input name="project_path" type="text" value="{{$project_path}}" hidden readonly>
         <div class="row">
             {{-- --------------------------------------------------------------------------------------------- --}}
             <div class="col-md form-group">
@@ -72,8 +73,8 @@
             {{-- --------------------------------------------------------------------------------------------- --}}
             <div class="col-md">
                 <label for="file_type">{{__( 'file type')}}
-                    <span class="small text-muted">({{__('optional')}})</span>:</label>
-                <select name="file_type" class="form-control @error ('file_type') is-invalid @enderror">
+                    <span class="small text-danger">({{__('required')}})</span>:</label>
+                <select name="file_type" class="form-control @error ('file_type') is-invalid @enderror" required>
                     <option selected value="" disabled>{{__( 'please pick')}}..</option>
                     @foreach ($file_types as $file_type)
                     <option value="{{$file_type}}"> {{$file_type}} </option>
@@ -86,9 +87,9 @@
             {{-- --------------------------------------------------------------------------------------------- --}}
             <div class="col-md">
                 <label for="main_type">{{__( 'file specificity')}}
-                    <span class="small text-muted">({{__('optional')}})</span>:</label>
+                    <span class="small text-danger">({{__('required')}})</span>:</label>
                 <select name="main_type" id="main_type" class="form-control @error ('main_type') is-invalid @enderror"
-                    onchange="getDetails()">
+                    onchange="getDetails()" required>
                     <option selected value="" disabled>{{__( 'please pick')}}..</option>
                     @foreach ($main_types as $main_type =>$description)
                     <option value="{{$main_type}}"> {{$description}} </option>
@@ -100,10 +101,10 @@
             </div>
             {{-- --------------------------------------------------------------------------------------------- --}}
             <div class="col-md">
-                <label for="detail">{{__( 'file extra details')}}
-                    <span class="small text-muted">({{__('optional')}})</span>:</label>
+                <label for="detail">{{__( 'extra details')}}
+                    <span class="small text-danger">({{__('required')}})</span>:</label>
                 <select id="detail" name="detail" class="form-control @error ('detail') is-invalid @enderror"
-                    onchange="ifOthSelected(event)">
+                    onchange="ifOthSelected(event)" required>
                     <option selected value="" disabled>{{__( 'please pick')}}..</option>
                 </select>
                 @error('detail')
@@ -112,7 +113,7 @@
             </div>
             {{-- --------------------------------------------------------------------------------------------- --}}
             <div class="col-md form-group">
-                <label for="detail">{{__( 'Or Type file extra details')}}
+                <label for="detail">{{__( 'extra details')}}
                     <span class="small text-danger">({{__('required')}})</span> :</label>
                 <input type="text" name="detail" id="detail_text_input"
                     class="form-control @error ('detail') is-invalid @enderror"
@@ -124,20 +125,19 @@
                 @enderror
             </div>
         </div>
-
-
-
-        <div class="d-flex">
-            <div class="col-md form-group w-75 align-content-center">
-                <label for="fiel">File</label>
-                <input type="file" class="form-control-file" id="file">
+        {{-- ================================================================================================================ --}}
+        <div class="row">
+            <div class="col-md form-group">
+                <label for="fiel">{{__( 'Please select file')}}
+                    <span class="small text-danger">({{__('required')}})</span> :</label>
+                <input type="file" name="file" class="form-control" id="file" required>
             </div>
         </div>
 
 
 
 
-        <button type="submit" class="btn btn-block btn-info">UpLoade</button>
+        <button type="submit" class="btn btn-block btn-info mb-3">UpLoade</button>
     </form>
 </div>
 
