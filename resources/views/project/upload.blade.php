@@ -128,9 +128,9 @@
         {{-- ================================================================================================================ --}}
         <div class="row">
             <div class="col-md form-group">
-                <label for="fiel">{{__( 'Please select file')}}
+                <label for="fiel_input">{{__( 'Please select file')}}
                     <span class="small text-danger">({{__('required')}})</span> :</label>
-                <input type="file" name="file" class="form-control" id="file" required>
+                <input type="file" name="file_input" class="form-control" id="file_input" required>
             </div>
         </div>
 
@@ -177,6 +177,9 @@ function clearSelectOptinons(select) {
     
     var detail_array;
     switch(main_type_value) {
+    case "all":
+        disable_detail_select();
+        break;
     case "concept":
     case "preliminary":
     case "ARC":
@@ -228,6 +231,11 @@ function ifOthSelected(event) {
         theSelect.disabled = true;
         detail_text_input.disabled = false;
     }
+}
+
+function disable_detail_select() {
+    let detail_select= document.getElementById('detail');
+    detail_select.disabled = true;
 }
 
     

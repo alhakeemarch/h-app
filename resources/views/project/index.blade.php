@@ -114,24 +114,11 @@
 
                     @php
                     $i=1;
-                    $path='';
+                    $finished_projects_path="\\100.0.0.6\Finished-Projects";
                     @endphp
 
-                    @foreach ($finishedProjects as $project_no=>$project_name)
-                    @if ($project_no == 'path')
-                    @php
-                    $path = $project_name;
-                    @endphp
-                    @endif
-                    @endforeach
 
                     @foreach ($finishedProjects as $project_no=>$project_name)
-                    @if ($project_no == 'path')
-                    @php
-                    // $path = $project_name;
-                    continue;
-                    @endphp
-                    @endif
                     <tr>
                         <td class="d-none" scope="row">{{$i}}</td>
                         <td class="project_number">{{$project_no}}</td>
@@ -143,7 +130,8 @@
                                 @csrf
                                 <input type="hidden" name="project_no" value={{$project_no}}>
                                 <input type="hidden" name="project_name" value="{{$project_name}}">
-                                <input type="hidden" name="path" value="{{$path}}">
+                                <input type="hidden" name="path"
+                                    value="{{$finished_projects_path}}\{{$project_no}} - {{$project_name}}">
                                 <input type="hidden" name="project_location" value="finished project">
                                 <button type="submit" class="btn btn-info m-1">
                                     <i class="fas fa-file-upload"></i>
@@ -182,7 +170,7 @@
                         <th scope="col">#</th>
                         <th scope="col">
                             <p>project name</p>
-                            <input type="text" id='projectNameInput' name="project_name" class="form-control"
+                            <input type="text" id=' projectNameInput' name="project_name" class="form-control"
                                 autocomplete="off" required placeholder="{{__( 'project Name')}}.."
                                 onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
                                 onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">

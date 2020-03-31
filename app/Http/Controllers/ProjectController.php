@@ -7,6 +7,7 @@ use App\Plot;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -20,7 +21,7 @@ class ProjectController extends Controller
     {
         $allProjects = Project::all();
         // == @home = false @ work = true ==//
-        if (false) {
+        if (true) {
             $runningProjects = $this->get_running_projects();
             $finishedProjects = $this->get_finished_projects();
             $e_archive = $this->get_e_archive();
@@ -45,10 +46,12 @@ class ProjectController extends Controller
      */
     public function showUplodeView(Project $project, Request $request)
     {
-        return $request;
+        // return $request;
         $project_no = $request->project_no;
         $project_name = $request->project_name;
+
         $project_path = $request->path;
+
         $project_location = $request->project_location;
         $user = auth()->user()->user_name;
         $employment_no = auth()->user()->person->employment_no;
@@ -57,6 +60,7 @@ class ProjectController extends Controller
         $file_types = ['drowing(dwg,dxf)', 'document(docx,pdf,xlsx)', 'image(jpeg,png,psd)', 'files(zip,rar)'];
 
         $main_types = [
+            'all' => 'All - كامل المشروع',
             'concept' => 'Concept - فكرة',
             'preliminary' => 'preliminary - ابتدائي',
             'ARC' => 'ARC - معماري',
@@ -75,37 +79,37 @@ class ProjectController extends Controller
 
 
         $arc = [
-            'calc-sheet', 'details', 'elevation', 'section', 'layout', 'BF', 'GF', 'mezanin', '1stF', '2ndF',
+            'all', 'calc-sheet', 'details', 'elevation', 'section', 'layout', 'BF', 'GF', 'mezanin', '1stF', '2ndF',
             '3rdF', '4thF', 'Typical-F', 'roof-F', 'roof-drainage', 'perspective', 'stair-roof', 'fence', 'other'
         ];
 
         $str = [
-            'details', 'columns', 'foundation', 'beams', 'smells', 'section', 'BF', 'GF', 'mezanin', '1stF', '2endF',
+            'all', 'details', 'columns', 'foundation', 'beams', 'smells', 'section', 'BF', 'GF', 'mezanin', '1stF', '2endF',
             '3rdF', '4thF', 'Typical-F', 'roof-F', 'stair-roof', 'fence', 'other'
         ];
 
         $elec = [
-            'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'all', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'earthing', 'fence', 'other'
         ];
 
         $dr = [
-            'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'all', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'fence', 'other'
         ];
 
         $ws = [
-            'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'all', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'fence', 'other'
         ];
 
         $ff = [
-            'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'all', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'fence', 'other'
         ];
 
         $fa = [
-            'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'all', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'fence', 'other'
         ];
 
@@ -135,8 +139,77 @@ class ProjectController extends Controller
      */
     public function uploadFile(Project $project, Request $request)
     {
-        // dd($request->file());
-        return $request;
+        $validator = $request->validate([
+            'file_input' => 'required|file|max:20971520| mimes:dwg',
+        ]);
+
+
+
+
+        // return $request->file_input;
+        // dd($request->file_input->getClientOriginalName());
+        // dd($request->file('file_input'));
+
+        $date_time = date_format(now(), 'y-m-d_H-i');
+        $employment_no = $request->employment_no;
+        $main_type = $request->main_type;
+        $detail = $request->detail;
+
+        $file_extension = $request->file_input->getClientOriginalExtension();
+        $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '_' . $detail . '.' . $file_extension;
+        $file_name = strtolower($file_name);
+        // dd($file_extension);
+
+
+        $X = move_uploaded_file($request->file_input, '\\\100.0.0.5\f$\data-server\New folder\\' . $file_name);
+        dd($X);
+        // $path = $request->file_input->store('\\\100.0.0.5\f$\data-server\New folder\\');
+        // dd($path);
+
+
+        // $path = Storage::putFileAs(
+        //     '\\\100.0.0.5\f$\data-server\New folder',
+        //     $request->file('file_input'),
+        //     $request->user()->id
+        // );
+        // dd($path);
+
+        /**
+        -test: false
+        -originalName: "فاتورة السداد.jpg"
+        -mimeType: "image/jpeg"
+        -error: 0
+        #hashName: null
+        path: "C:\Users\Administrator\AppData\Local\Temp"
+        filename: "phpFA01.tmp"
+        basename: "phpFA01.tmp"
+        pathname: "C:\Users\Administrator\AppData\Local\Temp\phpFA01.tmp"
+        extension: "tmp"
+        realPath: "C:\Users\Administrator\AppData\Local\Temp\phpFA01.tmp"
+        aTime: 2020-03-31 09:38:01
+        mTime: 2020-03-31 09:38:01
+        cTime: 2020-03-31 09:38:01
+        inode: 0
+        size: 31995
+        perms: 0100666
+        owner: 0
+        group: 0
+        type: "file"
+        writable: true
+        readable: true
+        executable: false
+        file: true
+        dir: false
+        link: false
+        linkTarget: "C:\Users\Administrator\AppData\Local\Temp\phpFA01.tmp"
+
+         */
+
+
+
+
+
+        // return $request;
 
         // 2020-06-15_12-20_arc_1003_aaaaa.dwg
 
@@ -277,7 +350,7 @@ class ProjectController extends Controller
 
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
-        $project_name['path'] = $directory;
+        // $project_name['path'] = $directory;
         foreach ($projects_dir as $key => $value) {
             $n = substr($value, 1, 1);
             $n = trim($n);
@@ -320,7 +393,7 @@ class ProjectController extends Controller
         $projects_dir = $scanned_directory;
 
         // return $projects_dir;
-        $project_name['path'] = $directory;
+        // $project_name['path'] = $directory;
         foreach ($projects_dir as $key => $value) {
             $position = stripos($value, '-');
             $sub = substr($value, 0, $position);
@@ -347,7 +420,7 @@ class ProjectController extends Controller
         // $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects';
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
-        $project_name['path'] = $directory;
+        // $project_name['path'] = $directory;
         foreach ($projects_dir as $key => $value) {
             $project_name['archive' . $key] = $value;
         }
@@ -368,7 +441,7 @@ class ProjectController extends Controller
         $projects_dir = $scanned_directory;
 
         // return $projects_dir;
-        $project_name['path'] = $directory;
+        // $project_name['path'] = $directory;
         foreach ($projects_dir as $key => $value) {
             $position = stripos($value, '-');
             $sub = substr($value, 0, $position);
@@ -387,7 +460,6 @@ class ProjectController extends Controller
     // -------------------------------------------------------------------------------------------------------------------
     function get_zaied_projects()
     {
-        // return ['0|مافي شبكة' => 'من البيت'];
         $project_no = [];
         $project_name = [];
         $projects_dir = [];
@@ -407,7 +479,7 @@ class ProjectController extends Controller
 
             // 'directory' => 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects',
         ];
-        $project_name['path'] = '100.0.0.5/f$/data-server/Zaied';
+        // $project_name['path'] = '100.0.0.5/f$/data-server/Zaied';
         foreach ($directories as $directory_key => $directory) {
             $scanned_directory = array_diff(scandir($directory), array('..', '.'));
             $kyed_dir = [];
