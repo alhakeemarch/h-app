@@ -133,14 +133,30 @@
                 <input type="file" name="file_input" class="form-control" id="file_input" required>
             </div>
         </div>
-
-
-
-
-        <button type="submit" class="btn btn-block btn-info mb-3">UpLoade</button>
+        {{-- ================================================================================================================ --}}
+        <div class="row text-center mb-4">
+            <div class="col-md">
+                <button type="submet" class="btn btn-info btn-block">
+                    <i class="fas fa-file-upload"></i>
+                    <span class="d-none d-md-inline-block">&nbsp; upload</span>
+                </button>
+            </div>
+            <div class="col-md">
+                <a href="{{ url('/project') }}" class="btn btn-info btn-block">
+                    <i class="fas fa-undo-alt"></i>
+                    <span class="d-none d-md-inline-block">&nbsp; cancel</span>
+                </a>
+            </div>
+        </div>
+        {{-- ================================================================================================================ --}}
     </form>
 </div>
 
+@if(session()->has('success'))
+<div class="alert alert-success">
+    {{ session()->get('success') }}
+</div>
+@endif
 
 <!-- ///////////////////////////////-->
 @if ($errors->any())

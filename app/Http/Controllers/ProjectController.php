@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Person;
 use App\Plot;
 use App\Project;
+use App\Rules\ValidFileSize;
+use App\Rules\ValidFileType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -139,16 +141,20 @@ class ProjectController extends Controller
      */
     public function uploadFile(Project $project, Request $request)
     {
-        $validator = $request->validate([
-            'file_input' => 'required|file|max:20971520| mimes:dwg',
+        $validatedData = $request->validate([
+            'project_path' => 'required',
+            'project_no' => 'required|numeric',
+            'project_name' => 'required',
+            'project_location' => 'required',
+            'employment_no' => 'required|numeric|digits:4',
+            'file_type' => 'required',
+            'main_type' => 'required',
+            'detail' => 'nullable|',
+            'file_input' => ['required', 'file', new ValidFileSize, new ValidFileType],
         ]);
 
-
-
-
-        // return $request->file_input;
-        // dd($request->file_input->getClientOriginalName());
-        // dd($request->file('file_input'));
+        // $project_dir = '\\\100.0.0.5\f$\data-server\New folder\\';
+        $project_dir = '\\' . $request->project_path . '\\';
 
         $date_time = date_format(now(), 'y-m-d_H-i');
         $employment_no = $request->employment_no;
@@ -156,60 +162,39 @@ class ProjectController extends Controller
         $detail = $request->detail;
 
         $file_extension = $request->file_input->getClientOriginalExtension();
-        $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '_' . $detail . '.' . $file_extension;
+        if ($detail) {
+            $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '_' . $detail . '.' . $file_extension;
+        } else {
+            $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '.' . $file_extension;
+        }
+
         $file_name = strtolower($file_name);
-        // dd($file_extension);
-
-
-        $X = move_uploaded_file($request->file_input, '\\\100.0.0.5\f$\data-server\New folder\\' . $file_name);
-        dd($X);
-        // $path = $request->file_input->store('\\\100.0.0.5\f$\data-server\New folder\\');
-        // dd($path);
-
-
-        // $path = Storage::putFileAs(
-        //     '\\\100.0.0.5\f$\data-server\New folder',
-        //     $request->file('file_input'),
-        //     $request->user()->id
-        // );
-        // dd($path);
-
-        /**
-        -test: false
-        -originalName: "فاتورة السداد.jpg"
-        -mimeType: "image/jpeg"
-        -error: 0
-        #hashName: null
-        path: "C:\Users\Administrator\AppData\Local\Temp"
-        filename: "phpFA01.tmp"
-        basename: "phpFA01.tmp"
-        pathname: "C:\Users\Administrator\AppData\Local\Temp\phpFA01.tmp"
-        extension: "tmp"
-        realPath: "C:\Users\Administrator\AppData\Local\Temp\phpFA01.tmp"
-        aTime: 2020-03-31 09:38:01
-        mTime: 2020-03-31 09:38:01
-        cTime: 2020-03-31 09:38:01
-        inode: 0
-        size: 31995
-        perms: 0100666
-        owner: 0
-        group: 0
-        type: "file"
-        writable: true
-        readable: true
-        executable: false
-        file: true
-        dir: false
-        link: false
-        linkTarget: "C:\Users\Administrator\AppData\Local\Temp\phpFA01.tmp"
-
-         */
 
 
 
+        try {
+            $done = move_uploaded_file($request->file_input, $project_dir . $file_name);
+        } catch (\Throwable $th) {
+            $error_msg = $th->getMessage();
+            $error_msg = substr($error_msg, strpos($error_msg, ':') + 1);
+            return redirect()->back()->withErrors([
+                'Error',
+                'Failed to upload file,',
+                'please check the folder first then try to upload it again,',
+                'or contact system administrator.',
+                'server error:' . $error_msg
+            ]);
+        }
 
 
-        // return $request;
+        if ($done) {
+            return redirect()->back()->with('success', 'File Uploded Successfully');
+        } else {
+            return redirect()->back()->withErrors(['Error', 'failed to upload file,', 'please check the folder first and try to upload it again,', 'or contact system administrator.']);
+        }
+
+
+
 
         // 2020-06-15_12-20_arc_1003_aaaaa.dwg
 
