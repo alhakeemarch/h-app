@@ -23,7 +23,7 @@ class ProjectController extends Controller
     {
         $allProjects = Project::all();
         // == @home = false @ work = true ==//
-        if (true) {
+        if (false) {
             $runningProjects = $this->get_running_projects();
             $finishedProjects = $this->get_finished_projects();
             $e_archive = $this->get_e_archive();
@@ -59,10 +59,18 @@ class ProjectController extends Controller
         $employment_no = auth()->user()->person->employment_no;
 
 
-        $file_types = ['drowing(dwg,dxf)', 'document(docx,pdf,xlsx)', 'image(jpeg,png,psd)', 'files(zip,rar)'];
+        $file_types = [
+            'drowing' => 'drowing(dwg,dxf)',
+            'document' => 'document(docx,pdf,xlsx)',
+            'image' => 'image(jpeg,png,psd)',
+            'zip_fiele' =>  'files(zip)'
+        ];
 
         $main_types = [
             'all' => 'All - كامل المشروع',
+            'doc' => 'Scanned Document -مستند سكانر',
+            'img' => 'image - صورة',
+            'row' => 'Row Document - مستند خام',
             'concept' => 'Concept - فكرة',
             'preliminary' => 'preliminary - ابتدائي',
             'ARC' => 'ARC - معماري',
@@ -81,37 +89,37 @@ class ProjectController extends Controller
 
 
         $arc = [
-            'all', 'calc-sheet', 'details', 'elevation', 'section', 'layout', 'BF', 'GF', 'mezanin', '1stF', '2ndF',
+            'all', 'plans', 'calc-sheet', 'details', 'elevation', 'section', 'layout', 'BF', 'GF', 'mezanin', '1stF', '2ndF',
             '3rdF', '4thF', 'Typical-F', 'roof-F', 'roof-drainage', 'perspective', 'stair-roof', 'fence', 'other'
         ];
 
         $str = [
-            'all', 'details', 'columns', 'foundation', 'beams', 'smells', 'section', 'BF', 'GF', 'mezanin', '1stF', '2endF',
+            'all', 'plans', 'details', 'columns', 'foundation', 'beams', 'smells', 'section', 'BF', 'GF', 'mezanin', '1stF', '2endF',
             '3rdF', '4thF', 'Typical-F', 'roof-F', 'stair-roof', 'fence', 'other'
         ];
 
         $elec = [
-            'all', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'earthing', 'fence', 'other'
         ];
 
         $dr = [
-            'all', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'fence', 'other'
         ];
 
         $ws = [
-            'all', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'fence', 'other'
         ];
 
         $ff = [
-            'all', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'fence', 'other'
         ];
 
         $fa = [
-            'all', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'fence', 'other'
         ];
 
@@ -154,13 +162,56 @@ class ProjectController extends Controller
         ]);
 
         // $project_dir = '\\\100.0.0.5\f$\data-server\New folder\\';
-        $project_dir = '\\' . $request->project_path . '\\';
+        $project_dir = '\\' . $request->project_path . '\\';   // this is for home only
+        $project_dir = 'D:\projects' . '\\';
 
         $date_time = date_format(now(), 'y-m-d_H-i');
         $employment_no = $request->employment_no;
+        $file_type = $request->file_type;
+        $file_extension = $request->file_input->getClientOriginalExtension();
         $main_type = $request->main_type;
         $detail = $request->detail;
 
+        // ----------------------------------------------------------------
+        // to check if the file is document to upload in documents folder
+        $is_document = false;
+        $type_mismatch = false;
+        $doc_extensions = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg', 'jpg', 'gif', 'png', 'bmp', 'tiff', 'psd', 'pdf'];
+
+        if (in_array($file_extension, $doc_extensions)) {
+            $is_document = true;
+            if ($file_type == 'drowing' || $file_type == 'zip_fiele') {
+                $type_mismatch = true;
+            }
+        }
+
+        if ($file_type == 'document' || $file_type == 'image') {
+            $is_document = true;
+
+            if (strtolower($file_extension) == 'dwg' || strtolower($file_extension) == 'dxf') {
+                $type_mismatch = true;
+            }
+        }
+
+        if ($type_mismatch) {
+            return redirect()->back()->withErrors(
+                [
+                    'Error',
+                    'file type mismatch',
+                    'please choose the correct file type',
+                    'or contact system administrator.'
+                ]
+            );
+        }
+
+        if ($is_document) {
+            if (!file_exists($project_dir . '\01 - Documents')) {
+                mkdir($project_dir . '\01 - Documents', 0777, true);
+            }
+            $project_dir = $project_dir . '\01 - Documents\\';
+        }
+
+        // ----------------------------------------------------------------
         $file_extension = $request->file_input->getClientOriginalExtension();
         if ($detail) {
             $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '_' . $detail . '.' . $file_extension;

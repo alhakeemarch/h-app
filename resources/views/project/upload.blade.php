@@ -76,8 +76,8 @@
                     <span class="small text-danger">({{__('required')}})</span>:</label>
                 <select name="file_type" class="form-control @error ('file_type') is-invalid @enderror" required>
                     <option selected value="" disabled>{{__( 'please pick')}}..</option>
-                    @foreach ($file_types as $file_type)
-                    <option value="{{$file_type}}"> {{$file_type}} </option>
+                    @foreach ($file_types as $file_type=>$description)
+                    <option value="{{$file_type}}"> {{$description}} </option>
                     @endforeach
                 </select>
                 @error('file_type')
@@ -114,11 +114,11 @@
             {{-- --------------------------------------------------------------------------------------------- --}}
             <div class="col-md form-group">
                 <label for="detail">{{__( 'extra details')}}
-                    <span class="small text-danger">({{__('required')}})</span> :</label>
+                    <span class="small text-muted">({{__('optional')}})</span> :</label>
                 <input type="text" name="detail" id="detail_text_input"
                     class="form-control @error ('detail') is-invalid @enderror"
-                    value="{{old('detail') ?? $detail ?? '' }}" required placeholder="{{__( 'details')}}.."
-                    onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'details')}}..'" maxlength="5"
+                    value="{{old('detail') ?? $detail ?? '' }}" placeholder="{{__( 'details')}}.."
+                    onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'details')}}..'" maxlength="10"
                     title="Max 5 letters" disabled>
                 @error('detail')
                 <small class="text-danger"> {{$errors->first('detail')}} </small>
@@ -190,11 +190,15 @@ function clearSelectOptinons(select) {
     detail_select.disabled = false;
     let main_type_value = '';
         main_type_value = main_type.value;
-    
+        disable_detail_input();
     var detail_array;
     switch(main_type_value) {
     case "all":
+    case "doc":
+    case "img":
+    case "row":
         disable_detail_select();
+        enable_detail_input();
         break;
     case "concept":
     case "preliminary":
@@ -227,9 +231,9 @@ function clearSelectOptinons(select) {
             // 'survey' => 'survey - مساحة'
         detail_array = ['other'];
     }
-       
     clearSelectOptinons(detail_select);
     addFirstOptinoToSelect(detail_select);
+
 
     detail_array.forEach(element => {
         var opt = document.createElement('option');
@@ -241,17 +245,23 @@ function clearSelectOptinons(select) {
 
 function ifOthSelected(event) {
     let selectedValue = event.target.value.toLowerCase();
-    let detail_text_input = document.getElementById('detail_text_input');
     if (selectedValue == 'other') {
-        theSelect = event.target;
-        theSelect.disabled = true;
-        detail_text_input.disabled = false;
+        disable_detail_select();
+        enable_detail_input();
     }
 }
 
 function disable_detail_select() {
     let detail_select= document.getElementById('detail');
     detail_select.disabled = true;
+}
+function enable_detail_input() {
+    let detail_select= document.getElementById('detail_text_input');
+    detail_text_input.disabled = false;
+}
+function disable_detail_input() {
+    let detail_select= document.getElementById('detail_text_input');
+    detail_text_input.disabled = true;
 }
 
     
