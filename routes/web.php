@@ -43,7 +43,7 @@ Route::any('/f', function () {
     // return time();
     //////////////////////////////////////////////////////////    
 
-    if (false) {
+    if (true) {
         Artisan::call('migrate:fresh');
         Artisan::call('cache:clear');
         Artisan::call('view:clear');
@@ -420,7 +420,8 @@ function makeUser($user)
         'mobile' => '0500000000',
         'phone' => '0148650000',
         'phone_extension' => '103',
-        'email' => 'admin@hakeemarch.com'
+        'email' => 'admin@hakeemarch.com',
+        'employment_no' => '1001',
     ];
     $adminUser = [
         'user_name' => 'admin',
@@ -447,7 +448,8 @@ function makeUser($user)
         'mobile' => '0500858415',
         'phone' => '0148650000',
         'phone_extension' => '103',
-        'email' => 'al-fahd@windowslive.com'
+        'email' => 'al-fahd@windowslive.com',
+        'employment_no' => '1002',
     ];
     $fahdUser = [
         'user_name' => 'fff',
@@ -473,7 +475,8 @@ function makeUser($user)
         'mobile' => '0535551215',
         'phone' => '0148650000',
         'phone_extension' => '133',
-        'email' => '1412hano@gmail.com'
+        'email' => '1412hano@gmail.com',
+        'employment_no' => '1003',
     ];
     $hanadiUser = [
         'user_name' => 'hanadi',

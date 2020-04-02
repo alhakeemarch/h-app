@@ -72,20 +72,6 @@
         <div class="row">
             {{-- --------------------------------------------------------------------------------------------- --}}
             <div class="col-md">
-                <label for="file_type">{{__( 'file type')}}
-                    <span class="small text-danger">({{__('required')}})</span>:</label>
-                <select name="file_type" class="form-control @error ('file_type') is-invalid @enderror" required>
-                    <option selected value="" disabled>{{__( 'please pick')}}..</option>
-                    @foreach ($file_types as $file_type=>$description)
-                    <option value="{{$file_type}}"> {{$description}} </option>
-                    @endforeach
-                </select>
-                @error('file_type')
-                <small class=" text-danger"> {{$errors->first('file_type')}} </small>
-                @enderror
-            </div>
-            {{-- --------------------------------------------------------------------------------------------- --}}
-            <div class="col-md">
                 <label for="main_type">{{__( 'file specificity')}}
                     <span class="small text-danger">({{__('required')}})</span>:</label>
                 <select name="main_type" id="main_type" class="form-control @error ('main_type') is-invalid @enderror"

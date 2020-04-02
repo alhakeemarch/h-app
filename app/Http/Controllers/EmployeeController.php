@@ -331,20 +331,20 @@ class EmployeeController extends PersonController
                 'created_by_name' => auth()->user()->user_name,
             ],
             // --------------------------------------------------
-            // [
-            //     'national_id' => '',// --------------------------------------------------
-            //     'ar_name1' => 'حسام',
-            //     'ar_name5' => '',// --------------------------------------------------
-            //     'en_name1' => '',// --------------------------------------------------
-            //     'en_name5' => '',// --------------------------------------------------
-            //     'mobile' => '',// --------------------------------------------------
-            //     'email' => '',// --------------------------------------------------
-            //     'phone' => '0148650000',
-            //     'phone_extension' => '100.0.0.99',
-            //     'is_employee' => true,
-            //     'created_by_id' => auth()->user()->id,
-            //     'created_by_name' => auth()->user()->user_name,
-            // ],
+            [
+                'national_id' => '2475020141',
+                'ar_name1' => 'حسام',
+                'ar_name5' => 'محمد',
+                'en_name1' => 'Hosam',
+                'en_name5' => 'Mahammad',
+                'mobile' => '0563578863',
+                'email' => 'hossamalsyed93@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '100.0.0.99',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
             // --------------------------------------------------
             [
                 'national_id' => '2001846613',
@@ -451,20 +451,20 @@ class EmployeeController extends PersonController
                 'created_by_name' => auth()->user()->user_name,
             ],
             // --------------------------------------------------
-            // [
-            //     'national_id' => '2181479805',
-            //     'ar_name1' => 'حنفي',
-            //     'ar_name5' => 'مهني',
-            //     'en_name1' => 'Hanafi',
-            //     'en_name5' => 'Mahany',
-            //     'mobile' => '0556140778',
-            //     'email' => '',// --------------------------------------------------
-            //     'phone' => '0148650000',
-            //     'phone_extension' => '112',
-            //     'is_employee' => true,
-            //     'created_by_id' => auth()->user()->id,
-            //     'created_by_name' => auth()->user()->user_name,
-            // ],
+            [
+                'national_id' => '2181479805',
+                'ar_name1' => 'حنفي',
+                'ar_name5' => 'مهني',
+                'en_name1' => 'Hanafi',
+                'en_name5' => 'Mahany',
+                'mobile' => '0556140778',
+                'email' => 'hanafy1972@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '112',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
             // --------------------------------------------------
             [
                 'national_id' => '2034388112',
@@ -496,20 +496,20 @@ class EmployeeController extends PersonController
                 'created_by_name' => auth()->user()->user_name,
             ],
             // --------------------------------------------------
-            // [
-            //     'national_id' => '',// --------------------------------------------- ابن المهندس فريد
-            //     'ar_name1' => 'اسلام',
-            //     'ar_name5' => 'محمد',
-            //     'en_name1' => 'Islam',
-            //     'en_name5' => 'Mohamed',
-            //     'mobile' => '0592780987',
-            //     'email' => 'architect_eslam@hotmail.com',
-            //     'phone' => '0148650000',
-            //     'phone_extension' => '120',
-            //     'is_employee' => true,
-            //     'created_by_id' => auth()->user()->id,
-            //     'created_by_name' => auth()->user()->user_name,
-            // ],
+            [
+                'national_id' => '2110900574',
+                'ar_name1' => 'احمد',
+                'ar_name5' => 'البحيري',
+                'en_name1' => 'Ahamad',
+                'en_name5' => 'Albehari',
+                'mobile' => '0503565425',
+                'email' => 'ahmadfaridbehery@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '120',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
             // --------------------------------------------------
             [
                 'national_id' => '2428342998',
@@ -602,34 +602,34 @@ class EmployeeController extends PersonController
             ],
             // --------------------------------------------------
             [
-                'national_id' => '1077416475',
-                'ar_name1' => 'علي',
-                'ar_name5' => 'النخلي',
-                'en_name1' => 'ALI',
-                'en_name5' => 'ALNAKHLI',
-                'mobile' => '0552720037',
-                'email' => 'ali.ibrahim.aln@gmail.com',
+                // 'national_id' => '1077416475',
+                // 'ar_name1' => 'علي',
+                // 'ar_name5' => 'النخلي',
+                // 'en_name1' => 'ALI',
+                // 'en_name5' => 'ALNAKHLI',
+                // 'mobile' => '0552720037',
+                // 'email' => 'ali.ibrahim.aln@gmail.com',
+                // 'phone' => '0148650000',
+                // 'phone_extension' => '127',
+                // 'is_employee' => true,
+                // 'created_by_id' => auth()->user()->id,
+                // 'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
+                'national_id' => '2106863042',
+                'ar_name1' => 'ايمن',
+                'ar_name5' => 'رجب',
+                'en_name1' => 'Ayman',
+                'en_name5' => 'Rajab',
+                'mobile' => '0597162340',
+                'email' => 'aymanragab100100@gmail.com',
                 'phone' => '0148650000',
-                'phone_extension' => '127',
+                'phone_extension' => '128',
                 'is_employee' => true,
                 'created_by_id' => auth()->user()->id,
                 'created_by_name' => auth()->user()->user_name,
             ],
-            // --------------------------------------------------
-            // [
-            //     'national_id' => '',// --------------------------------------------------
-            //     'ar_name1' => 'ايمن',
-            //     'ar_name5' => 'رجب',
-            //     'en_name1' => '',// --------------------------------------------------
-            //     'en_name5' => '',// --------------------------------------------------
-            //     'mobile' => '',// --------------------------------------------------
-            //     'email' => '',// --------------------------------------------------
-            //     'phone' => '0148650000',
-            //     'phone_extension' => '128',
-            //     'is_employee' => true,
-            //     'created_by_id' => auth()->user()->id,
-            //     'created_by_name' => auth()->user()->user_name,
-            // ],
             // --------------------------------------------------
             [
                 'national_id' => '2445000975',
@@ -676,20 +676,20 @@ class EmployeeController extends PersonController
                 'created_by_name' => auth()->user()->user_name,
             ],
             // --------------------------------------------------
-            // [
-            //     'national_id' => '1091137875', // --------------------------------------------- المعمارية الجديدة
-            //     'ar_name1' => 'امنية',
-            //     'ar_name5' => 'الدرغام',
-            //     'en_name1' => 'Omnia',
-            //     'en_name5' => 'Aldirgham',
-            //     'mobile' => '0546686552',
-            //     'email' => 'D.omnia1@hotmail.com',
-            //     'phone' => '0148650000',
-            //     'phone_extension' => '134',
-            //     'is_employee' => true,
-            //     'created_by_id' => auth()->user()->id,
-            //     'created_by_name' => auth()->user()->user_name,
-            // ],
+            [
+                'national_id' => '1107942664',
+                'ar_name1' => 'ريناد',
+                'ar_name5' => 'الحسيني',
+                'en_name1' => 'Renad',
+                'en_name5' => 'Alhosini',
+                'mobile' => '0580068858',
+                'email' => 'architectrenad@gmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '134',
+                'is_employee' => true,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
             // --------------------------------------------------
             [
                 'national_id' => '1076608981',
@@ -789,6 +789,9 @@ class EmployeeController extends PersonController
         // -------------------------------------
         foreach ($employees as $employee) {
             if (Person::where('national_id', $employee['national_id'])->first() != true) {
+                $last_employment_no = Person::max('employment_no');
+                $employee['employment_no'] = $last_employment_no + 1;
+                // array_push($employee, "employment_no" => $last_employment_no+1);
                 $new_employee = new Person;
                 $new_employee->create($employee);
             }

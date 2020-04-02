@@ -22,15 +22,28 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $allProjects = Project::all();
-        // == @home = false @ work = true ==//
-        if (false) {
-            $runningProjects = $this->get_running_projects();
-            $finishedProjects = $this->get_finished_projects();
-            $e_archive = $this->get_e_archive();
-            $zaied_projects = $this->get_zaied_projects();
-        } else {
-            $runningProjects =  $finishedProjects = $e_archive = $zaied_projects = $this->get_home_projects();
+
+        try {
+            // == @home = false @ work = true ==//
+            if (true) {
+                $runningProjects = $this->get_running_projects();
+                $finishedProjects = $this->get_finished_projects();
+                $e_archive = $this->get_e_archive();
+                $zaied_projects = $this->get_zaied_projects();
+            } else {
+                $runningProjects =  $finishedProjects = $e_archive = $zaied_projects = $this->get_home_projects();
+            }
+        } catch (\Throwable $th) {
+            $error_msg = $th->getMessage();
+            // $error_msg = substr($error_msg, strpos($error_msg, ':') + 1);
+            return redirect()->back()->withErrors([
+                'Error',
+                'Failed to git projects,',
+                'please contact system administrator.',
+                'server error:' . $error_msg
+            ]);
         }
+
         return view('project.index')->with([
             'projects' => $allProjects,
             'runningProjects' => $runningProjects,
@@ -58,14 +71,6 @@ class ProjectController extends Controller
         $user = auth()->user()->user_name;
         $employment_no = auth()->user()->person->employment_no;
 
-
-        $file_types = [
-            'drowing' => 'drowing(dwg,dxf)',
-            'document' => 'document(docx,pdf,xlsx)',
-            'image' => 'image(jpeg,png,psd)',
-            'zip_fiele' =>  'files(zip)'
-        ];
-
         $main_types = [
             'all' => 'All - كامل المشروع',
             'doc' => 'Scanned Document -مستند سكانر',
@@ -86,7 +91,6 @@ class ProjectController extends Controller
             'Elec-Paper' => 'Elec-Paper- ورقة الكهرباء',
             'survey' => 'survey - مساحة'
         ];
-
 
         $arc = [
             'all', 'plans', 'calc-sheet', 'details', 'elevation', 'section', 'layout', 'BF', 'GF', 'mezanin', '1stF', '2ndF',
@@ -129,7 +133,6 @@ class ProjectController extends Controller
             'project_path' => $project_path,
             'project_location' => $project_location,
             'employment_no' => $employment_no,
-            'file_types' => $file_types,
             'main_types' => $main_types,
             'arc' => $arc,
             'str' => $str,
@@ -155,19 +158,17 @@ class ProjectController extends Controller
             'project_name' => 'required',
             'project_location' => 'required',
             'employment_no' => 'required|numeric|digits:4',
-            'file_type' => 'required',
             'main_type' => 'required',
             'detail' => 'nullable|',
             'file_input' => ['required', 'file', new ValidFileSize, new ValidFileType],
         ]);
 
         // $project_dir = '\\\100.0.0.5\f$\data-server\New folder\\';
-        $project_dir = '\\' . $request->project_path . '\\';   // this is for home only
-        $project_dir = 'D:\projects' . '\\';
+        $project_dir = '\\' . $request->project_path . '\\';
+        // $project_dir = 'D:\projects' . '\\'; // this is for home only
 
         $date_time = date_format(now(), 'y-m-d_H-i');
         $employment_no = $request->employment_no;
-        $file_type = $request->file_type;
         $file_extension = $request->file_input->getClientOriginalExtension();
         $main_type = $request->main_type;
         $detail = $request->detail;
@@ -175,30 +176,27 @@ class ProjectController extends Controller
         // ----------------------------------------------------------------
         // to check if the file is document to upload in documents folder
         $is_document = false;
+        $is_drawing = false;
         $type_mismatch = false;
         $doc_extensions = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg', 'jpg', 'gif', 'png', 'bmp', 'tiff', 'psd', 'pdf'];
+        $drawing_extensions = ['dwg', 'dxf'];
 
-        if (in_array($file_extension, $doc_extensions)) {
+        if ($main_type == 'doc' || $main_type == 'img' || $main_type == 'row') {
             $is_document = true;
-            if ($file_type == 'drowing' || $file_type == 'zip_fiele') {
-                $type_mismatch = true;
-            }
         }
-
-        if ($file_type == 'document' || $file_type == 'image') {
-            $is_document = true;
-
-            if (strtolower($file_extension) == 'dwg' || strtolower($file_extension) == 'dxf') {
-                $type_mismatch = true;
-            }
+        if (in_array(strtolower($file_extension), $drawing_extensions)) {
+            $is_drawing = true;
+        }
+        if ($is_drawing && $is_document) {
+            $type_mismatch = true;
         }
 
         if ($type_mismatch) {
             return redirect()->back()->withErrors(
                 [
                     'Error',
-                    'file type mismatch',
-                    'please choose the correct file type',
+                    'cannot upload drawing into documents',
+                    'please choose the correct file specificity',
                     'or contact system administrator.'
                 ]
             );
@@ -221,8 +219,6 @@ class ProjectController extends Controller
 
         $file_name = strtolower($file_name);
 
-
-
         try {
             $done = move_uploaded_file($request->file_input, $project_dir . $file_name);
         } catch (\Throwable $th) {
@@ -236,19 +232,13 @@ class ProjectController extends Controller
                 'server error:' . $error_msg
             ]);
         }
-
+        $success_msg = ($is_document) ? 'File Uploded Successfully to Document folder' : 'File Uploded Successfully';
 
         if ($done) {
-            return redirect()->back()->with('success', 'File Uploded Successfully');
+            return redirect()->back()->with('success', $success_msg);
         } else {
             return redirect()->back()->withErrors(['Error', 'failed to upload file,', 'please check the folder first and try to upload it again,', 'or contact system administrator.']);
         }
-
-
-
-
-        // 2020-06-15_12-20_arc_1003_aaaaa.dwg
-
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
