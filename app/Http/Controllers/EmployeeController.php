@@ -601,20 +601,20 @@ class EmployeeController extends PersonController
                 'created_by_name' => auth()->user()->user_name,
             ],
             // --------------------------------------------------
-            [
-                // 'national_id' => '1077416475',
-                // 'ar_name1' => 'علي',
-                // 'ar_name5' => 'النخلي',
-                // 'en_name1' => 'ALI',
-                // 'en_name5' => 'ALNAKHLI',
-                // 'mobile' => '0552720037',
-                // 'email' => 'ali.ibrahim.aln@gmail.com',
-                // 'phone' => '0148650000',
-                // 'phone_extension' => '127',
-                // 'is_employee' => true,
-                // 'created_by_id' => auth()->user()->id,
-                // 'created_by_name' => auth()->user()->user_name,
-            ],
+            // [
+            // 'national_id' => '1077416475',
+            // 'ar_name1' => 'علي',
+            // 'ar_name5' => 'النخلي',
+            // 'en_name1' => 'ALI',
+            // 'en_name5' => 'ALNAKHLI',
+            // 'mobile' => '0552720037',
+            // 'email' => 'ali.ibrahim.aln@gmail.com',
+            // 'phone' => '0148650000',
+            // 'phone_extension' => '127',
+            // 'is_employee' => true,
+            // 'created_by_id' => auth()->user()->id,
+            // 'created_by_name' => auth()->user()->user_name,
+            // ],
             // --------------------------------------------------
             [
                 'national_id' => '2106863042',
@@ -788,6 +788,7 @@ class EmployeeController extends PersonController
         // }
         // -------------------------------------
         foreach ($employees as $employee) {
+            // var_dump($employee);
             if (Person::where('national_id', $employee['national_id'])->first() != true) {
                 $last_employment_no = Person::max('employment_no');
                 $employee['employment_no'] = $last_employment_no + 1;

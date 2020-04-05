@@ -25,7 +25,7 @@ class ProjectController extends Controller
 
         try {
             // == @home = false @ work = true ==//
-            if (true) {
+            if (false) {
                 $runningProjects = $this->get_running_projects();
                 $finishedProjects = $this->get_finished_projects();
                 $e_archive = $this->get_e_archive();
@@ -38,7 +38,7 @@ class ProjectController extends Controller
             // $error_msg = substr($error_msg, strpos($error_msg, ':') + 1);
             return redirect()->back()->withErrors([
                 'Error',
-                'Failed to git projects,',
+                'Failed to get projects,',
                 'please contact system administrator.',
                 'server error:' . $error_msg
             ]);
