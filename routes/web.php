@@ -51,7 +51,7 @@ Route::any('/f', function () {
         // makeUser('fahd');
         // makeUser('hanadi');
         // return;
-        return firstInsertion();
+        // return firstInsertion();
     }
 
 
