@@ -61,6 +61,13 @@ class RegisterController extends Controller
             return redirect()->back()->withErrors(['Contact System administrator, email mismatch']);
         }
         // ------------------------------------------------------------------------------- //
+        // give the employee -> employment number
+        if (!$found_person->employment) {
+            $last_employment_no = $person->max('employment_no');
+            $found_person['employment_no'] = $last_employment_no + 1;
+            $found_person->save();
+        }
+        // ------------------------------------------------------------------------------- //
         // return 'hi';
         event(new Registered($user = $this->create($validatedData)));
         $this->guard()->login($user);

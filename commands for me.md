@@ -217,14 +217,19 @@ add soft delet
 $table->timestamp('deleted_at')->nullable();
 ==============================================================================
  ## artisan Commands
+composer update
+composer require laravel/ui "^2.0"
 
 php artisan
+php artisan --version
 php artisan make:factory PersonFactory -m Person
 php artisan migrate:fresh
 php artisan cache:clear
 php artisan clear-compiled 
 composer dump-autoload
+php artisan clear
 php artisan optimize
+php artisan vendor:publish
 
 ============================
 

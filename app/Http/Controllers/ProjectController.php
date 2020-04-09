@@ -25,7 +25,7 @@ class ProjectController extends Controller
 
         try {
             // == @home = false @ work = true ==//
-            if (true) {
+            if (false) {
                 $runningProjects = $this->get_running_projects();
                 $finishedProjects = $this->get_finished_projects();
                 $e_archive = $this->get_e_archive();
@@ -125,6 +125,22 @@ class ProjectController extends Controller
         $fa = [
             'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
             'stair-roof', 'fence', 'other'
+        ];
+        $survey = [
+            'رفع مساحي
+            بيانات موقع
+            قرار مساحي
+            قرار ذرعة
+            محضر تثبيت
+            محضر مناسيب
+            لوحة تنظيمية
+            مخطط تنظيمي
+            مخطط إرشادي
+            لوحة فرز
+            لوحة دمج
+            بارسل الأمانة
+            إحداثيات
+            في ار اس'
         ];
 
         return view('project.upload')->with([

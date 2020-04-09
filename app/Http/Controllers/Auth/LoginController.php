@@ -87,7 +87,13 @@ class LoginController extends Controller
         }
         // ------------------------------------------------------------------------------- //
         if (substr($request_user_name, 0, 1) == '1' || substr($request_user_name, 0, 1) == '2') {
-            $found_user = $user->where('national_id', $request_user_name)->first();
+            if (strlen($request_user_name) == 10) {
+                $found_user = $user->where('national_id', $request_user_name)->first();
+            } else {
+                $found_person = $person->where('employment_no', $request_user_name)->first();
+                $found_user = $user->where('national_id', $found_person->national_id)->first();
+            }
+
             if (!$found_user) {
                 return redirect()->back()->withErrors(['User Not found. Try Again or Contact the Administrator']);
             }
