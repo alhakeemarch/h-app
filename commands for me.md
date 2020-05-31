@@ -560,3 +560,51 @@ https://laracasts.com/discuss/channels/general-discussion/maximum-execution-time
     <small class="text-danger"> {{$errors->first('area')}} </small>
     @enderror
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+================================
+    <x-input name='asd' title="">
+        <x-slot name='type'>cool tital</x-slot>
+        <x-slot name='title'>cool tital</x-slot>
+        <x-slot name='tooltip'>cool tooltip</x-slot>
+        <x-slot name='placeholder'>cool placeholder</x-slot>
+        {{-- ------------------------------------------------------- --}}
+        {{-- <x-slot name='input_class'>text-danger</x-slot> --}}
+        {{-- <x-slot name='input_id'>my_id</x-slot> --}}
+        {{-- ------------------------------------------------------- --}}
+        {{-- <x-slot name='onkeypress_fun'>onlyNumber(event)</x-slot>
+        <x-slot name='onkeypress_fun'>onlyNumber(event)</x-slot>
+        @slot('onkeypress_fun') onlyArabicString(event) @endslot --}}
+        {{-- ------------------------------------------------------- --}}
+        <x-slot name='is_required'>true</x-slot>
+        {{-- <x-slot name='is_readonly'>true</x-slot> --}}
+        {{-- //// if it is disabled then it will not be required or readonly --}}
+        {{-- <x-slot name='is_disabled'>true</x-slot> --}}
+        {{-- <x-slot name='is_hidden'>true</x-slot> --}}
+        {{-- ------------------------------------------------------- --}}
+        {{-- <x-slot name='input_pattern'>.{2,}</x-slot> --}}
+        {{-- ////this is for date:01-01-2020 --}}
+        {{-- <x-slot name='input_pattern'>(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}</x-slot> --}}
+
+        {{-- ------------------------------------------------------- --}}
+        <x-slot name='input_min'>5</x-slot>
+        <x-slot name='input_max'>10</x-slot>
+        {{-- ------------------------------------------------------- --}}
+        <x-slot name='input_value'>{{$person->ar_name1}}</x-slot>
+        {{-- ------------------------------------------------------- --}}
+        this is main slot
+    </x-input>
+    <hr>
+    
+    <x-input name='new' title="2nd title" />
+================================

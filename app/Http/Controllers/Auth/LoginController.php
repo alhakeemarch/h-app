@@ -91,7 +91,11 @@ class LoginController extends Controller
                 $found_user = $user->where('national_id', $request_user_name)->first();
             } else {
                 $found_person = $person->where('employment_no', $request_user_name)->first();
-                $found_user = $user->where('national_id', $found_person->national_id)->first();
+                if ($found_person) {
+                    $found_user = $user->where('national_id', $found_person->national_id)->first();
+                } else {
+                    $found_user = false;
+                }
             }
 
             if (!$found_user) {
