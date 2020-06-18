@@ -135,7 +135,6 @@ class RegisterController extends Controller
             'pass_char' => $data['password'],
             'password' => Hash::make($data['password']),
             'created_by_id' => null,
-            'created_by_id' => 'registeration',
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------

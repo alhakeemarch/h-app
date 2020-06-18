@@ -25,7 +25,7 @@ class ProjectController extends Controller
 
         try {
             // == @home = false @ work = true ==//
-            if (false) {
+            if (true) {
                 $runningProjects = $this->get_running_projects();
                 $finishedProjects = $this->get_finished_projects();
                 $e_archive = $this->get_e_archive();
@@ -170,7 +170,8 @@ class ProjectController extends Controller
     {
         $validatedData = $request->validate([
             'project_path' => 'required',
-            'project_no' => 'required|numeric',
+            'project_no' => 'required',
+            // 'project_no' => 'required|numeric',
             'project_name' => 'required',
             'project_location' => 'required',
             'employment_no' => 'required|numeric|digits:4',

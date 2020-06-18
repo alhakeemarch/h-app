@@ -191,6 +191,8 @@ function clearSelectOptinons(select) {
     case "ARC":
     case "evacuation":
     case "tourism":
+
+    
         detail_array = {!! json_encode($arc, JSON_HEX_TAG) !!};
         break;
     case "STR":
@@ -249,6 +251,29 @@ function disable_detail_input() {
     let detail_select= document.getElementById('detail_text_input');
     detail_text_input.disabled = true;
 }
+
+function test() {
+    console.log(axios.get('/api/get_main_types'));
+        // axios.get('/api/get_main_types')
+        //       .then((response) => {
+        //         // handle success
+        //         console.log(response.data);
+        //         //now this refers to your vue instance and this can access you data property
+        //         this.continents = response.data;
+        //       })
+        //       .catch((error) => {
+        //         // handle error
+        //         console.log(error);
+        //       })
+        //       .then(() => {
+        //         // always executed
+        //       });
+ 
+}
+
+
+
+
 
     
 </script>
