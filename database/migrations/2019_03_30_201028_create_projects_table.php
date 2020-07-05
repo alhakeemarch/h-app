@@ -109,10 +109,10 @@ class CreateProjectsTable extends Migration
             $table->bigInteger('district_id')->nullable();
             $table->bigInteger('street_id')->nullable();
             $table->bigInteger('plot_id')->nullable();
-            $table->bigInteger('plot_no')->nullable();
+            $table->string('plot_no')->nullable();
             $table->bigInteger('deed_id')->nullable();
-            $table->bigInteger('deed_no')->nullable();
-            $table->string('total_area')->nullable();
+            $table->string('deed_no')->nullable();
+            $table->bigInteger('total_area')->nullable();
             $table->string('project_location')->nullable();
 
 
