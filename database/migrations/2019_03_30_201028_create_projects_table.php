@@ -16,13 +16,14 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('project_no');
-            $table->bigInteger('project_name')->nullable();
+            $table->string('project_no')->unique();
+            $table->string('project_name_ar')->nullable();
+            $table->string('project_name_en')->nullable();
             // -----------------------------
-            $table->bigInteger('owner_id');
-            $table->bigInteger('owner_national_id');
-            $table->string('owner_type'); // فرد - شركة - ورثة - وقف - جهة 
-            $table->string('owner_name_ar');
+            $table->bigInteger('owner_id')->nullable();
+            $table->bigInteger('owner_national_id')->nullable();
+            $table->string('owner_type')->nullable(); // فرد - شركة - ورثة - وقف - جهة 
+            $table->string('owner_name_ar')->nullable();
             $table->string('owner_name_en')->nullable();
             $table->string('owner_main_mobile_no')->nullable();
             $table->text('extra_owners_list')->nullable();
@@ -41,9 +42,9 @@ class CreateProjectsTable extends Migration
             $table->string('representative_authorization_expire_date')->nullable();
             $table->text('extra_representatives_list')->nullable();
             // -----------------------------
-            $table->string('project_name_ar')->nullable();
-            $table->string('project_name_en')->nullable();
+            $table->string('project_status')->nullable();
             $table->string('project_type')->nullable();
+            $table->string('project_assign_to_user')->nullable();
             $table->string('project_arch_hight')->nullable();
             $table->string('project_str_hight')->nullable();
             // -----------------------------
@@ -102,25 +103,27 @@ class CreateProjectsTable extends Migration
 
 
             // -----------------------------
-            $table->bigInteger('municipality_branche_id');
-            $table->bigInteger('neighbor_id');
-            $table->bigInteger('plan_id');
-            $table->bigInteger('district_id');
-            $table->bigInteger('street_id');
-            $table->bigInteger('plot_id');
-            $table->bigInteger('plot_no');
-            $table->bigInteger('deed_id');
-            $table->bigInteger('deed_no');
+            $table->bigInteger('municipality_branche_id')->nullable();
+            $table->bigInteger('neighbor_id')->nullable();
+            $table->bigInteger('plan_id')->nullable();
+            $table->bigInteger('district_id')->nullable();
+            $table->bigInteger('street_id')->nullable();
+            $table->bigInteger('plot_id')->nullable();
+            $table->bigInteger('plot_no')->nullable();
+            $table->bigInteger('deed_id')->nullable();
+            $table->bigInteger('deed_no')->nullable();
             $table->string('total_area')->nullable();
+            $table->string('project_location')->nullable();
 
 
             // =============================
             // -----------------------------
             $table->longText('notes')->nullable();
             $table->longText('private_notes')->nullable();
+            $table->longText('created_at_note')->nullable();
             // -----------------------------
-            $table->bigInteger('created_by_id')->references('id')->on('users');
-            $table->string('created_by_name')->references('user_name')->on('users');
+            $table->bigInteger('created_by_id')->references('id')->on('users')->nullable();
+            $table->string('created_by_name')->references('user_name')->on('users')->nullable();
             $table->bigInteger('last_edit_by_id')->references('id')->on('users')->nullable();
             $table->string('last_edit_by_name')->references('user_name')->on('users')->nullable();
             // -----------------------------
