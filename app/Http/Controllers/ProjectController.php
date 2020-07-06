@@ -36,7 +36,7 @@ class ProjectController extends Controller
 
         try {
             // == @home = false @ work = true ==//
-            if (true) {
+            if (false) {
                 $runningProjects = $this->get_running_projects();
                 $finishedProjects = $this->get_finished_projects();
                 $e_archive = $this->get_e_archive();
@@ -306,7 +306,13 @@ class ProjectController extends Controller
      */
     public function show(Project $project, Request $request)
     {
-        return view('project.show')->with('project', $project);
+        $customers = Person::all()->where('is_customer', true)->reverse();
+        $current_customer = $customers->where('national_id', $request->owner_national_id);
+        return $customers;
+        return view('project.show', [
+            'project', $project,
+            'customers', $customers
+        ]);
     }
 
     /**

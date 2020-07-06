@@ -583,7 +583,11 @@ https://laracasts.com/discuss/channels/general-discussion/maximum-execution-time
         {{-- <x-slot name='input_id'>my_id</x-slot> --}}
         {{-- ------------------------------------------------------- --}}
         {{-- <x-slot name='onkeypress_fun'>onlyNumber(event)</x-slot>
-        <x-slot name='onkeypress_fun'>onlyNumber(event)</x-slot>
+        <x-slot name='onkeypress_fun'>userNameString(event)</x-slot>
+        <x-slot name='onkeypress_fun'>onlyCapitalString(event)</x-slot>
+        <x-slot name='onkeypress_fun'>onlyEnglishString(event)</x-slot>
+        <x-slot name='onkeypress_fun'>onlyArabicString(event)</x-slot>
+        <x-slot name='onkeypress_fun'>onlyString(event)</x-slot>
         @slot('onkeypress_fun') onlyArabicString(event) @endslot --}}
         {{-- ------------------------------------------------------- --}}
         <x-slot name='is_required'>true</x-slot>
