@@ -5,7 +5,7 @@
 <div class="card">
     <div class="card-body">
         <h1 class="text-center">
-            {{__('Welcom to')}} {{__('app name')}}
+            {{__('Welcome to')}} {{__('app name')}}
         </h1>
 
         <!-- ///////////////////////////////-->

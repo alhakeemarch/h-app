@@ -15,13 +15,24 @@ class ProjectController extends Controller
 {
     // -----------------------------------------------------------------------------------------------------------------
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->middleware('active_user');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $allProjects = Project::all();
+        $allProjects = Project::all()->reverse();
 
         try {
             // == @home = false @ work = true ==//
@@ -283,6 +294,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
         //
     }
 
@@ -294,10 +306,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project, Request $request)
     {
-        return 'Project show method';
-        // dd( $request);
-
-        //
+        return view('project.show')->with('project', $project);
     }
 
     /**
@@ -308,6 +317,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        return view('project.edit')->with('project', $project);
         //
     }
 
@@ -544,47 +554,5 @@ class ProjectController extends Controller
         // ksort($project_name);
         // return $projects_dir;
         return $project_name;
-    }
-
-
-    public static function firstInsertion()
-    {
-        /*******************************************************************************************************
-         *      1) key = name_en
-         *      2) value = name_en
-         *      https://langvara.com/ar/%D8%A3%D8%B3%D9%85%D8%A7%D8%A1-%D8%A7%D9%84%D9%85%D9%87%D9%86-%D9%88%D8%AA%D8%B1%D8%AC%D9%85%D8%AA%D9%87%D8%A7-%D8%A5%D9%84%D9%89-%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%D8%A9/
-         *******************************************************************************************************/
-        $projects_arr = array(
-            'architecture engineering' => 'هندسة معمارية',
-            'landscape engineering' => 'هندسة تخطيط',
-            'structure engineering' => 'هندسة مدنية',
-            'mechanical engineering' => 'هندسة ميكانيكية',
-            'electrical engineering' => 'هندسة كهربائية',
-            'land survey' => 'مساحة',
-            'architecture draftsman' => 'الرسم المعماري',
-            'building technician' => 'فني أبنية - مراقب أبنية',
-        );
-
-        /*******************************************************************************************************/
-        if (Major::all()->count() >= count($majors)) {
-            return false;
-        }
-
-        // -------------------------------------
-        $created_by_id = auth()->user()->id;
-        $created_by_name = auth()->user()->user_name;
-        // -------------------------------------
-        foreach ($majors as $key => $value) {
-            $major = new Major();
-            $major->created_by_id = $created_by_id;
-            $major->created_by_name = $created_by_name;
-            // -------------------------------------
-            $major->major_en = $key;
-            $major->major_ar = $value;
-            // -------------------------------------
-            $major->save();
-        }
-
-        return true;
     }
 }

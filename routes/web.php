@@ -44,12 +44,12 @@ Route::any('/f', function () {
     //////////////////////////////////////////////////////////    
 
     if (true) {
-        Artisan::call('migrate:fresh');
-        Artisan::call('cache:clear');
-        Artisan::call('view:clear');
-        makeUser('admin');
-        makeUser('fahd');
-        makeUser('hanadi');
+        // Artisan::call('migrate:fresh');
+        // Artisan::call('cache:clear');
+        // Artisan::call('view:clear');
+        // makeUser('admin');
+        // makeUser('fahd');
+        // makeUser('hanadi');
         // return;
         // return firstInsertion();
     }

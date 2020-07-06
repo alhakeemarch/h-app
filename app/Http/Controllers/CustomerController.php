@@ -49,7 +49,7 @@ class CustomerController extends PersonController
     {
         // return $request;
         $validatedData = collect($this->validatePerson($request));
-        $nationality = Country::where('code_2chracters', $validatedData['code_2chracters'])->first();
+        $nationality = Country::where('code_2chracters', $validatedData['nationality_code'])->first();
         // dd($nationality);
         if ($nationality) {
             $validatedData->put('nationality_ar', $nationality->ar_name);

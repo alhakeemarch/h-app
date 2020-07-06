@@ -3,6 +3,7 @@
     autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
     onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterSidebar(event)" onkeypress=" onlyString(event)">
 {{-- --------------------------------------------------------------------------------------------- --}}
+@if (auth()->user()->is_admin)
 <div class=" sidebar-group">
     <a href="#">
         <div class="sidebar-title d-flex justify-content-between">
@@ -37,6 +38,7 @@
         </div>
     </a>
 </div>
+@endif
 {{-- --------------------------------------------------------------------------------------------- --}}
 <div class=" sidebar-group">
     <a href="#">

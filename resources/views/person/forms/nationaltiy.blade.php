@@ -4,6 +4,7 @@
 
 @php $national_id = $national_id ?? $person->national_id; @endphp
 
+
 <div class="row">
     @if (substr($national_id,0,1)=='1')
     {{-- START: of Sudi ID info --}}

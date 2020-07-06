@@ -3,7 +3,7 @@
         @include('person.forms.ar_name')
     </div>
     <div class="col-4">
-        @include('person.forms.nationality')
+        @include('person.forms.nationaltiy')
     </div>
 </div>
 {{-- ============================================================================================== --}}
