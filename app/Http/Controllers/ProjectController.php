@@ -7,6 +7,7 @@ use App\Plot;
 use App\Project;
 use App\Rules\ValidFileSize;
 use App\Rules\ValidFileType;
+use Hamcrest\Type\IsNumeric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -32,11 +33,15 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $allProjects = Project::all()->reverse();
+        $allProjectsCount = Project::all()->count();
+        $db_all_projects = Project::all();
+        $allProjects = Project::orderBy('id', 'desc')->paginate(50);
+        // $allProjects = $db_all_projects->latest()->paginate(100);
+        // $allProjects = Project::paginate(100);
 
         try {
             // == @home = false @ work = true ==//
-            if (false) {
+            if (true) {
                 $runningProjects = $this->get_running_projects();
                 $finishedProjects = $this->get_finished_projects();
                 $e_archive = $this->get_e_archive();
@@ -54,13 +59,16 @@ class ProjectController extends Controller
                 'server error:' . $error_msg
             ]);
         }
-
+        $running_projects_path = "\\100.0.0.5\f$\data-server\02-Runing-Projects";
         return view('project.index')->with([
             'projects' => $allProjects,
+            'allProjectsCount' => $allProjectsCount,
             'runningProjects' => $runningProjects,
             'finishedProjects' => $finishedProjects,
             'e_archive' => $e_archive,
             'zaied_projects' => $zaied_projects,
+            'running_projects_path' => $running_projects_path,
+
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -79,7 +87,7 @@ class ProjectController extends Controller
         $project_path = $request->path;
 
         $project_location = $request->project_location;
-        $user = auth()->user()->user_name;
+        // $user = auth()->user()->user_name;
         $employment_no = auth()->user()->person->employment_no;
 
         $main_types = [
@@ -191,8 +199,16 @@ class ProjectController extends Controller
             'file_input' => ['required', 'file', new ValidFileSize, new ValidFileType],
         ]);
 
-        // $project_dir = '\\\100.0.0.5\f$\data-server\New folder\\';
-        $project_dir = '\\' . $request->project_path . '\\';
+        if ($request->project_location == 'running project') {
+            $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $request->project_no . ' - ' . $request->project_name . '\\';
+            if (!is_numeric(!$request->project_no)) {
+                $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $request->project_name . '\\';
+            }
+        }
+        if ($request->project_location == 'finished project') {
+            $project_dir = '\\' . $request->project_path . '\\';
+        }
+        // $project_dir = '\\' . $request->project_path . '\\';
         // $project_dir = 'D:\projects' . '\\'; // this is for home only
 
         $date_time = date_format(now(), 'yy-m-d_H-i');

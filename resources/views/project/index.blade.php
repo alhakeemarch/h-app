@@ -11,8 +11,8 @@
 
     <ul class="nav nav-tabs nav-justified text-uppercase" id="projects_tab_Just" role="tablist">
         <li class="nav-item">
-            <a class="nav-link" id="runnig_projects-tab-just" data-toggle="tab" href="#runnig_projects-just" role="tab"
-                aria-controls="runnig_projects-just" aria-selected="true">runnig projects</a>
+            <a class="nav-link" id="running_projects-tab-just" data-toggle="tab" href="#running_projects-just"
+                role="tab" aria-controls="running_projects-just" aria-selected="true">running projects</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="finshed_projects-tab-just" data-toggle="tab" href="#finshed_projects-just"
@@ -33,7 +33,8 @@
     </ul>
 
     <div class="tab-content card pt-5 text-capitalize" id="projects_tab_ContentJust">
-        <div class="tab-pane fade" id="runnig_projects-just" role="tabpanel" aria-labelledby="runnig_projects-tab-just">
+        <div class="tab-pane fade" id="running_projects-just" role="tabpanel"
+            aria-labelledby="running_projects-tab-just">
             {{-- ///////////////////////////////////////NOTE: running ////////////////////////////////////////////////////////// --}}
             <h3 class="h3 text-center">
                 list of running projects <p class="small">total = {{ count($runningProjects) }}</p>
@@ -56,6 +57,9 @@
                                 onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
                                 onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
                         </th>
+                        <th scope="col">
+                            <p>upload file</p>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +71,25 @@
                         <td class="d-none" scope="row">{{$i}}</td>
                         <td class="project_number">{{$project_no}}</td>
                         <td class="project_name">{{$project_name}}</td>
+                        {{-- ------------------------------------ --}}
+                        {{-- for upload form --}}
+                        <td class="project_upload">
+                            @if (!$project_no == 0 )
+                            <form action="{{ url('/project/showUplodeView') }}" method="GET" class="m-0 p-0">
+                                @csrf
+                                <input type="hidden" name="project_no" value={{$project_no}}>
+                                <input type="hidden" name="project_name" value="{{$project_name}}">
+                                <input type="hidden" name="path"
+                                    value="{{$running_projects_path}}\{{$project_no}} - {{$project_name}}">
+                                <input type="hidden" name="project_location" value="running project">
+                                <button type="submit" class="btn btn-info m-1">
+                                    <i class="fas fa-file-upload"></i>
+                                    <small class="mx-1">upload file</small>
+                                </button>
+                            </form>
+                            @endif
+                        </td>
+                        {{-- ------------------------------------ --}}
                     </tr>
                     @php $i ++ @endphp
                     </tr>
@@ -161,9 +184,14 @@
         <div class="tab-pane fade show active" id="all_projects-just" role="tabpanel"
             aria-labelledby="all_projects-tab-just">
             <h3 class="h3 text-center">
-                list of all projects <p class="small">total = {{ count($projects) }}</p>
+                list of all projects <p class="small">total = {{ $allProjectsCount }}</p>
             </h3>
+            @if (auth()->user()->is_admin)
             <a class="btn btn-info btn-block w-75 mx-auto mb-4" href="{{route('project.check')}}">crate new project</a>
+            @endif
+            <div class="d-flex justify-content-center my-2">
+                {{ $projects->links() }}
+            </div>
             <table class="table table-hover table-bordered">
                 <thead class="bg-thead">
                     <tr>
