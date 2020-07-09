@@ -104,8 +104,8 @@
                 <input type="text" name="detail" id="detail_text_input"
                     class="form-control @error ('detail') is-invalid @enderror"
                     value="{{old('detail') ?? $detail ?? '' }}" placeholder="{{__( 'details')}}.."
-                    onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'details')}}..'" maxlength="10"
-                    title="Max 5 letters" disabled>
+                    onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'details')}}..'" maxlength="15"
+                    title="Max 15 letters" disabled>
                 @error('detail')
                 <small class="text-danger"> {{$errors->first('detail')}} </small>
                 @enderror
