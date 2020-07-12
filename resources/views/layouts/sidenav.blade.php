@@ -53,9 +53,32 @@
             customers
         </div>
     </a>
+    @if (auth()->user()->is_admin)
     <a class="" href="{{route ('project.index')}}">
-        <div class="sidebar-item {{ (request()->is('project*')) ? 'active' : '' }}">
+        {{-- <div class="sidebar-item {{ (request()->is('project*')) ? 'active' : '' }}"> --}}
+        <div class="sidebar-item">
             projects
+        </div>
+    </a>
+    @endif
+    <a class="" href="{{route ('project.runningProjects')}}">
+        <div class="sidebar-item {{ (request()->is('project/runningProjects*')) ? 'active' : '' }}">
+            running projects
+        </div>
+    </a>
+    <a class="" href="{{route ('project.finshedProjects')}}">
+        <div class="sidebar-item {{ (request()->is('project/finshedProjects*')) ? 'active' : '' }}">
+            finished projects
+        </div>
+    </a>
+    <a class="" href="{{route ('project.zaidProjects')}}">
+        <div class="sidebar-item {{ (request()->is('project/zaidProjects*')) ? 'active' : '' }}">
+            zaied projects
+        </div>
+    </a>
+    <a class="" href="{{route ('project.earchive')}}">
+        <div class="sidebar-item {{ (request()->is('project/earchive*')) ? 'active' : '' }}">
+            E-Archive projects
         </div>
     </a>
     <a href="{{route ('plot.index')}}">

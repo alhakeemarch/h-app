@@ -313,6 +313,14 @@ Route::any('/user/userLogin', 'Auth\LoginController@check')->name('login.check')
 // Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 // Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
 // -----------------------------------------------------------------------------------------------------------------
+
+Route::group(['prefix' => 'project'], function () {
+    Route::any('uploadFile', 'ProjectController@uploadFile')->name('project.uploadFile');
+    Route::any('runningProjects', 'ProjectController@runningProjects')->name('project.runningProjects');
+    Route::any('finshedProjects', 'ProjectController@finshedProjects')->name('project.finshedProjects');
+    Route::any('zaidProjects', 'ProjectController@zaidProjects')->name('project.zaidProjects');
+    Route::any('earchive', 'ProjectController@earchive')->name('project.earchive');
+});
 Route::resources([
 
     // -- شخص أو جهة

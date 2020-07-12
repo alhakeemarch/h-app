@@ -73,7 +73,7 @@
                         <td class="project_name">{{$project_name}}</td>
                         {{-- ------------------------------------ --}}
                         {{-- for upload form --}}
-                        <td class="project_upload">
+                        <td class="project_upload m-0 p-0 text-center">
                             @if (!$project_no == 0 )
                             <form action="{{ url('/project/showUplodeView') }}" method="GET" class="m-0 p-0">
                                 @csrf
@@ -269,7 +269,7 @@
         </div>
 
         <div class="tab-pane fade" id="e_archive-just" role="tabpanel" aria-labelledby="e_archive-tab-just">
-            {{-- ///////////////////////////////////////NOTE: all projects ////////////////////////////////////////////////////////// --}}
+            {{-- ///////////////////////////////////////NOTE: E-Archive projects ////////////////////////////////////////////////////////// --}}
             <h3 class="h3 text-center">
                 list of e_archive <p class="small">total = {{ count($e_archive) }}</p>
             </h3>

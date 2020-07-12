@@ -73,6 +73,62 @@ class ProjectController extends Controller
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
+     * index of running porjects.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function runningProjects(Request $request)
+    {
+        $runningProjects = $this->get_running_projects();
+        // $runningProjects = $this->get_home_projects();
+        return view('project.running_projects')->with([
+            'runningProjects' => $runningProjects,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * index of finished Projects.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function finshedProjects(Request $request)
+    {
+        $finishedProjects = $this->get_finished_projects();
+        // $finishedProjects = $this->get_home_projects();
+        return view('project.finshed_projects')->with([
+            'finishedProjects' => $finishedProjects,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * index of zaid Projects.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function zaidProjects(Request $request)
+    {
+        $zaied_projects = $this->get_zaied_projects();
+        // $zaied_projects = $this->get_home_projects();
+        return view('project.zaied_projects')->with([
+            'zaied_projects' => $zaied_projects,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * index of e-archive Projects.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function earchive(Request $request)
+    {
+        $e_archive = $this->get_e_archive();
+        // $e_archive = $this->get_home_projects();
+        return view('project.e_archive_projects')->with([
+            'e_archive' => $e_archive,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
      * Display the specified resource.
      *
      * @param  \App\Project  $project
@@ -188,7 +244,6 @@ class ProjectController extends Controller
     public function uploadFile(Project $project, Request $request)
     {
         $validatedData = $request->validate([
-            'project_path' => 'required',
             'project_no' => 'required',
             // 'project_no' => 'required|numeric',
             'project_name' => 'required',
@@ -199,11 +254,11 @@ class ProjectController extends Controller
             'file_input' => ['required', 'file', new ValidFileSize, new ValidFileType],
         ]);
 
-        if ($request->project_location == 'running project') {
+        if (is_numeric($request->project_no) && $request->project_location == 'running project') {
             $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $request->project_no . ' - ' . $request->project_name . '\\';
-            if (!is_numeric(!$request->project_no)) {
-                $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $request->project_name . '\\';
-            }
+        }
+        if (!is_numeric($request->project_no) && $request->project_location == 'running project') {
+            $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $request->project_name . '\\';
         }
         if ($request->project_location == 'finished project') {
             $project_dir = '\\' . $request->project_path . '\\';
@@ -301,7 +356,7 @@ class ProjectController extends Controller
             'plot' => $plot,
         ]);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -322,13 +377,11 @@ class ProjectController extends Controller
      */
     public function show(Project $project, Request $request)
     {
-        $customers = Person::all()->where('is_customer', true)->reverse();
-        $current_customer = $customers->where('national_id', $request->owner_national_id);
-        return $customers;
-        return view('project.show', [
-            'project', $project,
-            'customers', $customers
-        ]);
+        // $customers = Person::all()->where('is_customer', true)->reverse();
+        // $current_customer = $customers->where('national_id', $request->owner_national_id);
+        // return $customers;
+        // return $project;
+        return view('project.show')->with('project', $project);
     }
 
     /**

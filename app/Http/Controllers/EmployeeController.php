@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Bank;
 use App\Country;
+use App\GradeRank;
+use App\Major;
 use Illuminate\Http\Request;
 use App\Person;
+use App\SceMembershipType;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -41,13 +45,21 @@ class EmployeeController extends PersonController
     public function create(Request $request, Person $employee)
     {
 
-        $nationalitiesArr = Country::all();
-        // return $nationalitiesArr;
+        $countries = Country::all();
+        $banks = Bank::all();
+        $majors = Major::all();
+        $gread_ranks = GradeRank::all();
+        $SCE_membership_types  = SceMembershipType::all();
+        // return $countries;
         $national_id = $request->input('national_id');
-        return view('/employee/create', [
+        return view('employee.create', [
             'national_id' => $national_id,
-            'nationalitiesArr' => $nationalitiesArr,
-            'employee' => $employee
+            'countries' => $countries,
+            'employee' => $employee,
+            'banks' => $banks,
+            'majors' => $majors,
+            'gread_ranks' => $gread_ranks,
+            'SCE_membership_types' => $SCE_membership_types,
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------

@@ -32,6 +32,12 @@
                         onkeypress=" userNameString(event)">
                 </th>
                 <th scope="column">
+                    <p class="pb-2">رقم الموظف</p>
+                    <input type="text" id='employment_no' name="employment_no_input" class="form-control"
+                        autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
+                        onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)">
+                </th>
+                <th scope="column">
                     <p class="pb-2">الإيميل</p>
                     <input type="text" id='email' name="email_input" class="form-control" autocomplete="off" required
                         placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
@@ -50,6 +56,7 @@
                 <td scope=" row" class="national_id_input">{{$user->national_id}}</td>
                 <td scope="row" class="name_input">{{$user->name}}</td>
                 <td scope="row" class="user_name_input text-lowercase">{{$user->user_name}}</td>
+                <td scope="row" class="employment_no_input"> {{$user->person->employment_no}}</td>
                 <td scope="row" class="email_input">{{$user->email}}</td>
                 <td scope="link">
                     <a href="{{ url('/user/'.$user->id) }}">
