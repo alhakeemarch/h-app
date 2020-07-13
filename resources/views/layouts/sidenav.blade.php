@@ -81,6 +81,16 @@
             E-Archive projects
         </div>
     </a>
+    <a class="" href="{{route ('project.Safety')}}">
+        <div class="sidebar-item {{ (request()->is('project/Safety*')) ? 'active' : '' }}">
+            Safety projects
+        </div>
+    </a>
+    <a class="" href="{{route ('project.central_area')}}">
+        <div class="sidebar-item {{ (request()->is('project/central_area*')) ? 'active' : '' }}">
+            central area projects
+        </div>
+    </a>
     <a href="{{route ('plot.index')}}">
         <div class="sidebar-item {{ (request()->is('plot*')) ? 'active' : '' }}">
             plots

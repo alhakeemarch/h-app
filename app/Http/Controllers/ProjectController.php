@@ -33,6 +33,12 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
+        if (!auth()->user()->is_admin) {
+            return redirect()->action(
+                'ProjectController@runningProjects'
+            );
+        }
+
         $allProjectsCount = Project::all()->count();
         $db_all_projects = Project::all();
         $allProjects = Project::orderBy('id', 'desc')->paginate(50);
@@ -126,6 +132,57 @@ class ProjectController extends Controller
         return view('project.e_archive_projects')->with([
             'e_archive' => $e_archive,
         ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * to Upload safety Projects.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function Safety(Request $request)
+    {
+        $employment_no = auth()->user()->person->employment_no;
+        $ff = [
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'
+        ];
+
+        $fa = [
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'
+        ];
+        return view('project.upload')->with([
+            'project_no' => 'safty',
+            'project_name' => 'دفاع مدني',
+            'project_path' => 'safty',
+            'project_location' => 'safty',
+            'employment_no' => $employment_no,
+            'main_types' => ['FF&FA' => 'FF&FA - انذار وإطفاء', 'FF' => 'FF - اطفاء', 'FA' => 'FA - انذار',],
+            'arc' => [],
+            'str' => [],
+            'elec' => [],
+            'dr' => [],
+            'ws' => [],
+            'ff' => $ff,
+            'fa' => $fa,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * to Upload central_area Projects.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function central_area(Request $request)
+    {
+        return redirect()->action(
+            'ProjectController@showUplodeView',
+            [
+                'project_no' => 'central_area',
+                'project_name' => 'مشاريع المنطقة المركزية',
+                'project_location' => 'central_area',
+            ]
+        );
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -263,6 +320,14 @@ class ProjectController extends Controller
         if ($request->project_location == 'finished project') {
             $project_dir = '\\' . $request->project_path . '\\';
         }
+        if ($request->project_location == 'safty') {
+            $pathe = '\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
+            $project_dir = '\\' . $pathe . '\\';
+        }
+        if ($request->project_location == 'central_area') {
+            $pathe = '\\100.0.0.5\f$\data-server\1-CENTRAL AREA\_Upload';
+            $project_dir = '\\' . $pathe . '\\';
+        }
         // $project_dir = '\\' . $request->project_path . '\\';
         // $project_dir = 'D:\projects' . '\\'; // this is for home only
 
@@ -392,6 +457,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        // return view('project.form')->with('project', $project);
         return view('project.edit')->with('project', $project);
         //
     }
@@ -604,8 +670,6 @@ class ProjectController extends Controller
             '1440' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1440',
             '1440->بلدي' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1440/بلدي',
             '1441' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1441',
-
-            // 'directory' => 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects',
         ];
         // $project_name['path'] = '100.0.0.5/f$/data-server/Zaied';
         foreach ($directories as $directory_key => $directory) {

@@ -27,7 +27,7 @@
         <div class="col-md">
             <label for="deed_no">{{__( 'Deed Number')}}
                 <span class="small text-danger">({{__('required')}})</span>:</label>
-            @if ($new_deed_no)
+            @if (isset ($new_deed_no))
             <input type="text" name="deed_no" class="form-control @error ('deed_no') is-invalid @enderror"
                 value="{{$new_deed_no}}" placeholder="{{__( 'Deed Number')}}.." readonly required>
             @error('deed_no')
@@ -35,7 +35,7 @@
             @enderror
             @else
             <input type="text" name="deed_no" class="form-control @error ('deed_no') is-invalid @enderror"
-                value="{{$plot->deed_no}}" placeholder="{{__( 'Deed Number')}}.." readonly required>
+                value="{{$project->plot->deed_no}}" placeholder="{{__( 'Deed Number')}}.." readonly required>
             @error('deed_no')
             <small class="text-danger"> {{$errors->first('deed_no')}} </small>
             @enderror
@@ -49,7 +49,8 @@
             <label for="deed_date">{{__( 'Deed Date')}}
                 <span class="small text-danger">({{__('required')}})</span> :</label>
             <input type="text" name="deed_date" class="form-control @error ('deed_date') is-invalid @enderror "
-                value="{{old('deed_date') ?? $plot->deed_date }}" placeholder="{{__( 'Deed Date')}}.." required>
+                value="{{old('deed_date') ?? $project->plot->deed_date }}" placeholder="{{__( 'Deed Date')}}.."
+                required>
             @error('deed_date')
             <small class="text-danger"> {{$errors->first('deed_date')}} </small>
             @enderror
@@ -65,7 +66,7 @@
             <label for="plot_no">{{__( 'Plot Number')}}
                 <span class="small text-danger">({{__('required')}})</span> :</label>
             <input type="text" name="plot_no" class="form-control @error ('plot_no') is-invalid @enderror"
-                value="{{old('plot_no') ?? $plot->plot_no }}" required placeholder="{{__( 'Plot Number')}}.."
+                value="{{old('plot_no') ?? $project->plot->plot_no }}" required placeholder="{{__( 'Plot Number')}}.."
                 onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'Plot Number')}}..'">
             @error('plot_no')
             <small class="text-danger"> {{$errors->first('plot_no')}} </small>
@@ -76,7 +77,7 @@
             <label for="area">{{__( 'area')}} <span class="small text-danger">({{__('required')}})</span>
                 :</label>
             <input type="text" name="area" class="form-control @error ('area') is-invalid @enderror"
-                value="{{old('area') ?? $plot->area }}" onkeypress="onlyNumber(event)" required
+                value="{{old('area') ?? $project->plot->area }}" onkeypress="onlyNumber(event)" required
                 placeholder="{{__( 'Area')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'Area')}}..'">
             @error('area')
@@ -90,10 +91,11 @@
                 :</label>
             <select class="form-control" name="allowed_building_ratio">
                 {{-- //this is if this is edit and have value selected before --}}
-                @if ($plot->allowed_building_ratio)
+                @if ($project->plot->allowed_building_ratio)
                 @foreach ($building_ratios as $building_ratio)
-                @if ($plot->allowed_building_ratio == $building_ratio->id)
-                <option selected="true" value="{{$plot->allowed_building_ratio}}">{{$building_ratio->building_ratio}}
+                @if ($project->plot->allowed_building_ratio == $building_ratio->id)
+                <option selected="true" value="{{$project->plot->allowed_building_ratio}}">
+                    {{$building_ratio->building_ratio}}
                 </option>
                 @endif
                 @endforeach
@@ -123,11 +125,12 @@
                 : </label>
             <select class="form-control" name="allowed_building_height">
 
-                @if ($plot->allowed_building_height)
+                @if ($project->plot->allowed_building_height)
                 {{-- //this is if this is edit and have value selected before --}}
                 @foreach ($building_heights as $building_height)
-                @if ($plot->allowed_building_height == $building_height->id)
-                <option selected="true" value="{{$plot->allowed_building_height}}">{{$building_height->building_height}}
+                @if ($project->plot->allowed_building_height == $building_height->id)
+                <option selected="true" value="{{$project->plot->allowed_building_height}}">
+                    {{$building_height->building_height}}
                 </option>
                 @endif
                 @endforeach
@@ -157,11 +160,11 @@
             <label for="allowed_usage">{{__('usage')}} <span class="small text-danger">({{__('required')}})</span>
                 : </label>
             <select class="form-control" name="allowed_usage">
-                @if ($plot->allowed_usage)
+                @if ($project->plot->allowed_usage)
                 {{-- //this is if this is edit and have value selected before --}}
                 @foreach ($usages as $usage)
-                @if ($plot->allowed_usage == $usage->id)
-                <option selected="true" value="{{$plot->allowed_usage}}">{{$usage->usage}} </option>
+                @if ($project->plot->allowed_usage == $usage->id)
+                <option selected="true" value="{{$project->plot->allowed_usage}}">{{$usage->usage}} </option>
                 @endif
                 @endforeach
 
@@ -197,11 +200,11 @@
                     class="small text-danger">({{__('required')}})</span>
                 : </label>
             <select class="form-control" name="municipality_branch_id">
-                @if ($plot->municipality_branch_id)
+                @if ($project->plot->municipality_branch_id)
                 {{-- //this is if this is edit and have value selected before --}}
                 @foreach ($municipality_branchs as $municipality_branch)
-                @if ($plot->municipality_branch_id == $municipality_branch->id)
-                <option selected="true" value="{{$plot->municipality_branch_id}}">
+                @if ($project->plot->municipality_branch_id == $municipality_branch->id)
+                <option selected="true" value="{{$project->plot->municipality_branch_id}}">
                     {{$municipality_branch->ar_name}} </option>
                 @endif
                 @endforeach
@@ -232,11 +235,11 @@
             <label for="district_id">{{__('district')}} <span class="small text-danger">({{__('required')}})</span>
                 : </label>
             <select class="form-control" name="district_id">
-                @if ($plot->district_id)
+                @if ($project->plot->district_id)
                 {{-- //this is if this is edit and have value selected before --}}
                 @foreach ($districts as $district)
-                @if ($plot->district_id == $district->id)
-                <option selected="true" value="{{$plot->district_id}}">
+                @if ($project->plot->district_id == $district->id)
+                <option selected="true" value="{{$project->plot->district_id}}">
                     {{$district->ar_name}} </option>
                 @endif
                 @endforeach
@@ -267,11 +270,11 @@
             <label for="plan_id">{{__('plan')}} <span class="small text-danger">({{__('required')}})</span>
                 : </label>
             <select class="form-control" name="plan_id">
-                @if ($plot->plan_id)
+                @if ($project->plot->plan_id)
                 {{-- //this is if this is edit and have value selected before --}}
                 @foreach ($plans as $plan)
-                @if ($plot->plan_id == $plan->id)
-                <option selected="true" value="{{$plot->plan_id}}">
+                @if ($project->plot->plan_id == $plan->id)
+                <option selected="true" value="{{$project->plot->plan_id}}">
                     {{$plan->plan_no}} </option>
                 @endif
                 @endforeach
@@ -302,11 +305,11 @@
             <label for="street_id">{{__('street')}} <span class="small text-danger">({{__('required')}})</span>
                 : </label>
             <select class="form-control" name="street_id">
-                @if ($plot->street_id)
+                @if ($project->plot->street_id)
                 {{-- //this is if this is edit and have value selected before --}}
                 @foreach ($streets as $street)
-                @if ($plot->street_id == $street->id)
-                <option selected="true" value="{{$plot->street_id}}">
+                @if ($project->plot->street_id == $street->id)
+                <option selected="true" value="{{$project->plot->street_id}}">
                     {{$street->ar_name}} </option>
                 @endif
                 @endforeach
@@ -342,7 +345,7 @@
                     class="small text-danger">({{__('required')}})</span>
                 :</label>
             <input type="text" name="x_coordinate" class="form-control @error ('x_coordinate') is-invalid @enderror"
-                value="{{old('x_coordinate') ?? $plot->x_coordinate }}" onkeypress="onlyNumber(event)" required
+                value="{{old('x_coordinate') ?? $project->plot->x_coordinate }}" onkeypress="onlyNumber(event)" required
                 placeholder="{{__( '5xxx')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( '5xxx')}}..'">
             @error('x_coordinate')
@@ -354,7 +357,7 @@
                     class="small text-danger">({{__('required')}})</span>
                 :</label>
             <input type="text" name="y_coordinate" class="form-control @error ('y_coordinate') is-invalid @enderror"
-                value="{{old('y_coordinate') ?? $plot->y_coordinate }}" onkeypress="onlyNumber(event)" required
+                value="{{old('y_coordinate') ?? $project->plot->y_coordinate }}" onkeypress="onlyNumber(event)" required
                 placeholder="{{__( '2xxx')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( '2xxx')}}..'">
             @error('y_coordinate')
@@ -376,9 +379,9 @@
                 :</label>
             <input type="text" name="north_border_name"
                 class="form-control @error ('north_border_name') is-invalid @enderror"
-                value="{{old('north_border_name') ?? $plot->north_border_name }}" onkeypress="onlyArabicString(event)"
-                required placeholder="{{__( 'name')}}.." onfocus="this.placeholder=''"
-                onblur="this.placeholder='{{__( 'name')}}..'">
+                value="{{old('north_border_name') ?? $project->plot->north_border_name }}"
+                onkeypress="onlyArabicString(event)" required placeholder="{{__( 'name')}}.."
+                onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'name')}}..'">
             @error('north_border_name')
             <small class="text-danger"> {{$errors->first('north_border_name')}} </small>
             @enderror
@@ -390,8 +393,8 @@
                 :</label>
             <input type="text" name="north_border_length"
                 class="form-control @error ('north_border_length') is-invalid @enderror"
-                value="{{old('north_border_length') ?? $plot->north_border_length }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'length')}}.." onfocus="this.placeholder=''"
+                value="{{old('north_border_length') ?? $project->plot->north_border_length }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'length')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'length')}}..'">
             @error('north_border_length')
             <small class="text-danger"> {{$errors->first('north_border_length')}} </small>
@@ -404,8 +407,8 @@
                 :</label>
             <input type="text" name="north_border_setback"
                 class="form-control @error ('north_border_setback') is-invalid @enderror"
-                value="{{old('north_border_setback') ?? $plot->north_border_setback }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'setback')}}.." onfocus="this.placeholder=''"
+                value="{{old('north_border_setback') ?? $project->plot->north_border_setback }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'setback')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'setback')}}..'">
             @error('north_border_setback')
             <small class="text-danger"> {{$errors->first('north_border_setback')}} </small>
@@ -418,7 +421,7 @@
                 :</label>
             <input type="text" name="north_border_cantilever"
                 class="form-control @error ('north_border_cantilever') is-invalid @enderror"
-                value="{{old('north_border_cantilever') ?? $plot->north_border_cantilever }}"
+                value="{{old('north_border_cantilever') ?? $project->plot->north_border_cantilever }}"
                 onkeypress="onlyNumber(event)" required placeholder="{{__( 'cantilever')}}.."
                 onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'cantilever')}}..'">
             @error('north_border_cantilever')
@@ -432,8 +435,8 @@
                 :</label>
             <input type="text" name="north_border_chamfer"
                 class="form-control @error ('north_border_chamfer') is-invalid @enderror"
-                value="{{old('north_border_chamfer') ?? $plot->north_border_chamfer }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'chamfer')}}.." onfocus="this.placeholder=''"
+                value="{{old('north_border_chamfer') ?? $project->plot->north_border_chamfer }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'chamfer')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'chamfer')}}..'">
             @error('north_border_chamfer')
             <small class="text-danger"> {{$errors->first('north_border_chamfer')}} </small>
@@ -445,8 +448,8 @@
                 :</label>
             <input type="text" name="north_border_note"
                 class="form-control @error ('north_border_note') is-invalid @enderror"
-                value="{{old('north_border_note') ?? $plot->north_border_note }}" onkeypress="onlyArabicString(event)"
-                placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
+                value="{{old('north_border_note') ?? $project->plot->north_border_note }}"
+                onkeypress="onlyArabicString(event)" placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'note')}}..'">
             @error('north_border_note')
             <small class="text-danger"> {{$errors->first('north_border_note')}} </small>
@@ -464,9 +467,9 @@
                 :</label>
             <input type="text" name="south_border_name"
                 class="form-control @error ('south_border_name') is-invalid @enderror"
-                value="{{old('south_border_name') ?? $plot->south_border_name }}" onkeypress="onlyArabicString(event)"
-                required placeholder="{{__( 'name')}}.." onfocus="this.placeholder=''"
-                onblur="this.placeholder='{{__( 'name')}}..'">
+                value="{{old('south_border_name') ?? $project->plot->south_border_name }}"
+                onkeypress="onlyArabicString(event)" required placeholder="{{__( 'name')}}.."
+                onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'name')}}..'">
             @error('south_border_name')
             <small class="text-danger"> {{$errors->first('south_border_name')}} </small>
             @enderror
@@ -478,8 +481,8 @@
                 :</label>
             <input type="text" name="south_border_length"
                 class="form-control @error ('south_border_length') is-invalid @enderror"
-                value="{{old('south_border_length') ?? $plot->south_border_length }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'length')}}.." onfocus="this.placeholder=''"
+                value="{{old('south_border_length') ?? $project->plot->south_border_length }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'length')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'length')}}..'">
             @error('south_border_length')
             <small class="text-danger"> {{$errors->first('south_border_length')}} </small>
@@ -492,8 +495,8 @@
                 :</label>
             <input type="text" name="south_border_setback"
                 class="form-control @error ('south_border_setback') is-invalid @enderror"
-                value="{{old('south_border_setback') ?? $plot->south_border_setback }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'setback')}}.." onfocus="this.placeholder=''"
+                value="{{old('south_border_setback') ?? $project->plot->south_border_setback }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'setback')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'setback')}}..'">
             @error('south_border_setback')
             <small class="text-danger"> {{$errors->first('south_border_setback')}} </small>
@@ -506,7 +509,7 @@
                 :</label>
             <input type="text" name="south_border_cantilever"
                 class="form-control @error ('south_border_cantilever') is-invalid @enderror"
-                value="{{old('south_border_cantilever') ?? $plot->south_border_cantilever }}"
+                value="{{old('south_border_cantilever') ?? $project->plot->south_border_cantilever }}"
                 onkeypress="onlyNumber(event)" required placeholder="{{__( 'cantilever')}}.."
                 onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'cantilever')}}..'">
             @error('south_border_cantilever')
@@ -520,8 +523,8 @@
                 :</label>
             <input type="text" name="south_border_chamfer"
                 class="form-control @error ('south_border_chamfer') is-invalid @enderror"
-                value="{{old('south_border_chamfer') ?? $plot->south_border_chamfer }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'chamfer')}}.." onfocus="this.placeholder=''"
+                value="{{old('south_border_chamfer') ?? $project->plot->south_border_chamfer }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'chamfer')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'chamfer')}}..'">
             @error('south_border_chamfer')
             <small class="text-danger"> {{$errors->first('south_border_chamfer')}} </small>
@@ -533,8 +536,8 @@
                 :</label>
             <input type="text" name="south_border_note"
                 class="form-control @error ('south_border_note') is-invalid @enderror"
-                value="{{old('south_border_note') ?? $plot->south_border_note }}" onkeypress="onlyArabicString(event)"
-                placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
+                value="{{old('south_border_note') ?? $project->plot->south_border_note }}"
+                onkeypress="onlyArabicString(event)" placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'note')}}..'">
             @error('south_border_note')
             <small class="text-danger"> {{$errors->first('south_border_note')}} </small>
@@ -551,9 +554,9 @@
                 :</label>
             <input type="text" name="east_border_name"
                 class="form-control @error ('east_border_name') is-invalid @enderror"
-                value="{{old('east_border_name') ?? $plot->east_border_name }}" onkeypress="onlyArabicString(event)"
-                required placeholder="{{__( 'name')}}.." onfocus="this.placeholder=''"
-                onblur="this.placeholder='{{__( 'name')}}..'">
+                value="{{old('east_border_name') ?? $project->plot->east_border_name }}"
+                onkeypress="onlyArabicString(event)" required placeholder="{{__( 'name')}}.."
+                onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'name')}}..'">
             @error('east_border_name')
             <small class="text-danger"> {{$errors->first('east_border_name')}} </small>
             @enderror
@@ -565,8 +568,8 @@
                 :</label>
             <input type="text" name="east_border_length"
                 class="form-control @error ('east_border_length') is-invalid @enderror"
-                value="{{old('east_border_length') ?? $plot->east_border_length }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'length')}}.." onfocus="this.placeholder=''"
+                value="{{old('east_border_length') ?? $project->plot->east_border_length }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'length')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'length')}}..'">
             @error('east_border_length')
             <small class="text-danger"> {{$errors->first('east_border_length')}} </small>
@@ -579,8 +582,8 @@
                 :</label>
             <input type="text" name="east_border_setback"
                 class="form-control @error ('east_border_setback') is-invalid @enderror"
-                value="{{old('east_border_setback') ?? $plot->east_border_setback }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'setback')}}.." onfocus="this.placeholder=''"
+                value="{{old('east_border_setback') ?? $project->plot->east_border_setback }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'setback')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'setback')}}..'">
             @error('east_border_setback')
             <small class="text-danger"> {{$errors->first('east_border_setback')}} </small>
@@ -593,7 +596,7 @@
                 :</label>
             <input type="text" name="east_border_cantilever"
                 class="form-control @error ('east_border_cantilever') is-invalid @enderror"
-                value="{{old('east_border_cantilever') ?? $plot->east_border_cantilever }}"
+                value="{{old('east_border_cantilever') ?? $project->plot->east_border_cantilever }}"
                 onkeypress="onlyNumber(event)" required placeholder="{{__( 'cantilever')}}.."
                 onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'cantilever')}}..'">
             @error('east_border_cantilever')
@@ -607,8 +610,8 @@
                 :</label>
             <input type="text" name="east_border_chamfer"
                 class="form-control @error ('east_border_chamfer') is-invalid @enderror"
-                value="{{old('east_border_chamfer') ?? $plot->east_border_chamfer }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'chamfer')}}.." onfocus="this.placeholder=''"
+                value="{{old('east_border_chamfer') ?? $project->plot->east_border_chamfer }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'chamfer')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'chamfer')}}..'">
             @error('east_border_chamfer')
             <small class="text-danger"> {{$errors->first('east_border_chamfer')}} </small>
@@ -620,8 +623,8 @@
                 :</label>
             <input type="text" name="east_border_note"
                 class="form-control @error ('east_border_note') is-invalid @enderror"
-                value="{{old('east_border_note') ?? $plot->east_border_note }}" onkeypress="onlyArabicString(event)"
-                placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
+                value="{{old('east_border_note') ?? $project->plot->east_border_note }}"
+                onkeypress="onlyArabicString(event)" placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'note')}}..'">
             @error('east_border_note')
             <small class="text-danger"> {{$errors->first('east_border_note')}} </small>
@@ -638,9 +641,9 @@
                 :</label>
             <input type="text" name="west_border_name"
                 class="form-control @error ('west_border_name') is-invalid @enderror"
-                value="{{old('west_border_name') ?? $plot->west_border_name }}" onkeypress="onlyArabicString(event)"
-                required placeholder="{{__( 'name')}}.." onfocus="this.placeholder=''"
-                onblur="this.placeholder='{{__( 'name')}}..'">
+                value="{{old('west_border_name') ?? $project->plot->west_border_name }}"
+                onkeypress="onlyArabicString(event)" required placeholder="{{__( 'name')}}.."
+                onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'name')}}..'">
             @error('west_border_name')
             <small class="text-danger"> {{$errors->first('west_border_name')}} </small>
             @enderror
@@ -652,8 +655,8 @@
                 :</label>
             <input type="text" name="west_border_length"
                 class="form-control @error ('west_border_length') is-invalid @enderror"
-                value="{{old('west_border_length') ?? $plot->west_border_length }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'length')}}.." onfocus="this.placeholder=''"
+                value="{{old('west_border_length') ?? $project->plot->west_border_length }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'length')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'length')}}..'">
             @error('west_border_length')
             <small class="text-danger"> {{$errors->first('west_border_length')}} </small>
@@ -666,8 +669,8 @@
                 :</label>
             <input type="text" name="west_border_setback"
                 class="form-control @error ('west_border_setback') is-invalid @enderror"
-                value="{{old('west_border_setback') ?? $plot->west_border_setback }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'setback')}}.." onfocus="this.placeholder=''"
+                value="{{old('west_border_setback') ?? $project->plot->west_border_setback }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'setback')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'setback')}}..'">
             @error('west_border_setback')
             <small class="text-danger"> {{$errors->first('west_border_setback')}} </small>
@@ -680,7 +683,7 @@
                 :</label>
             <input type="text" name="west_border_cantilever"
                 class="form-control @error ('west_border_cantilever') is-invalid @enderror"
-                value="{{old('west_border_cantilever') ?? $plot->west_border_cantilever }}"
+                value="{{old('west_border_cantilever') ?? $project->plot->west_border_cantilever }}"
                 onkeypress="onlyNumber(event)" required placeholder="{{__( 'cantilever')}}.."
                 onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'cantilever')}}..'">
             @error('west_border_cantilever')
@@ -694,8 +697,8 @@
                 :</label>
             <input type="text" name="west_border_chamfer"
                 class="form-control @error ('west_border_chamfer') is-invalid @enderror"
-                value="{{old('west_border_chamfer') ?? $plot->west_border_chamfer }}" onkeypress="onlyNumber(event)"
-                required placeholder="{{__( 'chamfer')}}.." onfocus="this.placeholder=''"
+                value="{{old('west_border_chamfer') ?? $project->plot->west_border_chamfer }}"
+                onkeypress="onlyNumber(event)" required placeholder="{{__( 'chamfer')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'chamfer')}}..'">
             @error('west_border_chamfer')
             <small class="text-danger"> {{$errors->first('west_border_chamfer')}} </small>
@@ -707,8 +710,8 @@
                 :</label>
             <input type="text" name="west_border_note"
                 class="form-control @error ('west_border_note') is-invalid @enderror"
-                value="{{old('west_border_note') ?? $plot->west_border_note }}" onkeypress="onlyArabicString(event)"
-                placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
+                value="{{old('west_border_note') ?? $project->plot->west_border_note }}"
+                onkeypress="onlyArabicString(event)" placeholder="{{__( 'note')}}.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='{{__( 'note')}}..'">
             @error('west_border_note')
             <small class="text-danger"> {{$errors->first('west_border_note')}} </small>
@@ -729,7 +732,7 @@
             <textarea name="notes" class="form-control @error ('notes') is-invalid @enderror " rows="3"
                 placeholder="add your notes.." onfocus="this.placeholder=''"
                 onblur="this.placeholder='add your notes..'">
-                {{old('notes') ?? $plot->notes }}</textarea>
+                {{old('notes') ?? $project->plot->notes }}</textarea>
 
             @error('notes')
             <small class="text-danger"> {{$errors->first('notes')}} </small>

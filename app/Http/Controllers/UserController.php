@@ -30,8 +30,7 @@ class UserController extends Controller
         if (!auth()->user()->is_admin) {
             return abort(403);
         }
-
-        $users = User::all();
+        $users = User::all()->reverse();
         return view('user.index')->with('users', $users);
     }
     // -----------------------------------------------------------------------------------------------------------------
