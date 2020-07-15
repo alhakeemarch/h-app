@@ -322,6 +322,7 @@ Route::group(['prefix' => 'project'], function () {
     Route::any('earchive', 'ProjectController@earchive')->name('project.earchive');
     Route::any('Safety', 'ProjectController@Safety')->name('project.Safety');
     Route::any('central_area', 'ProjectController@central_area')->name('project.central_area');
+    Route::any('db_projects', 'ProjectController@db_projects')->name('project.db_projects');
 });
 Route::resources([
 

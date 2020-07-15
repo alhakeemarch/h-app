@@ -21,13 +21,7 @@ $obj = json_decode($project, TRUE);
             back</a>
     </div>
     <div class="col-4">
-        @if (auth()->user()->is_admin)
-        <a href="{{ url('/project/'.$project->id.'/edit') }}" class="btn btn-info btn-lg
-    btn-block "> <i class="fas fa-pen"></i> Edit</a>
-        @else
-        <a href="#" class="btn disabled btn-info btn-lg
-            btn-block "> <i class="fas fa-pen"></i> Edit</a>
-        @endif
+        <x-btn type='edit' :resource=$project />
     </div>
     <div class="col-4">
         <form class="delete" action="{{ route('project.destroy', $project) }}" method="POST">

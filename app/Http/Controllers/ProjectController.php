@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\District;
+use App\MunicipalityBranch;
+use App\Neighbor;
+use App\OwnerType;
 use App\Person;
+use App\Plan;
 use App\Plot;
 use App\Project;
 use App\Rules\ValidFileSize;
 use App\Rules\ValidFileType;
+use App\Street;
 use Hamcrest\Type\IsNumeric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -75,6 +81,22 @@ class ProjectController extends Controller
             'zaied_projects' => $zaied_projects,
             'running_projects_path' => $running_projects_path,
 
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * index of running porjects.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function db_Projects(Request $request)
+    {
+        $allProjectsCount = Project::all()->count();
+        $db_all_projects = Project::all();
+        $allProjects = Project::orderBy('id', 'desc')->paginate(300);
+        return view('project.db_projects')->with([
+            'projects' => $allProjects,
+            'allProjectsCount' => $allProjectsCount,
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -457,9 +479,16 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        // return view('project.form')->with('project', $project);
-        return view('project.edit')->with('project', $project);
-        //
+        return view('project.edit')->with([
+            'project' => $project,
+            'owner_types' => OwnerType::all(),
+            'municipality_branches' => MunicipalityBranch::all(),
+            'neighbors' => Neighbor::all(),
+            'plans' => Plan::all(),
+            'districts' => District::all(),
+            'streets' => Street::offset(0)->limit(10)->get(),
+            'plots' => Plot::all()->reverse(),
+        ]);
     }
 
     /**

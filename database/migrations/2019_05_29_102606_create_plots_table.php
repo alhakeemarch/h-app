@@ -19,7 +19,7 @@ class CreatePlotsTable extends Migration
 
             // -----------------------------
             $table->string('deed_no')->unique();
-            $table->date('deed_date')->nullable();
+            $table->string('deed_date')->nullable();
             // -----------------------------
             $table->string('plot_no');
             $table->string('area')->nullable();

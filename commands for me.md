@@ -574,7 +574,7 @@ https://laracasts.com/discuss/channels/general-discussion/maximum-execution-time
 
 ================================
     <x-input name='asd' title="">
-        <x-slot name='type'>cool tital</x-slot>
+        <x-slot name='type'>text, textarea, select</x-slot>
         <x-slot name='title'>cool tital</x-slot>
         <x-slot name='tooltip'>cool tooltip</x-slot>
         <x-slot name='placeholder'>cool placeholder</x-slot>
@@ -611,4 +611,18 @@ https://laracasts.com/discuss/channels/general-discussion/maximum-execution-time
     <hr>
     
     <x-input name='new' title="2nd title" />
+================================
+
+
+
+    <x-select name='municipality_branche_id' :resource=$project :list=$municipality_branches>
+        <x-slot name='option_name'>ar_name</x-slot>
+        <x-slot name='title'>{{__('municipality branche')}}</x-slot>
+        <x-slot name='is_disabled'>true</x-slot>
+        <x-slot name='is_hidden'>true</x-slot>
+        <x-slot name='is_required'>true</x-slot>
+    </x-select>
+
+
+
 ================================

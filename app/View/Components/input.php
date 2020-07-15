@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\OwnerType;
 use Illuminate\View\Component;
 
 class input extends Component
@@ -10,6 +11,7 @@ class input extends Component
     public $name;
     public $placeholder;
     public $title;
+
     /**
      * Create a new component instance.
      *

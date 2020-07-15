@@ -94,15 +94,23 @@ class UserController extends Controller
     {
         $person = $person->find($user->person_id);
         // --------------------------------------------------------
-        $request->validate([
+        $valed_data = $request->validate([
+            'person_id' => 'required|numeric',
             'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+            // ----------------------------------------------------
             'name' => 'required|string',
             'user_name' => 'required|string|min:3|regex:/[a-z_-]/',
             'email' => 'required|email',
             'pass_char' => 'required|string|min:1',
+            // ----------------------------------------------------
             'is_admin' => 'boolean|nullable',
             'is_manager' => 'boolean|nullable',
             'is_active' => 'boolean|nullable',
+            // ----------------------------------------------------
+            'user_type_id' => 'numeric|nullable',
+            'user_type_name' => 'string|nullable',
+            'user_level' => 'numeric|nullable',
+            'job_level' => 'numeric|nullable',
             // ----------------------------------------------------
             'notes' => 'string|nullable',
             'private_notes' => 'string|nullable',
@@ -131,10 +139,10 @@ class UserController extends Controller
         ($request->is_manager) ? $user->is_manager = true : $user->is_manager = false;
         ($request->is_active) ? $user->is_active = true : $user->is_active = false;
         // --------------------------------------------------------
-        // user_type_id	"100"
-        // user_type_name	"Admin"
-        // user_level	"100"
-        // job_level	"100"
+        $user->user_type_id = $valed_data['user_type_id'];
+        $user->user_type_name = $valed_data['user_type_name'];
+        $user->user_level = $valed_data['user_level'];
+        $user->job_level = $valed_data['job_level'];
         // --------------------------------------------------------
         $user->last_edit_by_id = auth()->user()->id;
         $user->last_edit_by_name = auth()->user()->user_name;

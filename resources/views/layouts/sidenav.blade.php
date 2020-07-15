@@ -61,6 +61,11 @@
         </div>
     </a>
     @endif
+    <a class="" href="{{route ('project.db_projects')}}">
+        <div class="sidebar-item {{ (request()->is('project/db_projects*')) ? 'active' : '' }}">
+            all projects
+        </div>
+    </a>
     <a class="" href="{{route ('project.runningProjects')}}">
         <div class="sidebar-item {{ (request()->is('project/runningProjects*')) ? 'active' : '' }}">
             running projects

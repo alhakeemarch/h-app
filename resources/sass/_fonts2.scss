@@ -2,8 +2,8 @@ $font-path: "../fonts/Markazi2.ttf";
 // src: url('#{$fa-font-path}/quicksand-v7-latin-regular.eot');
 @font-face {
 	font-family: Markazi;
-	src: url("'#{$font-path}'");
-	font-weight: 500;
+	src: url("../fonts/majalla.ttf");
+	// font-weight: 500;
 }
 
 body {
