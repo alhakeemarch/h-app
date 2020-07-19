@@ -216,86 +216,47 @@ class ProjectController extends Controller
     public function showUplodeView(Project $project, Request $request)
     {
         // return $request;
+        $project_dir = '';
         $project_no = $request->project_no;
         $project_name = $request->project_name;
 
         $project_path = $request->path;
-
         $project_location = $request->project_location;
+
         // $user = auth()->user()->user_name;
         $employment_no = auth()->user()->person->employment_no;
 
-        $main_types = [
-            'all' => 'All - كامل المشروع',
-            'doc' => 'Scanned Document -مستند سكانر',
-            'img' => 'image - صورة',
-            'row' => 'Row Document - مستند خام',
-            'concept' => 'Concept - فكرة',
-            'preliminary' => 'preliminary - ابتدائي',
-            'ARC' => 'ARC - معماري',
-            'STR' => 'STR - إنشائي',
-            'Elec' => 'Elec - كهرباء',
-            'DR' => 'DR - صرف',
-            'WS' => 'WS - تغذية',
-            'HVAC' => 'HVAC - تكيف',
-            'FF' => 'FF - اطفاء',
-            'FA' => 'FA - انذار',
-            'evacuation' => 'evacuation - اخلاء',
-            'tourism' => 'tourism - سياحة',
-            'Elec-Paper' => 'Elec-Paper- ورقة الكهرباء',
-            'survey' => 'survey - مساحة'
-        ];
+        $main_types = $this->get_main_types();
+        $arc = $this->get_arc_types();
+        $str = $this->get_str_types();
+        $elec = $this->get_elec_types();
+        $dr = $this->get_dr_types();
+        $ws = $this->get_ws_types();
+        $ff = $this->get_ff_types();
+        $fa = $this->get_fa_types();
+        $survey = $this->get_survey_types();
 
-        $arc = [
-            'all', 'plans', 'calc-sheet', 'details', 'elevation', 'section', 'layout', 'BF', 'GF', 'mezanin', '1stF', '2ndF',
-            '3rdF', '4thF', 'Typical-F', 'roof-F', 'roof-drainage', 'perspective', 'stair-roof', 'fence', 'other'
-        ];
 
-        $str = [
-            'all', 'plans', 'details', 'columns', 'foundation', 'beams', 'smells', 'section', 'BF', 'GF', 'mezanin', '1stF', '2endF',
-            '3rdF', '4thF', 'Typical-F', 'roof-F', 'stair-roof', 'fence', 'other'
-        ];
 
-        $elec = [
-            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
-            'stair-roof', 'earthing', 'fence', 'other'
-        ];
+        if (is_numeric($project_no) && $project_location == 'running project') {
+            $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $project_no . ' - ' . $project_name . '\\';
+        }
+        if (!is_numeric($project_no) && $project_location == 'running project') {
+            $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $project_name . '\\';
+        }
+        if ($project_location == 'finished project') {
+            $project_dir = '\\' . $project_path . '\\';
+        }
+        if ($project_location == 'safty') {
+            $pathe = '\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
+            $project_dir = '\\' . $pathe . '\\';
+        }
+        if ($project_location == 'central_area') {
+            $pathe = '\\100.0.0.5\f$\data-server\1-CENTRAL AREA\_Upload';
+            $project_dir = '\\' . $pathe . '\\';
+        }
+        $project_content = $this->get_project_content($project_dir);
 
-        $dr = [
-            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
-            'stair-roof', 'fence', 'other'
-        ];
-
-        $ws = [
-            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
-            'stair-roof', 'fence', 'other'
-        ];
-
-        $ff = [
-            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
-            'stair-roof', 'fence', 'other'
-        ];
-
-        $fa = [
-            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
-            'stair-roof', 'fence', 'other'
-        ];
-        $survey = [
-            'رفع مساحي
-            بيانات موقع
-            قرار مساحي
-            قرار ذرعة
-            محضر تثبيت
-            محضر مناسيب
-            لوحة تنظيمية
-            مخطط تنظيمي
-            مخطط إرشادي
-            لوحة فرز
-            لوحة دمج
-            بارسل الأمانة
-            إحداثيات
-            في ار اس'
-        ];
 
         return view('project.upload')->with([
             'project_no' => $project_no,
@@ -311,6 +272,7 @@ class ProjectController extends Controller
             'ws' => $ws,
             'ff' => $ff,
             'fa' => $fa,
+            'project_content' => $project_content,
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -562,7 +524,7 @@ class ProjectController extends Controller
             ['person_id' => $found_person, 'plot_id' => $found_plot]
         );
     }
-
+    // -------------------------------------------------------------------------------------------------------------------
     function get_running_projects()
     {
         $project_no = [];
@@ -603,8 +565,38 @@ class ProjectController extends Controller
 
         return $project_name;
     }
+    // -------------------------------------------------------------------------------------------------------------------
+    function get_project_content($directory)
+    {
+        $project_content = [];
+        $doc_dir = '';
+        // $directory = '//100.0.0.5/f$/data-server/02-Runing-Projects/انفاق المنطقة المركزية';
 
+        $scanned_directory = array_diff(scandir($directory), array('..', '.'));
 
+        if (in_array('01 - Documents', $scanned_directory)) {
+            $doc_dir = $directory . '//01 - Documents';
+            $scaned_doc_directory = array_diff(scandir($doc_dir), array('..', '.'));
+
+            foreach ($scaned_doc_directory as $key => $value) {
+                $project_content[$value] = 'doc';
+            }
+        }
+
+        foreach ($scanned_directory as $key => $value) {
+            if (!is_dir($directory . '//' . $value)) {
+                $file = substr($value, 23, 3);
+                $project_content[$value] = ($file) ?  $file : 'not_uplod';
+            } else {
+                $project_content[$value] = 'dir';
+            }
+        }
+
+        $project_content[$directory] = 'main_dir';
+        $project_content[$doc_dir] = 'doc_dir';
+        return $project_content;
+    }
+    // -------------------------------------------------------------------------------------------------------------------
     function get_finished_projects()
     {
         $project_no = [];
@@ -632,8 +624,7 @@ class ProjectController extends Controller
 
         return $project_name;
     }
-
-
+    // -------------------------------------------------------------------------------------------------------------------
     function get_e_archive()
     {
         $project_no = [];
@@ -723,4 +714,116 @@ class ProjectController extends Controller
         // return $projects_dir;
         return $project_name;
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_main_types()
+    {
+        $main_types = [
+            'all' => 'All - كامل المشروع',
+            'doc' => 'Scanned Document -مستند سكانر',
+            'img' => 'image - صورة',
+            'row' => 'Row Document - مستند خام',
+            'concept' => 'Concept - فكرة',
+            'preliminary' => 'preliminary - ابتدائي',
+            'ARC' => 'ARC - معماري',
+            'STR' => 'STR - إنشائي',
+            'Elec' => 'Elec - كهرباء',
+            'DR' => 'DR - صرف',
+            'WS' => 'WS - تغذية',
+            'HVAC' => 'HVAC - تكيف',
+            'FF' => 'FF - اطفاء',
+            'FA' => 'FA - انذار',
+            'evacuation' => 'evacuation - اخلاء',
+            'tourism' => 'tourism - سياحة',
+            'Elec-Paper' => 'Elec-Paper- ورقة الكهرباء',
+            'survey' => 'survey - مساحة'
+        ];
+        return $main_types;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_arc_types()
+    {
+        $arc = [
+            'all', 'plans', 'calc-sheet', 'details', 'elevation', 'section', 'layout', 'BF', 'GF', 'mezanin', '1stF', '2ndF',
+            '3rdF', '4thF', 'Typical-F', 'roof-F', 'roof-drainage', 'perspective', 'stair-roof', 'fence', 'other'
+        ];
+        return $arc;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_str_types()
+    {
+        $str = [
+            'all', 'plans', 'details', 'columns', 'foundation', 'beams', 'smells', 'section', 'BF', 'GF', 'mezanin', '1stF', '2endF',
+            '3rdF', '4thF', 'Typical-F', 'roof-F', 'stair-roof', 'fence', 'other'
+        ];
+        return $str;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_elec_types()
+    {
+        $elec = [
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'earthing', 'fence', 'other'
+        ];
+        return $elec;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_dr_types()
+    {
+        $dr = [
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'
+        ];
+        return $dr;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_ws_types()
+    {
+        $ws = [
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'
+        ];
+
+        return $ws;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_ff_types()
+    {
+        $ff = [
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'
+        ];
+        return $ff;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_fa_types()
+    {
+        $fa = [
+            'all', 'plans', 'details', 'BF', 'GF', 'mezanin', '1stF', '2endF', '3rdF', '4thF', 'Typical-F', 'roof-F',
+            'stair-roof', 'fence', 'other'
+        ];
+        return $fa;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_survey_types()
+    {
+        $survey = [
+            'رفع مساحي
+            بيانات موقع
+            قرار مساحي
+            قرار ذرعة
+            محضر تثبيت
+            محضر مناسيب
+            لوحة تنظيمية
+            مخطط تنظيمي
+            مخطط إرشادي
+            لوحة فرز
+            لوحة دمج
+            بارسل الأمانة
+            إحداثيات
+            في ار اس'
+        ];
+
+        return $survey;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 }
