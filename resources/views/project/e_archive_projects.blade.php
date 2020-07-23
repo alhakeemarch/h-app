@@ -29,7 +29,9 @@
                             required placeholder="{{__( 'project Number')}}.." onfocus="this.placeholder=''"
                             onblur="this.placeholder=' {{__( 'project Number')}}..'" onkeyup="filterNames(event)"
                             onkeypress=" onlyNumber(event)">
-
+                    </th>
+                    <th scope="col">
+                        <p>upload file</p>
                     </th>
                 </tr>
             </thead>
@@ -42,6 +44,29 @@
                     <td scope="row">{{$i}}</td>
                     <td class="project_name">{{$project_name}}</td>
                     <td class="project_number">{{$project_no}}</td>
+                    {{-- ------------------------------------ --}}
+                    {{-- for upload form --}}
+                    <td class="project_upload m-0 p-0 text-center">
+                        @if (!$project_no == 0 )
+                        <form action="{{ url('/project/showUplodeView') }}" method="GET" class="m-0 p-0">
+                            @csrf
+                            <input type="hidden" name="project_no" value={{$project_no}}>
+                            <input type="hidden" name="project_name" value="{{$project_name}}">
+                            <input type="hidden" name="project_location" value="e_archive">
+                            {{-- @if (auth()->user()->is_admin)
+                            <button type="submit" class="btn btn-info m-1">
+                                <i class="fas fa-file-upload"></i>
+                                <small class="mx-1">upload file</small>
+                            </button>
+                            @endif --}}
+                            <button type="submit" class="btn btn-info m-1">
+                                <i class="fas fa-file-upload"></i>
+                                <small class="mx-1">upload file</small>
+                            </button>
+                        </form>
+                        @endif
+                    </td>
+                    {{-- ------------------------------------ --}}
                 </tr>
                 @php $i ++ @endphp
                 </tr>

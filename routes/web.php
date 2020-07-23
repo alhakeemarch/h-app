@@ -322,7 +322,10 @@ Route::group(['prefix' => 'project'], function () {
     Route::any('earchive', 'ProjectController@earchive')->name('project.earchive');
     Route::any('Safety', 'ProjectController@Safety')->name('project.Safety');
     Route::any('central_area', 'ProjectController@central_area')->name('project.central_area');
-    Route::any('db_projects', 'ProjectController@db_projects')->name('project.db_projects');
+    // Route::any('all_projects', 'ProjectController@all_projects')->name('project.all_projects');
+    Route::any('forlder_files', 'ProjectController@forlder_files')->name('project.forlder_files');
+    Route::any('download_file', 'ProjectController@download_file')->name('project.download_file');
+    Route::any('search', 'ProjectController@search')->name('project.search');
 });
 Route::resources([
 

@@ -33,6 +33,9 @@
                     <th scope="col">
                         <p>upload file</p>
                     </th>
+                    {{-- <th scope="col">
+                        <p>show files</p>
+                    </th> --}}
                 </tr>
             </thead>
             <tbody>

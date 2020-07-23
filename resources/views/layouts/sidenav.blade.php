@@ -3,7 +3,7 @@
     autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
     onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterSidebar(event)" onkeypress=" onlyString(event)">
 {{-- --------------------------------------------------------------------------------------------- --}}
-@if (auth()->user()->is_admin)
+
 <div class=" sidebar-group">
     <a href="#">
         <div class="sidebar-title d-flex justify-content-between">
@@ -17,6 +17,7 @@
             users
         </div>
     </a>
+    @if (auth()->user()->is_admin)
     <a href="{{route ('employee.index')}}">
         <div class="sidebar-item {{ (request()->is('employee*')) ? 'active' : '' }}">
             employee
@@ -37,8 +38,8 @@
             link
         </div>
     </a>
+    @endif
 </div>
-@endif
 {{-- --------------------------------------------------------------------------------------------- --}}
 <div class=" sidebar-group">
     <a href="#">
@@ -61,11 +62,11 @@
         </div>
     </a>
     @endif
-    <a class="" href="{{route ('project.db_projects')}}">
-        <div class="sidebar-item {{ (request()->is('project/db_projects*')) ? 'active' : '' }}">
-            all projects
-        </div>
-    </a>
+    {{-- <a class="" href="{{route ('project.db_projects')}}">
+    <div class="sidebar-item {{ (request()->is('project/db_projects*')) ? 'active' : '' }}">
+        run/fin/e_ar/db
+    </div>
+    </a> --}}
     <a class="" href="{{route ('project.runningProjects')}}">
         <div class="sidebar-item {{ (request()->is('project/runningProjects*')) ? 'active' : '' }}">
             running projects

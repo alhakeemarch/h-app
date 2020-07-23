@@ -147,147 +147,21 @@
 </div>
 @endif
 
-@if (auth()->user()->is_admin || true)
-<div class="my-5">
-
-</div>
-<div class="card">
-    <div class=" card-header mb-4">
-        this projects files and folders
-    </div>
-
-    @php
-    $doc_dir = $project_dir = '#';
-    @endphp
-    {{-- ---------------------------------- --}}
-    @foreach ($project_content as $files => $data)
-    @if ($data == 'main_dir')
-    @php $project_dir = $files; @endphp
-    @endif
-    @if ($data == 'dco_dir')
-    @php $doc_dir = $files; @endphp
-    @endif
-    @endforeach
-    {{-- ---------------------------------- --}}
-
-
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center text-center"> All Project | كامل المشروع </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'all')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center text-center"> Documents | مستندات </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'doc'||$data == 'img'||$data == 'row')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> Concepts | افكار </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'con')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> preliminary | ابتدائي </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'pre')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> Architectures | معماري </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'arc')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> Structures | انشائي </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'str')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> DR & WS | صحي </li>
-        @foreach ($project_content as $file => $data)
-        @if (substr($data,0,2) == 'dr'||substr($data,0,2) == 'ws' )
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> HVAC | تكيف </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'hva' )
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> electric | كهرباء </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'ele')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> FF & FA & evacuation| دفاع مدني </li>
-        @foreach ($project_content as $file => $data)
-
-        @if (substr($data,0,2) == 'ff' || substr($data,0,2) == 'fa'|| $data == 'eva')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> tourism | سياحة </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'tou')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> survey | مساحة </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'sur')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> Folder | مجلد </li>
-        @foreach ($project_content as $file => $data)
-        @if ($data == 'dir')
-        <li class="list-group-item">{{$file}}</li>
-        @endif
-        @endforeach
-    </ul>
-</div>
-{{-- {{dd($project_content)}} --}}
-@endif
-
-
-
 
 <!-- ///////////////////////////////-->
 @if ($errors->any())
 @include('layouts.errors')
 @endif
 <!-- ///////////////////////////////-->
+
+
+<div class="my-5">
+    {{-- to add space only  --}}
+</div>
+
+@include('project.folder_files')
+
+
 @endsection
 
 @section('script')
@@ -409,8 +283,6 @@ function test() {
         //       });
  
 }
-
-
 
 
 

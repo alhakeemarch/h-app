@@ -25,7 +25,7 @@ class ValidFileType implements Rule
      */
     public function passes($attribute, $value)
     {
-        $allowed_file_extensions = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg', 'jpg', 'gif', 'png', 'bmp', 'tiff', 'psd', 'pdf', 'dwg', 'dxf', 'zip'];
+        $allowed_file_extensions = ['doc', 'docx', 'xls', 'xlsx', 'xlsm', 'ppt', 'pptx', 'jpeg', 'jpg', 'gif', 'png', 'bmp', 'tiff', 'psd', 'pdf', 'dwg', 'dxf', 'zip'];
         $uploaded_file_extension = strtolower($value->getClientOriginalExtension());
         if (in_array($uploaded_file_extension, $allowed_file_extensions)) {
             return true;
