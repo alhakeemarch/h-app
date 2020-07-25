@@ -44,7 +44,6 @@
 
                 @php
                 $i=1;
-                $finished_projects_path="\\100.0.0.6\Finished-Projects";
                 @endphp
 
 
@@ -60,8 +59,6 @@
                             @csrf
                             <input type="hidden" name="project_no" value={{$project_no}}>
                             <input type="hidden" name="project_name" value="{{$project_name}}">
-                            <input type="hidden" name="path"
-                                value="{{$finished_projects_path}}\{{$project_no}} - {{$project_name}}">
                             <input type="hidden" name="project_location" value="finished project">
                             <button type="submit" class="btn btn-info m-1">
                                 <i class="fas fa-file-upload"></i>
@@ -71,7 +68,7 @@
                         @endif
                     </td>
                     <td>
-                        @if (!$project_no == 0)
+                        @if (!$project_no == 0 && auth()->user()->is_admin)
                         <a href="#">
                             show project details
                         </a>

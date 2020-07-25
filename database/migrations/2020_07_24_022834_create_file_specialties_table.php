@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrganizationsTable extends Migration
+class CreateFileSpecialtiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateOrganizationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizations', function (Blueprint $table) {
-            $table->bigIncrements('id');
-
+        Schema::create('file_specialties', function (Blueprint $table) {
+            $table->id();
+            $table->string('specialty')->nullable();
+            $table->string('description')->nullable();
+            $table->string('description2')->nullable();
+            $table->string('belongto')->nullable();
 
             //  ============================
             $table->longText('notes')->nullable();
@@ -38,6 +41,6 @@ class CreateOrganizationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizations');
+        Schema::dropIfExists('file_specialties');
     }
 }

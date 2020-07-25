@@ -1,4 +1,4 @@
-{{dd'1'}}
+{{-- {{dd('1')}} --}}
 @extends('layouts.app')
 @section('title', 'Project index')
 

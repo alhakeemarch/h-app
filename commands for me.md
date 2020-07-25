@@ -308,6 +308,7 @@ php artisan make:model GradeRank -a  // تقدير التخرج
 php artisan make:model SceMembershipType -a  // نوع العضوية بالهيئة السعودية للمهندسين
 php artisan make:model Bank -a  // قائمة البنوك
 php artisan make:model UserType -a  // قائمة انواع المستخدمين
+php artisan make:model FileSpecialty -a  // قائمة انواع المستخدمين
 
 ============== 
 # to do
@@ -626,3 +627,4 @@ https://laracasts.com/discuss/channels/general-discussion/maximum-execution-time
 
 
 ================================
+# APP_DEBUG = false

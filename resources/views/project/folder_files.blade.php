@@ -3,7 +3,6 @@
     <div class=" card-header mb-4">
         this projects files and folders
     </div>
-
     @php
     $doc_dir = $project_dir = '#';
     @endphp

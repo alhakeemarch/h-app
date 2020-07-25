@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\District;
+use App\FileSpecialty;
 use App\MunicipalityBranch;
 use App\Neighbor;
 use App\OwnerType;
@@ -22,16 +23,27 @@ use League\CommonMark\Inline\Element\Strong;
 class ProjectController extends Controller
 {
     // -----------------------------------------------------------------------------------------------------------------
-    private $server_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
-    private $server_ftp_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
-    private $server2_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
-    private $server2_ftp_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    private $server_path = '\\100.0.0.5\f$\data-server\\';
+    private $server_ftp_path = 'ftp';
+    private $server2_path = '//100.0.0.6//';
+    private $server2_ftp_path = 'ftp';
     private $running_projects_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
-    private $finished_projects_pathe = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
-    private $e_archive_projects_pathe = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
-    private $zaid_projects_pathe = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
-    private $safty_project_pathe = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
-    private $central_aria_pathe = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    private $finished_projects_pathe = '//100.0.0.6/Finished-Projects//';
+    private $e_archive_projects_pathe = '//100.0.0.6\E-Archive/';
+    private $zaid_projects_pathe = '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1441\\';
+    private $safty_project_pathe = '\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
+    private $central_aria_pathe = '\\100.0.0.5\f$\data-server\1-CENTRAL AREA\\';
+    // -----------------------------------------------------------------------------------------------------------------
+    // private $server_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    // private $server_ftp_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    // private $server2_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    // private $server2_ftp_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    // private $zaid_projects_pathe = 'D:\projects\\';
+    // private $central_aria_pathe = 'D:\projects\\';
+    // private $e_archive_projects_pathe = 'D:\projects\\';
+    // private $safty_project_pathe = 'D:\projects\\';
+    // private $running_projects_path = 'D:\projects\\';
+    // private $finished_projects_pathe = 'D:\projects\\';
     // -----------------------------------------------------------------------------------------------------------------
     /**
      * Create a new controller instance.
@@ -63,64 +75,7 @@ class ProjectController extends Controller
             'projects' => $allProjects,
             'allProjectsCount' => $allProjectsCount,
         ]);
-
-
-        /**
-
-        $allProjectsCount = Project::all()->count();
-        $db_all_projects = Project::all();
-        $allProjects = Project::orderBy('id', 'desc')->paginate(50);
-        // $allProjects = $db_all_projects->latest()->paginate(100);
-        // $allProjects = Project::paginate(100);
-
-        try {
-            // == @home = false @ work = true ==//
-            if (true) {
-                $runningProjects = $this->get_running_projects();
-                $finishedProjects = $this->get_finished_projects();
-                $e_archive = $this->get_e_archive();
-                $zaied_projects = $this->get_zaied_projects();
-            } else {
-                $runningProjects =  $finishedProjects = $e_archive = $zaied_projects = $this->get_home_projects();
-            }
-        } catch (\Throwable $th) {
-            $error_msg = $th->getMessage();
-            // $error_msg = substr($error_msg, strpos($error_msg, ':') + 1);
-            return redirect()->back()->withErrors([
-                'Error',
-                'Failed to git projects,',
-                'please contact system administrator.',
-                'server error:' . $error_msg
-            ]);
-        }
-        $running_projects_path = "\\100.0.0.5\f$\data-server\02-Runing-Projects";
-        return view('project.index')->with([
-            'projects' => $allProjects,
-            'allProjectsCount' => $allProjectsCount,
-            'runningProjects' => $runningProjects,
-            'finishedProjects' => $finishedProjects,
-            'e_archive' => $e_archive,
-            'zaied_projects' => $zaied_projects,
-            'running_projects_path' => $running_projects_path,
-
-        ]);
-         */
     }
-    // -----------------------------------------------------------------------------------------------------------------
-    /**
-     * index of running porjects.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function db_Projects(Request $request)
-    // {
-    //     $allProjectsCount = Project::all()->count();
-    //     $allProjects = Project::orderBy('id', 'desc')->paginate(300);
-    //     return view('project.db_projects')->with([
-    //         'projects' => $allProjects,
-    //         'allProjectsCount' => $allProjectsCount,
-    //     ]);
-    // }
     // -----------------------------------------------------------------------------------------------------------------
     /**
      * index of running porjects.
@@ -184,7 +139,7 @@ class ProjectController extends Controller
         $employment_no = auth()->user()->person->employment_no;
         $ff = $this->get_ff_types();
         $fa = $this->get_fa_types();
-        $pathe = '\\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
+        $pathe = $this->safty_project_pathe;
         $project_content = $this->get_project_content($pathe);
 
         return view('project.upload')->with([
@@ -249,25 +204,24 @@ class ProjectController extends Controller
         $survey = $this->get_survey_types();
 
         if (is_numeric($project_no) && $project_location == 'running project') {
-            $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $project_no . ' - ' . $project_name . '\\';
+            $project_dir = $this->running_projects_path . $project_no . ' - ' . $project_name . '\\';
         }
         if (!is_numeric($project_no) && $project_location == 'running project') {
-            $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $project_name . '\\';
+            $project_dir = $this->running_projects_path . $project_name . '\\';
         }
         if ($project_location == 'finished project') {
-            $project_dir = '\\' . $project_path . '\\';
+            $project_dir = $this->finished_projects_pathe . $project_no . ' - ' . $project_name . '\\';
         }
         if ($project_location == 'safty') {
-            $pathe = '\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
+            $pathe = $this->safty_project_pathe;
             $project_dir = '\\' . $pathe . '\\';
         }
         if ($project_location == 'central_area') {
-            $pathe = '\\100.0.0.5\f$\data-server\1-CENTRAL AREA\_Upload';
-            $project_dir = '\\' . $pathe . '\\';
+            $project_dir = $this->central_aria_pathe . '_Upload';
         }
         if ($project_location == 'e_archive') {
-            $pathe = '\\100.0.0.6\E-Archive';
-            $project_dir = '\\' . $pathe . '\\' . $project_name . '\\';
+            $pathe = $this->e_archive_projects_pathe;
+            $project_dir = '\\' . $pathe . $project_name . '\\';
         }
         $project_content = $this->get_project_content($project_dir);
         if (!isset($project_content)) {
@@ -288,7 +242,6 @@ class ProjectController extends Controller
             'ff' => $ff,
             'fa' => $fa,
             'project_content' => $project_content,
-            'running_project_ftp' => 'ftp://100.0.0.5/02-Runing-Projects/',
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -300,6 +253,7 @@ class ProjectController extends Controller
      */
     public function uploadFile(Project $project, Request $request)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'project_no' => 'required',
             // 'project_no' => 'required|numeric',
@@ -312,28 +266,25 @@ class ProjectController extends Controller
         ]);
 
         if (is_numeric($request->project_no) && $request->project_location == 'running project') {
-            $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $request->project_no . ' - ' . $request->project_name . '\\';
+            $project_dir = $this->running_projects_path . $request->project_no . ' - ' . $request->project_name . '\\';
         }
         if (!is_numeric($request->project_no) && $request->project_location == 'running project') {
-            $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $request->project_name . '\\';
+            $project_dir = $this->running_projects_path . $request->project_name . '\\';
         }
         if ($request->project_location == 'finished project') {
-            $project_dir = '\\' . $request->project_path . '\\';
+            $project_dir = $this->finished_projects_pathe . $request->project_no . ' - ' . $request->project_name . '\\';
         }
         if ($request->project_location == 'safty') {
-            $pathe = '\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
+            $pathe = $this->safty_project_pathe;
             $project_dir = '\\' . $pathe . '\\';
         }
         if ($request->project_location == 'central_area') {
-            $pathe = '\\100.0.0.5\f$\data-server\1-CENTRAL AREA\_Upload';
-            $project_dir = '\\' . $pathe . '\\';
+            $project_dir = $this->central_aria_pathe . '_Upload';
         }
         if ($request->project_location == 'e_archive') {
-            $pathe = '\\100.0.0.6\E-Archive\\';
+            $pathe = $this->e_archive_projects_pathe;
             $project_dir = '\\' . $pathe . $request->project_name . '\\';
         }
-        // $project_dir = '\\' . $request->project_path . '\\';
-        // $project_dir = 'D:\projects' . '\\'; // this is for home only
 
         $date_time = date_format(now(), 'yy-m-d_H-i');
         $employment_no = $request->employment_no;
@@ -411,33 +362,29 @@ class ProjectController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function download_file(Request $request)
     {
-        // $server_path = 'ftp://100.0.0.5/'; // FOR FTP didnt work
-        $server_path = '//100.0.0.5/f$/data-server/';
         $file_name = $request->file_name;
         $dir_name = $request->dir_name;
         $project_no = (is_numeric($request->project_no)) ? $request->project_no : false;
         if ($request->project_location == 'running project') {
-            $project_location = '02-Runing-Projects/';
+            $project_location = $this->running_projects_path;
         }
         if ($request->project_location == 'safty') {
-            $project_location = '03 - Safety Dept الدفاع المدني/';
+            $project_location = $this->safty_project_pathe;
         }
         if ($request->project_location == 'finished project') {
-            $server_path = '//100.0.0.6/';
-            $project_location = 'Finished-Projects/';
+            $project_location = $this->finished_projects_pathe;
         }
         if ($request->project_location == 'e_archive') {
-            $server_path = '//100.0.0.6/';
-            $project_location = 'E-Archive/';
+            $project_location = $this->e_archive_projects_pathe;
         }
         $headers = ['Content-Type: application/zip'];
 
         if ($project_no) {
-            $path_to_file = $server_path . $project_location  . $project_no . ' - ' . $dir_name . '/' . $file_name;
+            $path_to_file = $project_location  . $project_no . ' - ' . $dir_name . '/' . $file_name;
         } elseif ($request->project_location == 'safty') {
-            $path_to_file = $server_path . $project_location . $file_name;
+            $path_to_file = $project_location . $file_name;
         } else {
-            $path_to_file = $server_path . $project_location  . $dir_name . '/' . $file_name;
+            $path_to_file = $project_location  . $dir_name . '/' . $file_name;
         }
 
         try {
@@ -492,10 +439,6 @@ class ProjectController extends Controller
      */
     public function show(Project $project, Request $request)
     {
-        // $customers = Person::all()->where('is_customer', true)->reverse();
-        // $current_customer = $customers->where('national_id', $request->owner_national_id);
-        // return $customers;
-        // return $project;
         return view('project.show')->with('project', $project);
     }
 
@@ -595,9 +538,7 @@ class ProjectController extends Controller
     {
         $project_no = [];
         $project_name = [];
-
-        $directory = '//100.0.0.5/f$/data-server/02-Runing-Projects';
-        // $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/01- running projects';
+        $directory = $this->running_projects_path;
 
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
@@ -642,10 +583,8 @@ class ProjectController extends Controller
         // return $directory;
         $project_content = [];
         $doc_dir = '';
-        // $directory = '//100.0.0.5/f$/data-server/02-Runing-Projects/انفاق المنطقة المركزية';
 
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-        // return $scanned_directory;
 
         if (in_array('01 - Documents', $scanned_directory)) {
             $doc_dir = $directory . '//01 - Documents';
@@ -703,12 +642,10 @@ class ProjectController extends Controller
     {
         $project_no = [];
         $project_name = [];
-        $directory = '//100.0.0.6/Finished-Projects';
+        $directory = $this->finished_projects_pathe;
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
 
-        // return $projects_dir;
-        // $project_name['path'] = $directory;
         foreach ($projects_dir as $key => $value) {
             $position = stripos($value, '-');
             $sub = substr($value, 0, $position);
@@ -730,11 +667,9 @@ class ProjectController extends Controller
         $project_no = [];
         $project_name = [];
 
-        $directory = '//100.0.0.6/E-Archive';
-        // $directory = 'D:/xampp/htdocs/h-app/test_fa/projects/02 - finished Projects';
+        $directory = $this->e_archive_projects_pathe;
         $scanned_directory = array_diff(scandir($directory), array('..', '.'));
         $projects_dir = $scanned_directory;
-        // $project_name['path'] = $directory;
         foreach ($projects_dir as $key => $value) {
             $project_name['archive' . $key] = $value;
         }
@@ -744,33 +679,7 @@ class ProjectController extends Controller
 
         return $project_name;
     }
-    // -------------------------------------------------------------------------------------------------------------------
-    function get_home_projects()
-    {
-        $project_no = [];
-        $project_name = [];
 
-        $directory = 'D:\projects';
-        $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-        $projects_dir = $scanned_directory;
-
-        // return $projects_dir;
-        // $project_name['path'] = $directory;
-        foreach ($projects_dir as $key => $value) {
-            $position = stripos($value, '-');
-            $sub = substr($value, 0, $position);
-            $sub = trim($sub);
-            $sub2 = substr($value, $position + 1);
-            $sub2 = trim($sub2);
-            $project_no[$sub] = $value;
-            $project_name[$sub] = $sub2;
-        }
-
-        ksort($project_no);
-        ksort($project_name);
-
-        return $project_name;
-    }
     // -------------------------------------------------------------------------------------------------------------------
     function get_zaied_projects()
     {
@@ -791,7 +700,6 @@ class ProjectController extends Controller
             '1440->بلدي' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1440/بلدي',
             '1441' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1441',
         ];
-        // $project_name['path'] = '100.0.0.5/f$/data-server/Zaied';
         foreach ($directories as $directory_key => $directory) {
             $scanned_directory = array_diff(scandir($directory), array('..', '.'));
             $kyed_dir = [];
@@ -817,6 +725,13 @@ class ProjectController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function get_main_types()
     {
+        $a = [];
+        $fiel_specialties = FileSpecialty::all();
+        foreach ($fiel_specialties as  $specialty) {
+            if ($specialty['belongto'] == 'main') {
+                $a[$specialty['specialty']] = $specialty['description'];
+            }
+        }
         $main_types = [
             'all' => 'All - كامل المشروع',
             'doc' => 'Scanned Document -مستند سكانر',
@@ -837,6 +752,7 @@ class ProjectController extends Controller
             'Elec-Paper' => 'Elec-Paper- ورقة الكهرباء',
             'survey' => 'survey - مساحة'
         ];
+
         return $main_types;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -940,12 +856,12 @@ class ProjectController extends Controller
         // $all_projects = project::where('project_name_ar', 'LIKE',  "%$project_name%")->get(); // ما نقدر نعمل بيجنيشن
         $all_projects = project::where('project_name_ar', 'LIKE',  "%$project_name%");
 
-        $project_cout = $all_projects->count();
-        $projects = $all_projects->paginate($project_cout);
+        $allProjectsCount = $all_projects->count();
+        $projects = $all_projects->paginate($allProjectsCount);
 
         return view('project.index')->with([
             'projects' => $projects,
-            'project_cout' => $project_cout,
+            'allProjectsCount' => $allProjectsCount,
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
