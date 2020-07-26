@@ -27,7 +27,7 @@ class ProjectController extends Controller
     private $server_ftp_path = 'ftp';
     private $server2_path = '//100.0.0.6//';
     private $server2_ftp_path = 'ftp';
-    private $running_projects_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    private $running_projects_path = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
     private $finished_projects_pathe = '//100.0.0.6/Finished-Projects//';
     private $e_archive_projects_pathe = '//100.0.0.6\E-Archive/';
     private $zaid_projects_pathe = '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1441\\';
@@ -221,7 +221,7 @@ class ProjectController extends Controller
         }
         if ($project_location == 'e_archive') {
             $pathe = $this->e_archive_projects_pathe;
-            $project_dir = '\\' . $pathe . $project_name . '\\';
+            $project_dir = $pathe . $project_name . '\\';
         }
         $project_content = $this->get_project_content($project_dir);
         if (!isset($project_content)) {
@@ -725,13 +725,13 @@ class ProjectController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function get_main_types()
     {
-        $a = [];
-        $fiel_specialties = FileSpecialty::all();
-        foreach ($fiel_specialties as  $specialty) {
-            if ($specialty['belongto'] == 'main') {
-                $a[$specialty['specialty']] = $specialty['description'];
-            }
-        }
+        // $a = [];
+        // $fiel_specialties = FileSpecialty::all();
+        // foreach ($fiel_specialties as  $specialty) {
+        //     if ($specialty['belongto'] == 'main') {
+        //         $a[$specialty['specialty']] = $specialty['description'];
+        //     }
+        // }
         $main_types = [
             'all' => 'All - كامل المشروع',
             'doc' => 'Scanned Document -مستند سكانر',
