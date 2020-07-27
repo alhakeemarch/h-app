@@ -254,6 +254,7 @@ class ProjectController extends Controller
     public function uploadFile(Project $project, Request $request)
     {
         // dd($request->all());
+        $file_extensions = [];
         $validatedData = $request->validate([
             'project_no' => 'required',
             // 'project_no' => 'required|numeric',
@@ -262,7 +263,8 @@ class ProjectController extends Controller
             'employment_no' => 'required|numeric|digits:4',
             'main_type' => 'required',
             'detail' => 'nullable|',
-            'file_input' => ['required', 'file', new ValidFileSize, new ValidFileType],
+            // 'file_input' => ['required', 'file', new ValidFileSize, new ValidFileType],
+            'file_input' => ['required', new ValidFileSize, new ValidFileType],
         ]);
 
         if (is_numeric($request->project_no) && $request->project_location == 'running project') {
@@ -283,12 +285,14 @@ class ProjectController extends Controller
         }
         if ($request->project_location == 'e_archive') {
             $pathe = $this->e_archive_projects_pathe;
-            $project_dir = '\\' . $pathe . $request->project_name . '\\';
+            $project_dir =  $pathe . $request->project_name . '\\';
         }
-
         $date_time = date_format(now(), 'yy-m-d_H-i');
         $employment_no = $request->employment_no;
-        $file_extension = $request->file_input->getClientOriginalExtension();
+        foreach ($request->file_input as $file) {
+            array_push($file_extensions, $file->getClientOriginalExtension());
+        }
+        // $file_extension = $request->file_input->getClientOriginalExtension();
         $main_type = $request->main_type;
         $detail = $request->detail;
 
@@ -303,8 +307,10 @@ class ProjectController extends Controller
         if ($main_type == 'doc' || $main_type == 'img' || $main_type == 'row') {
             $is_document = true;
         }
-        if (in_array(strtolower($file_extension), $drawing_extensions)) {
-            $is_drawing = true;
+        foreach ($file_extensions as $file_extension) {
+            if (in_array(strtolower($file_extension), $drawing_extensions)) {
+                $is_drawing = true;
+            }
         }
         if ($is_drawing && $is_document) {
             $type_mismatch = true;
@@ -329,34 +335,41 @@ class ProjectController extends Controller
         }
 
         // ----------------------------------------------------------------
-        $file_extension = $request->file_input->getClientOriginalExtension();
-        if ($detail) {
-            $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '_' . $detail . '.' . $file_extension;
-        } else {
-            $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '.' . $file_extension;
-        }
+        $i = 0;
+        $done = false;
+        foreach ($request->file_input as $file) {
+            $file_extension = $file->getClientOriginalExtension();
+            if ($detail) {
+                $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '_' . $detail . '_' . $i . '.' . $file_extension;
+            } else {
+                $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '_' . $i . '.' . $file_extension;
+            }
+            // ------------------------------------
+            $file_name = strtolower($file_name);
 
-        $file_name = strtolower($file_name);
-
-        try {
-            $done = move_uploaded_file($request->file_input, $project_dir . $file_name);
-        } catch (\Throwable $th) {
-            $error_msg = $th->getMessage();
-            $error_msg = substr($error_msg, strpos($error_msg, ':') + 1);
-            return redirect()->back()->withErrors([
-                'Error',
-                'Failed to upload file,',
-                'please check the folder first then try to upload it again,',
-                'or contact system administrator.',
-                'server error:' . $error_msg
-            ]);
+            try {
+                $done = move_uploaded_file($file, $project_dir . $file_name);
+            } catch (\Throwable $th) {
+                $error_msg = $th->getMessage();
+                $error_msg = substr($error_msg, strpos($error_msg, ':') + 1);
+                return redirect()->back()->withErrors([
+                    'Error',
+                    'Failed to upload,',
+                    'please check the folder first then try to upload again,',
+                    'or contact system administrator.',
+                    'server error:' . $error_msg
+                ]);
+            }
+            // ------------------------------------
+            $i = $i + 1;
         }
-        $success_msg = ($is_document) ? 'File Uploded Successfully to Document folder' : 'File Uploded Successfully';
+        // ----------------------------------------------------------------
+        $success_msg = ($is_document) ? 'Uploded Successfully to Document folder' : 'Uploded Successfully';
 
         if ($done) {
             return redirect()->back()->with('success', $success_msg);
         } else {
-            return redirect()->back()->withErrors(['Error', 'failed to upload file,', 'please check the folder first and try to upload it again,', 'or contact system administrator.']);
+            return redirect()->back()->withErrors(['Error', 'failed to upload ,', 'please check the folder first and try to upload it again,', 'or contact system administrator.']);
         }
     }
     // -----------------------------------------------------------------------------------------------------------------

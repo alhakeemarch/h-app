@@ -116,7 +116,7 @@
             <div class="col-md form-group">
                 <label for="fiel_input">{{__( 'Please select file')}}
                     <span class="small text-danger">({{__('required')}})</span> :</label>
-                <input type="file" name="file_input" class="form-control" id="file_input" required>
+                <input type="file" name="file_input[]" multiple class="form-control" id="file_input" required>
             </div>
         </div>
         {{-- ================================================================================================================ --}}
@@ -128,7 +128,8 @@
                 </button>
             </div>
             <div class="col-md">
-                <a href="{{ url('/project') }}" class="btn btn-info btn-block">
+                {{-- <a href="{{ url()->previous()  }}" class="btn btn-info btn-block"> --}}
+                <a href="{{ redirect()->getUrlGenerator()->previous()  }}" class="btn btn-info btn-block">
                     <i class="fas fa-undo-alt"></i>
                     <span class="d-none d-md-inline-block">&nbsp; cancel</span>
                 </a>
