@@ -327,6 +327,21 @@ Route::group(['prefix' => 'project'], function () {
     Route::any('download_file', 'ProjectController@download_file')->name('project.download_file');
     Route::any('search', 'ProjectController@search')->name('project.search');
 });
+
+Route::group(['prefix' => 'fiel_folder'], function () {
+    // Route::any('uploadFile', 'FileAndFolderController@uploadFile')->name('project.uploadFile');
+    // Route::any('runningProjects', 'FileAndFolderController@runningProjects')->name('project.runningProjects');
+    // Route::any('finshedProjects', 'FileAndFolderController@finshedProjects')->name('project.finshedProjects');
+    // Route::any('zaidProjects', 'FileAndFolderController@zaidProjects')->name('project.zaidProjects');
+    // Route::any('earchive', 'FileAndFolderController@earchive')->name('project.earchive');
+    // Route::any('Safety', 'FileAndFolderController@Safety')->name('project.Safety');
+    // Route::any('central_area', 'FileAndFolderController@central_area')->name('project.central_area');
+    // Route::any('all_projects', 'FileAndFolderController@all_projects')->name('project.all_projects');
+    // Route::any('forlder_files', 'FileAndFolderController@forlder_files')->name('project.forlder_files');
+    // Route::any('download_file', 'FileAndFolderController@download_file')->name('project.download_file');
+    // Route::any('search', 'FileAndFolderController@search')->name('project.search');
+    Route::any('delete_file', 'FileAndFolderController@delete_file')->name('fiel_folder.delete_file');
+});
 Route::resources([
 
     // -- شخص أو جهة

@@ -11,7 +11,7 @@ $person = $employee;
         <form action="{{ route ('employee.update',$employee) }}" method="POST">
 
             @method('PUT')
-            @include('person.form')
+            @include('person.forms.form')
             <div class="row">
 
                 <div class="col-6">

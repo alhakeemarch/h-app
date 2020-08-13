@@ -54,15 +54,28 @@
         <li class="list-group-item bg-info text-center"> All Project | كامل المشروع </li>
         @foreach ($project_content as $file => $data)
         @if (substr($data,0,3) == 'all')
-        <form action="{{ route('project.download_file') }}" method="POST" class="list-group-item align-content-lg-start"
-            enctype="multipart/form-data" class="container">
-            @csrf
-            <input type="hidden" name="file_name" value="{{$file}}">
-            <input type="hidden" name="project_no" value="{{$project_no}}">
-            <input type="hidden" name="dir_name" value="{{$project_name}}">
-            <input type="hidden" name="project_location" value="{{$project_location}}">
-            <button type="submit" class="btn  btn-link">{{$file}} | <i class="fas fa-file-download"></i></button>
-        </form>
+        <li class="list-group-item d-flex justify-content-between">
+            {{-- <form action="{{ route('project.download_file') }}" method="POST"
+            class="list-group-item align-content-lg-start" enctype="multipart/form-data"> --}}
+            <form action="{{ route('project.download_file') }}" method="POST" class="" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="file_name" value="{{$file}}">
+                <input type="hidden" name="project_no" value="{{$project_no}}">
+                <input type="hidden" name="dir_name" value="{{$project_name}}">
+                <input type="hidden" name="project_location" value="{{$project_location}}">
+                <button type="submit" class="btn  btn-link">{{$file}} | <i class="fas fa-file-download"></i></button>
+            </form>
+            {{-- deleting form --}}
+            <form action="{{route('fiel_folder.delete_file')}}" method="post" class="" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="file_name" value="{{$file}}">
+                <input type="hidden" name="project_no" value="{{$project_no}}">
+                <input type="hidden" name="dir_name" value="{{$project_name}}">
+                <input type="hidden" name="project_location" value="{{$project_location}}">
+                <button type="submit" class="btn btn-link text-danger" onclick="return confirm('Are you sure?')"> delete
+                    <i class="fas fa-trash-alt"></i></button>
+            </form>
+        </li>
         @endif
         @endforeach
     </ul>
@@ -92,6 +105,7 @@
             @endif
             @else
             <button type="submit" class="btn  btn-link">{{$file}} | <i class="fas fa-file-download"></i></button>
+
             @endif
 
         </form>

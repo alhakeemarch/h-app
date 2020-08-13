@@ -188,7 +188,6 @@ class PersonController extends Controller
         $gread_ranks = GradeRank::all();
         $SCE_membership_types = SceMembershipType::all();
         $banks = Bank::all();
-
         return [
             'countries' => $countries,
             'majors' => $majors,

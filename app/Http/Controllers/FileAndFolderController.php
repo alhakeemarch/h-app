@@ -23,6 +23,29 @@ use League\CommonMark\Inline\Element\Strong;
 class FileAndFolderController extends Controller
 {
     // -----------------------------------------------------------------------------------------------------------------
+    private $server_path = '\\100.0.0.5\f$\data-server\\';
+    private $server_ftp_path = 'ftp';
+    private $server2_path = '//100.0.0.6//';
+    private $server2_ftp_path = 'ftp';
+    private $running_projects_path = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    private $finished_projects_pathe = '//100.0.0.6/Finished-Projects//';
+    private $e_archive_projects_pathe = '//100.0.0.6\E-Archive/';
+    private $zaid_projects_pathe = '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1441\\';
+    private $safty_project_pathe = '\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
+    private $central_aria_pathe = '\\100.0.0.5\f$\data-server\1-CENTRAL AREA\\';
+    // -----------------------------------------------------------------------------------------------------------------
+    // private $server_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    // private $server_ftp_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    // private $server2_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    // private $server2_ftp_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
+    // private $zaid_projects_pathe = 'D:\projects\\';
+    // private $central_aria_pathe = 'D:\projects\\';
+    // private $e_archive_projects_pathe = 'D:\projects\\';
+    // private $safty_project_pathe = 'D:\projects\\';
+    // private $running_projects_path = 'D:\projects\\';
+    // private $finished_projects_pathe = 'D:\projects\\';
+    // -----------------------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Create a new controller instance.
      *
@@ -34,116 +57,71 @@ class FileAndFolderController extends Controller
         // $this->middleware('active_user');
     }
     // -----------------------------------------------------------------------------------------------------------------
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function uploadFile(Request $request)
+    public function delete_file(Request $request)
     {
-        $validatedData = $request->validate([
-            'project_no' => 'required',
-            'project_name' => 'required',
-            'project_location' => 'required',
-            'employment_no' => 'required|numeric|digits:4',
-            'main_type' => 'required',
-            'detail' => 'nullable|',
-            'file_input' => ['required', 'file', new ValidFileSize, new ValidFileType],
-        ]);
-        return $validatedData;
+        // return $request;
 
-        if (is_numeric($request->project_no) && $request->project_location == 'running project') {
-            $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $request->project_no . ' - ' . $request->project_name . '\\';
-        }
-        if (!is_numeric($request->project_no) && $request->project_location == 'running project') {
-            $project_dir = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\' . $request->project_name . '\\';
-        }
-        if ($request->project_location == 'finished project') {
-            $project_dir = '\\' . $request->project_path . '\\';
-        }
-        if ($request->project_location == 'safty') {
-            $pathe = '\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
-            $project_dir = '\\' . $pathe . '\\';
-        }
-        if ($request->project_location == 'central_area') {
-            $pathe = '\\100.0.0.5\f$\data-server\1-CENTRAL AREA\_Upload';
-            $project_dir = '\\' . $pathe . '\\';
-        }
-        // $project_dir = '\\' . $request->project_path . '\\';
-        // $project_dir = 'D:\projects' . '\\'; // this is for home only
+        $emp_no = auth()->user()->person->employment_no;
+        $file_name = $request->file_name;
+        $dir_name = $request->dir_name;
+        $project_no = (is_numeric($request->project_no)) ? $request->project_no : false;
 
-        $date_time = date_format(now(), 'yy-m-d_H-i');
-        $employment_no = $request->employment_no;
-        $file_extension = $request->file_input->getClientOriginalExtension();
-        $main_type = $request->main_type;
-        $detail = $request->detail;
-
-        // ----------------------------------------------------------------
-        // to check if the file is document to upload in documents folder
-        $is_document = false;
-        $is_drawing = false;
-        $type_mismatch = false;
-        $doc_extensions = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg', 'jpg', 'gif', 'png', 'bmp', 'tiff', 'psd', 'pdf'];
-        $drawing_extensions = ['dwg', 'dxf'];
-
-        if ($main_type == 'doc' || $main_type == 'img' || $main_type == 'row') {
-            $is_document = true;
-        }
-        if (in_array(strtolower($file_extension), $drawing_extensions)) {
-            $is_drawing = true;
-        }
-        if ($is_drawing && $is_document) {
-            $type_mismatch = true;
+        //check if user can delete the file
+        $is_uploaded_by_the_user = (strpos($file_name, '_e' . $emp_no)) ? true : false;
+        $authrized_to_delete = (auth()->user()->is_manager || auth()->user()->is_admin) ? true : false;
+        if (!($is_uploaded_by_the_user || $authrized_to_delete)) {
+            return redirect()->back()->withErrors([
+                'Failed to delet file,',
+                'you are not authorized to delete this file',
+                'contact system administrator.',
+            ]);
         }
 
-        if ($type_mismatch) {
-            return redirect()->back()->withErrors(
-                [
-                    'Error',
-                    'cannot upload drawing into documents',
-                    'please choose the correct file specificity',
-                    'or contact system administrator.'
-                ]
-            );
+        // to get file location
+        switch ($request->project_location) {
+            case 'running project':
+                $project_location = $this->running_projects_path;
+                break;
+            case 'safty':
+                $project_location = $this->safty_project_pathe;
+                break;
+            case 'finished project':
+                $project_location = $this->finished_projects_pathe;
+                break;
+            case 'e_archive':
+                $project_location = $this->e_archive_projects_pathe;
+                break;
+
+            default:
+                return redirect()->back()->withErrors([
+                    'unknown file location',
+                    'contact system administrator.',
+                ]);
+                // break;
         }
 
-        if ($is_document) {
-            if (!file_exists($project_dir . '\01 - Documents')) {
-                mkdir($project_dir . '\01 - Documents', 0777, true);
-            }
-            $project_dir = $project_dir . '\01 - Documents\\';
-        }
-
-        // ----------------------------------------------------------------
-        $file_extension = $request->file_input->getClientOriginalExtension();
-        if ($detail) {
-            $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '_' . $detail . '.' . $file_extension;
+        // to get pathe with filename 
+        if ($project_no) {
+            $path_with_filename = $project_location  . $project_no . ' - ' . $dir_name . '/' . $file_name;
+        } elseif ($request->project_location == 'safty') {
+            $path_with_filename = $project_location . $file_name;
         } else {
-            $file_name = $date_time . '_e' . $employment_no . '_' . $main_type . '.' . $file_extension;
+            $path_with_filename = $project_location  . $dir_name . '/' . $file_name;
         }
-
-        $file_name = strtolower($file_name);
 
         try {
-            $done = move_uploaded_file($request->file_input, $project_dir . $file_name);
+            if (unlink($path_with_filename)) {
+                return redirect()->back()->with('success', 'file deleted');
+            }
         } catch (\Throwable $th) {
             $error_msg = $th->getMessage();
             $error_msg = substr($error_msg, strpos($error_msg, ':') + 1);
             return redirect()->back()->withErrors([
-                'Error',
-                'Failed to upload file,',
-                'please check the folder first then try to upload it again,',
+                'Failed to delet file,',
+                'please check the folder first then try to delet it again,',
                 'or contact system administrator.',
                 'server error:' . $error_msg
             ]);
-        }
-        $success_msg = ($is_document) ? 'File Uploded Successfully to Document folder' : 'File Uploded Successfully';
-
-        if ($done) {
-            return redirect()->back()->with('success', $success_msg);
-        } else {
-            return redirect()->back()->withErrors(['Error', 'failed to upload file,', 'please check the folder first and try to upload it again,', 'or contact system administrator.']);
         }
     }
 }

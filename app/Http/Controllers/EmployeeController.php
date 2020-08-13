@@ -120,11 +120,10 @@ class EmployeeController extends PersonController
      */
     public function edit(Person $employee)
     {
-        $nationalitiesArr = Country::all();
-        return view('employee.edit')->with([
+        $formsData = array_merge($this->formsData(), [
             'employee' => $employee,
-            'nationalitiesArr' => $nationalitiesArr,
         ]);
+        return view('employee.edit')->with($formsData);
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
