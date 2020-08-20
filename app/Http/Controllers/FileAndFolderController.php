@@ -29,6 +29,7 @@ class FileAndFolderController extends Controller
     private $server2_ftp_path = 'ftp';
     private $running_projects_path = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
     private $finished_projects_pathe = '//100.0.0.6/Finished-Projects//';
+    private $emps_dir_path = '//100.0.0.6/Follow_Up/05-Employees_الموظفين';
     private $e_archive_projects_pathe = '//100.0.0.6\E-Archive/';
     private $zaid_projects_pathe = '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1441\\';
     private $safty_project_pathe = '\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
@@ -124,4 +125,80 @@ class FileAndFolderController extends Controller
             ]);
         }
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function emps_dir(Request $request)
+    {
+        // return $request;
+        $saudi_emps = [];
+        $saudi_emps_old = [];
+        $non_saudi_emps = [];
+        $non_saudi_emps_old = [];
+        $other = [];
+        $directory = $this->emps_dir_path;
+        $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+        $i = 1;
+        foreach ($scanned_directory as $value) {
+            if (substr($value, 0, 1) === '1' && substr($value, -4) !== '_old') {
+                $n_id = substr($value, 0, 10);
+                $name = substr($value, 11);
+                $saudi_emps[$n_id] = $name;
+            } elseif (substr($value, 0, 1) === '1' && substr($value, -4) === '_old') {
+                $n_id = substr($value, 0, 10);
+                $name = substr($value, 11, -4);
+                $saudi_emps_old[$n_id] = $name;
+            } elseif (substr($value, 0, 1) === '2' && substr($value, -4) !== '_old') {
+                $n_id = substr($value, 0, 10);
+                $name = substr($value, 11);
+                $non_saudi_emps[$n_id] = $name;
+            } elseif (substr($value, 0, 1) === '2' && substr($value, -4) === '_old') {
+                $n_id = substr($value, 0, 10);
+                $name = substr($value, 11, -4);
+                $non_saudi_emps_old[$n_id] = $name;
+            } else {
+                $other[$i] = $value;
+            }
+            $i = $i + 1;
+        }
+
+        // dd($saudi_emps, $saudi_emps_old, $non_saudi_emps, $non_saudi_emps_old, $other);
+        return view('file_and_folder.emps_dir_index')->with([
+            'saudi_emps' => $saudi_emps,
+            'saudi_emps_old' => $saudi_emps_old,
+            'non_saudi_emps' => $non_saudi_emps,
+            'non_saudi_emps_old' => $non_saudi_emps_old,
+            'other' => $other,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function show_emp_dir(Request $request)
+    {
+        // return $request;
+        $main_emps_dir = $this->emps_dir_path;
+        $dir_path = '';
+        $dir_name = '';
+        if ($request->type === 'other') {
+            $dir_name = $request->name;
+            $dir_path = $main_emps_dir . '/' . $request->name;
+        } elseif ($request->type === 'saudi_emps_old' || $request->type === 'non_saudi_emps_old') {
+            $dir_name = $request->id . '-' . $request->name . '_old';
+            $dir_path = $main_emps_dir . '/' . $request->id . '-' . $request->name . '_old';
+        } else {
+            $dir_name = $request->id . '-' . $request->name;
+            $dir_path = $main_emps_dir . '/' . $request->id . '-' . $request->name;
+        }
+        $dir_content = array_diff(scandir($dir_path), array('..', '.'));
+        // return $dir_content;
+
+        return view('file_and_folder.emp_dir_show')->with([
+            'dir_content' => $dir_content,
+            'dir_name' => $dir_name,
+            'dir_path' => $dir_path,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function download_file(Request $request)
+    {
+        return $request;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 }

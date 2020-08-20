@@ -23,6 +23,11 @@
             employee
         </div>
     </a>
+    <a href="{{route ('fiel_folder.emps_dir')}}">
+        <div class="sidebar-item {{ (request()->is('employee*')) ? 'active' : '' }}">
+            employee dir
+        </div>
+    </a>
     <a href="{{route ('person.index')}}">
         <div class="sidebar-item {{ (request()->is('person*')) ? 'active' : '' }}">
             person

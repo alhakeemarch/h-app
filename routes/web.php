@@ -338,9 +338,11 @@ Route::group(['prefix' => 'fiel_folder'], function () {
     // Route::any('central_area', 'FileAndFolderController@central_area')->name('project.central_area');
     // Route::any('all_projects', 'FileAndFolderController@all_projects')->name('project.all_projects');
     // Route::any('forlder_files', 'FileAndFolderController@forlder_files')->name('project.forlder_files');
-    // Route::any('download_file', 'FileAndFolderController@download_file')->name('project.download_file');
+    Route::any('download_file', 'FileAndFolderController@download_file')->name('fiel_folder.download_file');
     // Route::any('search', 'FileAndFolderController@search')->name('project.search');
     Route::any('delete_file', 'FileAndFolderController@delete_file')->name('fiel_folder.delete_file');
+    Route::any('emps_dir', 'FileAndFolderController@emps_dir')->name('fiel_folder.emps_dir');
+    Route::any('show_emp_dir', 'FileAndFolderController@show_emp_dir')->name('fiel_folder.show_emp_dir');
 });
 Route::resources([
 

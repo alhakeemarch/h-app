@@ -24,7 +24,7 @@ class ProjectController extends Controller
 {
     // -----------------------------------------------------------------------------------------------------------------
     private $server_path = '\\100.0.0.5\f$\data-server\\';
-    private $server_ftp_path = 'ftp';
+    private $server_ftp_path = 'ftp://100.0.0.5/';
     private $server2_path = '//100.0.0.6//';
     private $server2_ftp_path = 'ftp';
     private $running_projects_path = '\\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
@@ -227,7 +227,9 @@ class ProjectController extends Controller
         if (!isset($project_content)) {
             $project_content = ['notset' => 'doc'];
         }
+
         return view('project.upload')->with([
+            'ftp' => $this->server_ftp_path,
             'project_no' => $project_no,
             'project_name' => $project_name,
             'project_path' => $project_path,
