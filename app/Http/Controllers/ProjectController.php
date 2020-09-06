@@ -337,7 +337,7 @@ class ProjectController extends Controller
         }
 
         // ----------------------------------------------------------------
-        $i = 0;
+        $i = 1;
         $done = false;
         foreach ($request->file_input as $file) {
             $file_extension = $file->getClientOriginalExtension();
@@ -363,7 +363,8 @@ class ProjectController extends Controller
                 ]);
             }
             // ------------------------------------
-            $i = $i + 1;
+            // $i = $i + 1;
+            $i++;
         }
         // ----------------------------------------------------------------
         $success_msg = ($is_document) ? 'Uploded Successfully to Document folder' : 'Uploded Successfully';
@@ -607,7 +608,7 @@ class ProjectController extends Controller
 
             foreach ($scaned_doc_directory as $key => $value) {
                 if ($value == 'Thumbs.db') {
-                    unlink($directory . '01 - Documents\\' . $value);
+                    // unlink($directory . '01 - Documents\\' . $value);
                 } elseif (is_dir($directory . '01 - Documents\\' . $value)) {
                     $project_content[$value] = 'dir_in_doc';
                 } else {
@@ -621,20 +622,20 @@ class ProjectController extends Controller
         ];
 
         // deleting unwanted files
-        foreach ($scanned_directory as  $value) {
-            if ($value == 'Thumbs.db') {
-                unlink($directory . '//' . $value);
-            }
+        // foreach ($scanned_directory as  $value) {
+        //     if ($value == 'Thumbs.db') {
+        //         unlink($directory . '//' . $value);
+        //     }
 
-            $path_info = pathinfo($directory . '//' . $value);
-            if (isset($path_info['extension'])) {
-                $file_extension = $path_info['extension'];
-                $is_unwanted = (($file_extension == 'bak') || ($file_extension == 'dwl') || ($file_extension == 'dwl2') || ($file_extension == 'lsp'));
-                if ($is_unwanted) {
-                    unlink($directory . '//' . $value);
-                }
-            }
-        }
+        //     $path_info = pathinfo($directory . '//' . $value);
+        //     if (isset($path_info['extension'])) {
+        //         $file_extension = $path_info['extension'];
+        //         $is_unwanted = (($file_extension == 'bak') || ($file_extension == 'dwl') || ($file_extension == 'dwl2') || ($file_extension == 'lsp'));
+        //         if ($is_unwanted) {
+        //             unlink($directory . '//' . $value);
+        //         }
+        //     }
+        // }
 
         foreach ($scanned_directory as $key => $value) {
             if (is_dir($directory . '//' . $value)) {

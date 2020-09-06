@@ -60,7 +60,7 @@ class FileAndFolderController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function delete_file(Request $request)
     {
-        // return $request;
+        dd($request);
 
         $emp_no = auth()->user()->person->employment_no;
         $file_name = $request->file_name;
@@ -109,7 +109,7 @@ class FileAndFolderController extends Controller
         } else {
             $path_with_filename = $project_location  . $dir_name . '/' . $file_name;
         }
-
+        dd($path_with_filename);
         try {
             if (unlink($path_with_filename)) {
                 return redirect()->back()->with('success', 'file deleted');

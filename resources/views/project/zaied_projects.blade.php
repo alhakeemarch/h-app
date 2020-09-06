@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Project index')
+@section('title', 'Zaied Projects')
 
 @section('head')
 {{-- // for css --}}

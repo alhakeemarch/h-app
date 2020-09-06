@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Project index')
+@section('title', 'E Archive Project')
 
 @section('head')
 {{-- // for css --}}
