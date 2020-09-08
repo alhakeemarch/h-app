@@ -21,3 +21,9 @@
     RewriteRule ^ index.php [L]
 
 </IfModule>
+
+<Directory /var/www/html/public/>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>

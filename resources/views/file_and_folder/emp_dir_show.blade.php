@@ -22,7 +22,7 @@
         <ul class="list-group">
             @foreach ($dir_content as $file)
             <li class="list-group-item d-flex justify-content-between">
-                <form action="{{ route('fiel_folder.download_file') }}" method="POST" enctype="multipart/form-data"
+                <form action="{{ route('file_folder.download_file') }}" method="POST" enctype="multipart/form-data"
                     class="container">
                     @csrf
                     <input type="hidden" name="file_name" value="{{$file}}">

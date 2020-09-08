@@ -46,7 +46,7 @@
                     <td class="saudi_emps_national_id">{{$id}}</td>
                     <td class="saudi_emps_name">{{$name}}</td>
                     <td scope="link">
-                        <form action="{{ route('fiel_folder.show_emp_dir') }}" method="get">
+                        <form action="{{ route('file_folder.show_emp_dir') }}" method="get">
                             @csrf
                             <input type="hidden" name="id" value="{{$id}}">
                             <input type="hidden" name="name" value="{{$name}}">
@@ -99,7 +99,7 @@
                     <td class="saudi_emps_old_national_id">{{$id}}</td>
                     <td class="saudi_emps_old_name">{{$name}}</td>
                     <td scope="link">
-                        <form action="{{ route('fiel_folder.show_emp_dir') }}" method="get">
+                        <form action="{{ route('file_folder.show_emp_dir') }}" method="get">
                             @csrf
                             <input type="hidden" name="id" value="{{$id}}">
                             <input type="hidden" name="name" value="{{$name}}">
@@ -152,7 +152,7 @@
                     <td class="non_saudi_emps_national_id">{{$id}}</td>
                     <td class="non_saudi_emps_name">{{$name}}</td>
                     <td scope="link">
-                        <form action="{{ route('fiel_folder.show_emp_dir') }}" method="get">
+                        <form action="{{ route('file_folder.show_emp_dir') }}" method="get">
                             @csrf
                             <input type="hidden" name="id" value="{{$id}}">
                             <input type="hidden" name="name" value="{{$name}}">
@@ -205,7 +205,7 @@
                     <td class="non_saudi_emps_old_national_id">{{$id}}</td>
                     <td class="non_saudi_emps_old_name">{{$name}}</td>
                     <td scope="link">
-                        <form action="{{ route('fiel_folder.show_emp_dir') }}" method="get">
+                        <form action="{{ route('file_folder.show_emp_dir') }}" method="get">
                             @csrf
                             <input type="hidden" name="id" value="{{$id}}">
                             <input type="hidden" name="name" value="{{$name}}">
@@ -258,7 +258,7 @@
                     <td class="other_national_id">{{$id}}</td>
                     <td class="other_name">{{$name}}</td>
                     <td scope="link">
-                        <form action="{{ route('fiel_folder.show_emp_dir') }}" method="get">
+                        <form action="{{ route('file_folder.show_emp_dir') }}" method="get">
                             @csrf
                             <input type="hidden" name="id" value="{{$id}}">
                             <input type="hidden" name="name" value="{{$name}}">
