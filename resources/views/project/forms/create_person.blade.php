@@ -3,32 +3,19 @@
 @section('content')
 
 <div class="card">
-    <div class="container my-5">
+    <h5 class="card-header">{{ __('registration') }} of {{__('customer')}}</h5>
+    <div class="card-body">
         <form class="form-group" action="{{ action('ProjectController@new_project') }}" accept-charset="UTF-8"
             method="POST">
             @csrf
             <input type="hidden" name="create_person" value="1">
-            <div class="my-2">
-                @include('person.forms.nationaltiy')
-            </div>
-            <div class="my-2">
-                @include('person.forms.ar_name')
-            </div>
-            <div class="my-2">
-                @include('person.forms.contact')
-            </div>
+            @include('person.forms.q_form')
             <button class=" btn btn-info btn-block" type="submit">
                 next
             </button>
+        </form>
     </div>
-    </form>
 </div>
-
-
-
-</div>
-
-
 
 <!-- ///////////////////////////////-->
 @if ($errors->any())
