@@ -315,17 +315,9 @@ Route::any('/user/userLogin', 'Auth\LoginController@check')->name('login.check')
 // -----------------------------------------------------------------------------------------------------------------
 
 Route::group(['prefix' => 'project'], function () {
-    // Route::any('uploadFile', 'ProjectController@uploadFile')->name('project.uploadFile');
-    // Route::any('runningProjects', 'ProjectController@runningProjects')->name('project.runningProjects');
-    // Route::any('finshedProjects', 'ProjectController@finshedProjects')->name('project.finshedProjects');
-    // Route::any('zaidProjects', 'ProjectController@zaidProjects')->name('project.zaidProjects');
-    // Route::any('earchive', 'ProjectController@earchive')->name('project.earchive');
-    // Route::any('Safety', 'ProjectController@Safety')->name('project.Safety');
-    // Route::any('central_area', 'ProjectController@central_area')->name('project.central_area');
-    // Route::any('all_projects', 'ProjectController@all_projects')->name('project.all_projects');
-    // Route::any('forlder_files', 'ProjectController@forlder_files')->name('project.forlder_files');
-    // Route::any('download_file', 'ProjectController@download_file')->name('project.download_file');
     Route::any('search', 'ProjectController@search')->name('project.search');
+    Route::any('new_project', 'ProjectController@new_project')->name('project.new_project');
+    Route::any('contracts', 'ProjectController@contracts')->name('project.contracts');
 });
 
 Route::group(['prefix' => 'file_folder'], function () {
@@ -339,6 +331,7 @@ Route::group(['prefix' => 'file_folder'], function () {
     Route::any('all_projects', 'FileAndFolderController@all_projects')->name('file_folder.all_projects');
     Route::any('forlder_files', 'FileAndFolderController@forlder_files')->name('file_folder.forlder_files');
     Route::any('download_file', 'FileAndFolderController@download_file')->name('file_folder.download_file');
+    Route::any('showUplodeView', 'FileAndFolderController@showUplodeView')->name('file_folder.showUplodeView');
     // Route::any('search', 'FileAndFolderController@search')->name('file_folder.search');
     Route::any('delete_file', 'FileAndFolderController@delete_file')->name('file_folder.delete_file');
     Route::any('emps_dir', 'FileAndFolderController@emps_dir')->name('file_folder.emps_dir');

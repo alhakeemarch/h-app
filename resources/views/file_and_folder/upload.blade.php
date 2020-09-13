@@ -12,7 +12,7 @@
         Upload File To Server
     </div>
 
-    <form action="{{ route('project.uploadFile') }}" method="POST" enctype="multipart/form-data" class="container">
+    <form action="{{ route('file_folder.uploadFile') }}" method="POST" enctype="multipart/form-data" class="container">
         @csrf
         <input name="project_path" type="text" value="{{$project_path}}" hidden readonly>
         <div class="row">
@@ -160,7 +160,7 @@
     {{-- to add space only  --}}
 </div>
 
-@include('project.folder_files')
+@include('file_and_folder.folder_files')
 
 
 @endsection

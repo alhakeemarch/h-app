@@ -44,9 +44,9 @@ $is_hidden = false;
 }
 // ------------------------------------------
 if ($is_readonly ?? false) {
-$is_readonly = (strtolower($is_readonly)=='true') ? true : false ;
+$is_readonly = (strtolower($is_readonly)=='true' &&(!auth()->user()->is_admin)) ? true : false ;
 } else {
-$is_readonly = (!auth()->user()->is_admin) ? true : false;
+$is_readonly = false;
 }
 // ------------------------------------------
 if ($is_disabled ?? false) {

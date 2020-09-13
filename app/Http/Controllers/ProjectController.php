@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use App\District;
 use App\FileSpecialty;
 use App\MunicipalityBranch;
@@ -189,6 +190,104 @@ class ProjectController extends Controller
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    public function new_project(Request $request)
+    {
+        // step 1 to check if the customer is already registered
+        if ($request->method() === "GET") {
+            return view('project.forms.check_n_id');
+        }
+        $person = new Person;
+        // step 2 to 
+        if ($request->check_n_id_form) {
+            $request->validate([
+                'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+            ]);
+            $found_person = $person->where('national_id', $request->national_id)->first();
+            if (!$found_person) {
+                return view('project.forms.create_person')->with([
+                    'national_id' => $request->national_id,
+                    'person' => $person,
+                ]);
+            } else {
+                return view('project.forms.check_plot_no')->with([
+                    'person' => $found_person,
+                ]);
+            }
+        }
+        // step 3 to 
+        if ($request->create_person) {
+            $validatedData = collect(PersonController::validatePerson($request));
+            $nationality = Country::where('code_2chracters', $validatedData['nationality_code'])->first();
+            if ($nationality) {
+                $validatedData->put('nationality_ar', $nationality->ar_name);
+                $validatedData->put('nationality_en', $nationality->en_name);
+            }
+            $created_by_id = auth()->user()->id;
+            $created_by_name = auth()->user()->user_name;
+            if (!$created_by_id and !$created_by_name) {
+                return abort(403);
+            }
+            $validatedData->put('created_by_id', $created_by_id);
+            $validatedData->put('created_by_name', $created_by_name);
+            $validatedData->put('is_customer', true);
+
+            $person = $person->create($validatedData->all());
+            $person->save();
+            return view('project.forms.check_plot_no')->with([
+                'person' => $person,
+            ]);
+        }
+        // step 4 to 
+        if ($request->check_deed_form) {
+            $request->validate([
+                'deed_no' => 'required',
+            ]);
+            $found_plot = Plot::where('deed_no', $request->deed_no)->first();
+            $found_person = $person->where('national_id', $request->national_id)->first();
+            // return $found_plot;
+            if (!$found_plot) {
+                return view('project.forms.create_plot')->with([
+                    'new_deed_no' => $request->deed_no,
+                    'plot' => new Plot,
+                    'project' => new Project,
+                    'person' => $found_person,
+                ]);
+            } else {
+                return redirect()->route('project.contracts', [
+                    'person' => $found_person,
+                    'plot' => $found_plot,
+                ]);
+            }
+        }
+        // step 5 to 
+        if ($request->create_plot) {
+            $found_person = $person->where('national_id', $request->national_id)->first();
+            $validatedData = collect(PlotController::validatePlot($request));
+            $created_by_id = auth()->user()->id;
+            $created_by_name = auth()->user()->user_name;
+            if (!$created_by_id and !$created_by_name) {
+                return abort(403);
+            }
+            $validatedData->put('created_by_id', $created_by_id);
+            $validatedData->put('created_by_name', $created_by_name);
+            $plot = Plot::create($validatedData->all());
+            return redirect()->route('project.contracts', [
+                'person' => $found_person,
+                'plot' => $plot,
+            ]);
+        }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function contracts(Request $request)
+    {
+        $person = Person::findOrFail($request['person']);
+        $plot = Plot::findOrFail($request['plot']);
+        return view('project.contracts')->with([
+            'person' => $person,
+            'plot' => $plot,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function search(Request $request)
     {
         if ($request->method() === "GET") {

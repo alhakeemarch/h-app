@@ -1,4 +1,4 @@
-<form action="{{route('fiel_folder.delete_file')}}" method="post" class="" enctype="multipart/form-data">
+<form action="{{route('file_folder.delete_file')}}" method="post" class="" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="file_name" value="{{$file}}">
     <input type="hidden" name="project_no" value="{{$project_no}}">

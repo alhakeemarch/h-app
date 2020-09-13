@@ -574,8 +574,9 @@ https://laracasts.com/discuss/channels/general-discussion/maximum-execution-time
 
 
 ================================
+required title -----> to add
     <x-input name='asd' title="">
-        <x-slot name='type'>text, textarea, select</x-slot>
+        <x-slot name='type'>text, textarea, tel, select</x-slot>
         <x-slot name='title'>cool tital</x-slot>
         <x-slot name='tooltip'>cool tooltip</x-slot>
         <x-slot name='placeholder'>cool placeholder</x-slot>

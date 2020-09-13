@@ -272,7 +272,7 @@ class PersonController extends Controller
             'phone' => 'nullable',
             'phone_extension' => 'nullable',
             'email' => 'nullable|email',
-            'personal_email' => 'string|nullable',
+            'personal_email' => 'email|nullable',
             'mobile2' => 'string|nullable',
             'mobile3' => 'string|nullable',
             // ----------------------------------------------------

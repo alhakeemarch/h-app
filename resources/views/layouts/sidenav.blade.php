@@ -102,23 +102,23 @@
             customers
         </div>
     </a>
-    @if (auth()->user()->is_admin)
-    <a class="" href="{{route ('project.index')}}">
-        {{-- <div class="sidebar-item {{ (request()->is('project*')) ? 'active' : '' }}"> --}}
-        <div class="sidebar-item">
-            projects
-        </div>
-    </a>
-    @endif
-    {{-- <a class="" href="{{route ('project.db_projects')}}">
-    <div class="sidebar-item {{ (request()->is('project/db_projects*')) ? 'active' : '' }}">
-        run/fin/e_ar/db
-    </div>
-    </a> --}}
+
 
     <a href="{{route ('plot.index')}}">
         <div class="sidebar-item {{ (request()->is('plot*')) ? 'active' : '' }}">
             plots
+        </div>
+    </a>
+    <a class="" href="{{route ('project.new_project')}}">
+        <div class="sidebar-item {{ (request()->is('new_project*')) ? 'active' : '' }}">
+            new project
+        </div>
+    </a>
+    @if (auth()->user()->is_admin)
+    <a class="" href="{{route ('project.index')}}">
+        <div class="sidebar-item {{ (request()->is('project*')) ? 'active' : '' }}">
+
+            projects
         </div>
     </a>
     <a href="{{route ('contract.index')}}">
@@ -136,6 +136,7 @@
             tasks
         </div>
     </a>
+    @endif
 </div>
 {{-- --------------------------------------------------------------------------------------------- --}}
 <div class=" sidebar-group">
@@ -146,6 +147,7 @@
             <i class="fas fa-caret-down d-none"></i>
         </div>
     </a>
+    @if(auth()->user()->is_admin)
     <a class="" href="{{route ('country.index')}}">
         <div class="sidebar-item {{ (request()->is('country*')) ? 'active' : '' }}">
             countries
@@ -236,5 +238,6 @@
             letter type
         </div>
     </a>
+    @endif
 </div>
 {{-- --------------------------------------------------------------------------------------------- --}}

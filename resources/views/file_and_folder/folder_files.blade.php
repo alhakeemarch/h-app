@@ -24,7 +24,7 @@
     @elseif (!($description === 'main_dir'||$description === 'doc_dir'))
     <div class="list-group-item d-flex justify-content-between">
 
-        <form action="{{ route('file_and_folderdownload_file') }}" method="POST" class=""
+        <form action="{{ route('file_folder.download_file') }}" method="POST" class=""
             enctype="multipart/form-description" class="container">
             @csrf
             <input type="hidden" name="file_name" value="{{$file}}">
@@ -58,7 +58,7 @@
         @if (substr($description,0,3) == 'all')
         <li class="list-group-item d-flex justify-content-between">
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         </li>
@@ -77,7 +77,7 @@
         @elseif(substr($description,0,3) == 'doc'||substr($description,0,3) =='img'||substr($description,0,3) == 'row')
         @if (!($description === 'doc_dir'))
         <li class="list-group-item d-flex justify-content-between">
-            <form action="{{ route('file_and_folderdownload_file') }}" method="POST" class=""
+            <form action="{{ route('file_folder.download_file') }}" method="POST" class=""
                 enctype="multipart/form-description" class="container">
                 @csrf
                 <input type="hidden" name="file_name" value="{{$file}}">
@@ -108,7 +108,7 @@
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'con')
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif
@@ -120,7 +120,7 @@
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'pre')
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif
@@ -132,7 +132,7 @@
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'arc')
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif
@@ -144,7 +144,7 @@
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'str')
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif
@@ -156,7 +156,7 @@
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,2) == 'dr'||substr($description,0,2) == 'ws' )
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif
@@ -168,7 +168,7 @@
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'hva' )
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif
@@ -180,7 +180,7 @@
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'ele')
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif
@@ -192,7 +192,7 @@
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,2) == 'ff' || substr($description,0,2) == 'fa'|| substr($description,0,3) == 'eva')
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif
@@ -204,7 +204,7 @@
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'tou')
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif
@@ -216,7 +216,7 @@
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'sur')
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif
@@ -228,7 +228,7 @@
         @foreach ($project_content as $file => $description)
         @if ($description == 'not_uplod')
         <li class="list-group-item d-flex justify-content-between">
-            @include('file_and_folderdownload_file_form')
+            @include('file_and_folder.download_file_form')
             @include('file_and_folder.delete_file_form')
         </li>
         @endif

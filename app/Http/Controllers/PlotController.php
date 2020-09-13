@@ -201,7 +201,7 @@ class PlotController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      */
-    public function validatePlot($request)
+    public static function validatePlot($request)
     {
 
         return $request->validate([

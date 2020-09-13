@@ -1,4 +1,4 @@
-<form action="{{ route('fiel_folder.download_file') }}" method="POST" class="" enctype="multipart/form-data"
+<form action="{{ route('file_folder.download_file') }}" method="POST" class="" enctype="multipart/form-data"
     class="container">
     @csrf
     <input type="hidden" name="file_name" value="{{$file}}">
