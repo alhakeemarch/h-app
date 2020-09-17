@@ -1,10 +1,17 @@
+@php
+if (isset ($is_read_only)) {
+$is_read_only = ($is_read_only== true) ? true : false ;
+}else {
+$is_read_only = false;
+}
+@endphp
 <h5 class="card-header text-white bg-dark my-2">{{ __('plan information') }} </h5>
 <div class="form-group row ">
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md form-group">
         <label for="municipality_branch_id">{{__('municipality branch')}}
             <span class="small text-muted">({{__('optional')}})</span> :</label>
-        <select class="form-control" name="municipality_branch_id">
+        <select class="form-control" name="municipality_branch_id" @if($is_read_only)readonly @endif>
             <option selected disabled>choose..</option>
             @foreach ($municipality_branchs as $municipality_branch)
             <option value="{{$municipality_branch->id}}" @if($plot->municipality_branch_id == $municipality_branch->id)
@@ -19,7 +26,7 @@
     <div class="col-md form-group">
         <label for="district_id">{{__('district')}}
             <span class="small text-muted">({{__('optional')}})</span> :</label>
-        <select class="form-control" name="district_id">
+        <select class="form-control" name="district_id" @if($is_read_only)readonly @endif>
             <option selected disabled>choose..</option>
             @foreach ($districts as $district)
             <option value="{{$district->id}}" @if($plot->district_id == $district->id)
@@ -31,10 +38,12 @@
         </select>
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
+    <p class="col-md form-group alert alert-warning">الحي - Naber</p>
+    {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md form-group">
         <label for="plan_id">{{__('plan')}}
             <span class="small text-muted">({{__('optional')}})</span> :</label>
-        <select class="form-control" name="plan_id">
+        <select class="form-control" name="plan_id" @if($is_read_only)readonly @endif>
             <option selected disabled>choose..</option>
             @foreach ($plans as $plan)
             <option value="{{$plan->id}}" @if($plot->plan_id == $plan->id)
@@ -46,10 +55,11 @@
         </select>
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
+    @if (auth()->user()->is_admin)
     <div class="col-md form-group">
         <label for="street_id">{{__('street')}}
             <span class="small text-muted">({{__('optional')}})</span> :</label>
-        <select class="form-control" name="street_id">
+        <select class="form-control" name="street_id" @if($is_read_only)readonly @endif>
             <option selected disabled>choose..</option>
             @foreach ($streets as $street)
             <option value="{{$street->id}}" @if($plot->street_id == $street->id)
@@ -60,5 +70,6 @@
             @endforeach
         </select>
     </div>
+    @endif
     {{-- --------------------------------------------------------------------------------------------- --}}
 </div>

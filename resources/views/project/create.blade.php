@@ -1,86 +1,48 @@
 @extends('layouts.app')
-@section('title', 'Create Porject')
+@section('title', 'new project 5/5')
 @section('content')
 
 <div class="card">
-    <h5 class="card-header">{{ __('adding new project') }}</h5>
+    <h5 class="card-header">{{ __('crating project') }}</h5>
     <div class="card-body">
-        <form action="{{ route ('project.store') }}" method="POST">
-            @csrf
-            <div class="row form-group">
-                <x-input name='person_name' title="">
-                    <x-slot name='type'>text</x-slot>
-                    <x-slot name='title'>Owner Name</x-slot>
-                    <x-slot name='is_required'>true</x-slot>
-                    <x-slot name='is_readonly'>true</x-slot>
-                    <x-slot name='input_value'>
-                        {{$person->ar_name1}} {{$person->ar_name2}} {{$person->ar_name3}} {{$person->ar_name5}}</x-slot>
-                </x-input>
-                <x-input name='national_id' title="">
-                    <x-slot name='type'>text</x-slot>
-                    <x-slot name='title'>Owner National ID</x-slot>
-                    <x-slot name='is_required'>true</x-slot>
-                    <x-slot name='is_readonly'>true</x-slot>
-                    <x-slot name='input_value'>{{$person->national_id}}</x-slot>
-                </x-input>
-                <x-input name='mobile' title="">
-                    <x-slot name='type'>text</x-slot>
-                    <x-slot name='title'>Owner National ID</x-slot>
-                    <x-slot name='is_required'>true</x-slot>
-                    <x-slot name='is_readonly'>true</x-slot>
-                    <x-slot name='input_value'>{{$person->mobile}}</x-slot>
-                </x-input>
-            </div>
-            <div class="row form-group">
-                <x-input name='plot_no' title="">
-                    <x-slot name='type'>text</x-slot>
-                    <x-slot name='title'>Plot No</x-slot>
-                    <x-slot name='is_required'>true</x-slot>
-                    <x-slot name='is_readonly'>true</x-slot>
-                    <x-slot name='input_value'>{{$plot->plot_no}} </x-slot>
-                </x-input>
-                <x-input name='deed_no' title="">
-                    <x-slot name='type'>text</x-slot>
-                    <x-slot name='title'>plote Deed NO</x-slot>
-                    <x-slot name='is_required'>true</x-slot>
-                    <x-slot name='is_readonly'>true</x-slot>
-                    <x-slot name='input_value'>{{$plot->deed_no}}</x-slot>
-                </x-input>
-                <x-input name='area' title="">
-                    <x-slot name='type'>text</x-slot>
-                    <x-slot name='title'>plote aria</x-slot>
-                    <x-slot name='is_required'>true</x-slot>
-                    <x-slot name='is_readonly'>true</x-slot>
-                    <x-slot name='input_value'>{{$plot->area}}</x-slot>
-                </x-input>
-            </div>
-            <div class="row text-center">
-                <div class="col-6">
-                    <button type="submet" class="btn btn-info w-75">
-                        <i class="fas fa-check"></i>
-                        <span class="d-none d-md-inline-block">&nbsp; create</span>
-                    </button>
-                </div>
-                <div class="col-6">
-                    <a href="{{ URL::previous() }}" class="btn btn-info w-75">
-                        <i class="fas fa-undo-alt"></i>
-                        <span class="d-none d-md-inline-block">&nbsp; cancel</span>
-                    </a>
-                </div>
-            </div>
-
+        @if ($project->id)
+        <div class=" alert alert-info">
+            <p>this deed is allredy regestered for onother project</p>
+            <p>هذا الصك مسجل لمشروع سابق</p>
+        </div>
+        <form action="{{route('project.show',$project)}}" method="get">
+            <button class="btn btn-info btn-block my-3">{{__('show')}} {{__('the project')}}</button>
         </form>
-    </div>
-    <div class="card-footer text-muted text-center ">
-        © Adding New project Form..
-    </div>
-    <!-- ///////////////////////////////-->
-    @if ($errors->any())
-    @include('layouts.errors')
-    @endif
-    <!-- ///////////////////////////////-->
+        @else
+        <form class="form-group" action="{{ action('ProjectController@store') }}" accept-charset="UTF-8" method="POST">
+            @csrf
+            {{-- --------------------------------------------------------------------------- --}}
+            <input type="hidden" name="create_plot" value="1">
+            {{-- --------------------------------------------------------------------------- --}}
+            @include('project.forms.customer_info')
+            {{-- --------------------------------------------------------------------------- --}}
+            <input type="hidden" name="national_id" value="{{$person->national_id}}">
+            {{-- --------------------------------------------------------------------------- --}}
+            <hr>
+            {{-- --------------------------------------------------------------------------- --}}
+            @include('plot.forms.deed_info')
+            @include('plot.forms.plan_info')
+            @include('plot.forms.regulations')
+            @include('plot.forms.coordinates')
+            @include('project.forms.project_info')
+            {{-- --------------------------------------------------------------------------- --}}
+            <button type="submit" class="btn btn-info btn-block my-3">{{__('save')}}</button>
+        </form>
+        @endif
 
+    </div>
 </div>
-<!-- end card-body -->
+
+
+<!-- ///////////////////////////////-->
+@if ($errors->any())
+@include('layouts.errors')
+@endif
+<!-- ///////////////////////////////-->
 
 @endsection

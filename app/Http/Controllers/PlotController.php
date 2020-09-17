@@ -38,7 +38,7 @@ class PlotController extends Controller
      */
     public function index(Plot $plot)
     {
-        $plots = $plot->all();
+        $plots = $plot->all()->reverse();
         return view('plot.index')->with('plots', $plots);
         //
     }
@@ -175,7 +175,7 @@ class PlotController extends Controller
         }
     }
     // ---------------------------------------------------------------------------------------------
-    public function formsData()
+    public static function formsData()
     {
         $districts = District::all();
         $municipality_branchs = MunicipalityBranch::all();

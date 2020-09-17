@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class receiptOut extends Model
+class ReceiptOut extends Model
 {
     //
 }

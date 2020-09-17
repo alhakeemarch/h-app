@@ -175,9 +175,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        // Elibyy\TCPDF\ServiceProvider::class,
-
-
+        Barryvdh\DomPDF\ServiceProvider::class, // by fa
+        // Elibyy\TCPDF\ServiceProvider::class, // by fa
     ],
 
     /*
@@ -226,7 +225,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        // 'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
+        // 'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,  // by fa
+        'PDF' => Barryvdh\DomPDF\Facade::class,  // by fa
 
     ],
 

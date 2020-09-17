@@ -12,6 +12,7 @@ use App\Person;
 use App\Plan;
 use App\Plot;
 use App\Project;
+use App\Rules\ValidDate;
 use App\Rules\ValidFileSize;
 use App\Rules\ValidFileType;
 use App\Street;
@@ -43,7 +44,7 @@ class ProjectController extends Controller
     {
         if (!auth()->user()->is_admin) {
             return redirect()->action(
-                'ProjectController@runningProjects'
+                'FileAndFolderController@runningProjects'
             );
         }
 
@@ -63,14 +64,20 @@ class ProjectController extends Controller
      */
     public function create(Request $request)
     {
-        // return $request;
-        $person = Person::where('id', $request->person_id)->first();
-        $plot = Plot::where('id', $request->plot_id)->first();
-
-        return view('project.create', [
-            'person' => $person,
+        $person = Person::findOrFail($request['person']);
+        $plot = Plot::findOrFail($request['plot']);
+        // return $plot;
+        $project = new Project;
+        $found_project = $project->where('deed_no', $plot->deed_no)->first();
+        $project = ($found_project) ? $found_project : $project;
+        $formsData = array_merge(PlotController::formsData(), [
+            'new_deed_no' => $plot->deed_no,
             'plot' => $plot,
+            'project' => $project,
+            'person' => $person,
+            'is_read_only' => true,
         ]);
+        return view('project.create')->with($formsData);
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -81,8 +88,21 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
-        //
+        $validated_project = collect($this->validate_project($request));
+        $validated_plot = PlotController::validatePlot($request);
+        // $validated_person = PersonController::validatePerson($request);
+        // dd($validated_project, $validated_plot, $request->all());
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->user_name;
+        if (!$created_by_id and !$created_by_name) {
+            return abort(403);
+        }
+        $validated_project->put('created_by_id', $created_by_id);
+        $validated_project->put('created_by_name', $created_by_name);
+
+        $project = Project::create($validated_project->all());
+
+        return redirect()->action('ProjectController@show', $project->id);
     }
 
     /**
@@ -136,7 +156,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        // return $project;
+        $project->delete();
+        return redirect()->action('ProjectController@index');
     }
 
     public function check(Request $request, Project $project)
@@ -184,7 +206,7 @@ class ProjectController extends Controller
 
         return redirect()->action(
             'ProjectController@create',
-            ['person_id' => $found_person, 'plot_id' => $found_plot]
+            ['person' => $found_person, 'plot' => $found_plot]
         );
     }
 
@@ -197,7 +219,7 @@ class ProjectController extends Controller
             return view('project.forms.check_n_id');
         }
         $person = new Person;
-        // step 2 to 
+        // step 2 to check if the customer is already registered
         if ($request->check_n_id_form) {
             $request->validate([
                 'national_id' => 'required|numeric|starts_with:1,2|digits:10',
@@ -214,7 +236,7 @@ class ProjectController extends Controller
                 ]);
             }
         }
-        // step 3 to 
+        // step 3 to regester new customer 
         if ($request->create_person) {
             $validatedData = collect(PersonController::validatePerson($request));
             $nationality = Country::where('code_2chracters', $validatedData['nationality_code'])->first();
@@ -237,29 +259,30 @@ class ProjectController extends Controller
                 'person' => $person,
             ]);
         }
-        // step 4 to 
+        // step 4 to check if the plot is already registered
         if ($request->check_deed_form) {
             $request->validate([
                 'deed_no' => 'required',
             ]);
             $found_plot = Plot::where('deed_no', $request->deed_no)->first();
             $found_person = $person->where('national_id', $request->national_id)->first();
-            // return $found_plot;
+
             if (!$found_plot) {
-                return view('project.forms.create_plot')->with([
+                $formsData = array_merge(PlotController::formsData(), [
                     'new_deed_no' => $request->deed_no,
                     'plot' => new Plot,
                     'project' => new Project,
                     'person' => $found_person,
                 ]);
+                return view('project.forms.create_plot')->with($formsData);
             } else {
-                return redirect()->route('project.contracts', [
+                return redirect()->route('project.create', [
                     'person' => $found_person,
                     'plot' => $found_plot,
                 ]);
             }
         }
-        // step 5 to 
+        // step 5 to create a new plot
         if ($request->create_plot) {
             $found_person = $person->where('national_id', $request->national_id)->first();
             $validatedData = collect(PlotController::validatePlot($request));
@@ -271,7 +294,7 @@ class ProjectController extends Controller
             $validatedData->put('created_by_id', $created_by_id);
             $validatedData->put('created_by_name', $created_by_name);
             $plot = Plot::create($validatedData->all());
-            return redirect()->route('project.contracts', [
+            return redirect()->route('project.create', [
                 'person' => $found_person,
                 'plot' => $plot,
             ]);
@@ -280,12 +303,7 @@ class ProjectController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function contracts(Request $request)
     {
-        $person = Person::findOrFail($request['person']);
-        $plot = Plot::findOrFail($request['plot']);
-        return view('project.contracts')->with([
-            'person' => $person,
-            'plot' => $plot,
-        ]);
+        #
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function search(Request $request)
@@ -307,6 +325,116 @@ class ProjectController extends Controller
         return view('project.index')->with([
             'projects' => $projects,
             'allProjectsCount' => $allProjectsCount,
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function validate_project(Request $request)
+    {
+        return $request->validate([
+            'project_no' => 'unique:projects|nullable',
+            'project_name_ar' => 'string|required', // required
+            'project_name_en' => 'string|nullable',
+            // ----------------------------------------------------
+            'owner_id' => 'numeric|nullable',
+            'owner_national_id' => 'numeric|starts_with:1,2|digits:10|nullable',
+            'owner_type' => ['nullable', 'string', //new ValidGregorianDate
+            ],
+            'owner_name_ar' => 'string|required', // required
+            'owner_name_en' => 'string|nullable',
+            'owner_main_mobile_no' => 'numeric|starts_with:0,9|digits:10,12,14|required', // required
+            'extra_owners_list' => 'string|nullable',
+            'extra_owners_info' => 'string|nullable',
+            // ----------------------------------------------------
+            'representative_id' => 'numeric|nullable',
+            'representative_id' => 'numeric|nullable',
+            'representative_type' => ['nullable', 'string', //new ValidGregorianDate
+            ], // وكيل شرعي - مفوض - ناظر الوقف - ولي على قصر - 
+            'representative_name_ar' => 'string|nullable',
+            'representative_name_en' => 'string|nullable',
+            'representative_main_mobile_no' => 'numeric|starts_with:0,9|digits:10,12,14|nullable',
+            'representative_main_mobile_no' => 'numeric|starts_with:0,9|digits:10,12,14|nullable',
+            'representative_authorization_type' => ['nullable', 'string', //new ValidGregorianDate
+            ], // وكالة - تفويض - صط نظارة - صك ولاية
+            'representative_authorization_no' => 'string|nullable',
+            'representative_authorization_issue_date' => ['nullable', 'string', new ValidDate],
+            'representative_authorization_issue_place' => 'string|nullable',
+            'representative_authorization_expire_date' => ['nullable', 'string', new ValidDate],
+            'extra_representatives_list' => 'string|nullable',
+            // ----------------------------------------------------
+            'project_status' => 'string|nullable',
+            'project_type' => 'string|nullable',
+            'project_assign_to_user' => 'string|nullable',
+            'project_arch_hight' => 'string|nullable',
+            'project_str_hight' => 'string|nullable',
+            // ----------------------------------------------------
+            'byanat_almawqi_no' => 'string|nullable',
+            'byanat_almawqi_issue_date' => ['nullable', 'string', new ValidDate],
+            'qarar_masahe_no' => 'string|nullable',
+            'qarar_masahe_issue_date' => ['nullable', 'string', new ValidDate],
+            'tanzeem_plan_no' => 'string|nullable',
+            'tanzeem_plan_issue_date' => ['nullable', 'string', new ValidDate],
+            'old_rokhsa_no' => 'string|nullable',
+            'old_rokhsa_issue_date' => ['nullable', 'string', new ValidDate],
+            'last_rokhsa_no' => 'string|nullable',
+            'last_rokhsa_issue_date' => ['nullable', 'string', new ValidDate],
+            'other_doc_details' => 'string|nullable',
+            // ----------------------------------------------------
+            'project_manager' => 'string|nullable',
+            'project_coordinator' => 'string|nullable',
+            // ----------------------------------------------------
+            'arch_designed_by' => 'string|nullable',
+            'elevation_designed_by' => 'string|nullable',
+            'str_designed_by' => 'string|nullable',
+            'san_designed_by' => 'string|nullable',
+            'elec_designed_by' => 'string|nullable',
+            'fire_fighting_designed_by' => 'string|nullable',
+            'fire_alarm_designed_by' => 'string|nullable',
+            'fire_escape_designed_by' => 'string|nullable',
+            'tourism_designed_by' => 'string|nullable',
+            'interior_designed_by' => 'string|nullable',
+            'landscape_designed_by' => 'string|nullable',
+            'surveyed_by' => 'string|nullable',
+            // ----------------------------------------------------
+            'main_draftsman' => 'string|nullable',
+            'draftsman_1' => 'string|nullable',
+            'draftsman_1_mission' => 'string|nullable',
+            'draftsman_2' => 'string|nullable',
+            'draftsman_2_mission' => 'string|nullable',
+            'draftsman_3' => 'string|nullable',
+            'draftsman_3_mission' => 'string|nullable',
+            'draftsman_4' => 'string|nullable',
+            'draftsman_4_mission' => 'string|nullable',
+            'draftsman_5' => 'string|nullable',
+            'draftsman_5_mission' => 'string|nullable',
+            'draftsman_6' => 'string|nullable',
+            'draftsman_6_mission' => 'string|nullable',
+            'draftsman_7' => 'string|nullable',
+            'draftsman_7_mission' => 'string|nullable',
+            'draftsman_8' => 'string|nullable',
+            'draftsman_8_mission' => 'string|nullable',
+            'draftsman_9' => 'string|nullable',
+            'draftsman_9_mission' => 'string|nullable',
+            'extra_draftsman_details' => 'string|nullable',
+            // ----------------------------------------------------
+            'contracts_list_names' => 'string|nullable',
+            'total_project_price' => 'numeric|nullable',
+            'total_project_cost' => 'numeric|nullable',
+            // ----------------------------------------------------
+            'municipality_branche_id' => 'numeric|nullable',
+            'neighbor_id' => 'numeric|nullable',
+            'plan_id' => 'numeric|nullable',
+            'district_id' => 'numeric|nullable',
+            'street_id' => 'numeric|nullable',
+            'plot_id' => 'numeric|nullable',
+            'plot_no' => 'string|nullable',
+            'deed_id' => 'numeric|nullable',
+            'deed_no' => 'unique:projects|string|nullable',
+            'total_area' => 'numeric|nullable',
+            'project_location' => 'string|nullable',
+            // ----------------------------------------------------
+            'notes' => 'string|nullable',
+            'private_notes' => 'string|nullable',
+            'created_at_note' => 'string|nullable',
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------

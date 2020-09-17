@@ -1,10 +1,17 @@
+@php
+if (isset ($is_read_only)) {
+$is_read_only = ($is_read_only== true) ? true : false ;
+}else {
+$is_read_only = false;
+}
+@endphp
 <h5 class="card-header text-white bg-dark my-2">{{ __('building regulations') }} </h5>
 <div class="form-group row ">
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md form-group">
-        <label for="allowed_building_ratio">{{__('building ratio')}}
+        <label for="allowed_building_ratio">{{__('allowed building ratio')}}
             <span class="small text-muted">({{__('optional')}})</span>:</label>
-        <select class="form-control" name="allowed_building_ratio">
+        <select class="form-control" name="allowed_building_ratio" @if($is_read_only)readonly @endif>
             <option selected disabled>choose..</option>
             @foreach ($building_ratios as $building_ratio)
             <option value="{{$building_ratio->id}}" @if($plot->allowed_building_ratio == $building_ratio->id)
@@ -17,9 +24,9 @@
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md form-group">
-        <label for="allowed_building_height">{{__('building height')}}
+        <label for="allowed_building_height">{{__('allowed building height')}}
             <span class="small text-muted">({{__('optional')}})</span>:</label>
-        <select class="form-control" name="allowed_building_height">
+        <select class="form-control" name="allowed_building_height" @if($is_read_only)readonly @endif>
             <option selected disabled>choose..</option>
             @foreach ($building_heights as $building_height)
             <option value="{{$building_height->id}}" @if($plot->allowed_building_height == $building_height->id)
@@ -32,9 +39,9 @@
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md form-group">
-        <label for="allowed_usage">{{__('usage')}}
+        <label for="allowed_usage">{{__('allowed usage')}}
             <span class="small text-muted">({{__('optional')}})</span>:</label>
-        <select class="form-control" name="allowed_usage">
+        <select class="form-control" name="allowed_usage" @if($is_read_only)readonly @endif>
             <option selected disabled>choose..</option>
             @foreach ($usages as $usage)
             <option value="{{$plot->allowed_usage}}" @if($plot-> allowed_usage == $usage->id) selected

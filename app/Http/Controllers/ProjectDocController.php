@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\ProjectDoc;
+// use PDF;
+use Barryvdh\DomPDF\Facade as PDF;
+// use 'PDF' => Barryvdh\DomPDF\Facade::class,  // by fa
 use Illuminate\Http\Request;
 
 class ProjectDocController extends Controller
@@ -14,7 +17,13 @@ class ProjectDocController extends Controller
      */
     public function index()
     {
-        return view('projectDoc.index');
+
+        // return view('projectDoc.tafweed');
+        // return view('projectDoc.index');
+
+
+        $pdf = PDF::loadView('projectDoc.tafweed');
+        return $pdf->download('a.pdf');
     }
 
     /**
