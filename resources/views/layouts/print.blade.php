@@ -20,32 +20,10 @@
     <link href="{{ asset('css/fontawesome/css/brands.css') }}" rel="stylesheet"> --}}
     @yield('head')
 
-
-
-    <style>
-        html {
-            min-width: 100%;
-            min-height: 100%;
-            background-image: url(http://www.example.com/somelargeimage.jpg);
-            background-position: top center;
-            background-color: #000;
-        }
-
-        main {
-            /* width: 1054px; */
-            height: 873px;
-            background-color: #FFF;
-        }
-
-    </style>
-
-
-
-
 </head>
 
 <body>
-    <div class="wrapper">
+    <div class="wrapper bg-danger">
         @yield('content')
     </div>
     @yield('script')
