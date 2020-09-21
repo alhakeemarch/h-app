@@ -1,56 +1,97 @@
 @extends('layouts.print')
 @section('title', 'تفويض')
 @section('content')
-{{-- <div class="page" style="height: 2.97cm; width:0.21cm;"> --}}
-{{-- <div class="page content" style="height: 1200px; width:800px;"> --}}
 <div class="page container-fluid">
-    <header>
-        {{-- <img src="{{URL::asset('/img/header.jpg')}}" alt="hedder" style="height: auto; width: 800px;"> --}}
-        <img src="{{URL::asset('/img/header.jpg')}}" alt="hedder" class=" w-100">
-    </header>
+    {{-- <header> --}}
+    {{-- <img src="{{URL::asset('/img/header.jpg')}}" alt="hedder" style="height: auto; width: 800px;"> --}}
+    {{-- <img src="{{URL::asset('/img/header.jpg')}}" alt="hedder" class=" w-100"> --}}
+    {{-- </header> --}}
+    {{-- <footer> --}}
+    {{-- <img src="{{URL::asset('/img/footer.jpg')}}" alt="hedder" style="height: auto; width: 800px;"> --}}
+    {{-- <img src="{{URL::asset('/img/footer.jpg')}}" class=" w-100"> --}}
+    {{-- </footer> --}}
     <main>
-        <section>
-            <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id blanditiis minima quo itaque sapiente ea,
-                dolorem at unde magni, odio eius fugit. Ullam quasi delectus dicta dolor eligendi exercitationem sunt
-                voluptas tenetur, temporibus quos fugiat excepturi eveniet officiis pariatur numquam illum dolores a cum
-                similique culpa, veritatis eaque voluptate cumque! Porro nesciunt dignissimos eius in assumenda maxime
-                quia et, possimus nemo vitae at enim, id praesentium nobis nisi officiis eligendi veniam similique
-                nostrum? Beatae saepe magni esse accusamus consectetur enim, odio maiores velit blanditiis culpa
-                possimus modi deleniti adipisci, libero explicabo commodi labore quas numquam, vel voluptatum neque
-                dolorem incidunt recusandae. Cupiditate, corporis ex! Hic eos temporibus, tempore velit eaque laborum
-                error et molestiae quis dolores mollitia maxime, facilis voluptates nesciunt! Inventore, minus laborum a
-                iusto impedit magnam facilis minima aliquid perferendis dolore ducimus nostrum ea quis unde ut vel
-                accusamus cumque nisi mollitia amet! Assumenda, aspernatur nisi voluptates fugiat ratione optio?
-                Quisquam dolorum molestiae aut accusamus consequuntur, laudantium nemo sunt maxime architecto officiis
-                provident dolore dolor doloremque aliquid sint labore repellendus ipsam rem quis placeat ab, quia
-                facere. Tempore, nostrum magni! Adipisci, consectetur perferendis. Et voluptatibus incidunt dignissimos
-                ducimus natus earum in aliquid sit quaerat iste facilis placeat veniam facere ipsa fugit recusandae
-                eveniet non, numquam, odio vel minus voluptates rerum exercitationem repudiandae? Fuga velit assumenda
-                dolore voluptatum cumque iusto accusantium, laborum ad, rerum illo ab aliquid blanditiis omnis natus
-                mollitia ratione, recusandae voluptate vero quaerat? Porro deleniti molestias culpa cupiditate animi
-                quas non commodi reprehenderit assumenda veniam nobis cumque impedit, excepturi corrupti aliquid
-                recusandae unde libero quisquam veritatis fugit maxime. Quas rerum asperiores quae nostrum natus
-                praesentium blanditiis maxime dolorum, sed optio eaque fuga laborum cum, iure culpa vero itaque libero!
-                Atque maxime perspiciatis maiores porro quas tempore, sequi doloremque saepe fuga. Soluta nihil illo
-                dolor iste qui!
-            </p>
+        <h1 style="text-align: center;">تفويض</h1>
+        <p>التاريخ: / / هـ</p>
+        <p style="text-align: justify; text-justify: inter-word;">
+            أفوض أنا/ ...................................................... رقم السجل
+            المدني(..........................)
+            وأنا بأتم الأوصاف المعتبرة شرعاً، وبصفتي: مالك العقار بموجب بالصك الشرعي رقم
+            (................................)
+            بتاريخ / / هـ الصادر من كتابة العدل الواقع بمنطقة ........................... حي: ..........................
+            بأنني قد فوضت مكتب / المهندس عبد الرزاق حكيم للاستشارات الهندسية (تصميم وإعداد المخططات الهندسية وكافة
+            الأعمال
+            المساحية ومتابعة إنهاء إجراءاتها الفنية والإدارية لدى الأمانة وجهات الاختصاص كالدفاع المدني وشركة الكهرباء
+            وهيئة
+            السياحة ووزارة الإسكان ... إلخ وذلك حتى استخراج رخصة الإنشاء واستلامها، واستلام المخططات المصادق عليها من
+            الأمانة إن وجد).</p>
+        <p>أخرى:(..............................................................................................) </p>
+        <h3 style="background-color:#d7b77e; line-height: 10px;">وأتعهد بما يلي:</h3>
+        <ol>
+            <li>
+                في حال إلغاء هذا التفويض إبلاغ الأمانة والمكتب المفوض خطياً بذلك، وأقدم للأمانة ما يفيد إبراء ذمة من
+                المكتب
+                المفوض.
+            </li>
+            <li>
+                لا يحق لي أو لأحد من طرفي استلام رخصة الإنشاء أو المخططات الابتدائية أو النهائية أو الرفوعات المساحية أو
+                بيانات الموقع أو قرارات الذرعة أو أي وثائق تتعلق بمعاملتي موضوع هذا
+                التفويض من الأمانة وأن المكتب وحده المسئول عن استلام هذه الوثائق والمستندات والمخططات.
+            </li>
+        </ol>
 
-        </section>
+        <h3> وعليه جرى التوقيع</h3>
+        <table>
+            <tr>
+                <td>اسم المفوض</td>
+                <td>.....................................................................</td>
+                <td>التوقيع:</td>
+                <td>........................</td>
+            </tr>
+        </table>
         <p>
-            كيف وضع اللغة العربية ما أدري
+            في حالة الوكيل
         </p>
-        <section>
+        <table>
+            <tr>
+                <td>رقم الوكالة</td>
+                <td>.....................................................................</td>
+                <td>تاريخها:</td>
+                <td>........................</td>
+                <td>مصدرها:</td>
+                <td>........................</td>
+            </tr>
+        </table>
+        <p>
+            أقر أنا الموضح اسمي ادناه بأن الشخص المفوض قام بالتوقيع أمامي
+        </p>
+        <table>
+            <tr>
+                <td>الإسم</td>
+                <td>.....................................................................</td>
+                <td>الصفة:</td>
+                <td>........................</td>
+                <td>التوقيع:</td>
+                <td>........................</td>
+            </tr>
+        </table>
+        <p>
+            الختم المعتمد للمكتب
+        </p>
 
-        </section>
-        <section>
 
-        </section>
+        <hr style="line-height: 1px;">
+        <p style="font-size: 11px; line-height: 100%;">ملاحظة: هذا التفويض يخص هذه المعاملة فقط، وينتهي مفعوله بانتهاء
+            المعاملة لدى الأمانة
+            أو إلغاءه من أحد
+            الطرفين.</p>
+
+
+
+
+
     </main>
-    <footer>
-        {{-- <img src="{{URL::asset('/img/footer.jpg')}}" alt="hedder" style="height: auto; width: 800px;"> --}}
-        <img src="{{URL::asset('/img/footer.jpg')}}" class=" w-100">
-    </footer>
+
 </div>
 
 <!-- ///////////////////////////////-->

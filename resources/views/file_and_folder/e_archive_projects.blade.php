@@ -48,7 +48,7 @@
                     {{-- for upload form --}}
                     <td class="project_upload m-0 p-0 text-center">
                         @if (!$project_no == 0 )
-                        <form action="{{ url('/project/showUplodeView') }}" method="GET" class="m-0 p-0">
+                        <form action="{{ route('file_folder.showUplodeView') }}" method="GET" class="m-0 p-0">
                             @csrf
                             <input type="hidden" name="project_no" value={{$project_no}}>
                             <input type="hidden" name="project_name" value="{{$project_name}}">
