@@ -104,9 +104,11 @@ class ProjectDocController extends Controller
         $lg['a_meta_language'] = 'ar';
         $lg['w_page'] = 'page';
 
+
         // Custom Header
         $newPDF::setHeaderCallback(function ($pdf) {
             $pdf->Image(URL::asset('/img/header.jpg'), 10, 4, 190, '', 'JPG', '');
+            $pdf->Image(URL::asset('/img/bg-Logo-t.jpg'), 20, 50, 170, '', 'JPG');
         });
 
         // Custom Footer
@@ -123,23 +125,26 @@ class ProjectDocController extends Controller
             $pdf->setCellHeightRatio(0.5);
         });
 
+
         $newPDF::SetAuthor('Hakeem-App');
         $newPDF::SetTitle('My Report');
         $newPDF::SetSubject('Report of System');
         #SetMargins(left, top, right = -1,, keepmargins = false) ⇒ Object
-        $newPDF::SetMargins(15, 30, 15);
+        $newPDF::SetMargins(15, 32, 15);
         // $newPDF::SetFooterMargin(PDF_MARGIN_FOOTER);
         $newPDF::SetFooterMargin(0);
-        $newPDF::setCellHeightRatio(1.1);
-
+        $newPDF::setCellHeightRatio(1);
+        // -----------------------------------------------------------------
         // set arabic font
         // $newPDF::SetFont('aefurat', '', 16, '', false);
         // PDF::SetFont('dejavusans', '', 8, '', false);
         // $newPDF::SetFont('freeserif', '', 14, '', false);
-        $newPDF::SetFont('al-mohanad', '', 12.5, '', false);
+        $newPDF::SetFont('al-mohanad', '', 14, '', false);
+        // $newPDF::SetFont('al-mateen', '', 12, '', false);
         // PDF::SetFont('aefurat', '', 16, '', false);
         // PDF::SetFont('aealarabiya', '', 16, '', false);
-
+        // -----------------------------------------------------------------
+        // $newPDF::SetCellPadding(5);
         $newPDF::setLanguageArray($lg);
 
         // $newPDF::setRTL(false);
