@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <div class="wrapper bg-danger">
+    <div class="wrapper">
         @yield('content')
     </div>
     @yield('script')
