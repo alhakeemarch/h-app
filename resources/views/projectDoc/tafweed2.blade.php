@@ -1,5 +1,14 @@
 @php
-$name = 'زياد عبدالرحمن عبدالله ناظر وشركاءه المشتركون';
+$mytime = Carbon\Carbon::now();
+// echo $mytime->toDateTimeString();
+$name = 'عميل بن عميل بن عميل العميلاتي';
+$n_id = '1000000000';
+$deed_no = '123456789123';
+$deed_date = '13/13/2013';
+$district_name = 'اسم المنطقة';
+$neighbor_name = 'اسم الحي';
+$responsable_name = 'عبدالعاطي عبدالحميد';
+$responsable_jop_tital = 'مدير التصميم';
 @endphp
 <style>
     * {
@@ -9,20 +18,19 @@ $name = 'زياد عبدالرحمن عبدالله ناظر وشركاءه ال
         padding: 0;
         margin: 0;
         box-sizing: border-box;
-        /* display: inline; */
     }
 
     h1 {
-        font-family: 'aealarabiya', 'Times New Roman', Times, serif;
-        font-size: 30rem;
-
+        font-family: 'ptboldheading', 'Times New Roman', Times, serif;
+        font-size: 200%;
     }
 
     h3,
     .title {
         font-weight: bold;
         font-size: 130%;
-        background-color: #d7b77e;
+        /* background-color: #d7b77e; */
+        background-color: #FFF2CC;
         line-height: 140%;
     }
 
@@ -53,21 +61,34 @@ $name = 'زياد عبدالرحمن عبدالله ناظر وشركاءه ال
 {{-- ---------------------------------------------------------- --}}
 <main>
     <h1 class="txt-center">تفويض</h1>
-    <p>التاريخ: / / هـ</p>
-    <p style="">أفوض أنا
-        <span>&nbsp;{{$name}}&nbsp;</span>
-        رقم السجل المدني
-        <span>({{$name}})</span>
-        وأنا بأتم الأوصاف المعتبرة شرعاً، وبصفتي: مالك العقار بموجب بالصك الشرعي رقم
-        (................................)
-        بتاريخ / / هـ الصادر من كتابة العدل الواقع بمنطقة ........................... حي: ..........................
-        بأنني قد فوضت مكتب / المهندس عبد الرزاق حكيم للاستشارات الهندسية (تصميم وإعداد المخططات الهندسية وكافة
-        الأعمال
-        المساحية ومتابعة إنهاء إجراءاتها الفنية والإدارية لدى الأمانة وجهات الاختصاص كالدفاع المدني وشركة الكهرباء
-        وهيئة
-        السياحة ووزارة الإسكان ... إلخ وذلك حتى استخراج رخصة الإنشاء واستلامها، واستلام المخططات المصادق عليها من
-        الأمانة إن وجد).</p>
-    <p>أخرى:(........................................) </p>
+    <div></div>
+    <div>
+        <span>التاريخ:</span>
+        <span>{{$mytime->toDateString()}}</span>
+        <span>مـ</span>
+    </div>
+    <p><span>أفوض أنا</span>
+        <span>{{$name}}</span>
+        <span>رقم السجل المدني</span>
+        <span>({{$n_id}})</span>
+        <span>وأنا بأتم الأوصاف المعتبرة شرعاً، وبصفتي: مالك العقار بموجب بالصك الشرعي رقم</span>
+        <span>({{$deed_no}})</span>
+        <span>بتاريخ</span>
+        <span>{{$deed_date}}</span>
+        <span>هـ الصادر من كتابة العدل الواقع بمنطقة</span>
+        <span> {{$district_name}} </span>
+        <span>حي:</span>
+        <span> {{$neighbor_name}} </span>
+        <span>
+            بأنني قد فوضت مكتب المهندس عبد الرزاق حكيم للاستشارات الهندسية (تصميم وإعداد المخططات الهندسية
+            وكافةالأعمال المساحية ومتابعة إنهاء إجراءاتها الفنية والإدارية لدى الأمانة وجهات الاختصاص كالدفاع المدني
+            وشركة الكهرباء وهيئة السياحة ووزارة الإسكان ... إلخ وذلك حتى استخراج رخصة الإنشاء واستلامها، واستلام
+            المخططات المصادق عليها من
+            الأمانة إن وجد).</span>
+    </p>
+
+    <p>أخرى:(................................................................) </p>
+    <div></div>
     <table>
         <tr>
             <td class="title"> وأتعهد بما يلي:</td>
@@ -75,8 +96,7 @@ $name = 'زياد عبدالرحمن عبدالله ناظر وشركاءه ال
     </table>
     <ol>
         <li>
-            في حال إلغاء هذا التفويض إبلاغ الأمانة والمكتب المفوض خطياً بذلك، وأقدم للأمانة ما يفيد إبراء ذمة من
-            المكتب
+            في حال إلغاء هذا التفويض إبلاغ الأمانة والمكتب المفوض خطياً بذلك، وأقدم للأمانة ما يفيد إبراء ذمة من المكتب
             المفوض.
         </li>
         <li>
@@ -85,67 +105,52 @@ $name = 'زياد عبدالرحمن عبدالله ناظر وشركاءه ال
             التفويض من الأمانة وأن المكتب وحده المسئول عن استلام هذه الوثائق والمستندات والمخططات.
         </li>
     </ol>
-
+    <div></div>
     <div class="txt-center">وعليه جرى التوقيع</div>
     <div></div>
-    <div>
-        <span class="txt-bold">اسم المفوض: </span>
-        <span>{{$name}}</span>
-        <span>&nbsp; &nbsp;</span>
-        <span class="highlight txt-bold">التوقيع:</span>
-        <span>....................</span>
-    </div>
-    {{-- <table>
+    <hr>
+    <div></div>
+    <table>
         <tr>
-            <span>اسم المفوض</span>
-            <span>{{$name}}</span>
-    <span class="highlight">التوقيع:</span>
-    <span></span>
-    </tr>
-    </table> --}}
+            <td colspan="5"> <span class="txt-bold">اسم المفوض: </span> <span>{{$name}}</span></td>
+            <td><span class="txt-bold highlight"> التوقيع:</span></td>
+            <td></td>
+        </tr>
+    </table>
     <p>
         في حالة الوكيل
     </p>
     <table>
         <tr>
             <td>رقم الوكالة</td>
-            <td></td>
+            <td colspan="2"></td>
             <td>تاريخها:</td>
             <td></td>
-            <td> <span class="txt-bold highlight">مصدرها:</span></td>
+            <td>مصدرها: </td>
             <td></td>
         </tr>
     </table>
-    <p>
-        أقر أنا الموضح اسمي ادناه بأن الشخص المفوض قام بالتوقيع أمامي :
-    </p>
-
-    <div>
-        <span class="txt-bold">الإسم</span>
-        <span></span>
-        <span class="txt-bold">الصفة:</span>
-        <span></span>
-        <span class="txt-bold highlight">التوقيع:</span>
-        <span></span>
-    </div>
-
-    <p>
-        الختم المعتمد للمكتب
-    </p>
+    <div></div>
+    <p>أقر أنا الموضح اسمي ادناه بأن الشخص المفوض قام بالتوقيع أمامي :</p>
+    <table>
+        <tr>
+            <td colspan="2"> <span class="txt-bold">الاسم:</span> <span>{{$responsable_name}}</span></td>
+            <td colspan="2"> <span class="txt-bold">الصفة:</span> <span>{{$responsable_jop_tital}}</span></td>
+            <td><span class="txt-bold"> التوقيع:</span></td>
+            <td></td>
+        </tr>
+    </table>
+    <div></div>
+    <table>
+        <tr>
+            <td colspan="3"></td>
+            <td>الختم المعتمد للمكتب</td>
+        </tr>
+    </table>
     <div></div>
     <div></div>
-
-
-
-
     <hr style="line-height: 1px;">
-    <p style="font-size: 11px; line-height: 4px;">ملاحظة: هذا التفويض يخص هذه المعاملة فقط، وينتهي مفعوله بانتهاء
-        المعاملة لدى الأمانة
-        أو إلغاءه من أحد
-        الطرفين.</p>
-
-
-
-
-
+    <p style="font-size: 11px; line-height: 3px;">
+        ملاحظة: هذا التفويض يخص هذه المعاملة فقط، وينتهي مفعوله بانتهاءالمعاملة لدى الأمانةأو إلغاءه من أحدالطرفين.
+    </p>
 </main>

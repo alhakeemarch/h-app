@@ -91,7 +91,7 @@ class ProjectDocController extends Controller
     {
         //
     }
-    // ---------------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------
     public function create_hakeem_pdf($view)
     {
         $newPDF = new PDF();
@@ -104,11 +104,12 @@ class ProjectDocController extends Controller
         $lg['a_meta_language'] = 'ar';
         $lg['w_page'] = 'page';
 
-
         // Custom Header
         $newPDF::setHeaderCallback(function ($pdf) {
+            // top header logo
             $pdf->Image(URL::asset('/img/header.jpg'), 10, 4, 190, '', 'JPG', '');
-            $pdf->Image(URL::asset('/img/bg-Logo-t.jpg'), 20, 50, 170, '', 'JPG');
+            // background logo
+            $pdf->Image(URL::asset('/img/bg-Logo-t.jpg'), 20, 70, 170, '', 'JPG');
         });
 
         // Custom Footer
@@ -125,22 +126,28 @@ class ProjectDocController extends Controller
             $pdf->setCellHeightRatio(0.5);
         });
 
-
         $newPDF::SetAuthor('Hakeem-App');
-        $newPDF::SetTitle('My Report');
-        $newPDF::SetSubject('Report of System');
+        $newPDF::SetTitle('تفويض');
+        $newPDF::SetSubject('تفويض');
         #SetMargins(left, top, right = -1,, keepmargins = false) ⇒ Object
         $newPDF::SetMargins(15, 32, 15);
         // $newPDF::SetFooterMargin(PDF_MARGIN_FOOTER);
         $newPDF::SetFooterMargin(0);
-        $newPDF::setCellHeightRatio(1);
+        $newPDF::setCellHeightRatio(1.2);
         // -----------------------------------------------------------------
         // set arabic font
         // $newPDF::SetFont('aefurat', '', 16, '', false);
         // PDF::SetFont('dejavusans', '', 8, '', false);
         // $newPDF::SetFont('freeserif', '', 14, '', false);
-        $newPDF::SetFont('al-mohanad', '', 14, '', false);
+        // $newPDF::SetFont('al-mohanad', '', 12, '', false);
+        // $newPDF::SetFont('aljazeera', '', 12, '', false);
+        // $newPDF::SetFont('font', '', 12, '', false); // good font 
+        $newPDF::SetFont('traditionalarabic', '', 12, '', false);
+        // $newPDF::SetFont('al-gemah-alhoda', '', 12, '', false); // just for hedars
         // $newPDF::SetFont('al-mateen', '', 12, '', false);
+        // $newPDF::SetFont('shahab', '', 12, '', false); // no numbers in tis fonts
+        // $newPDF::SetFont('ptboldheading', '', 12, '', false);
+
         // PDF::SetFont('aefurat', '', 16, '', false);
         // PDF::SetFont('aealarabiya', '', 16, '', false);
         // -----------------------------------------------------------------
@@ -160,44 +167,29 @@ class ProjectDocController extends Controller
         $newPDF::AddPage('P', 'A4');
         // $newPDF::writeHTML($html, true, false, true, false, '');
         $the_view = \view($content);
-        $newPDF::writeHTML($the_view->render(), true, false, true, false, '');
+        // dd($the_view->render());
+        // $html = $this->to_arabic_numbers($the_view->render());
+        $html = $the_view->render();
+        // dd($html);
+        $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output('my_file.pdf');
+        $newPDF::Output('tafweed.pdf');
         exit;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // --------------------------------------------------------------------------------------------------------------
 
         // return view('projectDoc.tafweed');
         // return view('projectDoc.index');
         // $pdf = new PDF('P', 'mm', 'A4');
-        $pdf = new HakeemPDF('P', 'mm', 'A4');
+        // $pdf = new HakeemPDF('P', 'mm', 'A4');
 
-        $pdf::SetTitle('sample pdf');
-        $pdf::AddPage();
-        $pdf::writeHTML('<h1>ok</h1>', true, false, true, false, '');
-        $pdf::AddPage();
-        $pdf::writeHTML('<h1>Page2</h1>', true, false, true, false, '');
+        // $pdf::SetTitle('sample pdf');
+        // $pdf::AddPage();
+        // $pdf::writeHTML('<h1>ok</h1>', true, false, true, false, '');
+        // $pdf::AddPage();
+        // $pdf::writeHTML('<h1>Page2</h1>', true, false, true, false, '');
         // $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
-        $pdf::Output('test.pdf');
+        // $pdf::Output('test.pdf');
 
         // to save pdf 
         // $pdf::Output('C:/' . 'test.pdf', 'F');
@@ -213,5 +205,20 @@ class ProjectDocController extends Controller
         // $pdf::writeHTML($view->render(), true, false, true, false, '');
         // $pdf::Output('test.pdf');
         // $pdf::Output('test.pdf', 'D');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function to_arabic_numbers($html)
+    {
+        $text = strval($html);
+        // $numarr = array("۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹");
+        $a = preg_replace_callback(
+            '/[0-9]/',
+            function ($matches) {
+                $numarr = array(0 => "۰", 1 => "۱", 2 => "٢", 3 => "۳", 4 => '٤', 5 => '٥', 6 => '٦', 7 => '٧', 8 => '٨', 9 => '٩');
+                return $numarr[intval($matches[0])];
+            },
+            $text
+        );
+        return $a;
     }
 }
