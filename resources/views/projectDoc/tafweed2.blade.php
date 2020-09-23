@@ -1,14 +1,14 @@
 @php
 $mytime = Carbon\Carbon::now();
 // echo $mytime->toDateTimeString();
-$name = 'عميل بن عميل بن عميل العميلاتي';
-$n_id = '1000000000';
-$deed_no = '123456789123';
-$deed_date = '13/13/2013';
-$district_name = 'اسم المنطقة';
-$neighbor_name = 'اسم الحي';
-$responsable_name = 'عبدالعاطي عبدالحميد';
-$responsable_jop_tital = 'مدير التصميم';
+$name = $project->owner_name_ar;
+$n_id = $project->owner_national_id;
+$deed_no = $project->plot()->deed_no ?? 'num';
+$deed_date = $project->plot()->deed_no ?? 'num';
+$district_name = $project->district_id;
+$neighbor_name = $project->neighbor_id;
+$responsable_name = $Project_manager->ar_name1.' '.$Project_manager->ar_name2.' '.$Project_manager->ar_name5 ;
+$responsable_jop_tital = $Project_manager->job_title;
 @endphp
 <style>
     * {
@@ -134,7 +134,7 @@ $responsable_jop_tital = 'مدير التصميم';
     <p>أقر أنا الموضح اسمي ادناه بأن الشخص المفوض قام بالتوقيع أمامي :</p>
     <table>
         <tr>
-            <td colspan="2"> <span class="txt-bold">الاسم:</span> <span>{{$responsable_name}}</span></td>
+            <td colspan="2"> <span class="txt-bold">الاسم: م.</span> <span>{{$responsable_name}}</span></td>
             <td colspan="2"> <span class="txt-bold">الصفة:</span> <span>{{$responsable_jop_tital}}</span></td>
             <td><span class="txt-bold"> التوقيع:</span></td>
             <td></td>

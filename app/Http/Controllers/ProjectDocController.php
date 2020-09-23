@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Person;
+use App\Plot;
+use App\Project;
 use App\ProjectDoc;
 use PDF;
-use App\Tcpdf\HakeemPDF;
+// use App\Tcpdf\HakeemPDF;
+use \Illuminate\Support\Facades\View;
 
-
-
-// use 'PDF' => Barryvdh\DomPDF\Facade::class,  // by fa
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -92,11 +93,40 @@ class ProjectDocController extends Controller
         //
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function create_hakeem_pdf($view)
+    // =====================================================
+    public function tafweed(Request $request)
     {
+        // return $request;
+        $project = Project::findOrFail($request->project_id);
+        // return $project;
+        $data = [
+            'pdf_name' => 'tafweed',
+            'view' => 'projectDoc.tafweed2',
+            'project_id' => $request->project_id,
+        ];
+        return $this->create_hakeem_pdf($data);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function create_hakeem_pdf(array $data = [])
+    {
+        $pdf_name = $data['pdf_name'];
+        $pdf_view = $data['view'];
+        $project = Project::findOrFail($data['project_id']);
+        $Project_manager = Person::findOrFail($project->project_manager_id);
+
+        // return ($project->person());
+        // return ($project->plot()->id);
+        // dd($project->plot());
+
+        $data = [
+            'project' => $project,
+            'Project_manager' => $Project_manager,
+        ];
+
+        // ------------------------------------------------------------
         $newPDF = new PDF();
         // Content
-        $content = $view;
+        $content = $pdf_view;
         // set some language dependent data:
         $lg = array();
         $lg['a_meta_charset'] = 'UTF-8';
@@ -166,14 +196,18 @@ class ProjectDocController extends Controller
         // $newPDF::AddPage('L', 'A4');
         $newPDF::AddPage('P', 'A4');
         // $newPDF::writeHTML($html, true, false, true, false, '');
-        $the_view = \view($content);
+        // $the_view = \Illuminate\Support\Facades\View::make($pdf_view)->with('project', $project);
+        $the_view = View::make($pdf_view)->with($data);
+        // $the_view = view($pdf_view, $project);
+        // $the_view = \view($pdf_view, 'project', $project);
         // dd($the_view->render());
         // $html = $this->to_arabic_numbers($the_view->render());
         $html = $the_view->render();
+        // dd($the_view);
         // dd($html);
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output('tafweed.pdf');
+        $newPDF::Output($pdf_name . '.pdf');
         exit;
 
         // --------------------------------------------------------------------------------------------------------------

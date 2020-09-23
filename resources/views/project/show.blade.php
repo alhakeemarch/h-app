@@ -84,8 +84,19 @@
 <div class="row container-fluid">
     <div class="card col">
         <div class="card-header">
-            contracts list
+            document list
+            قائمة المستندات
         </div>
+        <ul class="card-body list-group">
+            <li class="list-group-item d-flex justify-content-between">
+                تفويض
+                <form action="{{route('projectDoc.tafweed')}}" method="post">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print</button>
+                </form>
+            </li>
+        </ul>
         add new contract
     </div>
 </div>

@@ -9,8 +9,8 @@ $person = $employee;
     <h5 class="card-header">{{ __('Edit a employeee') }}</h5>
     <div class="card-body">
         <form action="{{ route ('employee.update',$employee) }}" method="POST">
-
             @method('PUT')
+            @csrf
             @include('person.forms.form')
             <div class="row">
 

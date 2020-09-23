@@ -53,7 +53,8 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
-            'engine' => null,
+            // 'engine' => null,
+            'engine' => 'InnoDB', // by fa
         ],
 
         'pgsql' => [

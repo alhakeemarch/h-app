@@ -20,8 +20,9 @@ class CreateProjectsTable extends Migration
             $table->string('project_name_ar')->nullable();
             $table->string('project_name_en')->nullable();
             // -----------------------------
-            $table->bigInteger('owner_id')->nullable();
-            $table->bigInteger('owner_national_id')->nullable();
+            $table->foreignID('person_id')->nullable()->references('id')->on('people'); // المالك أو ممثل المالك
+            $table->foreignId('owner_id')->nullable();
+            $table->foreignId('owner_national_id')->nullable();
             $table->string('owner_type')->nullable(); // فرد - شركة - ورثة - وقف - جهة 
             $table->string('owner_name_ar')->nullable();
             $table->string('owner_name_en')->nullable();
@@ -29,8 +30,8 @@ class CreateProjectsTable extends Migration
             $table->text('extra_owners_list')->nullable();
             $table->text('extra_owners_info')->nullable();
             // -----------------------------
-            $table->bigInteger('representative_id')->nullable();
-            $table->bigInteger('representative_national_id')->nullable();
+            $table->foreignId('representative_id')->nullable()->references('id')->on('people');
+            $table->foreignId('representative_national_id')->nullable();
             $table->string('representative_type')->nullable(); // وكيل شرعي - مفوض - ناظر الوقف - ولي على قصر - 
             $table->string('representative_name_ar')->nullable();
             $table->string('representative_name_en')->nullable();
@@ -60,61 +61,58 @@ class CreateProjectsTable extends Migration
             $table->string('last_rokhsa_issue_date')->nullable();
             $table->text('other_doc_details')->nullable();
             // -----------------------------
-            $table->string('project_manager')->nullable();
-            $table->string('project_coordinator')->nullable();
+            $table->foreignId('project_manager_id')->nullable()->references('id')->on('people');
+            $table->foreignId('project_coordinator_id')->nullable()->references('id')->on('people');
             // -----------------------------
-            $table->string('arch_designed_by')->nullable();
-            $table->string('elevation_designed_by')->nullable();
-            $table->string('str_designed_by')->nullable();
-            $table->string('san_designed_by')->nullable();
-            $table->string('elec_designed_by')->nullable();
-            $table->string('fire_fighting_designed_by')->nullable();
-            $table->string('fire_alarm_designed_by')->nullable();
-            $table->string('fire_escape_designed_by')->nullable();
-            $table->string('tourism_designed_by')->nullable();
-            $table->string('interior_designed_by')->nullable();
-            $table->string('landscape_designed_by')->nullable();
-            $table->string('surveyed_by')->nullable();
+            $table->foreignId('arch_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('elevation_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('str_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('san_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('elec_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('fire_fighting_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('fire_alarm_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('fire_escape_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('tourism_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('interior_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('landscape_designed_by_id')->nullable()->references('id')->on('people');
+            $table->foreignId('surveyed_by_id')->nullable()->references('id')->on('people');
             // -----------------------------
-            $table->string('main_draftsman')->nullable();
-            $table->string('draftsman_1')->nullable();
+            $table->foreignId('main_draftsman_id')->nullable()->references('id')->on('people');
+            $table->foreignId('draftsman_1_id')->nullable()->references('id')->on('people');
             $table->text('draftsman_1_mission')->nullable();
-            $table->string('draftsman_2')->nullable();
+            $table->foreignId('draftsman_2_id')->nullable()->references('id')->on('people');
             $table->text('draftsman_2_mission')->nullable();
-            $table->string('draftsman_3')->nullable();
+            $table->foreignId('draftsman_3_id')->nullable()->references('id')->on('people');
             $table->text('draftsman_3_mission')->nullable();
-            $table->string('draftsman_4')->nullable();
+            $table->foreignId('draftsman_4_id')->nullable()->references('id')->on('people');
             $table->text('draftsman_4_mission')->nullable();
-            $table->string('draftsman_5')->nullable();
+            $table->foreignId('draftsman_5_id')->nullable()->references('id')->on('people');
             $table->text('draftsman_5_mission')->nullable();
-            $table->string('draftsman_6')->nullable();
+            $table->foreignId('draftsman_6_id')->nullable()->references('id')->on('people');
             $table->text('draftsman_6_mission')->nullable();
-            $table->string('draftsman_7')->nullable();
+            $table->foreignId('draftsman_7_id')->nullable()->references('id')->on('people');
             $table->text('draftsman_7_mission')->nullable();
-            $table->string('draftsman_8')->nullable();
+            $table->foreignId('draftsman_8_id')->nullable()->references('id')->on('people');
             $table->text('draftsman_8_mission')->nullable();
-            $table->string('draftsman_9')->nullable();
+            $table->foreignId('draftsman_9_id')->nullable()->references('id')->on('people');
             $table->text('draftsman_9_mission')->nullable();
             $table->text('extra_draftsman_details')->nullable();
             // -----------------------------
             $table->text('contracts_list_names')->nullable();
-            $table->bigInteger('total_project_price')->nullable();
-            $table->bigInteger('total_project_cost')->nullable();
-
-
+            $table->unsignedBigInteger('total_project_price')->nullable();
+            $table->unsignedBigInteger('total_project_cost')->nullable();
             // -----------------------------
-            $table->bigInteger('municipality_branche_id')->nullable();
-            $table->bigInteger('neighbor_id')->nullable();
-            $table->bigInteger('plan_id')->nullable();
-            $table->bigInteger('district_id')->nullable();
-            $table->bigInteger('street_id')->nullable();
-            $table->bigInteger('plot_id')->nullable();
+            $table->foreignID('municipality_branche_id')->nullable();
+            $table->foreignId('neighbor_id')->nullable();
+            $table->foreignId('plan_id')->nullable();
+            $table->foreignId('district_id')->nullable();
+            $table->foreignId('street_id')->nullable();
+            $table->foreignID('plot_id')->nullable();
             $table->string('plot_no')->nullable();
-            $table->bigInteger('deed_id')->nullable();
+            $table->foreignId('deed_id')->nullable();
             $table->string('deed_no')->nullable();
-            $table->bigInteger('total_area')->nullable();
+            $table->foreignId('total_area')->nullable();
             $table->string('project_location')->nullable();
-
 
             // =============================
             // -----------------------------
@@ -122,9 +120,9 @@ class CreateProjectsTable extends Migration
             $table->longText('private_notes')->nullable();
             $table->longText('created_at_note')->nullable();
             // -----------------------------
-            $table->bigInteger('created_by_id')->references('id')->on('users')->nullable();
+            $table->foreignId('created_by_id')->references('id')->on('users')->nullable();
             $table->string('created_by_name')->references('user_name')->on('users')->nullable();
-            $table->bigInteger('last_edit_by_id')->references('id')->on('users')->nullable();
+            $table->foreignId('last_edit_by_id')->references('id')->on('users')->nullable();
             $table->string('last_edit_by_name')->references('user_name')->on('users')->nullable();
             // -----------------------------
             $table->timestamp('deleted_at')->nullable();

@@ -44,7 +44,7 @@ Route::any('/f', function () {
     //////////////////////////////////////////////////////////    
 
     if (true) {
-        // Artisan::call('migrate:fresh');
+        Artisan::call('migrate:fresh');
         // Artisan::call('cache:clear');
         // Artisan::call('view:clear');
         // makeUser('admin');
@@ -313,13 +313,17 @@ Route::any('/user/userLogin', 'Auth\LoginController@check')->name('login.check')
 // Route::any('/user/userLogin', 'Auth\LoginController@userLogin')->name('userLogin');
 // Route::any('/user/personStore', 'Auth\RegisterController@personStore')->name('personStore');
 // -----------------------------------------------------------------------------------------------------------------
-
 Route::group(['prefix' => 'project'], function () {
     Route::any('search', 'ProjectController@search')->name('project.search');
     Route::any('new_project', 'ProjectController@new_project')->name('project.new_project');
     Route::any('contracts', 'ProjectController@contracts')->name('project.contracts');
 });
-
+// -----------------------------------------------------------------------------------------------------------------
+Route::group(['prefix' => 'projectDoc'], function () {
+    Route::any('search', 'ProjectDocController@search')->name('projectDoc.search');
+    Route::any('tafweed', 'ProjectDocController@tafweed')->name('projectDoc.tafweed');
+});
+// -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'file_folder'], function () {
     Route::any('uploadFile', 'FileAndFolderController@uploadFile')->name('file_folder.uploadFile');
     Route::any('runningProjects', 'FileAndFolderController@runningProjects')->name('file_folder.runningProjects');
@@ -337,6 +341,7 @@ Route::group(['prefix' => 'file_folder'], function () {
     Route::any('emps_dir', 'FileAndFolderController@emps_dir')->name('file_folder.emps_dir');
     Route::any('show_emp_dir', 'FileAndFolderController@show_emp_dir')->name('file_folder.show_emp_dir');
 });
+// -----------------------------------------------------------------------------------------------------------------
 Route::resources([
 
     // -- شخص أو جهة

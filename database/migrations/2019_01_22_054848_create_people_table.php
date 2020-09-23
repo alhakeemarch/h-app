@@ -14,7 +14,7 @@ class CreatePeopleTable extends Migration
     public function up()
     {
         Schema::create('people', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->unsignedInteger('national_id')->unique();
             // -----------------------------
             $table->boolean('is_employee')->default(false)->nullable();
