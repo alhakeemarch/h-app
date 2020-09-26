@@ -14,7 +14,7 @@ class CreateNeighborsTable extends Migration
     public function up()
     {
         Schema::create('neighbors', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->bigInteger('code')->nullable();
             // -----------------------------
             $table->string('en_name')->nullable();

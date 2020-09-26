@@ -14,7 +14,7 @@ class CreatePlansTable extends Migration
     public function up()
     {
         Schema::create('plans', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned()->key();
             // -----------------------------
             $table->string('plan_no')->default('مخطط غير معروف رقمه');;
             $table->string('plan_ar_name')->default('مخطط غير معروف إسمه');

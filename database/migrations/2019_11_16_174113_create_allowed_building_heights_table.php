@@ -14,7 +14,7 @@ class CreateAllowedBuildingHeightsTable extends Migration
     public function up()
     {
         Schema::create('allowed_building_heights', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('building_height');
 
 

@@ -38,7 +38,11 @@ $is_read_only = false;
         </select>
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
-    <p class="col-md form-group alert alert-warning">الحي - Naber</p>
+
+    <x-select name='neighbor_id' :resource=$project :list=$neighbors>
+        <x-slot name='option_name'>ar_name</x-slot>
+        <x-slot name='title'>{{__('neighbor')}}</x-slot>
+    </x-select>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md form-group">
         <label for="plan_id">{{__('plan')}}

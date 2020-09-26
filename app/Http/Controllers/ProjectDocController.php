@@ -93,18 +93,112 @@ class ProjectDocController extends Controller
         //
     }
     // -----------------------------------------------------------------------------------------------------------------
-    // =====================================================
     public function tafweed(Request $request)
     {
         // return $request;
         $project = Project::findOrFail($request->project_id);
-        // return $project;
         $data = [
             'pdf_name' => 'tafweed',
             'view' => 'projectDoc.tafweed2',
             'project_id' => $request->project_id,
         ];
         return $this->create_hakeem_pdf($data);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function tafweed_masaha(Request $request)
+    {
+        // return $request;
+        $project = Project::findOrFail($request->project_id);
+        $data = [
+            'pdf_name' => 'tafweed',
+            'view' => 'projectDoc.tafweed2',
+            'project_id' => $request->project_id,
+        ];
+
+
+        // **********************************************************
+        $pdf_name = 'tafweed_masaha';
+        $newPDF = new PDF();
+        // Content
+        $pdf_view = 'projectDoc.tafweed_masaha';
+        // -----------------------------------------------------------------
+        // set some language dependent data:
+        $lg = array();
+        $lg['a_meta_charset'] = 'UTF-8';
+        $lg['a_meta_dir'] = 'rtl';
+        $lg['a_meta_language'] = 'ar';
+        $lg['w_page'] = 'page';
+        $newPDF::setLanguageArray($lg);
+        // -----------------------------------------------------------------
+        $newPDF::SetAuthor('Hakeem-App');
+        $newPDF::SetTitle('تفويض مساحة');
+        $newPDF::SetSubject('تفويض مساحة');
+        $newPDF::SetMargins(15, 15, 15);
+        // $newPDF::SetFooterMargin(0);
+        // $newPDF::setCellHeightRatio(1.2);
+        // -----------------------------------------------------------------
+        // set arabic font
+        $newPDF::SetFont('traditionalarabic', '', 12, '', false);
+        // -----------------------------------------------------------------
+        $newPDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        $newPDF::AddPage('P', 'A4');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output($pdf_name . '.pdf');
+        exit;
+
+        // **********************************************************
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function t_makhater(Request $request)
+    {
+        return view('projectDoc.t_makhater');
+        $project = Project::findOrFail($request->project_id);
+        $data = [
+            'pdf_name' => 't_makhater',
+            'view' => 'projectDoc.t_makhater',
+            'project_id' => $request->project_id,
+        ];
+
+
+        // **********************************************************
+        $pdf_name = 't_makhater';
+        $newPDF = new PDF();
+        // Content
+        $pdf_view = 'projectDoc.t_makhater';
+        // -----------------------------------------------------------------
+        // set some language dependent data:
+        $lg = array();
+        $lg['a_meta_charset'] = 'UTF-8';
+        $lg['a_meta_dir'] = 'rtl';
+        $lg['a_meta_language'] = 'ar';
+        $lg['w_page'] = 'page';
+        $newPDF::setLanguageArray($lg);
+        // -----------------------------------------------------------------
+        $newPDF::SetAuthor('Hakeem-App');
+        $newPDF::SetTitle('تفويض مساحة');
+        $newPDF::SetSubject('تفويض مساحة');
+        $newPDF::SetMargins(15, 15, 15);
+        // $newPDF::SetFooterMargin(0);
+        // $newPDF::setCellHeightRatio(1.2);
+        // -----------------------------------------------------------------
+        // set arabic font
+        $newPDF::SetFont('traditionalarabic', '', 12, '', false);
+        // -----------------------------------------------------------------
+        $newPDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        $newPDF::AddPage('P', 'A4');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output($pdf_name . '.pdf');
+        exit;
+
+        // **********************************************************
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function create_hakeem_pdf(array $data = [])

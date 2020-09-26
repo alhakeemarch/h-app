@@ -14,7 +14,7 @@ class CreatePlotDocsTable extends Migration
     public function up()
     {
         Schema::create('plot_docs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
             // =============================
             // -----------------------------

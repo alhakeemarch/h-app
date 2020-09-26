@@ -14,6 +14,7 @@ use App\Rules\ValidDate;
 use App\Rules\ValidHijriDate;
 use Illuminate\Http\Request;
 use App\MunicipalityBranch;
+use App\Neighbor;
 use App\Plan;
 use App\Project;
 use App\street;
@@ -178,6 +179,7 @@ class PlotController extends Controller
     public static function formsData()
     {
         $districts = District::all();
+        $neighbors = Neighbor::all();
         $municipality_branchs = MunicipalityBranch::all();
         $building_ratios = AllowedBuildingRatio::all();
         $building_heights = AllowedBuildingHeight::all();
@@ -186,6 +188,7 @@ class PlotController extends Controller
         $streets = Street::all('id', 'ar_name')->sortBy('ar_name');
         return [
             'districts' => $districts,
+            'neighbors' => $neighbors,
             'municipality_branchs' => $municipality_branchs,
             'building_ratios' => $building_ratios,
             'building_heights' => $building_heights,

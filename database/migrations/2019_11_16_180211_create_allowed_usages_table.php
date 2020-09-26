@@ -14,7 +14,7 @@ class CreateAllowedUsagesTable extends Migration
     public function up()
     {
         Schema::create('allowed_usages', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('usage');
 
 

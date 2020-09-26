@@ -14,7 +14,7 @@ class CreateInvoiceReturnDetailsTable extends Migration
     public function up()
     {
         Schema::create('invoice_return_details', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
 
             // =============================

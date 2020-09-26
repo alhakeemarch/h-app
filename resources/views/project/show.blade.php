@@ -90,7 +90,23 @@
         <ul class="card-body list-group">
             <li class="list-group-item d-flex justify-content-between">
                 تفويض
-                <form action="{{route('projectDoc.tafweed')}}" method="post">
+                <form action="{{route('projectDoc.tafweed')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print</button>
+                </form>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                تفويض المساحة
+                <form action="{{route('projectDoc.tafweed_masaha')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print</button>
+                </form>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                تعهد المخاطر
+                <form action="{{route('projectDoc.t_makhater')}}" method="get">
                     @csrf
                     <input type="hidden" name="project_id" value="{{$project->id}}">
                     <button type="submit" class="btn btn-link">print</button>

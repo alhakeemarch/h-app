@@ -45,12 +45,12 @@ Route::any('/f', function () {
 
     if (true) {
         Artisan::call('migrate:fresh');
-        // Artisan::call('cache:clear');
-        // Artisan::call('view:clear');
-        // makeUser('admin');
-        // makeUser('fahd');
-        // makeUser('hanadi');
-        // return;
+        Artisan::call('cache:clear');
+        Artisan::call('view:clear');
+        makeUser('admin');
+        makeUser('fahd');
+        makeUser('hanadi');
+        return 'done....!';
         // return firstInsertion();
     }
 
@@ -322,6 +322,8 @@ Route::group(['prefix' => 'project'], function () {
 Route::group(['prefix' => 'projectDoc'], function () {
     Route::any('search', 'ProjectDocController@search')->name('projectDoc.search');
     Route::any('tafweed', 'ProjectDocController@tafweed')->name('projectDoc.tafweed');
+    Route::any('tafweed_masaha', 'ProjectDocController@tafweed_masaha')->name('projectDoc.tafweed_masaha');
+    Route::any('t_makhater', 'ProjectDocController@t_makhater')->name('projectDoc.t_makhater');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'file_folder'], function () {

@@ -65,16 +65,18 @@ class ProjectController extends Controller
     public function create(Request $request)
     {
         $person = Person::findOrFail($request['person']);
+        $employees = $person->all()->where('is_employee', true)->reverse();
         $plot = Plot::findOrFail($request['plot']);
         // return $plot;
         $project = new Project;
-        $found_project = $project->where('deed_no', $plot->deed_no)->first();
+        $found_project = $project->where('plot_id', $plot->plot_id)->first();
         $project = ($found_project) ? $found_project : $project;
         $formsData = array_merge(PlotController::formsData(), [
             'new_deed_no' => $plot->deed_no,
             'plot' => $plot,
             'project' => $project,
             'person' => $person,
+            'employees' => $employees,
             'is_read_only' => true,
         ]);
         return view('project.create')->with($formsData);
@@ -88,6 +90,9 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        // project_manager_id 
+
+        $plot = Plot::where('deed_no', $request->deed_no)->first();
         $validated_project = collect($this->validate_project($request));
         $validated_plot = PlotController::validatePlot($request);
         // $validated_person = PersonController::validatePerson($request);
@@ -99,9 +104,11 @@ class ProjectController extends Controller
         }
         $validated_project->put('created_by_id', $created_by_id);
         $validated_project->put('created_by_name', $created_by_name);
+        $validated_project->put('plot_id', $plot->id);
 
         $project = Project::create($validated_project->all());
-
+        $plot->project_id = $project->id;
+        $plot->save();
         return redirect()->action('ProjectController@show', $project->id);
     }
 
@@ -156,7 +163,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        // return $project;
+        $plot = Plot::where('project_id', $project->id)->first();
+        $plot->project_id = null;
+        $plot->save();
         $project->delete();
         return redirect()->action('ProjectController@index');
     }
@@ -215,9 +224,12 @@ class ProjectController extends Controller
     public function new_project(Request $request)
     {
         // step 1 to check if the customer is already registered
-        if ($request->method() === "GET") {
+        if (!($request->has('_token'))) {
             return view('project.forms.check_n_id');
         }
+        // if ($request->method() === "GET") {
+        //     return view('project.forms.check_n_id');
+        // }
         $person = new Person;
         // step 2 to check if the customer is already registered
         if ($request->check_n_id_form) {
@@ -379,7 +391,7 @@ class ProjectController extends Controller
             'last_rokhsa_issue_date' => ['nullable', 'string', new ValidDate],
             'other_doc_details' => 'string|nullable',
             // ----------------------------------------------------
-            'project_manager' => 'string|nullable',
+            'project_manager_id' => 'numeric|nullable',
             'project_coordinator' => 'string|nullable',
             // ----------------------------------------------------
             'arch_designed_by' => 'string|nullable',
@@ -420,16 +432,16 @@ class ProjectController extends Controller
             'total_project_price' => 'numeric|nullable',
             'total_project_cost' => 'numeric|nullable',
             // ----------------------------------------------------
-            'municipality_branche_id' => 'numeric|nullable',
-            'neighbor_id' => 'numeric|nullable',
-            'plan_id' => 'numeric|nullable',
-            'district_id' => 'numeric|nullable',
-            'street_id' => 'numeric|nullable',
-            'plot_id' => 'numeric|nullable',
-            'plot_no' => 'string|nullable',
-            'deed_id' => 'numeric|nullable',
-            'deed_no' => 'unique:projects|string|nullable',
-            'total_area' => 'numeric|nullable',
+            // 'municipality_branche_id' => 'numeric|nullable', // cnceld in db
+            // 'neighbor_id' => 'numeric|nullable', // cnceld in db
+            // 'plan_id' => 'numeric|nullable', // cnceld in db
+            // 'district_id' => 'numeric|nullable', // cnceld in db
+            // 'street_id' => 'numeric|nullable', // cnceld in db
+            'plot_id' => 'numeric|nullable', // 
+            // 'plot_no' => 'string|nullable', // cnceld in db
+            // 'deed_id' => 'numeric|nullable', // cnceld in db
+            // 'deed_no' => 'unique:projects|string|nullable', // cnceld in db
+            // 'total_area' => 'numeric|nullable', // cnceld in db
             'project_location' => 'string|nullable',
             // ----------------------------------------------------
             'notes' => 'string|nullable',

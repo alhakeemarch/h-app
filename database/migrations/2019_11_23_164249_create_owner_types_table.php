@@ -14,7 +14,7 @@ class CreateOwnerTypesTable extends Migration
     public function up()
     {
         Schema::create('owner_types', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('type_ar');
             $table->string('type_en')->nullable();
 

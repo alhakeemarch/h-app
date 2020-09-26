@@ -14,7 +14,7 @@ class CreateProjectDocsTable extends Migration
     public function up()
     {
         Schema::create('project_docs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
 
             // =============================

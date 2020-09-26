@@ -14,7 +14,7 @@ class CreatePersonDocsTable extends Migration
     public function up()
     {
         Schema::create('person_docs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
             // =============================
             // -----------------------------

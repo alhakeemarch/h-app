@@ -22,9 +22,11 @@
         <x-slot name='title'>{{__('rokhsa issue date')}}</x-slot>
         <x-slot name='input_value'>{{old('last_rokhsa_issue_date') ?? $project->last_rokhsa_issue_date}}</x-slot>
     </x-input>
-    <x-input name='project_manager' title="">
-        <x-slot name='type'>text</x-slot>
-        <x-slot name='title'>{{__('project manager')}}</x-slot>
-        <x-slot name='input_value'>{{old('project_manager') ?? $project->project_manager}}</x-slot>
-    </x-input>
+    <x-select name='project_manager_id' :resource=$person :list=$employees>
+        <x-slot name='option_name'>ar_name1</x-slot>
+        <x-slot name='title'>{{__('project_manager')}}</x-slot>
+        {{-- <x-slot name='is_disabled'>true</x-slot> --}}
+        {{-- <x-slot name='is_hidden'>true</x-slot> --}}
+        <x-slot name='is_required'>true</x-slot>
+    </x-select>
 </div>

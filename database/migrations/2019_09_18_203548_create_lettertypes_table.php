@@ -14,7 +14,7 @@ class CreateLettertypesTable extends Migration
     public function up()
     {
         Schema::create('lettertypes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
             // =============================
             // -----------------------------

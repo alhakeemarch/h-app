@@ -14,7 +14,7 @@ class CreateReceiptOutsTable extends Migration
     public function up()
     {
         Schema::create('receipt_outs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
 
             // =============================

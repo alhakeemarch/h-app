@@ -14,7 +14,7 @@ class CreateImportsTable extends Migration
     public function up()
     {
         Schema::create('imports', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
             // =============================
             // -----------------------------

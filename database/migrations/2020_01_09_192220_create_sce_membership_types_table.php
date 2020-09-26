@@ -14,7 +14,7 @@ class CreateSceMembershipTypesTable extends Migration
     public function up()
     {
         Schema::create('sce_membership_types', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
             $table->string('name_en')->nullable();
             $table->string('name_ar')->nullable();

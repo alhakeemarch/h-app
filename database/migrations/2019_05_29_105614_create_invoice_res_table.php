@@ -14,7 +14,7 @@ class CreateInvoiceResTable extends Migration
     public function up()
     {
         Schema::create('invoice_res', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
             // =============================
             // -----------------------------

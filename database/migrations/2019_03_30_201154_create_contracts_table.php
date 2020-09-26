@@ -14,9 +14,7 @@ class CreateContractsTable extends Migration
     public function up()
     {
         Schema::create('contracts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-
-
+            $table->bigIncrements('id')->unsigned();
             // =============================
             // -----------------------------
             $table->longText('notes')->nullable();

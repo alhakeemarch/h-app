@@ -14,7 +14,7 @@ class CreateSaudiCitiesTable extends Migration
     public function up()
     {
         Schema::create('saudi_cities', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('ar_region_name');
             $table->string('en_region_name');
             $table->string('ar_city_name');

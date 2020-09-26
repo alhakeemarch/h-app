@@ -14,7 +14,7 @@ class CreateMunicipalityBranchesTable extends Migration
     public function up()
     {
         Schema::create('municipality_branches', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->bigInteger('code')->nullable();
 
 

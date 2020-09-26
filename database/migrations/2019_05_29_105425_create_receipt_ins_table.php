@@ -14,7 +14,7 @@ class CreateReceiptInsTable extends Migration
     public function up()
     {
         Schema::create('receipt_ins', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
 
 

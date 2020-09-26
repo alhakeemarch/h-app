@@ -14,7 +14,7 @@ class CreateAllowedBuildingRatiosTable extends Migration
     public function up()
     {
         Schema::create('allowed_building_ratios', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->decimal('building_ratio');
 
 

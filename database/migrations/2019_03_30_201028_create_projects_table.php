@@ -15,7 +15,7 @@ class CreateProjectsTable extends Migration
     public function up()
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('project_no')->unique()->nullable();
             $table->string('project_name_ar')->nullable();
             $table->string('project_name_en')->nullable();
@@ -102,16 +102,17 @@ class CreateProjectsTable extends Migration
             $table->unsignedBigInteger('total_project_price')->nullable();
             $table->unsignedBigInteger('total_project_cost')->nullable();
             // -----------------------------
-            $table->foreignID('municipality_branche_id')->nullable();
-            $table->foreignId('neighbor_id')->nullable();
-            $table->foreignId('plan_id')->nullable();
-            $table->foreignId('district_id')->nullable();
-            $table->foreignId('street_id')->nullable();
-            $table->foreignID('plot_id')->nullable();
-            $table->string('plot_no')->nullable();
-            $table->foreignId('deed_id')->nullable();
-            $table->string('deed_no')->nullable();
-            $table->foreignId('total_area')->nullable();
+            // this all moved to plot tabel
+            // $table->foreignId('municipality_branche_id')->nullable()->references('id')->on('municipality_branches');
+            // $table->foreignId('neighbor_id')->nullable();
+            // $table->foreignId('plan_id')->nullable();
+            // $table->foreignId('district_id')->nullable();
+            // $table->foreignId('street_id')->nullable();
+            $table->foreignId('plot_id')->nullable();
+            // $table->string('plot_no')->nullable();
+            // $table->foreignId('deed_id')->nullable();
+            // $table->string('deed_no')->nullable();
+            // $table->foreignId('total_area')->nullable();
             $table->string('project_location')->nullable();
 
             // =============================
@@ -120,10 +121,10 @@ class CreateProjectsTable extends Migration
             $table->longText('private_notes')->nullable();
             $table->longText('created_at_note')->nullable();
             // -----------------------------
-            $table->foreignId('created_by_id')->references('id')->on('users')->nullable();
-            $table->string('created_by_name')->references('user_name')->on('users')->nullable();
-            $table->foreignId('last_edit_by_id')->references('id')->on('users')->nullable();
-            $table->string('last_edit_by_name')->references('user_name')->on('users')->nullable();
+            $table->foreignId('created_by_id')->references('id')->on('users');
+            $table->string('created_by_name')->references('user_name')->on('users');
+            $table->foreignId('last_edit_by_id')->nullable()->references('id')->on('users');
+            $table->string('last_edit_by_name')->nullable()->references('user_name')->on('users');
             // -----------------------------
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

@@ -14,7 +14,7 @@ class CreateGradeRanksTable extends Migration
     public function up()
     {
         Schema::create('grade_ranks', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
             $table->string('grade_en')->nullable();
             $table->string('grade_ar')->nullable();

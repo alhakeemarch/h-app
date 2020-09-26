@@ -3,10 +3,12 @@ $mytime = Carbon\Carbon::now();
 // echo $mytime->toDateTimeString();
 $name = $project->owner_name_ar;
 $n_id = $project->owner_national_id;
-$deed_no = $project->plot()->deed_no ?? 'num';
-$deed_date = $project->plot()->deed_no ?? 'num';
-$district_name = $project->district_id;
-$neighbor_name = $project->neighbor_id;
+$deed_no = $project->plot->deed_no;
+$deed_date = $project->plot->deed_date;
+$district_name = 'المنطقة';
+// $district_name = $project->plot()->first()->district()->first()->ar_name;
+$neighbor_name = 'الحي';
+// $neighbor_name = $project->plot()->first()->neighbor()->first()->ar_name;
 $responsable_name = $Project_manager->ar_name1.' '.$Project_manager->ar_name2.' '.$Project_manager->ar_name5 ;
 $responsable_jop_tital = $Project_manager->job_title;
 @endphp

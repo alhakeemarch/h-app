@@ -14,7 +14,7 @@ class CreateDbLogsTable extends Migration
     public function up()
     {
         Schema::create('db_logs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('table');
             $table->string('model');
             $table->string('Model_id');

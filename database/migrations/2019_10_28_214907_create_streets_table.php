@@ -14,7 +14,7 @@ class CreateStreetsTable extends Migration
     public function up()
     {
         Schema::create('streets', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->bigInteger('code')->default('0');
 
             $table->string('en_name')->nullable();

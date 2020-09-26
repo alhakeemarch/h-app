@@ -14,7 +14,7 @@ class CreateFileSpecialtiesTable extends Migration
     public function up()
     {
         Schema::create('file_specialties', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('specialty')->nullable();
             $table->string('description')->nullable();
             $table->string('description2')->nullable();

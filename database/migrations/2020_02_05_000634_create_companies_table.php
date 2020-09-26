@@ -14,7 +14,7 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->bigInteger('unified_code')->unique(); // رقم المميز 700
             $table->bigInteger('commercial_registration_no')->unique(); // رقم السجل
             $table->string('commercial_name'); // الإسم التجاري

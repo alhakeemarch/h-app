@@ -14,7 +14,7 @@ class CreateEndowmentsTable extends Migration
     public function up()
     {
         Schema::create('endowments', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
 
             //  ============================
