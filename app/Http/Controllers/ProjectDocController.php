@@ -23,7 +23,7 @@ class ProjectDocController extends Controller
      */
     public function index()
     {
-        $this->create_hakeem_pdf('projectDoc.tafweed2');
+        // $this->create_hakeem_pdf('projectDoc.tafweed2');
         // return view('projectDoc.tafweed');
     }
 
@@ -155,7 +155,7 @@ class ProjectDocController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function t_makhater(Request $request)
     {
-        return view('projectDoc.t_makhater');
+        // return view('projectDoc.t_makhater');
         $project = Project::findOrFail($request->project_id);
         $data = [
             'pdf_name' => 't_makhater',
@@ -170,6 +170,35 @@ class ProjectDocController extends Controller
         // Content
         $pdf_view = 'projectDoc.t_makhater';
         // -----------------------------------------------------------------
+        $newPDF::setHeaderCallback(function ($pdf) {
+            // top header logo
+            $pdf->Image(URL::asset('/img/amana-logo.jpg'), 90, 10, 35, '', 'JPG', '');
+            $pdf->SetFont('traditionalarabic', '', 12, '', false);
+            // set top right text
+            $pdf->Cell(0, 0, '', 0, 1, 'R', 0, '', 0);
+            $pdf->Cell(0, 0, '', 0, 1, 'R', 0, '', 0);
+            $pdf->Cell(0, 0, 'المملكة العربية السعودية', 0, 1, 'R', 0, '', 0);
+            $pdf->Cell(0, 0, 'وزارة الشؤون البلدية والقروية', 0, 1, 'R', 0, '', 0);
+            $pdf->Cell(0, 0, 'امانة منطقة المدينة المنورة', 0, 1, 'R', 0, '', 0);
+            $pdf->Cell(0, 0, 'الرمز(266\300)', 0, 1, 'R', 0, '', 0);
+            // background rectangel
+            $pdf->RoundedRect(10, 45, 190, 230, 5, '1111');
+        });
+        // -----------------------------------------------------------------
+        // Custom Footer
+        $newPDF::setFooterCallback(function ($pdf) {
+            // Position at 22 mm from bottom
+            $pdf->SetY(-18);
+            // Set font
+            $pdf->SetFont('helvetica', 'I', 8);
+            // Page number
+            $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
+            $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'M');
+            // image of footer
+            $pdf->Image(URL::asset('/img/amana-footer.jpg'), 10, 280, 190, '', 'JPG');
+            // $pdf->setCellHeightRatio(0.5);
+        });
+        // -----------------------------------------------------------------
         // set some language dependent data:
         $lg = array();
         $lg['a_meta_charset'] = 'UTF-8';
@@ -181,12 +210,15 @@ class ProjectDocController extends Controller
         $newPDF::SetAuthor('Hakeem-App');
         $newPDF::SetTitle('تفويض مساحة');
         $newPDF::SetSubject('تفويض مساحة');
-        $newPDF::SetMargins(15, 15, 15);
-        // $newPDF::SetFooterMargin(0);
+        #SetMargins(left, top, right = -1,, keepmargins = false) ⇒ Object
+        $newPDF::SetMargins(15, 50, 15);
+        // $newPDF::SetFooterMargin(PDF_MARGIN_FOOTER);
+        $newPDF::SetFooterMargin(0);
+        $newPDF::setCellHeightRatio(1.5);
         // $newPDF::setCellHeightRatio(1.2);
         // -----------------------------------------------------------------
         // set arabic font
-        $newPDF::SetFont('traditionalarabic', '', 12, '', false);
+        $newPDF::SetFont('al-mohanad', '', 14, '', false);
         // -----------------------------------------------------------------
         $newPDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
         $newPDF::AddPage('P', 'A4');
@@ -203,6 +235,7 @@ class ProjectDocController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function create_hakeem_pdf(array $data = [])
     {
+
         $pdf_name = $data['pdf_name'];
         $pdf_view = $data['view'];
         $project = Project::findOrFail($data['project_id']);

@@ -26,16 +26,11 @@ class CreatePlotsTable extends Migration
             $table->string('allowed_building_height')->nullable();
             $table->string('allowed_usage')->nullable();
             // -----------------------------
-            // $table->foreignId('municipality_branch_id')->nullable()->references('id')->on('municipality_branches')->unsigned();
-            // $table->foreignId('neighbor_id')->nullable()->references('id')->on('neighbors')->unsigned();
-            // $table->foreignId('plan_id')->nullable()->references('id')->on('plans')->unsigned();
-            // $table->foreignId('district_id')->nullable()->references('id')->on('districts')->unsigned();
-            // $table->foreignId('street_id')->nullable()->references('id')->on('streets')->unsigned();
-            $table->foreignId('municipality_branch_id')->nullable();
-            $table->foreignId('neighbor_id')->nullable();
-            $table->foreignId('plan_id')->nullable();
-            $table->foreignId('district_id')->nullable();
-            $table->foreignId('street_id')->nullable();
+            $table->foreignId('municipality_branch_id')->nullable()->references('id')->on('municipality_branches')->unsigned();
+            $table->foreignId('neighbor_id')->nullable()->references('id')->on('neighbors')->unsigned();
+            $table->foreignId('plan_id')->nullable()->references('id')->on('plans')->unsigned();
+            $table->foreignId('district_id')->nullable()->references('id')->on('districts')->unsigned();
+            $table->foreignId('street_id')->nullable()->references('id')->on('streets')->unsigned();
             // -----------------------------
             $table->foreignId('total_area')->nullable();
             // -----------------------------

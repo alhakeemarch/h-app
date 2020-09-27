@@ -50,8 +50,8 @@ Route::any('/f', function () {
         makeUser('admin');
         makeUser('fahd');
         makeUser('hanadi');
-        return 'done....!';
-        // return firstInsertion();
+        // return 'done....!';
+        return firstInsertion();
     }
 
 
@@ -167,13 +167,13 @@ function firstInsertion()
         array_push($feed_back, ['Plans records = ' => App\Plan::all()->count()]);
     }
     // -------------------------------------------------------------------
-    if (App\Http\Controllers\StreetController::firstInsertion() || false) {
-        array_push($feed_back, ['streets' => true]);
-        array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
-    } else {
-        array_push($feed_back, ['streets' => false]);
-        array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
-    }
+    // if (App\Http\Controllers\StreetController::firstInsertion() || false) {
+    //     array_push($feed_back, ['streets' => true]);
+    //     array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
+    // } else {
+    //     array_push($feed_back, ['streets' => false]);
+    //     array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
+    // }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\AllowedUsageController::firstInsertion()) {
         array_push($feed_back, ['allowedUsages' => true]);

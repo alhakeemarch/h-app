@@ -51,7 +51,11 @@
                 {{$project->deed_no}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('deed date')}}: </span>
-                يجب تعديل البرنامج</li>
+                @php
+                $a = $project->plot->deed_date;
+                @endphp
+                {{$a}}
+            </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('plot number')}}: </span>
                 {{$project->plot_no}}</li>
@@ -93,7 +97,10 @@
                 <form action="{{route('projectDoc.tafweed')}}" method="get">
                     @csrf
                     <input type="hidden" name="project_id" value="{{$project->id}}">
-                    <button type="submit" class="btn btn-link">print</button>
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i>
+                        {{-- <i class="fas fa-file-pdf"></i> --}}
+                    </button>
                 </form>
             </li>
             <li class="list-group-item d-flex justify-content-between">
@@ -101,7 +108,8 @@
                 <form action="{{route('projectDoc.tafweed_masaha')}}" method="get">
                     @csrf
                     <input type="hidden" name="project_id" value="{{$project->id}}">
-                    <button type="submit" class="btn btn-link">print</button>
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i></button>
                 </form>
             </li>
             <li class="list-group-item d-flex justify-content-between">
@@ -109,7 +117,8 @@
                 <form action="{{route('projectDoc.t_makhater')}}" method="get">
                     @csrf
                     <input type="hidden" name="project_id" value="{{$project->id}}">
-                    <button type="submit" class="btn btn-link">print</button>
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i></button>
                 </form>
             </li>
         </ul>

@@ -41,8 +41,8 @@ class Project extends Model
     // -----------------------------------------------------------------------------------------------------------------
     public function plot()
     {
-        return $this->belongsTo('\App\Plot');
-        // return $this->belongsTo(Plot::class);
+        // return $this->belongsTo('\App\Plot');
+        return $this->belongsTo(Plot::class);
         // return $this->hasOne(Plot::class);
     }
     // -----------------------------------------------------------------------------------------------------------------

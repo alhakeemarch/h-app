@@ -120,6 +120,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project, Request $request)
     {
+        // return $project->plot->deed_date;
+        // $a = $project->plot->deed_date;
+        // dd($project->plot->deed_date);
         return view('project.show')->with('project', $project);
     }
 
