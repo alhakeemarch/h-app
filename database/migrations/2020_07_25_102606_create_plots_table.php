@@ -22,9 +22,9 @@ class CreatePlotsTable extends Migration
             // -----------------------------
             $table->string('plot_no');
             $table->string('area')->nullable();
-            $table->string('allowed_building_ratio')->nullable();
-            $table->string('allowed_building_height')->nullable();
-            $table->string('allowed_usage')->nullable();
+            $table->string('allowed_building_ratio_id')->nullable();
+            $table->string('allowed_building_height_id')->nullable();
+            $table->string('allowed_usage_id')->nullable();
             // -----------------------------
             $table->foreignId('municipality_branch_id')->nullable()->references('id')->on('municipality_branches')->unsigned();
             $table->foreignId('neighbor_id')->nullable()->references('id')->on('neighbors')->unsigned();

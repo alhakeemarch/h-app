@@ -39,7 +39,7 @@
                 {{$project->owner_name_ar}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('mobile')}}: </span>
-                {{$project->mobile}}</li>
+                {{$project->person()->first()->mobile}}</li>
         </ul>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
@@ -48,29 +48,29 @@
         <ul class="list-group card-body">
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('deed number')}}: </span>
-                {{$project->deed_no}}</li>
+                {{$project->plot()->first()->deed_no}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('deed date')}}: </span>
-                @php
-                $a = $project->plot->deed_date;
-                @endphp
-                {{$a}}
+                {{$project->plot()->first()->deed_date}}
             </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('plot number')}}: </span>
-                {{$project->plot_no}}</li>
+                {{$project->plot()->first()->plot_no}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('total area')}}: </span>
-                {{$project->total_area}}</li>
+                {{$project->plot()->first()->area}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('neighbor_id')}}: </span>
-                {{$project->neighbor_id}}</li>
+                {{$project->plot()->first()->neighbor()->first()->ar_name}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('district_id')}}: </span>
-                {{$project->district_id}}</li>
+                {{$project->plot()->first()->district()->first()->ar_name}}</li>
             <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('plan_id')}}: </span>
-                {{$project->plan_id}}</li>
+                <span class="font-weight-bold">{{__('plan number')}}: </span>
+                {{$project->plot()->first()->plan()->first()->plan_no}}</li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="font-weight-bold">{{__('plan name')}}: </span>
+                {{$project->plot()->first()->plan()->first()->plan_ar_name}}</li>
         </ul>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
@@ -79,7 +79,8 @@
         <ul class="list-group card-body">
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('project manager')}}: </span>
-                {{$project->project_manager}}</li>
+                {{$project->project_manager()->first()->ar_name1 .' '.$project->project_manager()->first()->ar_name5}}
+            </li>
         </ul>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}

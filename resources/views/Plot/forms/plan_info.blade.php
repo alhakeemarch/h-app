@@ -38,8 +38,7 @@ $is_read_only = false;
         </select>
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
-
-    <x-select name='neighbor_id' :resource=$project :list=$neighbors>
+    <x-select name='neighbor_id' :resource=$plot :list=$neighbors>
         <x-slot name='option_name'>ar_name</x-slot>
         <x-slot name='title'>{{__('neighbor')}}</x-slot>
     </x-select>

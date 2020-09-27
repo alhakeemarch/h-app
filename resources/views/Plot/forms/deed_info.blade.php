@@ -26,8 +26,8 @@ $is_read_only = false;
         <label for="deed_no">{{__( 'deed')}} {{ __('number') }}
             <span class="small text-danger">({{__('required')}})</span>:</label>
         <input type="text" name="deed_no" class="form-control @error ('deed_no') is-invalid @enderror"
-            value="{{$new_deed_no ?? $plot->deed_no }}" placeholder="{{__( 'Deed Number')}}.."
-            @if($is_read_only)readonly @endif required>
+            value="{{$plot->deed_no ?? $new_deed_no}}" placeholder="{{__( 'Deed Number')}}.." @if($is_read_only)readonly
+            @endif required>
         @error('deed_no')
         <small class="text-danger"> {{$errors->first('deed_no')}} </small>
         @enderror

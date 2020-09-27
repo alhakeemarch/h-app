@@ -46,4 +46,11 @@ class Project extends Model
         // return $this->hasOne(Plot::class);
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function project_manager()
+    {
+        // return $this->belongsTo('\App\Plot');
+        // return $this->belongsTo(Person::class);
+        return $this->belongsTo(Person::class, 'project_manager_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 }

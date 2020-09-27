@@ -127,7 +127,7 @@ class PlotController extends Controller
      */
     public function update(Request $request, plot $plot)
     {
-
+        // return $request;
         $validatedData = $this->validatePlot($request);
         $last_edit_by_id = auth()->user()->id;
         $last_edit_by_name  = auth()->user()->user_name;
@@ -214,15 +214,17 @@ class PlotController extends Controller
             'deed_date' => ['required', new ValidHijriDate],
             'plot_no' => ['required', 'string'],
             'area' => 'nullable| numeric',
-            'allowed_building_ratio' => ['nullable', 'numeric'],
-            'allowed_building_height' => ['nullable', 'numeric'],
-            'allowed_usage' => ['nullable', 'numeric'],
-            'allowed_usage' => ['nullable', 'numeric'],
+            'allowed_building_ratio_id' => ['nullable', 'numeric'],
+            'allowed_building_height_id' => ['nullable', 'numeric'],
+            'allowed_usage_id' => ['nullable', 'numeric'],
             'plan_id' => [
                 'nullable', 'numeric', //new ValidPlan
             ],
             'district_id' => [
                 'nullable', 'numeric', //new ValidDistrict
+            ],
+            'neighbor_id' => [
+                'nullable', 'numeric', //new neighbor
             ],
             'municipality_branch_id' => [
                 'nullable', 'numeric', //new ValidMunicipalityBranch

@@ -90,7 +90,6 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        // project_manager_id 
 
         $plot = Plot::where('deed_no', $request->deed_no)->first();
         $validated_project = collect($this->validate_project($request));
@@ -349,6 +348,7 @@ class ProjectController extends Controller
             'project_no' => 'unique:projects|nullable',
             'project_name_ar' => 'string|required', // required
             'project_name_en' => 'string|nullable',
+            'person_id' => 'numeric|required',
             // ----------------------------------------------------
             'owner_id' => 'numeric|nullable',
             'owner_national_id' => 'numeric|starts_with:1,2|digits:10|nullable',
