@@ -7,6 +7,7 @@ use App\Person;
 use App\Plot;
 use App\Project;
 use App\ProjectDoc;
+use Carbon\Carbon;
 use PDF;
 // use App\Tcpdf\HakeemPDF;
 use \Illuminate\Support\Facades\View;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\URL;
 
 class ProjectDocController extends Controller
 {
+    private $is_tafweed = false;
     /**
      * Create a new controller instance.
      *
@@ -38,7 +40,7 @@ class ProjectDocController extends Controller
         // $this->create_hakeem_pdf('projectDoc.tafweed2');
         // return view('projectDoc.tafweed');
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for creating a new resource.
      *
@@ -48,7 +50,7 @@ class ProjectDocController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -59,7 +61,7 @@ class ProjectDocController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display the specified resource.
      *
@@ -70,7 +72,7 @@ class ProjectDocController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for editing the specified resource.
      *
@@ -81,7 +83,7 @@ class ProjectDocController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Update the specified resource in storage.
      *
@@ -93,7 +95,7 @@ class ProjectDocController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Remove the specified resource from storage.
      *
@@ -107,52 +109,28 @@ class ProjectDocController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function tafweed(Request $request)
     {
-        // return $request;
-        $project = Project::findOrFail($request->project_id);
-        $data = [
-            'pdf_name' => 'tafweed',
-            'view' => 'projectDoc.tafweed',
-            'project_id' => $request->project_id,
-        ];
-        return $this->create_hakeem_pdf($data);
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function tafweed_masaha(Request $request)
-    {
-        // return $request;
+        // data needed in document
         $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $data = [
             'project' => $project,
             'office_data' => $office_data,
         ];
-
-        // **********************************************************
-        $pdf_name = 'tafweed_masaha';
+        // creating pdf 
         $newPDF = new PDF();
         // Content
-        $pdf_view = 'projectDoc.tafweed_masaha';
+        $pdf_name = 'tafweed';
+        $pdf_view = 'projectDoc.tafweed';
+        $this->is_tafweed = true;
         // -----------------------------------------------------------------
-        // set some language dependent data:
-        $lg = array();
-        $lg['a_meta_charset'] = 'UTF-8';
-        $lg['a_meta_dir'] = 'rtl';
-        $lg['a_meta_language'] = 'ar';
-        $lg['w_page'] = 'page';
-        $newPDF::setLanguageArray($lg);
+        // setting a header and foooter 
+        $newPDF = $this->set_hakeem_header_footer($newPDF);
+        // setting main sittings
+        $newPDF = $this->set_common_settings($newPDF);
         // -----------------------------------------------------------------
-        $newPDF::SetAuthor('Hakeem-App');
-        $newPDF::SetTitle('تفويض مساحة');
-        $newPDF::SetSubject('تفويض مساحة');
-        $newPDF::SetMargins(15, 15, 15);
-        // $newPDF::SetFooterMargin(0);
-        $newPDF::setCellHeightRatio(1.5);
-        // -----------------------------------------------------------------
-        // set arabic font
-        $newPDF::SetFont('traditionalarabic', '', 12, '', false);
-        // -----------------------------------------------------------------
-        $newPDF::SetAutoPageBreak(TRUE, 0);
-        $newPDF::AddPage('P', 'A4');
+        // pdf title
+        $newPDF::SetTitle('تفويض');
+        $newPDF::SetSubject('تفويض');
         // -----------------------------------------------------------------
         $the_view = View::make($pdf_view)->with($data);
         $html = $the_view->render();
@@ -160,93 +138,42 @@ class ProjectDocController extends Controller
         $newPDF::lastPage();
         $newPDF::Output($pdf_name . '.pdf');
         exit;
-
-        // **********************************************************
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function tafweed_masaha(Request $request)
+    {
+        // data needed in document
+        $project = Project::findOrFail($request->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+        ];
+        // creating pdf 
+        $newPDF = new PDF();
+        // Content
+        $pdf_name = 'tafweed_masaha';
+        $pdf_view = 'projectDoc.tafweed_masaha';
+        $newPDF = $this->set_common_settings($newPDF);
+        // setting pdf title
+        $newPDF::SetTitle('تفويض مساحة');
+        $newPDF::SetSubject('تفويض مساحة');
+        // overriding som settings
+        $newPDF::SetMargins(15, 15, 15);
+        $newPDF::SetFont('al-mohanad', '', 9, '', false);
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output($pdf_name . '.pdf');
+        exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function t_makhater(Request $request)
     {
         // return view('projectDoc.t_makhater');
-        $project = Project::findOrFail($request->project_id);
-        $data = [
-            'pdf_name' => 't_makhater',
-            'view' => 'projectDoc.t_makhater',
-            'project_id' => $request->project_id,
-        ];
-
-        // **********************************************************
-        $pdf_name = 't_makhater';
-        $newPDF = new PDF();
-        // Content
-        $pdf_view = 'projectDoc.t_makhater';
-        // -----------------------------------------------------------------
-        $newPDF::setHeaderCallback(function ($pdf) {
-            // top header logo
-            $pdf->Image(URL::asset('/img/amana-logo.jpg'), 90, 10, 35, '', 'JPG', '');
-            $pdf->SetFont('traditionalarabic', '', 12, '', false);
-            // set top right text
-            $pdf->Cell(0, 0, '', 0, 1, 'R', 0, '', 0);
-            $pdf->Cell(0, 0, '', 0, 1, 'R', 0, '', 0);
-            $pdf->Cell(0, 0, 'المملكة العربية السعودية', 0, 1, 'R', 0, '', 0);
-            $pdf->Cell(0, 0, 'وزارة الشؤون البلدية والقروية', 0, 1, 'R', 0, '', 0);
-            $pdf->Cell(0, 0, 'امانة منطقة المدينة المنورة', 0, 1, 'R', 0, '', 0);
-            $pdf->Cell(0, 0, 'الرمز(266\300)', 0, 1, 'R', 0, '', 0);
-            // background rectangel
-            $pdf->RoundedRect(10, 45, 190, 230, 5, '1111');
-        });
-        // -----------------------------------------------------------------
-        // Custom Footer
-        $newPDF::setFooterCallback(function ($pdf) {
-            // Position at 22 mm from bottom
-            $pdf->SetY(-18);
-            // Set font
-            $pdf->SetFont('helvetica', 'I', 8);
-            // Page number
-            $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
-            $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'M');
-            // image of footer
-            $pdf->Image(URL::asset('/img/amana-footer.jpg'), 10, 280, 190, '', 'JPG');
-            // $pdf->setCellHeightRatio(0.5);
-        });
-        // -----------------------------------------------------------------
-        // set some language dependent data:
-        $lg = array();
-        $lg['a_meta_charset'] = 'UTF-8';
-        $lg['a_meta_dir'] = 'rtl';
-        $lg['a_meta_language'] = 'ar';
-        $lg['w_page'] = 'page';
-        $newPDF::setLanguageArray($lg);
-        // -----------------------------------------------------------------
-        $newPDF::SetAuthor('Hakeem-App');
-        $newPDF::SetTitle('تفويض مساحة');
-        $newPDF::SetSubject('تفويض مساحة');
-        #SetMargins(left, top, right = -1,, keepmargins = false) ⇒ Object
-        $newPDF::SetMargins(15, 50, 15);
-        // $newPDF::SetFooterMargin(PDF_MARGIN_FOOTER);
-        $newPDF::SetFooterMargin(0);
-        $newPDF::setCellHeightRatio(1.5);
-        // $newPDF::setCellHeightRatio(1.2);
-        // -----------------------------------------------------------------
-        // set arabic font
-        $newPDF::SetFont('al-mohanad', '', 14, '', false);
-        // -----------------------------------------------------------------
-        $newPDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-        $newPDF::AddPage('P', 'A4');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output($pdf_name . '.pdf');
-        exit;
-
-        // **********************************************************
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    // -----------------------------------------------------------------------------------------------------------------
-    public function t_soor(Request $request)
-    {
-        // return view('projectDoc.t_soor');
+        // data needed in document
         $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $data = [
@@ -254,12 +181,225 @@ class ProjectDocController extends Controller
             'office_data' => $office_data,
         ];
 
-        // **********************************************************
-        $pdf_name = 't_soor';
+        // creating pdf 
         $newPDF = new PDF();
         // Content
-        $pdf_view = 'projectDoc.t_soor';
+        $pdf_name = 't_makhater';
+        $pdf_view = 'projectDoc.t_makhater';
         // -----------------------------------------------------------------
+        // setting a header and foooter 
+        $newPDF = $this->set_amana_header_footer($newPDF);
+        // setting main sittings
+        $newPDF = $this->set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle('تعهد مخاطر');
+        $newPDF::SetSubject('تعهد مخاطر');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output($pdf_name . '.pdf');
+        exit;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function t_soor(Request $request)
+    {
+        // return view('projectDoc.t_soor');
+        // data needed in document
+        $project = Project::findOrFail($request->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+        ];
+        // creating pdf 
+        $newPDF = new PDF();
+        // Content
+        $pdf_name = 't_soor';
+        $pdf_view = 'projectDoc.t_soor';
+        // setting a header and foooter 
+        $newPDF = $this->set_amana_header_footer($newPDF);
+        // -----------------------------------------------------------------
+        // setting main sittings
+        $newPDF = $this->set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle('تعهد السور');
+        $newPDF::SetSubject('تعهد السور');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output($pdf_name . '.pdf');
+        exit;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function t_meyaah(Request $request)
+    {
+        // return view('projectDoc.t_meyaah');
+        // data needed in document
+        $project = Project::findOrFail($request->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+        ];
+        // creating pdf 
+        $newPDF = new PDF();
+        // Content
+        $pdf_name = 't_meyaah';
+        $pdf_view = 'projectDoc.t_meyaah';
+        // setting a header and foooter 
+        $newPDF = $this->set_page_no_footer($newPDF);
+        // -----------------------------------------------------------------
+        // setting main sittings
+        $newPDF = $this->set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle('تعهد المياه');
+        $newPDF::SetSubject('تعهد المياه');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output($pdf_name . '.pdf');
+        exit;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function report_empty_land(Request $request)
+    {
+        // return view('projectDoc.report_empty_land');
+        // data needed in document
+        $project = Project::findOrFail($request->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+        ];
+        // creating pdf 
+        $newPDF = new PDF();
+        // Content
+        $pdf_name = 'report_empty_land';
+        $pdf_view = 'projectDoc.report_empty_land';
+        // setting a header and foooter 
+        $newPDF = $this->set_hakeem_header_footer($newPDF);
+        // -----------------------------------------------------------------
+        // setting main sittings
+        $newPDF = $this->set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle('تعهد المياه');
+        $newPDF::SetSubject('تعهد المياه');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output($pdf_name . '.pdf');
+        exit;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function set_common_settings($newPDF)
+    {
+        // set some language dependent data:
+        $lg = array();
+        $lg['a_meta_charset'] = 'UTF-8';
+        $lg['a_meta_dir'] = 'rtl';
+        $lg['a_meta_language'] = 'ar';
+        $lg['w_page'] = 'page';
+        $newPDF::setLanguageArray($lg);
+        // -----------------------------------------------------------------
+        // main pdf setting
+        $newPDF::SetAuthor('Hakeem-App');
+        $newPDF::SetFooterMargin(0);
+        $newPDF::setCellHeightRatio(1.5);
+        // -----------------------------------------------------------------
+        // set arabic font
+        $newPDF::SetFont('al-mohanad', '', 12, '', false);
+        // -----------------------------------------------------------------
+        $newPDF::SetAutoPageBreak(TRUE, 0);
+        $newPDF::AddPage('P', 'A4');
+        // -----------------------------------------------------------------
+        return $newPDF;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function set_hakeem_header_footer($newPDF)
+    {
+        // Custom Header
+        $newPDF::setHeaderCallback(function ($pdf) {
+            // top header logo
+            $pdf->Image(URL::asset('/img/header.jpg'), 10, 4, 190, '', 'JPG', '');
+            // background logo
+            $pdf->Image(URL::asset('/img/bg-Logo-t.jpg'), 20, 70, 170, '', 'JPG');
+        });
+        // -----------------------------------------------------------------
+        // Custom Footer
+        $newPDF::setFooterCallback(function ($pdf) {
+            // -----------------------------------------------------------------
+            //  just for tafweed
+            if ($this->is_tafweed) {
+                // Position at 22 mm from bottom
+                $pdf->SetY(-22);
+                // Set font
+                $pdf->SetFont('freeserif', '', 12);
+                // text
+                $html = 'ملاحظة: هذا التفويض يخص هذه المعاملة فقط، وينتهي مفعوله بانتهاءالمعاملة لدى الامانة او الغاءه من احدالطرفين.';
+                // cell hight
+                $pdf->setCellHeightRatio(1.5);
+                // creating the cell
+                $pdf->Cell(0, 0, $html, 'T', true, 'R', 0, '', 0, false, 'B', 'M');
+            }
+            // -----------------------------------------------------------------
+            // Position at 22 mm from bottom
+            $pdf->SetY(-18);
+            // Set font
+            $pdf->SetFont('helvetica', 'I', 8);
+            // print date 
+            $data = 'printed at: ' . (Carbon::now())->toDateString();
+            $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
+            // Page number
+            $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
+            $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'B');
+            // image of footer
+            $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
+            // $pdf->setCellHeightRatio(0.5);
+        });
+        // -----------------------------------------------------------------
+        // seting page margin (L,T,R)
+        $newPDF::SetMargins(15, 35, 15);
+        // -----------------------------------------------------------------
+        return $newPDF;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function set_page_no_footer($newPDF)
+    {
+        // Custom Footer
+        $newPDF::setFooterCallback(function ($pdf) {
+
+            // Position at 22 mm from bottom
+            $pdf->SetY(-15);
+            // Set font
+            $pdf->SetFont('helvetica', 'I', 8);
+            // print date 
+            $data = 'printed at: ' . (Carbon::now())->toDateString();
+            $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
+            // Page number
+            $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
+            $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'B');
+        });
+        // -----------------------------------------------------------------
+        // seting page margin (L,T,R)
+        $newPDF::SetMargins(20, 20, 20);
+        // -----------------------------------------------------------------
+        return $newPDF;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function set_amana_header_footer($newPDF)
+    {
         $newPDF::setHeaderCallback(function ($pdf) {
             // top header logo
             $pdf->Image(URL::asset('/img/amana-logo.jpg'), 90, 10, 35, '', 'JPG', '');
@@ -289,55 +429,49 @@ class ProjectDocController extends Controller
             // $pdf->setCellHeightRatio(0.5);
         });
         // -----------------------------------------------------------------
-        // set some language dependent data:
-        $lg = array();
-        $lg['a_meta_charset'] = 'UTF-8';
-        $lg['a_meta_dir'] = 'rtl';
-        $lg['a_meta_language'] = 'ar';
-        $lg['w_page'] = 'page';
-        $newPDF::setLanguageArray($lg);
-        // -----------------------------------------------------------------
-        $newPDF::SetAuthor('Hakeem-App');
-        $newPDF::SetTitle('تفويض مساحة');
-        $newPDF::SetSubject('تفويض مساحة');
-        #SetMargins(left, top, right = -1,, keepmargins = false) ⇒ Object
+        // seting page margin (L,T,R)
         $newPDF::SetMargins(15, 50, 15);
-        // $newPDF::SetFooterMargin(PDF_MARGIN_FOOTER);
-        $newPDF::SetFooterMargin(0);
-        $newPDF::setCellHeightRatio(1.5);
-        // $newPDF::setCellHeightRatio(1.2);
         // -----------------------------------------------------------------
-        // set arabic font
-        $newPDF::SetFont('al-mohanad', '', 12, '', false);
-        // -----------------------------------------------------------------
-        $newPDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-        $newPDF::AddPage('P', 'A4');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output($pdf_name . '.pdf');
-        exit;
-
-        // **********************************************************
+        return $newPDF;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function create_hakeem_pdf(array $data = [])
+    public function to_arabic_numbers($html)
+    {
+        $text = strval($html);
+        // $numarr = array("۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹");
+        $a = preg_replace_callback(
+            '/[0-9]/',
+            function ($matches) {
+                $numarr = array(0 => "۰", 1 => "۱", 2 => "٢", 3 => "۳", 4 => '٤', 5 => '٥', 6 => '٦', 7 => '٧', 8 => '٨', 9 => '٩');
+                return $numarr[intval($matches[0])];
+            },
+            $text
+        );
+        return $a;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+    public function create_hakeem_pdf(array $data = []) // ! canceld
     {
 
         $pdf_name = $data['pdf_name'];
         $pdf_view = $data['view'];
+
+        // data needed in document
         $project = Project::findOrFail($data['project_id']);
-        // $Project_manager = Person::findOrFail($project->project_manager_id);
-
-        // return ($project->person());
-        // return ($project->plot()->id);
-        // dd($project->plot());
-
+        $office_data = OfficeData::findOrFail(1);
         $data = [
             'project' => $project,
-            // 'Project_manager' => $Project_manager,
+            'office_data' => $office_data,
         ];
 
         // ------------------------------------------------------------
@@ -457,20 +591,5 @@ class ProjectDocController extends Controller
         // $pdf::writeHTML($view->render(), true, false, true, false, '');
         // $pdf::Output('test.pdf');
         // $pdf::Output('test.pdf', 'D');
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function to_arabic_numbers($html)
-    {
-        $text = strval($html);
-        // $numarr = array("۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹");
-        $a = preg_replace_callback(
-            '/[0-9]/',
-            function ($matches) {
-                $numarr = array(0 => "۰", 1 => "۱", 2 => "٢", 3 => "۳", 4 => '٤', 5 => '٥', 6 => '٦', 7 => '٧', 8 => '٨', 9 => '٩');
-                return $numarr[intval($matches[0])];
-            },
-            $text
-        );
-        return $a;
     }
 }

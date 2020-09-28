@@ -87,10 +87,10 @@
 </div>
 <hr class="my-2">
 <div class="row container-fluid">
-    <div class="card col">
-        <div class="card-header">
-            document list
-            قائمة المستندات
+    <div class="card col-md-6">
+        <div class="card-header d-flex justify-content-between">
+            <span>document list</span>
+            <span>قائمة المستندات</span>
         </div>
         <ul class="card-body list-group">
             <li class="list-group-item d-flex justify-content-between">
@@ -131,8 +131,53 @@
                         <i class="fa fa-print" aria-hidden="true"></i></button>
                 </form>
             </li>
+            <li class="list-group-item d-flex justify-content-between">
+                تعهد المياه
+                <form action="{{route('projectDoc.t_meyaah')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i></button>
+                </form>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                تقرير ارض فضاء
+                <form action="{{route('projectDoc.report_empty_land')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i></button>
+                </form>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                غلاف المذكرة الإنشائية
+                <form action="{{route('projectDoc.t_meyaah')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i></button>
+                </form>
+            </li>
         </ul>
-        add new contract
+    </div>
+    <div class="card col-md-6">
+        <div class="card-header d-flex justify-content-between">
+            <span>contracts list</span>
+            <span>قائمة العقود</span>
+        </div>
+        <ul class="card-body list-group">
+            <li class="list-group-item d-flex justify-content-between">
+                عقد التصميم
+                <form action="{{route('projectDoc.tafweed')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i>
+                        {{-- <i class="fas fa-file-pdf"></i> --}}
+                    </button>
+                </form>
+            </li>
+        </ul>
     </div>
 </div>
 

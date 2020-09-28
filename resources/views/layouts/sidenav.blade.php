@@ -148,6 +148,11 @@
         </div>
     </a>
     @if(auth()->user()->is_admin)
+    <a class="" href="{{route ('officeData.index')}}">
+        <div class="sidebar-item {{ (request()->is('officeData*')) ? 'active' : '' }}">
+            office data
+        </div>
+    </a>
     <a class="" href="{{route ('country.index')}}">
         <div class="sidebar-item {{ (request()->is('country*')) ? 'active' : '' }}">
             countries

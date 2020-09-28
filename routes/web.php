@@ -262,6 +262,13 @@ function firstInsertion()
         array_push($feed_back, ['Employees' => false]);
         array_push($feed_back, ['Employees records = ' => App\Person::all()->where('is_employee')->count()]);
     }
+    if (App\Http\Controllers\OfficeDataController::firstInsertion()) {
+        array_push($feed_back, ['OfficeDatas' => true]);
+        array_push($feed_back, ['OfficeDatas records = ' => App\Person::all()->count()]);
+    } else {
+        array_push($feed_back, ['OfficeDatas' => false]);
+        array_push($feed_back, ['OfficeDatas records = ' => App\Person::all()->count()]);
+    }
 
 
     // -------------------------------------------------------------------
@@ -325,6 +332,8 @@ Route::group(['prefix' => 'projectDoc'], function () {
     Route::any('tafweed_masaha', 'ProjectDocController@tafweed_masaha')->name('projectDoc.tafweed_masaha');
     Route::any('t_makhater', 'ProjectDocController@t_makhater')->name('projectDoc.t_makhater');
     Route::any('t_soor', 'ProjectDocController@t_soor')->name('projectDoc.t_soor');
+    Route::any('t_meyaah', 'ProjectDocController@t_meyaah')->name('projectDoc.t_meyaah');
+    Route::any('report_empty_land', 'ProjectDocController@report_empty_land')->name('projectDoc.report_empty_land');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'file_folder'], function () {
@@ -386,6 +395,7 @@ Route::resources([
     'lettertype' => 'LettertypeController',
 
     //  جداول لحفظ الداتا
+    'officeData' => 'OfficeDataController',
     'country' => 'CountryController',
     'country' => 'CountryController',
     'saudiCity' => 'SaudiCityController',

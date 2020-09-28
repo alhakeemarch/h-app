@@ -14,7 +14,8 @@ class OfficeDataController extends Controller
      */
     public function index()
     {
-        //
+        $offices = OfficeData::all();
+        return view('officeData.index')->with(['offices' => $offices]);
     }
 
     /**
@@ -81,5 +82,28 @@ class OfficeDataController extends Controller
     public function destroy(OfficeData $officeData)
     {
         //
+    }
+    public static function firstInsertion()
+    {
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->name;
+        $officeDatas = array(
+            [
+                'name_ar' => 'عبدالرزاق حكيم للإستشارات الهندسية',
+                'phone ' => '920020544',
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+
+        );
+        if (OfficeData::all()->count() >= count($officeDatas)) {
+            return false;
+        }
+        // -------------------------------------
+        foreach ($officeDatas as $officeData) {
+            $new_type = new OfficeData();
+            $new_type->create($officeData);
+        }
+        return true;
     }
 }

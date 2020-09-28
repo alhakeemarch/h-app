@@ -78,6 +78,12 @@
   <table style="border: none;">
     <tr style="border: none;">
       <td style="border: none;"></td>
+      <td style="border: none;" class="txt-center">
+        المقر بما فيه
+      </td>
+    </tr>
+    <tr style="border: none;">
+      <td style="border: none;"></td>
       <td style="border: none;">الإسم:
         {{$project->owner_name_ar}}
       </td>

@@ -7,7 +7,13 @@
 </head>
 
 <body>
-    <h1 class="txt-center">تفويض</h1>
+    <table>
+        <tr>
+            <td class="main-title txt-center">
+                تفويض
+            </td>
+        </tr>
+    </table>
 
     <table>
         <span>التاريخ:</span>
@@ -34,8 +40,10 @@
             الأمانة إن وجد).</span>
     </p>
 
-    <p>أخرى:(................................................................) </p>
-    <div></div>
+    <p>أخرى:
+        (.........................................................................................................................)
+    </p>
+
     <table>
         <tr>
             <td class="title"> وأتعهد بما يلي:</td>
@@ -53,22 +61,30 @@
             التفويض من الأمانة وأن المكتب وحده المسئول عن استلام هذه الوثائق والمستندات والمخططات.
         </li>
     </ol>
-    <div></div>
     <div class="txt-center">وعليه جرى التوقيع</div>
-    <hr>
-    <div></div>
+
     <table>
         <tr>
-            <td colspan="5"> <span class="txt-bold">اسم المفوض: </span> <span>{{$project->owner_name_ar}}</span>
+            <td colspan="7">
+                <hr>
             </td>
-            <td><span class="txt-bold highlight"> التوقيع:</span></td>
-            <td></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <span class="txt-bold">اسم المفوض:</span>
+                <span>{{$project->owner_name_ar}}</span>
+            </td>
+            <td colspan="2">
+                <span class="txt-bold highlight">التوقيع:</span>
+                <span> ....................... </span>
+            </td>
         </tr>
     </table>
-    <p>
-        في حالة الوكيل
-    </p>
+    <br><br>
     <table>
+        <tr>
+            <td colspan="7">في حالة الوكيل</td>
+        </tr>
         <tr>
             <td>رقم الوكالة</td>
             <td colspan="2"></td>
@@ -78,16 +94,23 @@
             <td></td>
         </tr>
     </table>
-    <p>أقر أنا الموضح اسمي ادناه بأن الشخص المفوض قام بالتوقيع أمامي :</p>
+    <br><br>
     <table>
         <tr>
-            <td colspan="2"> <span class="txt-bold">الاسم: م.</span>
+            <td colspan="7">
+                أقر أنا الموضح اسمي ادناه بأن الشخص المفوض قام بالتوقيع أمامي :
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3"> <span class="txt-bold">الاسم: م.</span>
                 <span>{{$project->project_manager->ar_name1.' '.$project->project_manager->ar_name2 .' '.$project->project_manager->ar_name5}}</span>
             </td>
-            <td colspan="2"> <span class="txt-bold">الصفة:</span>
+            <td colspan="2">
+                <span class="txt-bold">الصفة:</span>
                 <span>{{$project->project_manager->job_title}}</span></td>
-            <td><span class="txt-bold"> التوقيع:</span></td>
-            <td></td>
+            <td colspan="2"><span class="txt-bold">التوقيع:</span>
+                <span> ...................... </span>
+            </td>
         </tr>
     </table>
     <div></div>
@@ -97,16 +120,7 @@
             <td>الختم المعتمد للمكتب</td>
         </tr>
     </table>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
 
-
-    <hr style="line-height: 1px;">
-    <p style="font-size: 11px; line-height: 3px;">
-        ملاحظة: هذا التفويض يخص هذه المعاملة فقط، وينتهي مفعوله بانتهاءالمعاملة لدى الأمانةأو إلغاءه من أحدالطرفين.
-    </p>
 
 </body>
 

@@ -394,7 +394,7 @@ class ProjectController extends Controller
             'last_rokhsa_issue_date' => ['nullable', 'string', new ValidDate],
             'other_doc_details' => 'string|nullable',
             // ----------------------------------------------------
-            'project_manager_id' => 'numeric|nullable',
+            'project_manager_id' => 'numeric|nullable|required',
             'project_coordinator' => 'string|nullable',
             // ----------------------------------------------------
             'arch_designed_by' => 'string|nullable',
