@@ -76,6 +76,7 @@ class CreatePeopleTable extends Migration
             // -----------------------------
             $table->string('id_job_title')->nullable();
             $table->string('job_title')->nullable();
+            $table->bigInteger('job_level')->nullable();
             $table->string('job_division')->nullable();
             $table->string('job_position')->nullable();
             $table->string('current_project')->nullable();

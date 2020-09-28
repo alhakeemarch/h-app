@@ -43,7 +43,7 @@ class CreateProjectsTable extends Migration
             $table->string('representative_authorization_expire_date')->nullable();
             $table->text('extra_representatives_list')->nullable();
             // -----------------------------
-            $table->string('project_status')->nullable();
+            $table->string('project_status_id')->nullable()->references('id')->on('project_statuses');
             $table->string('project_type')->nullable();
             $table->string('project_assign_to_user')->nullable();
             $table->string('project_arch_hight')->nullable();

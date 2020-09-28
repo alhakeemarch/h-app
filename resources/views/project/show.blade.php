@@ -122,6 +122,15 @@
                         <i class="fa fa-print" aria-hidden="true"></i></button>
                 </form>
             </li>
+            <li class="list-group-item d-flex justify-content-between">
+                تعهد السور
+                <form action="{{route('projectDoc.t_soor')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i></button>
+                </form>
+            </li>
         </ul>
         add new contract
     </div>

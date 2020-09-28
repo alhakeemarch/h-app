@@ -65,7 +65,7 @@ class ProjectController extends Controller
     public function create(Request $request)
     {
         $person = Person::findOrFail($request['person']);
-        $employees = $person->all()->where('is_employee', true)->reverse();
+        $employees = $person->all()->where('job_level', '>=', 5)->reverse();
         $plot = Plot::findOrFail($request['plot']);
         // return $plot;
         $project = new Project;

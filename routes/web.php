@@ -324,6 +324,7 @@ Route::group(['prefix' => 'projectDoc'], function () {
     Route::any('tafweed', 'ProjectDocController@tafweed')->name('projectDoc.tafweed');
     Route::any('tafweed_masaha', 'ProjectDocController@tafweed_masaha')->name('projectDoc.tafweed_masaha');
     Route::any('t_makhater', 'ProjectDocController@t_makhater')->name('projectDoc.t_makhater');
+    Route::any('t_soor', 'ProjectDocController@t_soor')->name('projectDoc.t_soor');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'file_folder'], function () {

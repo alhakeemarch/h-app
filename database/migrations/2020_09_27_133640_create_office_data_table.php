@@ -81,8 +81,8 @@ class CreateOfficeDataTable extends Migration
             $table->foreignId('cco_id')->nullable()->references('id')->on('people'); // CCO—Chief Customer Officer
             //  -----------------------------
             $table->integer('uni_700_no')->nullable();
-            $table->bigInteger('commercial_registration_no')->unique(); // رقم السجل
-            $table->string('commercial_name'); // الإسم التجاري
+            $table->bigInteger('commercial_registration_no')->nullable()->unique(); // رقم السجل
+            $table->string('commercial_name')->nullable(); // الإسم التجاري
             $table->string('headquarter')->nullable(); // المقر الرئيسي
             $table->string('issue_date')->nullable(); // تاريخ إصدار السجل
             $table->string('end_date')->nullable(); // تاريخ إنتهاء السجل
@@ -99,9 +99,9 @@ class CreateOfficeDataTable extends Migration
             $table->string('SEC_license_no_4')->nullable();; // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
             $table->string('SEC_license_no_5')->nullable();; // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
             //  -----------------------------
-            $table->string('shop_open_license_no'); // رقم رخصة فتح المحل
-            $table->string('htsd_uni_no'); // رقم المنشأة في مكتب العمل
-            $table->string('gosi_uni_no'); // رقم المنشأة في التأمنيات الإجتماعية
+            $table->string('shop_open_license_no')->nullable(); // رقم رخصة فتح المحل
+            $table->string('htsd_uni_no')->nullable(); // رقم المنشأة في مكتب العمل
+            $table->string('gosi_uni_no')->nullable(); // رقم المنشأة في التأمنيات الإجتماعية
             //  -----------------------------
             $table->string('other1')->nullable();
             $table->string('other2')->nullable();
@@ -130,8 +130,8 @@ class CreateOfficeDataTable extends Migration
             //  -----------------------------
             $table->foreignId('created_by_id')->references('id')->on('users');
             $table->string('created_by_name')->references('user_name')->on('users');
-            $table->foreignId('last_edit_by_id')->references('id')->on('users')->nullable();
-            $table->string('last_edit_by_name')->references('user_name')->on('users')->nullable();
+            $table->foreignId('last_edit_by_id')->nullable()->references('id')->on('users');
+            $table->string('last_edit_by_name')->nullable()->references('user_name')->on('users');
             //  -----------------------------
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

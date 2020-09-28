@@ -8,12 +8,12 @@
         box-sizing: border-box;
     }
 
-    h1 {
+    .main-title {
         font-family: "ptboldheading", "Times New Roman", Times, serif;
-        font-size: 200%;
+        font-size: 150%;
+        text-align: center;
     }
 
-    h3,
     .title {
         font-weight: bold;
         font-size: 130%;
@@ -22,13 +22,10 @@
         line-height: 140%;
     }
 
-    table {
-        /* border: 1px, solid, black; */
-        /* width: 100%; */
-    }
 
-    td {
-        /* border: 1px, solid, black; */
+    .bordered {
+        border: 1px, solid, black;
+        border-collapse: collapse;
     }
 
     .txt-center {
@@ -43,6 +40,19 @@
     .txt-bold {
         font-weight: bold;
         font-size: 110%;
+    }
+
+    .bg-blue-1 {
+        background-color: #92cddc;
+    }
+
+    .bg-green-1 {
+        /* background-color: rgb(220, 243, 228); */
+        background-color: rgb(235, 241, 222);
+    }
+
+    .bg-green-2 {
+        background-color: rgb(196, 215, 155);
     }
 
 </style>
