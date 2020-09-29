@@ -87,7 +87,7 @@ class ProjectStatusController extends Controller
     {
         $created_by_id = auth()->user()->id;
         $created_by_name = auth()->user()->name;
-        $officeDatas = array(
+        $project_statuses = array(
             [
                 'name_ar' => 'التعاقد',
                 'name_en ' => 'contracting',
@@ -109,15 +109,169 @@ class ProjectStatusController extends Controller
                 'created_by_id' => $created_by_id,
                 'created_by_name' => $created_by_name,
             ],
+            [
+                'name_ar' => 'انتظار موافقة العميل على الفكرة',
+                'name_en ' => 'Customer approval',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'التقديم لإعتماد الفكرة',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'اصدار موافقات اضافية',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'المخططات النهائية',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'التقديم للإعتماد',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'ملاحظات قبل الاعتماد',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'رسوم حكومية',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'طباعة الرخصة',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'طباعة المخططات للعميل',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'مشروع منتهي مكتمل',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'مشروع متوقف بناء على طلب العميل',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'مشروع متوقف بسبب فني',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'مشروع متوقف بسبب الاشتراطات',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'مشروع متوقف في انتظار موافقات حكومية',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'مشروع متوقف في انتظار اجراءات حكومية',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'مشروع متوقف بسبب خلاف مالي',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'مشروع متوقف لسداد دفعات المكتب',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'مشروع متوقف لعدم مراجعة العميل',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'مشروع متوقف لعدم مراجعة العميل',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'ملغي بناء على طلب العميل',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'ملغي بسبب خلاف مع العميل',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'ملغي',
+                'name_en ' => '',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
 
         );
-        if (OfficeData::all()->count() >= count($officeDatas)) {
+        if (ProjectStatus::all()->count() >= count($project_statuses)) {
             return false;
         }
         // -------------------------------------
-        foreach ($officeDatas as $officeData) {
-            $new_type = new OfficeData();
-            $new_type->create($officeData);
+        foreach ($project_statuses as $project_status) {
+            $new_type = new ProjectStatus();
+            $new_type->create($project_status);
         }
         return true;
     }

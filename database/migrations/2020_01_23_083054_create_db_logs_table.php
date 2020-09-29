@@ -15,11 +15,13 @@ class CreateDbLogsTable extends Migration
     {
         Schema::create('db_logs', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('table');
-            $table->string('model');
-            $table->string('Model_id');
-            $table->string('action');
-            $table->string('sql');
+            $table->string('table')->nullable();
+            $table->string('model')->nullable();
+            $table->string('Model_id')->nullable();
+            $table->string('action')->nullable();
+            $table->string('request')->nullable();
+            $table->string('sql')->nullable();
+            $table->string('description')->nullable();
 
 
 

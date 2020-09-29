@@ -15,6 +15,33 @@ class CreateContractsTable extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
+            $table->foreignId('project_id')->references('id')->on('projects');
+            $table->string('period')->nullable();
+            $table->string('period_scale')->nullable(); // D, M, Y
+            // -----------------------------
+            $table->decimal('cost', 12, 2)->nullable();
+            $table->decimal('vat_percentage', 12, 2)->nullable();
+            $table->decimal('vat_value', 12, 2)->nullable();
+            $table->decimal('price_withe_vat', 12, 2)->nullable();
+            // -----------------------------
+            $table->decimal('tax_1', 12, 2)->nullable();
+            $table->decimal('tax_2', 12, 2)->nullable();
+            $table->decimal('tax_3', 12, 2)->nullable();
+            $table->decimal('tax_4', 12, 2)->nullable();
+            $table->decimal('tax_5', 12, 2)->nullable();
+            $table->decimal('price_withe_vat_and_taxes', 12, 2)->nullable();
+            // -----------------------------
+            $table->decimal('visit_fee', 12, 2)->nullable();
+            $table->decimal('monthly_fee', 12, 2)->nullable();
+            // -----------------------------
+            $table->longText('fields')->nullable();
+            $table->longText('text')->nullable();
+            $table->longText('html')->nullable();
+            $table->longText('html_1')->nullable();
+            // -----------------------------
+
+
+
             // =============================
             // -----------------------------
             $table->longText('notes')->nullable();

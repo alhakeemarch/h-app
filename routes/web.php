@@ -262,12 +262,29 @@ function firstInsertion()
         array_push($feed_back, ['Employees' => false]);
         array_push($feed_back, ['Employees records = ' => App\Person::all()->where('is_employee')->count()]);
     }
+    // -------------------------------------------------------------------
     if (App\Http\Controllers\OfficeDataController::firstInsertion()) {
         array_push($feed_back, ['OfficeDatas' => true]);
-        array_push($feed_back, ['OfficeDatas records = ' => App\Person::all()->count()]);
+        array_push($feed_back, ['OfficeDatas records = ' => App\OfficeData::all()->count()]);
     } else {
         array_push($feed_back, ['OfficeDatas' => false]);
-        array_push($feed_back, ['OfficeDatas records = ' => App\Person::all()->count()]);
+        array_push($feed_back, ['OfficeDatas records = ' => App\OfficeData::all()->count()]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\ProjectStatusController::firstInsertion()) {
+        array_push($feed_back, ['projectStatus' => true]);
+        array_push($feed_back, ['projectStatus records = ' => App\ProjectStatus::all()->count()]);
+    } else {
+        array_push($feed_back, ['projectStatus' => false]);
+        array_push($feed_back, ['projectStatus records = ' => App\ProjectStatus::all()->count()]);
+    }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\ContractTypeController::firstInsertion()) {
+        array_push($feed_back, ['contractTypes' => true]);
+        array_push($feed_back, ['contractTypes records = ' => App\ContractType::all()->count()]);
+    } else {
+        array_push($feed_back, ['contractTypes' => false]);
+        array_push($feed_back, ['contractTypes records = ' => App\ContractType::all()->count()]);
     }
 
 
@@ -334,6 +351,7 @@ Route::group(['prefix' => 'projectDoc'], function () {
     Route::any('t_soor', 'ProjectDocController@t_soor')->name('projectDoc.t_soor');
     Route::any('t_meyaah', 'ProjectDocController@t_meyaah')->name('projectDoc.t_meyaah');
     Route::any('report_empty_land', 'ProjectDocController@report_empty_land')->name('projectDoc.report_empty_land');
+    Route::any('str_notes_cover', 'ProjectDocController@str_notes_cover')->name('projectDoc.str_notes_cover');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'file_folder'], function () {

@@ -65,6 +65,10 @@ class CreatePlotsTable extends Migration
             $table->string('west_border_chamfer')->nullable();
             $table->string('west_border_note')->nullable();
             // -----------------------------
+            $table->string('soil_report_laboratory_name')->nullable();
+            $table->string('soil_report_no')->nullable();
+            $table->string('soil_report_date')->nullable();
+            $table->text('soil_report_notes')->nullable();
 
 
             // =============================

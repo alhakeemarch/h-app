@@ -270,6 +270,39 @@ class ProjectDocController extends Controller
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function str_notes_cover(Request $request)
+    {
+        // return view('projectDoc.str_notes_cover');
+        // data needed in document
+        $project = Project::findOrFail($request->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+        ];
+        // creating pdf 
+        $newPDF = new PDF();
+        // Content
+        $pdf_name = 'str_notes_cover';
+        $pdf_view = 'projectDoc.str_notes_cover';
+        // setting a header and foooter 
+        $newPDF = $this->set_hakeem_header_footer($newPDF);
+        // -----------------------------------------------------------------
+        // setting main sittings
+        $newPDF = $this->set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle('غلاف المذكرة الإنشائية');
+        $newPDF::SetSubject('غلاف المذكرة الإنشائية');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output($pdf_name . '.pdf');
+        exit;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function report_empty_land(Request $request)
     {
         // return view('projectDoc.report_empty_land');
