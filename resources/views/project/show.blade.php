@@ -150,11 +150,20 @@
                 </form>
             </li>
             <li class="list-group-item d-flex justify-content-between">
+                طلب ربط رخصة بالقرار المساحي
+                <form action="{{route('projectDoc.t_meyaah')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button disabled type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i></button>
+                </form>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
                 غلاف المذكرة الإنشائية
                 <form action="{{route('projectDoc.t_meyaah')}}" method="get">
                     @csrf
                     <input type="hidden" name="project_id" value="{{$project->id}}">
-                    <button type="submit" class="btn btn-link">print |
+                    <button disabled type="submit" class="btn btn-link">print |
                         <i class="fa fa-print" aria-hidden="true"></i></button>
                 </form>
             </li>

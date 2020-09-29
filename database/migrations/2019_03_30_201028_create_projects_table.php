@@ -30,6 +30,10 @@ class CreateProjectsTable extends Migration
             $table->text('extra_owners_list')->nullable();
             $table->text('extra_owners_info')->nullable();
             // -----------------------------
+            $table->foreignId('previous_person_id')->nullable()->references('id')->on('people');
+            $table->foreignId('previous_owner_id')->nullable();
+            $table->foreignId('previous_owner_type')->nullable();
+            // -----------------------------
             $table->foreignId('representative_id')->nullable()->references('id')->on('people');
             $table->foreignId('representative_national_id')->nullable();
             $table->string('representative_type')->nullable(); // وكيل شرعي - مفوض - ناظر الوقف - ولي على قصر - 
@@ -102,19 +106,8 @@ class CreateProjectsTable extends Migration
             $table->unsignedBigInteger('total_project_price')->nullable();
             $table->unsignedBigInteger('total_project_cost')->nullable();
             // -----------------------------
-            // this all moved to plot tabel
-            // $table->foreignId('municipality_branche_id')->nullable()->references('id')->on('municipality_branches');
-            // $table->foreignId('neighbor_id')->nullable();
-            // $table->foreignId('plan_id')->nullable();
-            // $table->foreignId('district_id')->nullable();
-            // $table->foreignId('street_id')->nullable();
             $table->foreignId('plot_id')->nullable();
-            // $table->string('plot_no')->nullable();
-            // $table->foreignId('deed_id')->nullable();
-            // $table->string('deed_no')->nullable();
-            // $table->foreignId('total_area')->nullable();
             $table->string('project_location')->nullable();
-
             // =============================
             // -----------------------------
             $table->longText('notes')->nullable();

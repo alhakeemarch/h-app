@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectStatusesTable extends Migration
+class CreateContractProjectTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateProjectStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('project_statuses', function (Blueprint $table) {
+        Schema::create('contract_project', function (Blueprint $table) {
             $table->id();
-            $table->string('name_ar');
-            $table->string('name_en')->nullable();
+            $table->foreignId('project_id')->references('id')->on('projects');
+            $table->foreignId('contract_id')->references('id')->on('contracts');
+            $table->foreignId('contract_type_id')->references('id')->on('contract_types');
             $table->string('description')->nullable();
+            
 
             // =============================
             // -----------------------------
@@ -42,6 +44,6 @@ class CreateProjectStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_statuses');
+        Schema::dropIfExists('contract_project');
     }
 }

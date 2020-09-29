@@ -274,6 +274,7 @@ php artisan make:model Project -a
 php artisan make:model ProjectDoc -a
 php artisan make:model Task -a
 php artisan make:model Contract -a
+php artisan make:model ContractType -a
 php artisan make:model Contractfield -a
 
 php artisan make:model Plot -a
@@ -310,7 +311,7 @@ php artisan make:model MunicipalityBranch -a  // البلدية الفرعية
 php artisan make:model AllowedBuildingRatio -a  // نسبة البناء
 php artisan make:model AllowedBuildingHeight -a  // الإرتفاعات
 php artisan make:model AllowedUsage -a  // الإستخدامات
-php artisan make:model ProjectStatus -a  // الإستخدامات
+php artisan make:model ProjectStatus -a  // حالة المشروع
 php artisan make:model OwnerType -a  // نوع المالك
 php artisan make:model GradeRank -a  // تقدير التخرج
 php artisan make:model SceMembershipType -a  // نوع العضوية بالهيئة السعودية للمهندسين
@@ -318,6 +319,9 @@ php artisan make:model Bank -a  // قائمة البنوك
 php artisan make:model UserType -a  // قائمة انواع المستخدمين
 php artisan make:model FileSpecialty -a  // قائمة انواع المستخدمين
 
+============== 
+لعمل علاقة Many to many
+php artisan make:migration create_contract_project_table --create contract_project
 ============== 
 # to do
 php artisan make:model DbLog -a  // الحركات في قاعدة البيانات

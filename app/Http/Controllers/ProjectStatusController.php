@@ -82,4 +82,43 @@ class ProjectStatusController extends Controller
     {
         //
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function firstInsertion()
+    {
+        $created_by_id = auth()->user()->id;
+        $created_by_name = auth()->user()->name;
+        $officeDatas = array(
+            [
+                'name_ar' => 'التعاقد',
+                'name_en ' => 'contracting',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'اعمال مساحية',
+                'name_en ' => 'survey work',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+            [
+                'name_ar' => 'فكرة',
+                'name_en ' => 'concept',
+                'description ' => null,
+                'created_by_id' => $created_by_id,
+                'created_by_name' => $created_by_name,
+            ],
+
+        );
+        if (OfficeData::all()->count() >= count($officeDatas)) {
+            return false;
+        }
+        // -------------------------------------
+        foreach ($officeDatas as $officeData) {
+            $new_type = new OfficeData();
+            $new_type->create($officeData);
+        }
+        return true;
+    }
 }
