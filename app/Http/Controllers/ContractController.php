@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Contract;
+use App\OfficeData;
+use App\Project;
+use DateTime;
+use PDF as TCPDF;
 use Illuminate\Http\Request;
+use \Illuminate\Support\Facades\View;
 
 class ContractController extends Controller
 {
@@ -82,5 +87,45 @@ class ContractController extends Controller
     public function destroy(Contract $contract)
     {
         //
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function design_contract(Request $request)
+    {
+        // return view('contract.design_contract');
+
+        $project = Project::findOrFail($request->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_tame($project);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'project_tame' => $project_tame,
+            'date_and_time' => $date_and_time,
+        ];
+        // Content
+        $doc_name = 'tafweed';
+        $pdf_view = 'contract.design_contract';
+
+        // creating pdf 
+        $newPDF = new TCPDF();
+        // -----------------------------------------------------------------
+        // setting a header and foooter 
+        $newPDF = ProjectDocController::set_hakeem_header_footer($newPDF);
+        // setting main sittings
+        $newPDF = ProjectDocController::set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle('عقد تصميم');
+        $newPDF::SetSubject('عقد تصميم');
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output($doc_name . '.pdf');
+        exit;
     }
 }

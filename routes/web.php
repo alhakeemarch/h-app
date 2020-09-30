@@ -362,6 +362,10 @@ Route::group(['prefix' => 'projectDoc'], function () {
     Route::any('str_notes_cover', 'ProjectDocController@str_notes_cover')->name('projectDoc.str_notes_cover');
 });
 // -----------------------------------------------------------------------------------------------------------------
+Route::group(['prefix' => 'contract'], function () {
+    Route::any('design_contract', 'ContractController@design_contract')->name('contract.design_contract');
+});
+// -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'file_folder'], function () {
     Route::any('uploadFile', 'FileAndFolderController@uploadFile')->name('file_folder.uploadFile');
     Route::any('runningProjects', 'FileAndFolderController@runningProjects')->name('file_folder.runningProjects');

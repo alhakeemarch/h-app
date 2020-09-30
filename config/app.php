@@ -177,6 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         // Barryvdh\DomPDF\ServiceProvider::class, // by fa
         Elibyy\TCPDF\ServiceProvider::class, // by fa
+        // tecnickcom\TCPDF::class, // by fa
     ],
 
     /*
@@ -227,6 +228,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,  // by fa
         // 'PDF' => Barryvdh\DomPDF\Facade::class,  // by fa
+        // 'TCPDF' => tecnickcom\TCPDF::class,  // by fa
+
 
     ],
 

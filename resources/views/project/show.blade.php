@@ -184,7 +184,7 @@
         <ul class="card-body list-group">
             <li class="list-group-item d-flex justify-content-between">
                 عقد التصميم
-                <form action="{{route('projectDoc.tafweed')}}" method="get">
+                <form action="{{route('contract.design_contract')}}" method="get">
                     @csrf
                     <input type="hidden" name="project_id" value="{{$project->id}}">
                     <button type="submit" class="btn btn-link">print |

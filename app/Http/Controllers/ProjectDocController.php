@@ -8,7 +8,8 @@ use App\Plot;
 use App\Project;
 use App\ProjectDoc;
 use Carbon\Carbon;
-use PDF;
+use PDF as TCPDF;
+// use Elibyy\TCPDF\Facades\TCPdf as TCPDF;
 // use App\Tcpdf\HakeemPDF;
 use \Illuminate\Support\Facades\View;
 
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\URL;
 
 class ProjectDocController extends Controller
 {
-    private $is_tafweed = false;
+    public $is_tafweed = false;
     /**
      * Create a new controller instance.
      *
@@ -106,6 +107,7 @@ class ProjectDocController extends Controller
     {
         //
     }
+
     // -----------------------------------------------------------------------------------------------------------------
     public function tafweed(Request $request)
     {
@@ -119,14 +121,14 @@ class ProjectDocController extends Controller
             'project_tame' => $project_tame,
         ];
         // creating pdf 
-        $newPDF = new PDF();
+        $newPDF = new TCPDF();
         // Content
         $doc_name = 'tafweed';
         $pdf_view = 'projectDoc.tafweed';
-        $this->is_tafweed = true;
+        $is_tafweed = true;
         // -----------------------------------------------------------------
         // setting a header and foooter 
-        $newPDF = $this->set_hakeem_header_footer($newPDF);
+        $newPDF = $this->set_hakeem_header_footer($newPDF, $is_tafweed);
         // setting main sittings
         $newPDF = $this->set_common_settings($newPDF);
         // -----------------------------------------------------------------
@@ -152,7 +154,7 @@ class ProjectDocController extends Controller
             'office_data' => $office_data,
         ];
         // creating pdf 
-        $newPDF = new PDF();
+        $newPDF = new TCPDF();
         // Content
         $doc_name = 'tafweed_masaha';
         $pdf_view = 'projectDoc.tafweed_masaha';
@@ -184,7 +186,7 @@ class ProjectDocController extends Controller
         ];
 
         // creating pdf 
-        $newPDF = new PDF();
+        $newPDF = new TCPDF();
         // Content
         $doc_name = 't_makhater';
         $pdf_view = 'projectDoc.t_makhater';
@@ -217,7 +219,7 @@ class ProjectDocController extends Controller
             'office_data' => $office_data,
         ];
         // creating pdf 
-        $newPDF = new PDF();
+        $newPDF = new TCPDF();
         // Content
         $doc_name = 't_soor';
         $pdf_view = 'projectDoc.t_soor';
@@ -250,7 +252,7 @@ class ProjectDocController extends Controller
             'office_data' => $office_data,
         ];
         // creating pdf 
-        $newPDF = new PDF();
+        $newPDF = new TCPDF();
         // Content
         $doc_name = 't_meyaah';
         $pdf_view = 'projectDoc.t_meyaah';
@@ -291,7 +293,7 @@ class ProjectDocController extends Controller
             return redirect()->back()->withErrors($missing_dat);
         }
         // creating pdf 
-        $newPDF = new PDF();
+        $newPDF = new TCPDF();
         // setting a header and foooter 
         $newPDF = $this->set_hakeem_header_footer($newPDF);
         // -----------------------------------------------------------------
@@ -321,7 +323,7 @@ class ProjectDocController extends Controller
             'office_data' => $office_data,
         ];
         // creating pdf 
-        $newPDF = new PDF();
+        $newPDF = new TCPDF();
         // Content
         $doc_name = 'report_empty_land';
         $pdf_view = 'projectDoc.report_empty_land';
@@ -361,7 +363,7 @@ class ProjectDocController extends Controller
         return $missing_data;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function set_common_settings($newPDF)
+    public static function set_common_settings($newPDF)
     {
         // set some language dependent data:
         $lg = array();
@@ -385,7 +387,7 @@ class ProjectDocController extends Controller
         return $newPDF;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function set_hakeem_header_footer($newPDF)
+    public static function set_hakeem_header_footer($newPDF, $is_tafweed = false)
     {
         // Custom Header
         $newPDF::setHeaderCallback(function ($pdf) {
@@ -396,10 +398,9 @@ class ProjectDocController extends Controller
         });
         // -----------------------------------------------------------------
         // Custom Footer
-        $newPDF::setFooterCallback(function ($pdf) {
-            // -----------------------------------------------------------------
-            //  just for tafweed
-            if ($this->is_tafweed) {
+        //  just for tafweed
+        if ($is_tafweed) {
+            $newPDF::setFooterCallback(function ($pdf) {
                 // Position at 22 mm from bottom
                 $pdf->SetY(-22);
                 // Set font
@@ -410,22 +411,40 @@ class ProjectDocController extends Controller
                 $pdf->setCellHeightRatio(1.5);
                 // creating the cell
                 $pdf->Cell(0, 0, $html, 'T', true, 'R', 0, '', 0, false, 'B', 'M');
-            }
-            // -----------------------------------------------------------------
-            // Position at 22 mm from bottom
-            $pdf->SetY(-18);
-            // Set font
-            $pdf->SetFont('helvetica', 'I', 8);
-            // print date 
-            $data = 'printed at: ' . (Carbon::now())->toDateString();
-            $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
-            // Page number
-            $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
-            $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'B');
-            // image of footer
-            $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
-            // $pdf->setCellHeightRatio(0.5);
-        });
+
+                // -----------------------------------------------------------------
+                // Position at 22 mm from bottom
+                $pdf->SetY(-18);
+                // Set font
+                $pdf->SetFont('helvetica', 'I', 8);
+                // print date 
+                $data = 'printed at: ' . (Carbon::now())->toDateString();
+                $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
+                // Page number
+                $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
+                $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'B');
+                // image of footer
+                $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
+                // $pdf->setCellHeightRatio(0.5);
+            });
+        } else {
+            $newPDF::setFooterCallback(function ($pdf) {
+                // Position at 22 mm from bottom
+                $pdf->SetY(-18);
+                // Set font
+                $pdf->SetFont('helvetica', 'I', 8);
+                // print date 
+                $data = 'printed at: ' . (Carbon::now())->toDateString();
+                $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
+                // Page number
+                $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
+                $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'B');
+                // image of footer
+                $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
+                // $pdf->setCellHeightRatio(0.5);
+            });
+        }
+
         // -----------------------------------------------------------------
         // seting page margin (L,T,R)
         $newPDF::SetMargins(15, 35, 15);
@@ -433,7 +452,7 @@ class ProjectDocController extends Controller
         return $newPDF;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function set_page_no_footer($newPDF)
+    public static function set_page_no_footer($newPDF)
     {
         // Custom Footer
         $newPDF::setFooterCallback(function ($pdf) {
@@ -456,7 +475,7 @@ class ProjectDocController extends Controller
         return $newPDF;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function set_amana_header_footer($newPDF)
+    public static function set_amana_header_footer($newPDF)
     {
         $newPDF::setHeaderCallback(function ($pdf) {
             // top header logo
@@ -493,7 +512,7 @@ class ProjectDocController extends Controller
         return $newPDF;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function to_arabic_numbers($html)
+    public static function to_arabic_numbers($html)
     {
         $text = strval($html);
         // $numarr = array("۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹");
@@ -533,7 +552,7 @@ class ProjectDocController extends Controller
         ];
 
         // ------------------------------------------------------------
-        $newPDF = new PDF();
+        $newPDF = new TCPDF();
         // Content
         $content = $pdf_view;
         // set some language dependent data:
@@ -624,7 +643,7 @@ class ProjectDocController extends Controller
 
         // return view('projectDoc.tafweed');
         // return view('projectDoc.index');
-        // $pdf = new PDF('P', 'mm', 'A4');
+        // $pdf = new TCPDF('P', 'mm', 'A4');
         // $pdf = new HakeemPDF('P', 'mm', 'A4');
 
         // $pdf::SetTitle('sample pdf');
