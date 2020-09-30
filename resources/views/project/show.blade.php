@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', 'project show')
 @section('content')
+
 <div class="row container-fluid">
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-3">
@@ -58,29 +59,35 @@
                 {{$project->plot()->first()->plot_no}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('total area')}}: </span>
-                {{$project->plot()->first()->area}}</li>
+                {{$project->plot()->first()->area ?? ''}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('neighbor_id')}}: </span>
-                {{$project->plot()->first()->neighbor()->first()->ar_name}}</li>
+                {{$project->plot()->first()->neighbor()->first()->ar_name ?? ''}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('district_id')}}: </span>
-                {{$project->plot()->first()->district()->first()->ar_name}}</li>
+                {{$project->plot()->first()->district()->first()->ar_name ?? ''}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('plan number')}}: </span>
-                {{$project->plot()->first()->plan()->first()->plan_no}}</li>
+                {{$project->plot()->first()->plan()->first()->plan_no ?? ''}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('plan name')}}: </span>
-                {{$project->plot()->first()->plan()->first()->plan_ar_name}}</li>
+                {{$project->plot()->first()->plan()->first()->plan_ar_name ?? ''}}</li>
         </ul>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-3">
-        <h3 class="card-header">tame info</h3>
+        <h3 class="card-header d-flex justify-content-between">
+            <span>فريق العمل</span> <span>tame info</span>
+        </h3>
         <ul class="list-group card-body">
+            @foreach ($project_tame as $job => $employee)
+            @if($employee)
             <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('project manager')}}: </span>
-                {{$project->project_manager()->first()->ar_name1 .' '.$project->project_manager()->first()->ar_name5}}
+                <span class="font-weight-bold">{{__(str_replace('_', ' ' , $job))}}:</span>
+                <span>{{str_replace('  ', ' ' , $employee)}}</span>
             </li>
+            @endif
+            @endforeach
         </ul>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
@@ -94,7 +101,7 @@
         </div>
         <ul class="card-body list-group">
             <li class="list-group-item d-flex justify-content-between">
-                تفويض
+                <span>تفويض</span>
                 <form action="{{route('projectDoc.tafweed')}}" method="get">
                     @csrf
                     <input type="hidden" name="project_id" value="{{$project->id}}">
@@ -159,7 +166,7 @@
                 </form>
             </li>
             <li class="list-group-item d-flex justify-content-between">
-                غلاف المذكرة الإنشائية
+                <span>غلاف المذكرة الإنشائية</span>
                 <form action="{{route('projectDoc.str_notes_cover')}}" method="get">
                     @csrf
                     <input type="hidden" name="project_id" value="{{$project->id}}">
@@ -233,13 +240,5 @@ $obj = json_decode($project, TRUE);
 
 </div>
 @endif
-
-
-
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 
 @endsection

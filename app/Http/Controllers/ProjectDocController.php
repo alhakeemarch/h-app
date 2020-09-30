@@ -112,14 +112,16 @@ class ProjectDocController extends Controller
         // data needed in document
         $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_tame($project);
         $data = [
             'project' => $project,
             'office_data' => $office_data,
+            'project_tame' => $project_tame,
         ];
         // creating pdf 
         $newPDF = new PDF();
         // Content
-        $pdf_name = 'tafweed';
+        $doc_name = 'tafweed';
         $pdf_view = 'projectDoc.tafweed';
         $this->is_tafweed = true;
         // -----------------------------------------------------------------
@@ -136,7 +138,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($pdf_name . '.pdf');
+        $newPDF::Output($doc_name . '.pdf');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -152,7 +154,7 @@ class ProjectDocController extends Controller
         // creating pdf 
         $newPDF = new PDF();
         // Content
-        $pdf_name = 'tafweed_masaha';
+        $doc_name = 'tafweed_masaha';
         $pdf_view = 'projectDoc.tafweed_masaha';
         $newPDF = $this->set_common_settings($newPDF);
         // setting pdf title
@@ -166,7 +168,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($pdf_name . '.pdf');
+        $newPDF::Output($doc_name . '.pdf');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -184,7 +186,7 @@ class ProjectDocController extends Controller
         // creating pdf 
         $newPDF = new PDF();
         // Content
-        $pdf_name = 't_makhater';
+        $doc_name = 't_makhater';
         $pdf_view = 'projectDoc.t_makhater';
         // -----------------------------------------------------------------
         // setting a header and foooter 
@@ -200,7 +202,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($pdf_name . '.pdf');
+        $newPDF::Output($doc_name . '.pdf');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -217,7 +219,7 @@ class ProjectDocController extends Controller
         // creating pdf 
         $newPDF = new PDF();
         // Content
-        $pdf_name = 't_soor';
+        $doc_name = 't_soor';
         $pdf_view = 'projectDoc.t_soor';
         // setting a header and foooter 
         $newPDF = $this->set_amana_header_footer($newPDF);
@@ -233,7 +235,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($pdf_name . '.pdf');
+        $newPDF::Output($doc_name . '.pdf');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -250,7 +252,7 @@ class ProjectDocController extends Controller
         // creating pdf 
         $newPDF = new PDF();
         // Content
-        $pdf_name = 't_meyaah';
+        $doc_name = 't_meyaah';
         $pdf_view = 'projectDoc.t_meyaah';
         // setting a header and foooter 
         $newPDF = $this->set_page_no_footer($newPDF);
@@ -266,7 +268,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($pdf_name . '.pdf');
+        $newPDF::Output($doc_name . '.pdf');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -280,11 +282,16 @@ class ProjectDocController extends Controller
             'project' => $project,
             'office_data' => $office_data,
         ];
+        // Content
+        $doc_name = 'str_notes_cover';
+        $pdf_view = 'projectDoc.str_notes_cover';
+        // check if there is data missing for the pdf file
+        $missing_dat = $this->get_missing_data($doc_name, $project);
+        if (!empty($missing_dat)) {
+            return redirect()->back()->withErrors($missing_dat);
+        }
         // creating pdf 
         $newPDF = new PDF();
-        // Content
-        $pdf_name = 'str_notes_cover';
-        $pdf_view = 'projectDoc.str_notes_cover';
         // setting a header and foooter 
         $newPDF = $this->set_hakeem_header_footer($newPDF);
         // -----------------------------------------------------------------
@@ -299,7 +306,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($pdf_name . '.pdf');
+        $newPDF::Output($doc_name . '.pdf');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -316,7 +323,7 @@ class ProjectDocController extends Controller
         // creating pdf 
         $newPDF = new PDF();
         // Content
-        $pdf_name = 'report_empty_land';
+        $doc_name = 'report_empty_land';
         $pdf_view = 'projectDoc.report_empty_land';
         // setting a header and foooter 
         $newPDF = $this->set_hakeem_header_footer($newPDF);
@@ -332,8 +339,26 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($pdf_name . '.pdf');
+        $newPDF::Output($doc_name . '.pdf');
         exit;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function get_missing_data($doc_name, $project)
+    {
+        $missing_data = [];
+        if (!($project->plot()->first()->neighbor()->first())) {
+            array_push($missing_data, 'يجب تسجيل معلومات الحي');
+        }
+        if (!($project->plot()->first()->district()->first())) {
+            array_push($missing_data, 'يجب تسجيل معلومات المنطقة');
+        }
+        if (!($project->project_str_hight)) {
+            array_push($missing_data, 'يجب تسجيل معلومات الإرتفاع الإنشائي المصمم');
+        }
+        if (!($project->str_designed_id)) {
+            array_push($missing_data, 'يجب تسجيل المهندس الإنشائي المصمم');
+        }
+        return $missing_data;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function set_common_settings($newPDF)
@@ -496,7 +521,7 @@ class ProjectDocController extends Controller
     public function create_hakeem_pdf(array $data = []) // ! canceld
     {
 
-        $pdf_name = $data['pdf_name'];
+        $doc_name = $data['doc_name'];
         $pdf_view = $data['view'];
 
         // data needed in document
@@ -592,7 +617,7 @@ class ProjectDocController extends Controller
         // dd($html);
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($pdf_name . '.pdf');
+        $newPDF::Output($doc_name . '.pdf');
         exit;
 
         // --------------------------------------------------------------------------------------------------------------

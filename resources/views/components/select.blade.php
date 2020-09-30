@@ -14,7 +14,11 @@
         @endif
         :</label>
 
-    <select class="form-control" name={{$name}} @if ($is_disabled ?? false) disabled="disabled" @endif>
+    <select class="form-control" name={{$name}}
+        {{-- --------------------------------------------------------------------------------------------------------- --}}
+        @if ($is_disabled ?? false) disabled="disabled" @endif
+        {{-- --------------------------------------------------------------------------------------------------------- --}}
+        @if ($is_required ?? false) required @endif>
         {{-- //this is if this is edit and have value selected before --}}
         @if ($resource->$name)
         @foreach ($list as $item)

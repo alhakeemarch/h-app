@@ -42,5 +42,10 @@ class Plot extends Model
         return $this->belongsTo(Street::class);
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function soilLaboratory()
+    {
+        return $this->belongsTo(SoilLaboratory::class, 'soil_report_laboratory_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 
 }

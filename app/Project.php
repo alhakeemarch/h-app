@@ -41,9 +41,8 @@ class Project extends Model
     // -----------------------------------------------------------------------------------------------------------------
     public function plot()
     {
-        // return $this->belongsTo('\App\Plot');
+
         return $this->belongsTo(Plot::class);
-        // return $this->hasOne(Plot::class);
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function project_manager()
@@ -53,4 +52,128 @@ class Project extends Model
         return $this->belongsTo(Person::class, 'project_manager_id');
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function project_coordinator()
+    {
+        return $this->belongsTo(Person::class, 'project_coordinator_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function arch_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'arch_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function elevation_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'elevation_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function str_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'str_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function san_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'san_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function elec_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'elec_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function fire_fighting_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'fire_fighting_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function fire_alarm_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'fire_alarm_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function fire_escape_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'fire_escape_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function tourism_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'tourism_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function interior_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'interior_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function landscape_designed_by()
+    {
+        return $this->belongsTo(Person::class, 'landscape_designed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function surveyed_by()
+    {
+        return $this->belongsTo(Person::class, 'surveyed_by_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function main_draftsman()
+    {
+        return $this->belongsTo(Person::class, 'main_draftsman_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function draftsman_1()
+    {
+        return $this->belongsTo(Person::class, 'draftsman_1_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function draftsman_2()
+    {
+        return $this->belongsTo(Person::class, 'draftsman_2_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function draftsman_3()
+    {
+        return $this->belongsTo(Person::class, 'draftsman_3_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function draftsman_4()
+    {
+        return $this->belongsTo(Person::class, 'draftsman_4_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function draftsman_5()
+    {
+        return $this->belongsTo(Person::class, 'draftsman_5_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function draftsman_6()
+    {
+        return $this->belongsTo(Person::class, 'draftsman_6_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function draftsman_7()
+    {
+        return $this->belongsTo(Person::class, 'draftsman_7_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function draftsman_8()
+    {
+        return $this->belongsTo(Person::class, 'draftsman_8_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function draftsman_9()
+    {
+        return $this->belongsTo(Person::class, 'draftsman_9_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 }

@@ -286,6 +286,14 @@ function firstInsertion()
         array_push($feed_back, ['contractTypes' => false]);
         array_push($feed_back, ['contractTypes records = ' => App\ContractType::all()->count()]);
     }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\SoilLaboratoryController::firstInsertion()) {
+        array_push($feed_back, ['soilLaboratories' => true]);
+        array_push($feed_back, ['soilLaboratories records = ' => App\SoilLaboratory::all()->count()]);
+    } else {
+        array_push($feed_back, ['soilLaboratories' => false]);
+        array_push($feed_back, ['soilLaboratories records = ' => App\SoilLaboratory::all()->count()]);
+    }
 
 
     // -------------------------------------------------------------------

@@ -21,19 +21,20 @@
         <span>مـ</span>
     </table>
     <p><span>أفوض أنا</span>
-        <span>{{$project->owner_name_ar}}</span>
+        <span>{{$project->owner_name_ar ?? '....................................................'}}</span>
         <span>رقم السجل المدني</span>
-        <span>({{$project->owner_national_id}})</span>
+        <span>({{$project->owner_national_id ?? '..........................'}})</span>
+        <span>،جوال رقم</span>
+        <span>({{$project->person->mobile ?? '..........................'}})</span>
         <span>وأنا بأتم الأوصاف المعتبرة شرعاً، وبصفتي: مالك العقار بموجب بالصك الشرعي رقم</span>
-        <span>({{$project->plot->deed_no}})</span>
+        <span>({{$project->plot->deed_no ?? '..........................'}})</span>
         <span>بتاريخ</span>
-        <span>{{$project->plot->deed_date}}</span>
+        <span>{{$project->plot->deed_date ?? '..........................'}}</span>
         <span>هـ الصادر من كتابة العدل الواقع بمنطقة</span>
-        <span> {{$project->plot()->first()->district()->first()->ar_name}} </span>
+        <span>{{$project->plot()->first()->district()->first()->ar_name ?? '..........................'}}</span>
         <span>حي:</span>
-        <span> {{$project->plot()->first()->neighbor()->first()->ar_name}} </span>
-        <span>
-            بأنني قد فوضت مكتب المهندس عبد الرزاق حكيم للاستشارات الهندسية (تصميم وإعداد المخططات الهندسية
+        <span>{{$project->plot()->first()->neighbor()->first()->ar_name ?? '..........................'}}</span>
+        <span>بأنني قد فوضت مكتب المهندس عبد الرزاق حكيم للاستشارات الهندسية (تصميم وإعداد المخططات الهندسية
             وكافةالأعمال المساحية ومتابعة إنهاء إجراءاتها الفنية والإدارية لدى الأمانة وجهات الاختصاص كالدفاع المدني
             وشركة الكهرباء وهيئة السياحة ووزارة الإسكان ... إلخ وذلك حتى استخراج رخصة الإنشاء واستلامها، واستلام
             المخططات المصادق عليها من
@@ -72,7 +73,7 @@
         <tr>
             <td colspan="5">
                 <span class="txt-bold">اسم المفوض:</span>
-                <span>{{$project->owner_name_ar}}</span>
+                <span>{{$project->owner_name_ar ?? '..............................................................'}}</span>
             </td>
             <td colspan="2">
                 <span class="txt-bold highlight">التوقيع:</span>
@@ -86,12 +87,9 @@
             <td colspan="7">في حالة الوكيل</td>
         </tr>
         <tr>
-            <td>رقم الوكالة</td>
-            <td colspan="2"></td>
-            <td>تاريخها:</td>
-            <td></td>
-            <td>مصدرها: </td>
-            <td></td>
+            <td colspan="3">رقم الوكالة {{'......................................'}}</td>
+            <td colspan="2">تاريخها: {{'.........................'}}</td>
+            <td colspan="2">مصدرها: {{'.......................'}}</td>
         </tr>
     </table>
     <br><br>
@@ -103,11 +101,11 @@
         </tr>
         <tr>
             <td colspan="3"> <span class="txt-bold">الاسم: م.</span>
-                <span>{{$project->project_manager->ar_name1.' '.$project->project_manager->ar_name2 .' '.$project->project_manager->ar_name5}}</span>
+                <span>{{$project_tame['project_manager'] ?? '...................................' }}</span>
             </td>
             <td colspan="2">
                 <span class="txt-bold">الصفة:</span>
-                <span>{{$project->project_manager->job_title}}</span></td>
+                <span>{{$project->project_manager->job_title ?? '......................'}}</span></td>
             <td colspan="2"><span class="txt-bold">التوقيع:</span>
                 <span> ...................... </span>
             </td>
@@ -120,7 +118,6 @@
             <td>الختم المعتمد للمكتب</td>
         </tr>
     </table>
-
 
 </body>
 

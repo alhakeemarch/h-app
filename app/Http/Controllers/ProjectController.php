@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use League\CommonMark\Inline\Element\Strong;
 
+use function PHPSTORM_META\map;
+
 class ProjectController extends Controller
 {
     /**
@@ -122,7 +124,11 @@ class ProjectController extends Controller
         // return $project->plot->deed_date;
         // $a = $project->plot->deed_date;
         // dd($project->plot->deed_date);
-        return view('project.show')->with('project', $project);
+        $project_tame = $this->get_project_tame($project);
+        return view('project.show')->with([
+            'project' => $project,
+            'project_tame' => $project_tame,
+        ]);
     }
 
     /**
@@ -340,6 +346,120 @@ class ProjectController extends Controller
             'projects' => $projects,
             'allProjectsCount' => $allProjectsCount,
         ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function get_project_tame($project)
+    {
+
+        $project_tame = [
+            'project_manager' => ($project->project_manager()->first())
+                ? $project->project_manager()->first()->ar_name1 . ' '
+                . $project->project_manager()->first()->ar_name2 . ' '
+                . $project->project_manager()->first()->ar_name5
+                : null,
+            'project_coordinator' => ($project->project_coordinator()->first())
+                ? $project->project_coordinator()->first()->ar_name1 . ' '
+                . $project->project_coordinator()->first()->ar_name2 . ' '
+                . $project->project_coordinator()->first()->ar_name5
+                : null,
+            'arch_designed_by' => ($project->arch_designed_by()->first())
+                ? $project->arch_designed_by()->first()->ar_name1 . ' '
+                . $project->arch_designed_by()->first()->ar_name2 . ' '
+                . $project->arch_designed_by()->first()->ar_name5
+                : null,
+            'elevation_designed_by' => ($project->elevation_designed_by()->first())
+                ? $project->elevation_designed_by()->first()->ar_name1 . ' '
+                . $project->elevation_designed_by()->first()->ar_name2 . ' '
+                . $project->elevation_designed_by()->first()->ar_name5
+                : null,
+            'str_designed_by' => ($project->str_designed_by()->first())
+                ? $project->str_designed_by()->first()->ar_name1 . ' '
+                . $project->str_designed_by()->first()->ar_name2 . ' '
+                . $project->str_designed_by()->first()->ar_name5
+                : null,
+            'san_designed_by' => ($project->san_designed_by()->first())
+                ? $project->san_designed_by()->first()->ar_name1 . ' '
+                . $project->san_designed_by()->first()->ar_name2 . ' '
+                . $project->san_designed_by()->first()->ar_name5
+                : null,
+            'elec_designed_by' => ($project->elec_designed_by()->first())
+                ? $project->elec_designed_by()->first()->ar_name1 . ' '
+                . $project->elec_designed_by()->first()->ar_name2 . ' '
+                . $project->elec_designed_by()->first()->ar_name5
+                : null,
+            'fire_fighting_designed_by' => ($project->fire_fighting_designed_by()->first())
+                ? $project->fire_fighting_designed_by()->first()->ar_name1 . ' '
+                . $project->fire_fighting_designed_by()->first()->ar_name2 . ' '
+                . $project->fire_fighting_designed_by()->first()->ar_name5
+                : null,
+            'fire_alarm_designed_by' => ($project->fire_alarm_designed_by()->first())
+                ? $project->fire_alarm_designed_by()->first()->ar_name1 . ' '
+                . $project->fire_alarm_designed_by()->first()->ar_name2 . ' '
+                . $project->fire_alarm_designed_by()->first()->ar_name5
+                : null,
+            'fire_escape_designed_by' => ($project->fire_escape_designed_by()->first())
+                ? $project->fire_escape_designed_by()->first()->ar_name1 . ' '
+                . $project->fire_escape_designed_by()->first()->ar_name2 . ' '
+                . $project->fire_escape_designed_by()->first()->ar_name5
+                : null,
+            'surveyed_by' => ($project->surveyed_by()->first())
+                ? $project->surveyed_by()->first()->ar_name1 . ' '
+                . $project->surveyed_by()->first()->ar_name2 . ' '
+                . $project->surveyed_by()->first()->ar_name5
+                : null,
+            'main_draftsman' => ($project->main_draftsman()->first())
+                ? $project->main_draftsman()->first()->ar_name1 . ' '
+                . $project->main_draftsman()->first()->ar_name2 . ' '
+                . $project->main_draftsman()->first()->ar_name5
+                : null,
+            'draftsman_1' => ($project->draftsman_1()->first())
+                ? $project->draftsman_1()->first()->ar_name1 . ' '
+                . $project->draftsman_1()->first()->ar_name2 . ' '
+                . $project->draftsman_1()->first()->ar_name5
+                : null,
+            'draftsman_2' => ($project->draftsman_2()->first())
+                ? $project->draftsman_2()->first()->ar_name1 . ' '
+                . $project->draftsman_2()->first()->ar_name2 . ' '
+                . $project->draftsman_2()->first()->ar_name5
+                : null,
+            'draftsman_3' => ($project->draftsman_3()->first())
+                ? $project->draftsman_3()->first()->ar_name1 . ' '
+                . $project->draftsman_3()->first()->ar_name2 . ' '
+                . $project->draftsman_3()->first()->ar_name5
+                : null,
+            'draftsman_4' => ($project->draftsman_4()->first())
+                ? $project->draftsman_4()->first()->ar_name1 . ' '
+                . $project->draftsman_4()->first()->ar_name2 . ' '
+                . $project->draftsman_4()->first()->ar_name5
+                : null,
+            'draftsman_5' => ($project->draftsman_5()->first())
+                ? $project->draftsman_5()->first()->ar_name1 . ' '
+                . $project->draftsman_5()->first()->ar_name2 . ' '
+                . $project->draftsman_5()->first()->ar_name5
+                : null,
+            'draftsman_6' => ($project->draftsman_6()->first())
+                ? $project->draftsman_6()->first()->ar_name1 . ' '
+                . $project->draftsman_6()->first()->ar_name2 . ' '
+                . $project->draftsman_6()->first()->ar_name5
+                : null,
+            'draftsman_7' => ($project->draftsman_7()->first())
+                ? $project->draftsman_7()->first()->ar_name1 . ' '
+                . $project->draftsman_7()->first()->ar_name2 . ' '
+                . $project->draftsman_7()->first()->ar_name5
+                : null,
+            'draftsman_8' => ($project->draftsman_8()->first())
+                ? $project->draftsman_8()->first()->ar_name1 . ' '
+                . $project->draftsman_8()->first()->ar_name2 . ' '
+                . $project->draftsman_8()->first()->ar_name5
+                : null,
+            'draftsman_9' => ($project->draftsman_9()->first())
+                ? $project->draftsman_9()->first()->ar_name1 . ' '
+                . $project->draftsman_9()->first()->ar_name2 . ' '
+                . $project->draftsman_9()->first()->ar_name5
+                : null,
+        ];
+
+        return $project_tame;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function validate_project(Request $request)

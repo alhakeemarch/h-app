@@ -318,6 +318,7 @@ php artisan make:model SceMembershipType -a  // نوع العضوية بالهي
 php artisan make:model Bank -a  // قائمة البنوك
 php artisan make:model UserType -a  // قائمة انواع المستخدمين
 php artisan make:model FileSpecialty -a  // قائمة انواع المستخدمين
+php artisan make:model SoilLaboratory -a  // قائمة بمكاتب تحليل التربة
 
 ============== 
 لعمل علاقة Many to many

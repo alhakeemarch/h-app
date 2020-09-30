@@ -42,6 +42,10 @@
         font-size: 110%;
     }
 
+    .color-blue {
+        color: blue;
+    }
+
     .bg-blue-1 {
         background-color: #92cddc;
     }

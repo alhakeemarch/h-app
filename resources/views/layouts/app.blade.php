@@ -69,6 +69,11 @@
                 @auth
                 <a class="show_side_bar_btn" onclick="show_side_bar(event)"><i class="fas fa-sliders-h"></i></a>
                 @endauth
+                <!-- ///////////////////////////////-->
+                @if ($errors->any())
+                @include('layouts.errors')
+                @endif
+                <!-- ///////////////////////////////-->
                 @yield('content')
             </section>
             {{-- ----------------------------------------------------------- --}}

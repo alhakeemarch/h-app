@@ -17,6 +17,7 @@ use App\MunicipalityBranch;
 use App\Neighbor;
 use App\Plan;
 use App\Project;
+use App\SoilLaboratory;
 use App\street;
 
 class PlotController extends Controller
@@ -185,6 +186,7 @@ class PlotController extends Controller
         $building_heights = AllowedBuildingHeight::all();
         $usages = AllowedUsage::all();
         $plans = Plan::all();
+        $soil_laboratories = SoilLaboratory::all();
         $streets = Street::all('id', 'ar_name')->sortBy('ar_name');
         return [
             'districts' => $districts,
@@ -195,6 +197,7 @@ class PlotController extends Controller
             'usages' => $usages,
             'plans' => $plans,
             'plans' => $plans,
+            'soil_laboratories' => $soil_laboratories,
             'streets' => $streets,
         ];
     }
@@ -217,6 +220,12 @@ class PlotController extends Controller
             'allowed_building_ratio_id' => ['nullable', 'numeric'],
             'allowed_building_height_id' => ['nullable', 'numeric'],
             'allowed_usage_id' => ['nullable', 'numeric'],
+            // -------------------------------------------------------
+            'soil_report_laboratory_id' => 'nullable|string',
+            'soil_report_no' => 'nullable|string',
+            'soil_report_date' =>  ['nullable', new ValidDate],
+            'soil_report_notes' => 'nullable|string',
+            // -------------------------------------------------------
             'plan_id' => [
                 'nullable', 'numeric', //new ValidPlan
             ],
