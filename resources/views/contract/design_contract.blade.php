@@ -130,6 +130,7 @@
       </td>
     </tr>
   </table>
+  <div style="page-break-before:always"></div>
   <table>
     <tr>
       <td class="title">الأتعاب والدفعات</td>
@@ -156,6 +157,21 @@
             أخيرة تدفع عند الانتهاء واستخراج الرخصة وتسليمها للطرف الثاني.</li>
         </ul>
       </td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <td>قيمة العقد</td>
+      <td>{{$price}}</td>
+    </tr>
+    <tr>
+      <td>الضريبة</td>
+      <td>{{($price*15/100)}}</td>
+    </tr>
+    <tr>
+      <td>الإجمالي مع الضريبة</td>
+      <td>{{$price+($price*15/100)}}</td>
     </tr>
   </table>
 

@@ -178,6 +178,8 @@ return [
         // Barryvdh\DomPDF\ServiceProvider::class, // by fa
         Elibyy\TCPDF\ServiceProvider::class, // by fa
         // tecnickcom\TCPDF::class, // by fa
+
+        // App\vendor\arphp\arabic::class,  // by fa
     ],
 
     /*

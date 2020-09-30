@@ -93,6 +93,36 @@ class ContractController extends Controller
     {
         // return view('contract.design_contract');
 
+
+
+        // App\vendor\arphp\arabic::class,
+
+        // include('App/vendor/arphp/Arabic.php');
+        // $obj = new I18N_Arabic('Numbers');
+
+        // return $obj->int2str(1975);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $price = 4000;
         $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
@@ -102,6 +132,7 @@ class ContractController extends Controller
             'office_data' => $office_data,
             'project_tame' => $project_tame,
             'date_and_time' => $date_and_time,
+            'price' => $price,
         ];
         // Content
         $doc_name = 'tafweed';
