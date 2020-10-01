@@ -184,7 +184,18 @@
         <ul class="card-body list-group">
             <li class="list-group-item d-flex justify-content-between">
                 عقد التصميم
-                <form action="{{route('contract.design_contract')}}" method="get">
+                <form action="{{route('contract.design')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i>
+                        {{-- <i class="fas fa-file-pdf"></i> --}}
+                    </button>
+                </form>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                عقد اشراف عظم
+                <form action="{{route('contract.supervision')}}" method="get">
                     @csrf
                     <input type="hidden" name="project_id" value="{{$project->id}}">
                     <button type="submit" class="btn btn-link">print |

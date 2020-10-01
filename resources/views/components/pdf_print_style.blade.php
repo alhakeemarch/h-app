@@ -22,12 +22,6 @@
         line-height: 140%;
     }
 
-
-    .bordered {
-        border: 1px, solid, black;
-        border-collapse: collapse;
-    }
-
     .txt-center {
         text-align: center;
     }
@@ -57,6 +51,21 @@
 
     .bg-green-2 {
         background-color: rgb(196, 215, 155);
+    }
+
+    .tbl-bordered td {
+        border: gray soled 0.5px;
+        border-collapse: collapse;
+    }
+
+    .tbl-bordered th {
+        border: gray soled 0.5px;
+        border-collapse: collapse;
+        background-color: lightgrey;
+    }
+
+    .tbl-center td {
+        text-align: center;
     }
 
 </style>

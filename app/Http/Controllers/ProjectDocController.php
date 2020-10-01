@@ -447,7 +447,7 @@ class ProjectDocController extends Controller
 
         // -----------------------------------------------------------------
         // seting page margin (L,T,R)
-        $newPDF::SetMargins(15, 35, 15);
+        $newPDF::SetMargins(15, 30, 15);
         // -----------------------------------------------------------------
         return $newPDF;
     }

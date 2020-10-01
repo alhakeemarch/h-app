@@ -363,7 +363,8 @@ Route::group(['prefix' => 'projectDoc'], function () {
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'contract'], function () {
-    Route::any('design_contract', 'ContractController@design_contract')->name('contract.design_contract');
+    Route::any('design', 'ContractController@design')->name('contract.design');
+    Route::any('supervision', 'ContractController@supervision')->name('contract.supervision');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'file_folder'], function () {
