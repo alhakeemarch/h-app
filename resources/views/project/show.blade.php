@@ -107,7 +107,7 @@
                     <input type="hidden" name="project_id" value="{{$project->id}}">
                     <button type="submit" class="btn btn-link">print |
                         <i class="fa fa-print" aria-hidden="true"></i>
-                        {{-- <i class="fas fa-file-pdf"></i> --}}
+
                     </button>
                 </form>
             </li>
@@ -189,7 +189,7 @@
                     <input type="hidden" name="project_id" value="{{$project->id}}">
                     <button type="submit" class="btn btn-link">print |
                         <i class="fa fa-print" aria-hidden="true"></i>
-                        {{-- <i class="fas fa-file-pdf"></i> --}}
+
                     </button>
                 </form>
             </li>
@@ -200,7 +200,38 @@
                     <input type="hidden" name="project_id" value="{{$project->id}}">
                     <button type="submit" class="btn btn-link">print |
                         <i class="fa fa-print" aria-hidden="true"></i>
-                        {{-- <i class="fas fa-file-pdf"></i> --}}
+
+                    </button>
+                </form>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                عقد اشراف كامل
+                <form action="{{route('contract.supervision_full')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i>
+
+                    </button>
+                </form>
+            <li class="list-group-item d-flex justify-content-between">
+                عقد قرار مساحي
+                <form action="{{route('contract.qarar_masahe')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i>
+
+                    </button>
+                </form>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                عقد محضر تثبيت
+                <form action="{{route('contract.mahder_tathbeet')}}" method="get">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{$project->id}}">
+                    <button type="submit" class="btn btn-link">print |
+                        <i class="fa fa-print" aria-hidden="true"></i>
                     </button>
                 </form>
             </li>

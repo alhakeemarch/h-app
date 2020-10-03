@@ -381,7 +381,9 @@ class ProjectDocController extends Controller
         // set arabic font
         $newPDF::SetFont('al-mohanad', '', 12, '', false);
         // -----------------------------------------------------------------
-        $newPDF::SetAutoPageBreak(TRUE, 0);
+        // to create new page auto (create_new_page,margin_bottom)
+        $newPDF::SetAutoPageBreak(TRUE, 24);
+        // -----------------------------------------------------------------
         $newPDF::AddPage('P', 'A4');
         // -----------------------------------------------------------------
         return $newPDF;
@@ -447,7 +449,7 @@ class ProjectDocController extends Controller
 
         // -----------------------------------------------------------------
         // seting page margin (L,T,R)
-        $newPDF::SetMargins(15, 30, 15);
+        $newPDF::SetMargins(15, 32, 15);
         // -----------------------------------------------------------------
         return $newPDF;
     }
