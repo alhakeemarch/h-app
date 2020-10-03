@@ -53,6 +53,11 @@
         background-color: rgb(196, 215, 155);
     }
 
+    .tbl-bordered {
+        padding-right: 4px;
+        padding-left: 4px;
+    }
+
     .tbl-bordered td {
         border: gray soled 0.5px;
         border-collapse: collapse;

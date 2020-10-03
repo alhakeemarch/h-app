@@ -4,23 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Country;
 use App\District;
-use App\FileSpecialty;
+use App\Contract;
+use App\ContractType;
 use App\MunicipalityBranch;
 use App\Neighbor;
 use App\OwnerType;
 use App\Person;
+use App\PersonTitles;
 use App\Plan;
 use App\Plot;
 use App\Project;
 use App\Rules\ValidDate;
-use App\Rules\ValidFileSize;
-use App\Rules\ValidFileType;
 use App\Street;
-use Hamcrest\Type\IsNumeric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
-use League\CommonMark\Inline\Element\Strong;
+
 
 use function PHPSTORM_META\map;
 
@@ -121,13 +119,17 @@ class ProjectController extends Controller
      */
     public function show(Project $project, Request $request)
     {
-        // return $project->plot->deed_date;
-        // $a = $project->plot->deed_date;
-        // dd($project->plot->deed_date);
+
         $project_tame = $this->get_project_tame($project);
+        $contract = new Contract();
+        $contract_types = ContractType::all();
+        $quick_form_contracts = $this->get_quick_form_contracts();
         return view('project.show')->with([
             'project' => $project,
             'project_tame' => $project_tame,
+            'contract' => $contract,
+            'contract_types' => $contract_types,
+            'quick_form_contracts' => $quick_form_contracts,
         ]);
     }
 
@@ -247,6 +249,7 @@ class ProjectController extends Controller
             $found_person = $person->where('national_id', $request->national_id)->first();
             if (!$found_person) {
                 return view('project.forms.create_person')->with([
+                    'person_titles' => PersonTitles::all(),
                     'national_id' => $request->national_id,
                     'person' => $person,
                 ]);
@@ -346,6 +349,19 @@ class ProjectController extends Controller
             'projects' => $projects,
             'allProjectsCount' => $allProjectsCount,
         ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_quick_form_contracts()
+    {
+        return [
+            'عقد تصميم',
+            'عقد قرار مساحي',
+            'عقد محضر تثبيت',
+            'عقد اشراف عظم',
+            'عقد اشراف كامل',
+            'عقد تصميم واجهة ثلاثية الابعاد',
+            'عقد تصميم سلامة',
+        ];
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_project_tame($project)

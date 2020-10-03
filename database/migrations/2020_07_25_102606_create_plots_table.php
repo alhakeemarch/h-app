@@ -19,7 +19,7 @@ class CreatePlotsTable extends Migration
             // -----------------------------
             $table->string('deed_no')->unique();
             $table->string('deed_date')->nullable();
-            $table->string('deed_issue_place')->nullable();
+            $table->string('deed_issue_place')->nullable()->default('كتابة عدل');
             // -----------------------------
             $table->string('plot_no');
             $table->string('area')->nullable();

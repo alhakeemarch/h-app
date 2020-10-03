@@ -319,6 +319,7 @@ php artisan make:model Bank -a  // قائمة البنوك
 php artisan make:model UserType -a  // قائمة انواع المستخدمين
 php artisan make:model FileSpecialty -a  // قائمة انواع المستخدمين
 php artisan make:model SoilLaboratory -a  // قائمة بمكاتب تحليل التربة
+php artisan make:model PersonTitles -a  // قائمة بألقاب العملاء السيد الدكتور المهندس
 
 ============== 
 لعمل علاقة Many to many

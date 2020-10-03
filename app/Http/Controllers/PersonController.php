@@ -7,6 +7,7 @@ use App\Country;
 use App\GradeRank;
 use App\Major;
 use App\Person;
+use App\PersonTitles;
 use App\SceMembershipType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -187,6 +188,7 @@ class PersonController extends Controller
         $majors = Major::all();
         $gread_ranks = GradeRank::all();
         $SCE_membership_types = SceMembershipType::all();
+        $person_titles = PersonTitles::all();
         $banks = Bank::all();
         return [
             'countries' => $countries,
@@ -194,6 +196,7 @@ class PersonController extends Controller
             'gread_ranks' => $gread_ranks,
             'gread_ranks' => $gread_ranks,
             'SCE_membership_types' => $SCE_membership_types,
+            'person_titles' => $person_titles,
             'banks' => $banks,
         ];
     }

@@ -16,6 +16,10 @@ class CreateContractsTable extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->foreignId('project_id')->references('id')->on('projects');
+            $table->foreignId('contract_type_id')->references('id')->on('contract_types');
+            $table->bigInteger('contract_no')->nullable()->unique();
+            $table->bigInteger('contract_no_acc')->nullable()->unique();
+            // -----------------------------
             $table->string('period')->nullable();
             $table->string('period_scale')->nullable(); // D, M, Y
             // -----------------------------

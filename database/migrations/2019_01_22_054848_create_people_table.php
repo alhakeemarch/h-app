@@ -20,6 +20,8 @@ class CreatePeopleTable extends Migration
             $table->boolean('is_employee')->default(false)->nullable();
             $table->boolean('is_customer')->default(false)->nullable();
             // -----------------------------
+            $table->foreignId('person_title_id')->nullable()->references('id')->on('person_titles');
+            // -----------------------------
             $table->string('ar_name1');
             $table->string('ar_name2')->nullable();
             $table->string('ar_name3')->nullable();

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * The attributes that are NOT mass assignable.
      *
@@ -16,14 +16,20 @@ class Person extends Model
     protected $guarded = [
         'id',
     ];
-
+    // -----------------------------------------------------------------------------------------------------------------
     public function scopeIsexist($qury, $id)
     {
         return $qury->where('national_id', $id);
     }
-
-    public function user(){
+    // -----------------------------------------------------------------------------------------------------------------
+    public function user()
+    {
         return $this->hasOne(User::class);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
+    public function person_titles()
+    {
+        return $this->hasOne(PersonTitles::class);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 }

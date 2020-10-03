@@ -45,6 +45,14 @@ $is_read_only = false;
         @enderror
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
+    <x-input name='deed_issue_place' title="">
+        <x-slot name='title'>deed issue place</x-slot>
+        <x-slot name='placeholder'>كتابة عدل</x-slot>
+        {{-- ------------------------------------------------------- --}}
+        <x-slot name='input_value'>{{$plot->deed_issue_place}}</x-slot>
+        {{-- ------------------------------------------------------- --}}
+    </x-input>
+    {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
         <label for="plot_no">{{__( 'Plot Number')}}
             <span class="small text-danger">({{__('required')}})</span> :</label>

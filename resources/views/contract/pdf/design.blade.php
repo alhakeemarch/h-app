@@ -47,6 +47,7 @@
   </tr>
 </table>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
+{{-- <table class="tbl-bordered txt-center" cellpadding="6"> --}}
 <table class="tbl-bordered txt-center">
   <tr>
     <th colspan="2">الدفعات</th>
@@ -57,20 +58,26 @@
   <tr>
     <td colspan="2">الدفعة الاولى عند توقيع العقد</td>
     <td>{{$pyment_arr['pyment_1']??''}}</td>
-    <td>{{$pyment_arr['pyment_1_vat']??''}}</td>
-    <td>{{$pyment_arr['pyment_1_with_vat']??''}}</td>
+    {{-- <td>{{$pyment_arr['pyment_1_vat']??''}}</td> --}}
+    <td>{{$pyment_arr['vat_value']??''}}</td>
+    {{-- <td>{{$pyment_arr['pyment_1_with_vat']??''}}</td> --}}
+    <td>{{$pyment_arr['pyment_1_with_total_vat']??''}}</td>
   </tr>
   <tr>
     <td colspan="2">الدفعة الثانية عند اعتماد العميل للفكرة</td>
     <td>{{$pyment_arr['pyment_2']??''}}</td>
-    <td>{{$pyment_arr['pyment_2_vat']??''}}</td>
-    <td>{{$pyment_arr['pyment_2_with_vat']??''}}</td>
+    {{-- <td>{{$pyment_arr['pyment_2_vat']??''}}</td> --}}
+    <td>{{'0'}}</td>
+    {{-- <td>{{$pyment_arr['pyment_2_with_vat']??''}}</td> --}}
+    <td>{{$pyment_arr['pyment_2']??''}}</td>
   </tr>
   <tr>
     <td colspan="2"> الدفعة الأخيرة عند صدور الرخصة</td>
     <td>{{$pyment_arr['pyment_3']??''}}</td>
-    <td>{{$pyment_arr['pyment_3_vat']??''}}</td>
-    <td>{{$pyment_arr['pyment_3_with_vat']??''}}</td>
+    {{-- <td>{{$pyment_arr['pyment_3_vat']??''}}</td> --}}
+    <td>{{'0'}}</td>
+    {{-- <td>{{$pyment_arr['pyment_3_with_vat']??''}}</td> --}}
+    <td>{{$pyment_arr['pyment_3']??''}}</td>
   </tr>
   <tr>
     <td colspan="2"><span>الاجمالي</span></td>

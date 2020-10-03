@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contract;
+use App\ContractType;
 use App\OfficeData;
 use App\Project;
 use DateTime;
@@ -41,6 +42,10 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
+        $contract_types = ContractType::all();
+        return $request;
+
+        // dd($request->all(), $contract_types->all());
         //
     }
 
@@ -91,7 +96,7 @@ class ContractController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function design(Request $request)
     {
-        $price = 12000;
+        $price = 6956.5;
         $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
@@ -325,24 +330,30 @@ class ContractController extends Controller
         // $table->decimal('visit_fee', 12, 2)->nullable();
         // $table->decimal('monthly_fee', 12, 2)->nullable();
 
-
-        $cost = $price;
+        $cost = round($price, 1);
         $vat_percentage = '15';
-        $vat_value = $price * $vat_percentage / 100;
-        $price_withe_vat = $vat_value + $cost;
-        $pyment_1 = $cost * 0.5;
-        $pyment_1_vat = $vat_value * 0.5;
-        $pyment_1_with_vat = $price_withe_vat * 0.5;
-        $pyment_2 = $cost * 0.35;
-        $pyment_2_vat = $vat_value * 0.35;
-        $pyment_2_with_vat = $price_withe_vat * 0.35;
-        $pyment_3 = $cost - ($pyment_1 + $pyment_2);
-        $pyment_3_vat = $vat_value - ($pyment_1_vat + $pyment_2_vat);
-        $pyment_3_with_vat = $price_withe_vat - ($pyment_1_with_vat + $pyment_2_with_vat);
+        $vat_value = round($price * $vat_percentage / 100, 0);
+        // $price_withe_vat = $vat_value + $cost;
+        $price_withe_vat = ceil($vat_value + $cost); // للتقريب لأعلى رقم صحيح
 
-        $visit_fee = ($visit_fee) ? $visit_fee : 1000; // if no viset fee it well set as 1000 SAR
-        $visit_fee_vat = $visit_fee * $vat_percentage / 100;
-        $visit_fee_with_vat = $visit_fee + $visit_fee_vat;
+        $pyment_1 = ceil($cost * 0.5);
+        $pyment_1_vat =  ceil($vat_value * 0.5);
+        // $pyment_1_with_vat = round( $price_withe_vat * 0.5;
+        $pyment_1_with_vat = ceil($price_withe_vat * 0.5); // للتقريب لأعلى رقم صحيح
+        $pyment_1_with_total_vat = ceil($pyment_1 + $vat_value); // للتقريب لأعلى رقم صحيح
+
+        $pyment_2 =  ceil($cost * 0.35);
+        $pyment_2_vat =  ceil($vat_value * 0.35);
+        // $pyment_2_with_vat = round( $price_withe_vat * 0.35,1);
+        $pyment_2_with_vat = ceil($price_withe_vat * 0.35);  // للتقريب لأعلى رقم صحيح
+
+        $pyment_3 = ceil($cost - ($pyment_1 + $pyment_2));
+        $pyment_3_vat = ceil($vat_value - ($pyment_1_vat + $pyment_2_vat));
+        $pyment_3_with_vat = ceil($price_withe_vat - ($pyment_1_with_vat + $pyment_2_with_vat));
+
+        $visit_fee =  round(($visit_fee) ? $visit_fee : 1000, 1); // if no viset fee it well set as 1000 SAR
+        $visit_fee_vat = round($visit_fee * $vat_percentage / 100, 1);
+        $visit_fee_with_vat = round($visit_fee + $visit_fee_vat, 1);
 
         // --------------------------------------------------------------------------------------------
         // I18N_Arabic_Numbers
@@ -371,6 +382,7 @@ class ContractController extends Controller
         $pyment_arr['pyment_1'] = ($pyment_1) ? $pyment_1 : null;
         $pyment_arr['pyment_1_vat'] = ($pyment_1_vat) ? $pyment_1_vat : null;
         $pyment_arr['pyment_1_with_vat'] = ($pyment_1_with_vat) ? $pyment_1_with_vat : null;
+        $pyment_arr['pyment_1_with_total_vat'] = ($pyment_1_with_total_vat) ? $pyment_1_with_total_vat : null;
         $pyment_arr['pyment_2'] = ($pyment_2) ? $pyment_2 : null;
         $pyment_arr['pyment_2_vat'] = ($pyment_2_vat) ? $pyment_2_vat : null;
         $pyment_arr['pyment_2_with_vat'] = ($pyment_2_with_vat) ? $pyment_2_with_vat : null;

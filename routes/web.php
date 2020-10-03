@@ -294,6 +294,15 @@ function firstInsertion()
         array_push($feed_back, ['soilLaboratories' => false]);
         array_push($feed_back, ['soilLaboratories records = ' => App\SoilLaboratory::all()->count()]);
     }
+    // -------------------------------------------------------------------
+    if (App\Http\Controllers\PersonTitlesController::firstInsertion()) {
+        array_push($feed_back, ['personTitles' => true]);
+        array_push($feed_back, ['personTitles records = ' => App\PersonTitles::all()->count()]);
+        App\Http\Controllers\PersonTitlesController::set_defult_title_all();
+    } else {
+        array_push($feed_back, ['personTitles' => false]);
+        array_push($feed_back, ['personTitles records = ' => App\PersonTitles::all()->count()]);
+    }
 
 
     // -------------------------------------------------------------------

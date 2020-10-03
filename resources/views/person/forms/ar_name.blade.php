@@ -4,6 +4,13 @@
 </div>
 {{--START: arabic Name --}}
 <div class="form-group">
+    {{-- --------------------------------------------------------------------------------------------- --}}
+    {{-- <x-select name='person_title_id' :resource=$person :list=$person_titles>
+        <x-slot name='option_name'>name_ar</x-slot>
+        <x-slot name='title'>اللقب</x-slot>
+    </x-select> --}}
+    {{-- --------------------------------------------------------------------------------------------- --}}
+
     <label for="fname" class="d-block">{{__('arabic name')}} <span class="small text-danger">({{__('required')}})</span>
         :</label>
     <div class="form-row mb-3">

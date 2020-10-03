@@ -32,6 +32,7 @@ class CustomerController extends PersonController
         // return $request;
         $nationalitiesArr = Country::all();
         $national_id = $request->input('national_id');
+
         return view('/customer/create', [
             'national_id' => $national_id,
             'nationalitiesArr' => $nationalitiesArr,

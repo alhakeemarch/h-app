@@ -176,12 +176,17 @@
             </li>
         </ul>
     </div>
+    {{-- =================================================================================================================== --}}
     <div class="card col-md-6">
         <div class="card-header d-flex justify-content-between">
             <span>contracts list</span>
             <span>قائمة العقود</span>
         </div>
+        {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+        @include('contract.forms.q_form')
+        {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
         <ul class="card-body list-group">
+            {{-- ------------------------------------------------------------ --}}
             <li class="list-group-item d-flex justify-content-between">
                 عقد التصميم
                 <form action="{{route('contract.design')}}" method="get">
@@ -189,10 +194,10 @@
                     <input type="hidden" name="project_id" value="{{$project->id}}">
                     <button type="submit" class="btn btn-link">print |
                         <i class="fa fa-print" aria-hidden="true"></i>
-
                     </button>
                 </form>
             </li>
+            {{-- ------------------------------------------------------------ --}}
             <li class="list-group-item d-flex justify-content-between">
                 عقد اشراف عظم
                 <form action="{{route('contract.supervision')}}" method="get">
@@ -204,6 +209,7 @@
                     </button>
                 </form>
             </li>
+            {{-- ------------------------------------------------------------ --}}
             <li class="list-group-item d-flex justify-content-between">
                 عقد اشراف كامل
                 <form action="{{route('contract.supervision_full')}}" method="get">
@@ -214,6 +220,8 @@
 
                     </button>
                 </form>
+            </li>
+            {{-- ------------------------------------------------------------ --}}
             <li class="list-group-item d-flex justify-content-between">
                 عقد قرار مساحي
                 <form action="{{route('contract.qarar_masahe')}}" method="get">
@@ -225,6 +233,7 @@
                     </button>
                 </form>
             </li>
+            {{-- ------------------------------------------------------------ --}}
             <li class="list-group-item d-flex justify-content-between">
                 عقد محضر تثبيت
                 <form action="{{route('contract.mahder_tathbeet')}}" method="get">
@@ -235,6 +244,7 @@
                     </button>
                 </form>
             </li>
+            {{-- ------------------------------------------------------------ --}}
         </ul>
     </div>
 </div>
