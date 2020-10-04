@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Person;
 use App\Auth\RegisterController;
-
-
+use App\Contract;
+use App\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +30,7 @@ Route::get('/', function () {
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/f', function () {
 
+
     //////////////////////////////////////////////////////////    
     // $h = new App\HijriDate();
     // return $h->get_date(12 - 01 - 2020);
@@ -43,7 +44,7 @@ Route::any('/f', function () {
     // return time();
     //////////////////////////////////////////////////////////    
 
-    if (true) {
+    if (false) {
         Artisan::call('migrate:fresh');
         Artisan::call('cache:clear');
         Artisan::call('view:clear');

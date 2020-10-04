@@ -216,6 +216,7 @@ class PlotController extends Controller
             // 'deed_date' => ['required', new ValidDate],
             'deed_date' => ['required', new ValidHijriDate],
             'plot_no' => ['required', 'string'],
+            'deed_issue_place' => ['nullable', 'string'],
             'area' => 'nullable| numeric',
             'allowed_building_ratio_id' => ['nullable', 'numeric'],
             'allowed_building_height_id' => ['nullable', 'numeric'],

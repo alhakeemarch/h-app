@@ -38,6 +38,7 @@ class CreateContractsTable extends Migration
             $table->decimal('visit_fee', 12, 2)->nullable();
             $table->decimal('monthly_fee', 12, 2)->nullable();
             // -----------------------------
+            $table->string('date')->nullable();
             $table->longText('fields')->nullable();
             $table->longText('text')->nullable();
             $table->longText('html')->nullable();

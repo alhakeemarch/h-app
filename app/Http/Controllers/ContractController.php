@@ -42,11 +42,44 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        $contract_types = ContractType::all();
-        return $request;
+        return redirect()->back()->withErrors(['erooooor']);
+        $project = Project::findOrFail($request->project_id);
 
-        // dd($request->all(), $contract_types->all());
-        //
+        $contract_types = ContractType::all();
+        $all_contracts = [];
+        foreach ($request->all() as $key => $value) {
+            foreach ($contract_types as $contract_type) {
+                if (substr($key, 6) == $contract_type->id) {
+                    $all_contracts[$contract_type->id] = $value;
+                }
+            }
+        }
+        foreach ($all_contracts as $contract_id => $cost) {
+            if ($cost > 0) {
+                if ($contract_id == 1) {
+                    return redirect()->back()->withErrors(['erooddoor']);
+                    $this->design($project, $cost);
+                }
+                // if ($contract_id == 2) {
+                //     $this->qarar_masahe($project, $cost);
+                // }
+                // if ($contract_id == 3) {
+                //     $this->mahder_tathbeet($project, $cost);
+                // }
+                // if ($contract_id == 4) {
+                //     $this->supervision($project, $cost);
+                // }
+                // if ($contract_id == 5) {
+                //     $this->supervision_full($project, $cost);
+                // }
+                // if ($contract_id == 6) {
+                //     // $this->elevation_3d($project, $cost);
+                // }
+                // if ($contract_id == 7) {
+                //     // $this->safety($project, $cost);
+                // }
+            }
+        }
     }
 
     /**
@@ -94,10 +127,28 @@ class ContractController extends Controller
         //
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function design(Request $request)
+    public function design($project, $price)
     {
-        $price = 6956.5;
-        $project = Project::findOrFail($request->project_id);
+        // $price = 6956.5;
+        // $project = Project::findOrFail($request->project_id);
+        // -----------------------------------------------------------------
+        $found_contract = false;
+        $found_contract = Contract::where(['project_id' => $project->id, 'contract_type_id' => 1])->get();
+        if ($found_contract) {
+            return redirect()->action(
+                'ProjectController@show',
+                ['project' => $project]
+            )->withErrors([
+                'this contract is allredy created',
+                'هذا العقد تم عمله مسبقاً',
+            ]);
+        }
+
+        return redirect()->action(
+            'ProjectController@create',
+            ['person' => $found_person, 'plot' => $found_plot]
+        );
+
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
         $date_and_time = DateAndTime::get_date_time_arr();
@@ -133,16 +184,61 @@ class ContractController extends Controller
         // View
         $the_view = View::make($pdf_view)->with($data);
         $html = $the_view->render();
+
+        // =========================================================================================
+
+
+
+        $last_contract_no = Contract::max('contract_no');
+        $data = [
+            'project_id' => $project->id,
+            'contract_type_id' => 1, // عقد التصميم دائماً 1
+            'contract_no' => 1,
+            'contract_no' => $last_contract_no + 1,
+            'cost' => $pyment_arr['cost'],
+            'vat_percentage' => $pyment_arr['vat_percentage'],
+            'vat_value' => $pyment_arr['vat_value'],
+            'price_withe_vat' => $pyment_arr['price_withe_vat'],
+            'date' => $date_and_time['g_date_en'],
+            'html' => $html,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ];
+        $contract = Contract::create($data);
+
+
+
+
+        // $contract->projects()->attach($project);
+        // $project->contracts()->sync($contract);
+
+
+        // $project->contracts()->attach($contract);
+        $project->contracts()->attach([$contract->id => [
+            'contract_type_id' => 1,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ]]);
+        return 'hi';
+
+        // $project->contracts();
+
+        // return $contract->projects()->first();
+        // return $project->contracts()->first();
+
+
+        // --------------------------------------------------------------------------------------
+
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
-        exit;
+        $newPDF::Output($doc_name . '.pdf', 'D');
+        // exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function supervision(Request $request)
+    public function supervision($project, $price)
     {
-        $price = 4000;
-        $project = Project::findOrFail($request->project_id);
+        // $price = 4000;
+        // $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
         $date_and_time = DateAndTime::get_date_time_arr();
@@ -179,19 +275,20 @@ class ContractController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
-        exit;
+        $newPDF::Output($doc_name . '.pdf', 'D');
+        // exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function supervision_full(Request $request)
+    public function supervision_full($project, $price)
     {
-        $price = 13000; // from user
-        $visit_fee = 1000; // from user
-        $project = Project::findOrFail($request->project_id);
+        // $price = 13000; // from user
+        // $visit_fee = 1000; // from user
+        // $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
         $date_and_time = DateAndTime::get_date_time_arr();
-        $pyment_arr = self::get_payment_arr($price, $visit_fee);
+        // $pyment_arr = self::get_payment_arr($price, $visit_fee);
+        $pyment_arr = self::get_payment_arr($price);
         $contract_title = 'عقد اشراف هندسي كامل';
         $data = [
             'project' => $project,
@@ -225,14 +322,14 @@ class ContractController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
-        exit;
+        $newPDF::Output($doc_name . '.pdf', 'D');
+        // exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function qarar_masahe(Request $request)
+    public function qarar_masahe($project, $price)
     {
-        $price = 13000; // from user
-        $project = Project::findOrFail($request->project_id);
+        // $price = 13000; // from user
+        // $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
         $date_and_time = DateAndTime::get_date_time_arr();
@@ -267,14 +364,14 @@ class ContractController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
-        exit;
+        $newPDF::Output($doc_name . '.pdf', 'D');
+        // exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function mahder_tathbeet(Request $request)
+    public function mahder_tathbeet($project, $price)
     {
-        $price = 1000; // from user
-        $project = Project::findOrFail($request->project_id);
+        // $price = 1000; // from user
+        // $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
         $date_and_time = DateAndTime::get_date_time_arr();
@@ -309,8 +406,8 @@ class ContractController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
-        exit;
+        $newPDF::Output($doc_name . '.pdf', 'D');
+        // exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_payment_arr($price, $visit_fee = null)

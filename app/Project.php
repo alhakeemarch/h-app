@@ -167,6 +167,12 @@ class Project extends Model
         return $this->belongsTo(Person::class, 'draftsman_9_id');
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function contracts()
+    {
+        // return $this->hasMany(Contract::class)->withTimestamps();
+        return $this->belongsToMany(Contract::class)->withTimestamps();
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 
 
 
