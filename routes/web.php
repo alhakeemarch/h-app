@@ -44,7 +44,7 @@ Route::any('/f', function () {
     // return time();
     //////////////////////////////////////////////////////////    
 
-    if (false) {
+    if (true) {
         Artisan::call('migrate:fresh');
         Artisan::call('cache:clear');
         Artisan::call('view:clear');
@@ -378,6 +378,7 @@ Route::group(['prefix' => 'contract'], function () {
     Route::any('supervision_full', 'ContractController@supervision_full')->name('contract.supervision_full');
     Route::any('qarar_masahe', 'ContractController@qarar_masahe')->name('contract.qarar_masahe');
     Route::any('mahder_tathbeet', 'ContractController@mahder_tathbeet')->name('contract.mahder_tathbeet');
+    Route::any('contract_to_pdf', 'ContractController@contract_to_pdf')->name('contract.contract_to_pdf');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'file_folder'], function () {

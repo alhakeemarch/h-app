@@ -119,17 +119,30 @@ class ProjectController extends Controller
      */
     public function show(Project $project, Request $request)
     {
-
+        $project_contracts = ContractController::get_project_contracts($project);
+        // return $project_contracts;
         $project_tame = $this->get_project_tame($project);
         $contract = new Contract();
         $contract_types = ContractType::all();
         $quick_form_contracts = $this->get_quick_form_contracts();
+
+        // to remove contract that already added from the list
+        foreach ($quick_form_contracts as $key => $value) {
+            foreach ($project_contracts as $contract) {
+                if ($contract->contract_type()->first()->name_ar == $value) {
+                    unset($quick_form_contracts[$key]);
+                }
+            }
+        }
+
+
         return view('project.show')->with([
             'project' => $project,
             'project_tame' => $project_tame,
             'contract' => $contract,
             'contract_types' => $contract_types,
             'quick_form_contracts' => $quick_form_contracts,
+            'project_contracts' => $project_contracts,
         ]);
     }
 
@@ -308,15 +321,18 @@ class ProjectController extends Controller
         // step 5 to create a new plot
         if ($request->create_plot) {
             $found_person = $person->where('national_id', $request->national_id)->first();
-            $validatedData = collect(PlotController::validatePlot($request));
+            $validatedData = (PlotController::validatePlot($request));
             $created_by_id = auth()->user()->id;
             $created_by_name = auth()->user()->user_name;
             if (!$created_by_id and !$created_by_name) {
                 return abort(403);
             }
-            $validatedData->put('created_by_id', $created_by_id);
-            $validatedData->put('created_by_name', $created_by_name);
-            $plot = Plot::create($validatedData->all());
+            if (!(isset($validatedData['deed_issue_place']))) {
+                $validatedData['deed_issue_place'] = 'كتابة عدل';
+            }
+            $validatedData['created_by_id'] = $created_by_id;
+            $validatedData['created_by_name'] =  $created_by_name;
+            $plot = Plot::create($validatedData);
             return redirect()->route('project.create', [
                 'person' => $found_person,
                 'plot' => $plot,

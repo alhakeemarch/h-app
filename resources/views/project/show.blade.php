@@ -185,69 +185,9 @@
         {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
         @include('contract.forms.q_form')
         {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
-        {{-- {{dd($project->contracts())}} --}}
+        @include('project.show_project_contracts')
         {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
-        <ul class="card-body list-group">
-            {{-- ------------------------------------------------------------ --}}
-            <li class="list-group-item d-flex justify-content-between">
-                عقد التصميم
-                <form action="{{route('contract.design')}}" method="get">
-                    @csrf
-                    <input type="hidden" name="project_id" value="{{$project->id}}">
-                    <button type="submit" class="btn btn-link">print |
-                        <i class="fa fa-print" aria-hidden="true"></i>
-                    </button>
-                </form>
-            </li>
-            {{-- ------------------------------------------------------------ --}}
-            <li class="list-group-item d-flex justify-content-between">
-                عقد اشراف عظم
-                <form action="{{route('contract.supervision')}}" method="get">
-                    @csrf
-                    <input type="hidden" name="project_id" value="{{$project->id}}">
-                    <button type="submit" class="btn btn-link">print |
-                        <i class="fa fa-print" aria-hidden="true"></i>
 
-                    </button>
-                </form>
-            </li>
-            {{-- ------------------------------------------------------------ --}}
-            <li class="list-group-item d-flex justify-content-between">
-                عقد اشراف كامل
-                <form action="{{route('contract.supervision_full')}}" method="get">
-                    @csrf
-                    <input type="hidden" name="project_id" value="{{$project->id}}">
-                    <button type="submit" class="btn btn-link">print |
-                        <i class="fa fa-print" aria-hidden="true"></i>
-
-                    </button>
-                </form>
-            </li>
-            {{-- ------------------------------------------------------------ --}}
-            <li class="list-group-item d-flex justify-content-between">
-                عقد قرار مساحي
-                <form action="{{route('contract.qarar_masahe')}}" method="get">
-                    @csrf
-                    <input type="hidden" name="project_id" value="{{$project->id}}">
-                    <button type="submit" class="btn btn-link">print |
-                        <i class="fa fa-print" aria-hidden="true"></i>
-
-                    </button>
-                </form>
-            </li>
-            {{-- ------------------------------------------------------------ --}}
-            <li class="list-group-item d-flex justify-content-between">
-                عقد محضر تثبيت
-                <form action="{{route('contract.mahder_tathbeet')}}" method="get">
-                    @csrf
-                    <input type="hidden" name="project_id" value="{{$project->id}}">
-                    <button type="submit" class="btn btn-link">print |
-                        <i class="fa fa-print" aria-hidden="true"></i>
-                    </button>
-                </form>
-            </li>
-            {{-- ------------------------------------------------------------ --}}
-        </ul>
     </div>
 </div>
 
@@ -256,7 +196,8 @@
 
 
 
-@if (auth()->user()->is_admin)
+
+@if (auth()->user()->is_admin AND false)
 <h1> this is show project view</h1>
 
 @php

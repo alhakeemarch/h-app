@@ -13,6 +13,7 @@ use \Illuminate\Support\Facades\View;
 
 class ContractController extends Controller
 {
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +24,7 @@ class ContractController extends Controller
         return view('contract.index');
         // return 'this is contract controller / index method';
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for creating a new resource.
      *
@@ -33,7 +34,7 @@ class ContractController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -42,46 +43,63 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->back()->withErrors(['erooooor']);
         $project = Project::findOrFail($request->project_id);
-
-        $contract_types = ContractType::all();
-        $all_contracts = [];
-        foreach ($request->all() as $key => $value) {
-            foreach ($contract_types as $contract_type) {
-                if (substr($key, 6) == $contract_type->id) {
-                    $all_contracts[$contract_type->id] = $value;
-                }
-            }
+        $found_contract = false;
+        // -----------------------------------------------------------------
+        $found_contract = Contract::where([
+            'project_id' => $project->id,
+            'contract_type_id' => $request->contract_type_id
+        ])->first();
+        // dd($found_contract);
+        if ($found_contract) {
+            return redirect()->back()->withErrors([
+                'this contract is allredy created',
+                'هذا العقد تم عمله مسبقاً',
+            ]);
         }
-        foreach ($all_contracts as $contract_id => $cost) {
-            if ($cost > 0) {
-                if ($contract_id == 1) {
-                    return redirect()->back()->withErrors(['erooddoor']);
-                    $this->design($project, $cost);
-                }
-                // if ($contract_id == 2) {
-                //     $this->qarar_masahe($project, $cost);
-                // }
-                // if ($contract_id == 3) {
-                //     $this->mahder_tathbeet($project, $cost);
-                // }
-                // if ($contract_id == 4) {
-                //     $this->supervision($project, $cost);
-                // }
-                // if ($contract_id == 5) {
-                //     $this->supervision_full($project, $cost);
-                // }
-                // if ($contract_id == 6) {
-                //     // $this->elevation_3d($project, $cost);
-                // }
-                // if ($contract_id == 7) {
-                //     // $this->safety($project, $cost);
-                // }
-            }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 1) {
+            return $this->design($project, $request->cost);
         }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 2) {
+            return $this->qarar_masahe($project, $request->cost);
+        }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 3) {
+            return $this->mahder_tathbeet($project, $request->cost);
+        }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 4) {
+            $found_contract = Contract::where([
+                'project_id' => $project->id,
+                'contract_type_id' => 5,
+            ])->first();
+            if ($found_contract) {
+                return redirect()->back()->withErrors([
+                    'there is a full supervision contract for this project',
+                    'يوجد عقد اشراف كامل لهذا المشروع',
+                ]);
+            }
+            return $this->supervision($project, $request->cost);
+        }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 5) {
+            $found_contract = Contract::where([
+                'project_id' => $project->id,
+                'contract_type_id' => 4,
+            ])->first();
+            if ($found_contract) {
+                return redirect()->back()->withErrors([
+                    'there is a supervision contract for this project',
+                    'يوجد عقد اشراف عادي لهذا المشروع',
+                ]);
+            }
+            return $this->supervision_full($project, $request->cost);
+        }
+        // -----------------------------------------------------------------
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display the specified resource.
      *
@@ -92,7 +110,7 @@ class ContractController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for editing the specified resource.
      *
@@ -103,7 +121,7 @@ class ContractController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Update the specified resource in storage.
      *
@@ -115,7 +133,7 @@ class ContractController extends Controller
     {
         //
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Remove the specified resource from storage.
      *
@@ -127,73 +145,45 @@ class ContractController extends Controller
         //
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public static function get_project_contracts($project)
+    {
+        $found_contract = Contract::where([
+            'project_id' => $project->id,
+        ])->get();
+        return  $found_contract;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function design($project, $price)
     {
-        // $price = 6956.5;
-        // $project = Project::findOrFail($request->project_id);
         // -----------------------------------------------------------------
-        $found_contract = false;
-        $found_contract = Contract::where(['project_id' => $project->id, 'contract_type_id' => 1])->get();
-        if ($found_contract) {
-            return redirect()->action(
-                'ProjectController@show',
-                ['project' => $project]
-            )->withErrors([
-                'this contract is allredy created',
-                'هذا العقد تم عمله مسبقاً',
-            ]);
-        }
-
-        return redirect()->action(
-            'ProjectController@create',
-            ['person' => $found_person, 'plot' => $found_plot]
-        );
-
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
         $date_and_time = DateAndTime::get_date_time_arr();
         $pyment_arr = self::get_payment_arr($price);
-        $data = [
+        $contract_title = 'عقد تصميم';
+        $contract_type_id = 1;
+        $pdf_data = [
             'project' => $project,
             'office_data' => $office_data,
             'project_tame' => $project_tame,
             'date_and_time' => $date_and_time,
             'pyment_arr' => $pyment_arr,
-            'contract_title' => 'عقد تصميم',
+            'contract_title' => $contract_title,
         ];
+        // -----------------------------------------------------------------
         // Content
         $doc_name = 'tafweed';
         $pdf_view = 'contract.pdf.design';
-
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // -----------------------------------------------------------------
-        // setting a header and foooter 
-        $newPDF = ProjectDocController::set_hakeem_header_footer($newPDF);
-        // setting main sittings
-        $newPDF = ProjectDocController::set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle('عقد تصميم');
-        $newPDF::SetSubject('عقد تصميم');
-        // -----------------------------------------------------------------
-        // override some settings
-        $newPDF::SetFontSize(11);
-        $newPDF::setCellHeightRatio(1.4);
         // -----------------------------------------------------------------
         // View
-        $the_view = View::make($pdf_view)->with($data);
+        $the_view = View::make($pdf_view)->with($pdf_data);
         $html = $the_view->render();
-
-        // =========================================================================================
-
-
-
+        // -----------------------------------------------------------------
+        // creating a contract
         $last_contract_no = Contract::max('contract_no');
         $data = [
             'project_id' => $project->id,
-            'contract_type_id' => 1, // عقد التصميم دائماً 1
-            'contract_no' => 1,
+            'contract_type_id' => $contract_type_id,
             'contract_no' => $last_contract_no + 1,
             'cost' => $pyment_arr['cost'],
             'vat_percentage' => $pyment_arr['vat_percentage'],
@@ -205,57 +195,23 @@ class ContractController extends Controller
             'created_by_name' => auth()->user()->user_name,
         ];
         $contract = Contract::create($data);
-
-
-
-
-        // $contract->projects()->attach($project);
-        // $project->contracts()->sync($contract);
-
-
-        // $project->contracts()->attach($contract);
+        // -----------------------------------------------------------------
+        // creating the relationship
         $project->contracts()->attach([$contract->id => [
-            'contract_type_id' => 1,
+            'contract_type_id' => $contract_type_id,
             'created_by_id' => auth()->user()->id,
             'created_by_name' => auth()->user()->user_name,
         ]]);
-        return 'hi';
+        // $contract->projects()->attach($project);
+        // $project->contracts()->sync($contract);
 
-        // $project->contracts();
-
-        // return $contract->projects()->first();
-        // return $project->contracts()->first();
-
-
-        // --------------------------------------------------------------------------------------
-
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf', 'D');
-        // exit;
+        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function supervision($project, $price)
+    public static function contract_to_pdf(Request $request, $contract = null)
     {
-        // $price = 4000;
-        // $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_tame($project);
-        $date_and_time = DateAndTime::get_date_time_arr();
-        $pyment_arr = self::get_payment_arr($price);
-        $data = [
-            'project' => $project,
-            'office_data' => $office_data,
-            'project_tame' => $project_tame,
-            'date_and_time' => $date_and_time,
-            'pyment_arr' => $pyment_arr,
-            'contract_title' => 'عقد اشراف هندسي (عظم ومباني)',
-        ];
-        // Content
-        $doc_name = 'tafweed';
-        $pdf_view = 'contract.pdf.supervision';
-
-        // creating pdf 
+        $contract = ($contract) ? $contract : Contract::findOrFail($request->contract_id);
+        // $contract = Contract::findOrFail($request->contract_id);
         $newPDF = new TCPDF();
         // -----------------------------------------------------------------
         // setting a header and foooter 
@@ -264,33 +220,36 @@ class ContractController extends Controller
         $newPDF = ProjectDocController::set_common_settings($newPDF);
         // -----------------------------------------------------------------
         // pdf title
-        $newPDF::SetTitle('عقد اشراف هندسي (عظم ومباني)');
-        $newPDF::SetSubject('عقد اشراف هندسي (عظم ومباني)');
+        $newPDF::SetTitle($contract->contract_type()->first()->name_ar);
+        $newPDF::SetSubject($contract->contract_type()->first()->name_ar);
         // -----------------------------------------------------------------
         // override some settings
-        // $newPDF::SetFontSize(11);
+        if ($contract->contract_type_id == 1) {
+            $newPDF::SetFontSize(11);
+            $newPDF::setCellHeightRatio(1.4);
+        }
         // -----------------------------------------------------------------
-        // View
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
+        $html = $contract->html;
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        // -----------------------------------------------------------------
+        return;
+        // return redirect()->back();
         // exit;
+        // -----------------------------------------------------------------
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function supervision_full($project, $price)
+    public function supervision($project, $price)
     {
-        // $price = 13000; // from user
-        // $visit_fee = 1000; // from user
-        // $project = Project::findOrFail($request->project_id);
+        // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
         $date_and_time = DateAndTime::get_date_time_arr();
-        // $pyment_arr = self::get_payment_arr($price, $visit_fee);
         $pyment_arr = self::get_payment_arr($price);
-        $contract_title = 'عقد اشراف هندسي كامل';
-        $data = [
+        $contract_title = 'عقد اشراف هندسي (عظم ومباني)';
+        $contract_type_id = 4;
+        $pdf_data = [
             'project' => $project,
             'office_data' => $office_data,
             'project_tame' => $project_tame,
@@ -298,44 +257,110 @@ class ContractController extends Controller
             'pyment_arr' => $pyment_arr,
             'contract_title' => $contract_title,
         ];
+        // -----------------------------------------------------------------
         // Content
-        $doc_name = 'tafweed';
-        $pdf_view = 'contract.pdf.supervision_full';
-
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // -----------------------------------------------------------------
-        // setting a header and foooter 
-        $newPDF = ProjectDocController::set_hakeem_header_footer($newPDF);
-        // setting main sittings
-        $newPDF = ProjectDocController::set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle($contract_title);
-        $newPDF::SetSubject($contract_title);
-        // -----------------------------------------------------------------
-        // override some settings
-        // $newPDF::SetFontSize(11);
+        $doc_name = 'supervision';
+        $pdf_view = 'contract.pdf.supervision';
         // -----------------------------------------------------------------
         // View
-        $the_view = View::make($pdf_view)->with($data);
+        $the_view = View::make($pdf_view)->with($pdf_data);
         $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf', 'D');
-        // exit;
+        // -----------------------------------------------------------------
+        // creating a contract
+        $last_contract_no = Contract::max('contract_no');
+        $data = [
+            'project_id' => $project->id,
+            'contract_type_id' => $contract_type_id,
+            'contract_no' => $last_contract_no + 1,
+            'cost' => $pyment_arr['cost'],
+            'vat_percentage' => $pyment_arr['vat_percentage'],
+            'vat_value' => $pyment_arr['vat_value'],
+            'price_withe_vat' => $pyment_arr['price_withe_vat'],
+            'date' => $date_and_time['g_date_en'],
+            'html' => $html,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ];
+        $contract = Contract::create($data);
+        // -----------------------------------------------------------------
+        // creating the relationship
+        $project->contracts()->attach([$contract->id => [
+            'contract_type_id' => $contract_type_id,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ]]);
+
+        // -----------------------------------------------------------------
+        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
+        // -----------------------------------------------------------------
+
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function supervision_full($project, $price)
+    {
+        // -----------------------------------------------------------------
+        $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_tame($project);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد اشراف هندسي (كامل)';
+        $contract_type_id = 5;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'project_tame' => $project_tame,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+        // -----------------------------------------------------------------
+        // Content
+        $doc_name = 'supervision_full';
+        $pdf_view = 'contract.pdf.supervision_full';
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
+        // -----------------------------------------------------------------
+        // creating a contract
+        $last_contract_no = Contract::max('contract_no');
+        $data = [
+            'project_id' => $project->id,
+            'contract_type_id' => $contract_type_id,
+            'contract_no' => $last_contract_no + 1,
+            'cost' => $pyment_arr['cost'],
+            'vat_percentage' => $pyment_arr['vat_percentage'],
+            'vat_value' => $pyment_arr['vat_value'],
+            'price_withe_vat' => $pyment_arr['price_withe_vat'],
+            'date' => $date_and_time['g_date_en'],
+            'html' => $html,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ];
+        $contract = Contract::create($data);
+        // -----------------------------------------------------------------
+        // creating the relationship
+        $project->contracts()->attach([$contract->id => [
+            'contract_type_id' => $contract_type_id,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ]]);
+
+        // -----------------------------------------------------------------
+        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
+        // -----------------------------------------------------------------
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function qarar_masahe($project, $price)
     {
-        // $price = 13000; // from user
-        // $project = Project::findOrFail($request->project_id);
+        // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
         $date_and_time = DateAndTime::get_date_time_arr();
         $pyment_arr = self::get_payment_arr($price);
         $contract_title = 'عقد خدمات هندسية (اصدار قرار مساحي)';
-        $data = [
+        $contract_type_id = 2;
+        $pdf_data = [
             'project' => $project,
             'office_data' => $office_data,
             'project_tame' => $project_tame,
@@ -343,41 +368,53 @@ class ContractController extends Controller
             'pyment_arr' => $pyment_arr,
             'contract_title' => $contract_title,
         ];
+        // -----------------------------------------------------------------
         // Content
-        $doc_name = 'tafweed';
+        $doc_name = 'qarar_masahe';
         $pdf_view = 'contract.pdf.qarar_masahe';
-
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // -----------------------------------------------------------------
-        // setting a header and foooter 
-        $newPDF = ProjectDocController::set_hakeem_header_footer($newPDF);
-        // setting main sittings
-        $newPDF = ProjectDocController::set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle($contract_title);
-        $newPDF::SetSubject($contract_title);
         // -----------------------------------------------------------------
         // View
-        $the_view = View::make($pdf_view)->with($data);
+        $the_view = View::make($pdf_view)->with($pdf_data);
         $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf', 'D');
-        // exit;
+        // -----------------------------------------------------------------
+        // creating a contract
+        $last_contract_no = Contract::max('contract_no');
+        $data = [
+            'project_id' => $project->id,
+            'contract_type_id' => $contract_type_id,
+            'contract_no' => $last_contract_no + 1,
+            'cost' => $pyment_arr['cost'],
+            'vat_percentage' => $pyment_arr['vat_percentage'],
+            'vat_value' => $pyment_arr['vat_value'],
+            'price_withe_vat' => $pyment_arr['price_withe_vat'],
+            'date' => $date_and_time['g_date_en'],
+            'html' => $html,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ];
+        $contract = Contract::create($data);
+        // -----------------------------------------------------------------
+        // creating the relationship
+        $project->contracts()->attach([$contract->id => [
+            'contract_type_id' => $contract_type_id,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ]]);
+        // -----------------------------------------------------------------
+        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
+        // -----------------------------------------------------------------
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function mahder_tathbeet($project, $price)
     {
-        // $price = 1000; // from user
-        // $project = Project::findOrFail($request->project_id);
+        // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_tame($project);
         $date_and_time = DateAndTime::get_date_time_arr();
         $pyment_arr = self::get_payment_arr($price);
         $contract_title = 'عقد خدمات هندسية (تثبيت موقع)';
-        $data = [
+        $contract_type_id = 3;
+        $pdf_data = [
             'project' => $project,
             'office_data' => $office_data,
             'project_tame' => $project_tame,
@@ -385,29 +422,45 @@ class ContractController extends Controller
             'pyment_arr' => $pyment_arr,
             'contract_title' => $contract_title,
         ];
+        // -----------------------------------------------------------------
         // Content
-        $doc_name = 'tafweed';
+        $doc_name = 'mahder_tathbeet';
         $pdf_view = 'contract.pdf.mahder_tathbeet';
-
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // -----------------------------------------------------------------
-        // setting a header and foooter 
-        $newPDF = ProjectDocController::set_hakeem_header_footer($newPDF);
-        // setting main sittings
-        $newPDF = ProjectDocController::set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle($contract_title);
-        $newPDF::SetSubject($contract_title);
         // -----------------------------------------------------------------
         // View
-        $the_view = View::make($pdf_view)->with($data);
+        $the_view = View::make($pdf_view)->with($pdf_data);
         $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf', 'D');
-        // exit;
+        // -----------------------------------------------------------------
+        // creating a contract
+        $last_contract_no = Contract::max('contract_no');
+        $data = [
+            'project_id' => $project->id,
+            'contract_type_id' => $contract_type_id,
+            'contract_no' => $last_contract_no + 1,
+            'cost' => $pyment_arr['cost'],
+            'vat_percentage' => $pyment_arr['vat_percentage'],
+            'vat_value' => $pyment_arr['vat_value'],
+            'price_withe_vat' => $pyment_arr['price_withe_vat'],
+            'date' => $date_and_time['g_date_en'],
+            'html' => $html,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ];
+        $contract = Contract::create($data);
+        // -----------------------------------------------------------------
+        // creating the relationship
+        $project->contracts()->attach([$contract->id => [
+            'contract_type_id' => $contract_type_id,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ]]);
+        // ----------------------------------------------------------------- هذا الأمر ماشي بس ما يعمل ريفرش للصفحة
+        // return redirect()->route('contract.contract_to_pdf', [
+        //     'contract_id' => $contract->id
+        // ]);
+        // -----------------------------------------------------------------
+        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
+        // -----------------------------------------------------------------
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_payment_arr($price, $visit_fee = null)
