@@ -52,11 +52,15 @@
   <tr>
     <th colspan="2">الدفعات</th>
     <th>المبلغ</th>
-    <th>الضريبة</th>
+    <th><span>الضريبة</span> <span>VAT</span> <span>{{$pyment_arr['vat_percentage']??''}}</span><span>%</span></th>
     <th>الإجمالي</th>
   </tr>
   <tr>
-    <td colspan="2">الدفعة الاولى عند توقيع العقد</td>
+    <td colspan="2" style="font-size: 95%;">
+      <span>الدفعة الاولى</span>
+      <span>(شاملة كامل الضريبة)</span>
+      <span>عند التعاقد</span>
+    </td>
     <td>{{$pyment_arr['pyment_1']??''}}</td>
     {{-- <td>{{$pyment_arr['pyment_1_vat']??''}}</td> --}}
     <td>{{$pyment_arr['vat_value']??''}}</td>

@@ -90,7 +90,11 @@ class OfficeDataController extends Controller
         $officeDatas = array(
             [
                 'name_ar' => 'عبدالرزاق حكيم للإستشارات الهندسية',
-                'phone ' => '920020544',
+                'phone' => '920020544',
+                'phone1' => '0148650000',
+                'email' => 'ahc@hakeemarch.com',
+                'SEC_license_no' => '692',
+                'SEC_license_issue_date' => '1412-08-07',
                 'created_by_id' => $created_by_id,
                 'created_by_name' => $created_by_name,
             ],

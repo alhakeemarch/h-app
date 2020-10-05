@@ -30,6 +30,8 @@ Route::get('/', function () {
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/f', function () {
 
+    return App\Http\Controllers\DateAndTime::get_date_time_arr('25-08-1983');
+
     //////////////////////////////////////////////////////////    
     // $h = new App\HijriDate();
     // return $h->get_date(12 - 01 - 2020);

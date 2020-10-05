@@ -360,21 +360,32 @@ class ProjectDocController extends Controller
         $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $date_and_time = DateAndTime::get_date_time_arr();
-        $data = [
+        $azel_data = [
+            'walls_material' => 'بولسترين',
+            'walls_value' => '0.53',
+            'ceiling_material' => 'بولسترين',
+            'ceiling_value' => '0.31',
+            'window_material' => 'زجاج مضاعف',
+            'window_value' => '2.67',
+        ];
+        $data_for_pdf = [
             'project' => $project,
             'office_data' => $office_data,
             'date_and_time' => $date_and_time,
+            'date_and_time' => $date_and_time,
+            'azel_data' => $azel_data,
         ];
         // creating pdf 
         $newPDF = new TCPDF();
         $pdf_view = 'projectDoc.t_azel';
         // -----------------------------------------------------------------
         // set some language dependent data:
-        $lg = array();
-        $lg['a_meta_charset'] = 'UTF-8';
-        $lg['a_meta_dir'] = 'rtl';
-        $lg['a_meta_language'] = 'ar';
-        $lg['w_page'] = 'page';
+        $lg = [
+            'a_meta_charset' => 'UTF-8',
+            'a_meta_dir' => 'rtl',
+            'a_meta_language' => 'ar',
+            'w_page' => 'page',
+        ];
         $newPDF::setLanguageArray($lg);
         // -----------------------------------------------------------------
         $newPDF::SetAuthor('Hakeem-App');
@@ -382,21 +393,22 @@ class ProjectDocController extends Controller
         $newPDF::SetSubject('تعهد العزل');
         $newPDF::SetFooterMargin(0);
         $newPDF::SetAutoPageBreak(TRUE, 24);
-        $newPDF::SetMargins(20, 30, 20, true);
-        $newPDF::setCellHeightRatio(1.1);
+        $newPDF::SetMargins(20, 25, 20, true);
+        $newPDF::setCellHeightRatio(1.3);
         // $newPDF::Ln(10);
         // -----------------------------------------------------------------
         // set arabic font
-        $newPDF::SetFont('al-mohanad', '', 12, '', false);
+        $newPDF::SetFont('al-mohanad', 'B', 10, '', false);
+        // $newPDF::SetFont('traditionalarabic', 'B', 14, '', false);
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data_for_pdf);
+        $html = $the_view->render();
         // -----------------------------------------------------------------
         $newPDF::AddPage('P', 'A4');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'I');
-        exit;
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        return;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_missing_data($doc_name, $project)

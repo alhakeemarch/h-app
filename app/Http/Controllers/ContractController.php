@@ -43,6 +43,10 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'cost' => 'required|numeric',
+        ]);
+        // -----------------------------------------------------------------
         $project = Project::findOrFail($request->project_id);
         $found_contract = false;
         // -----------------------------------------------------------------
@@ -117,9 +121,9 @@ class ContractController extends Controller
      * @param  \App\Contract  $contract
      * @return \Illuminate\Http\Response
      */
-    public function edit(Contract $contract)
+    public function edit(Contract $contract, Request $request)
     {
-        //
+        return view('contract.edit')->with(['contract' => $contract]);
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -131,7 +135,42 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
-        //
+        $request->validate([
+            'cost' => 'required|numeric',
+        ]);
+
+        return 'جاري التجهيز';
+
+        $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_tame($project);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد تصميم';
+        $contract_type_id = 1;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'project_tame' => $project_tame,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+
+
+
+
+
+        $data = [
+            'cost' => $pyment_arr['cost'],
+            'vat_value' => $pyment_arr['vat_value'],
+            'price_withe_vat' => $pyment_arr['price_withe_vat'],
+            'date' => $date_and_time['g_date_en'],
+            'html' => $html,
+            'last_edit_by_id' => auth()->user()->id,
+            'last_edit_by_name' => auth()->user()->user_name,
+        ];
+
+        $contract->update($data);
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -153,11 +192,23 @@ class ContractController extends Controller
         return  $found_contract;
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public static function get_quick_form_contracts()
+    {
+        return [
+            'عقد تصميم',
+            'عقد قرار مساحي',
+            'عقد محضر تثبيت',
+            'عقد اشراف عظم',
+            'عقد اشراف كامل',
+            // 'عقد تصميم واجهة ثلاثية الابعاد',
+            // 'عقد تصميم سلامة',
+        ];
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function design($project, $price)
     {
         // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_tame($project);
         $date_and_time = DateAndTime::get_date_time_arr();
         $pyment_arr = self::get_payment_arr($price);
         $contract_title = 'عقد تصميم';
@@ -165,7 +216,6 @@ class ContractController extends Controller
         $pdf_data = [
             'project' => $project,
             'office_data' => $office_data,
-            'project_tame' => $project_tame,
             'date_and_time' => $date_and_time,
             'pyment_arr' => $pyment_arr,
             'contract_title' => $contract_title,

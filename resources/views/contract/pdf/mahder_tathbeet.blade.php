@@ -38,27 +38,6 @@
     </tr>
 </table><br><br style="line-height: 30%;">
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
-<table class="tbl-bordered txt-center">
-    <tr>
-        <th colspan=" 1" rowspan="2">قيمة العقد</th>
-        <th style="padding: 35px;">المبلغ</th>
-        <th>ضريبة القيمة المضافة 15%</th>
-        <th>الإجمالي</th>
-    </tr>
-    <tr>
-        <td>{{$pyment_arr['cost']??''}}</td>
-        <td>{{$pyment_arr['vat_value']??''}}</td>
-        <td>{{$pyment_arr['price_withe_vat']??''}}</td>
-    </tr>
-    <tr>
-        <td colspan="5" style="text-align: none;">
-            <span>
-                <span>الاجمالي شامل ضريبة القيمة المضافة وقدره</span>
-                <span>{{$pyment_arr['price_withe_vat_text'] ?? '........'}}</span>
-                <span>فقط لا غير.</span>
-            </span>
-        </td>
-    </tr>
-</table> <br><br style="line-height: 30%;">
+@include('contract.pdf.price_tbl')
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 @include('contract.pdf.footer')

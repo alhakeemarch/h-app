@@ -89,15 +89,21 @@ class CreateOfficeDataTable extends Migration
             $table->string('issue_place')->nullable(); // مكان إصدار السجل
             $table->boolean('is_primary_commercial_registration')->nullable(); // هل سجل رئيسي
             $table->boolean('is_sub_commercial_registration')->nullable(); //  هل سجل فرعي
-            $table->string('chamber_of_commerce_no')->nullable();; // رقم عضوية الغرفة التجارية
-            $table->bigInteger('VAT_account_no')->nullable();; // الرقم الضريبي
+            $table->string('chamber_of_commerce_no')->nullable(); // رقم عضوية الغرفة التجارية
+            $table->bigInteger('VAT_account_no')->nullable(); // الرقم الضريبي
             //  -----------------------------
-            $table->string('SEC_license_no')->nullable();; // رقم ترخيص الهيئة السعودية للمهندسين
-            $table->string('SEC_safety_license_no')->nullable();; // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
-            $table->string('SEC_license_no_2')->nullable();; // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
-            $table->string('SEC_license_no_3')->nullable();; // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
-            $table->string('SEC_license_no_4')->nullable();; // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
-            $table->string('SEC_license_no_5')->nullable();; // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
+            $table->string('SEC_license_no')->nullable(); // رقم ترخيص الهيئة السعودية للمهندسين
+            $table->date('SEC_license_issue_date')->nullable();
+            $table->string('SEC_safety_license_no')->nullable(); // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
+            $table->date('SEC_safety_license_issue_date')->nullable();
+            $table->string('SEC_license_no_2')->nullable(); // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
+            $table->date('SEC_license_issue_date_2')->nullable();
+            $table->string('SEC_license_no_3')->nullable(); // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
+            $table->date('SEC_license_issue_date_3')->nullable();
+            $table->string('SEC_license_no_4')->nullable(); // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
+            $table->date('SEC_license_issue_date_4')->nullable();
+            $table->string('SEC_license_no_5')->nullable(); // رقم ترخيص الهيئة السعودية للمهندسين للسلامة
+            $table->date('SEC_license_issue_date_5')->nullable();
             //  -----------------------------
             $table->string('shop_open_license_no')->nullable(); // رقم رخصة فتح المحل
             $table->string('htsd_uni_no')->nullable(); // رقم المنشأة في مكتب العمل

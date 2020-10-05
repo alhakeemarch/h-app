@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 
 class DateAndTime extends Controller
 {
-    public static function get_date_time_arr()
+    public static function get_date_time_arr($date = null)
     {
-
-        $gregorian_date_ar = date("yy-m-d", strtotime(now()));
-        $gregorian_date_en = date("d-m-yy", strtotime(now()));
-        $day_of_week_en = date("l", strtotime(now()));
+        $date = ($date) ? $date : now();
+        $gregorian_date_ar = date("yy-m-d", strtotime($date));
+        $gregorian_date_en = date("d-m-yy", strtotime($date));
+        $day_of_week_en = date("l", strtotime($date));
         // $day_of_week_en = date("l", strtotime('2020-09-20'));
         // ----------------------------------------------------------
         $arabic_week_days = [

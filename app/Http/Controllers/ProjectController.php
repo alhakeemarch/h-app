@@ -124,7 +124,7 @@ class ProjectController extends Controller
         $project_tame = $this->get_project_tame($project);
         $contract = new Contract();
         $contract_types = ContractType::all();
-        $quick_form_contracts = $this->get_quick_form_contracts();
+        $quick_form_contracts = ContractController::get_quick_form_contracts();
         $project_docs = ProjectDocController::get_project_docs();
 
         // to remove contract that already added from the list
@@ -367,19 +367,6 @@ class ProjectController extends Controller
             'projects' => $projects,
             'allProjectsCount' => $allProjectsCount,
         ]);
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function get_quick_form_contracts()
-    {
-        return [
-            'عقد تصميم',
-            'عقد قرار مساحي',
-            'عقد محضر تثبيت',
-            'عقد اشراف عظم',
-            'عقد اشراف كامل',
-            'عقد تصميم واجهة ثلاثية الابعاد',
-            'عقد تصميم سلامة',
-        ];
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_project_tame($project)
