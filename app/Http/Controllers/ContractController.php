@@ -172,7 +172,6 @@ class ContractController extends Controller
         ];
         // -----------------------------------------------------------------
         // Content
-        $doc_name = 'tafweed';
         $pdf_view = 'contract.pdf.design';
         // -----------------------------------------------------------------
         // View
@@ -211,7 +210,7 @@ class ContractController extends Controller
     public static function contract_to_pdf(Request $request, $contract = null)
     {
         $contract = ($contract) ? $contract : Contract::findOrFail($request->contract_id);
-        // $contract = Contract::findOrFail($request->contract_id);
+        // -----------------------------------------------------------------
         $newPDF = new TCPDF();
         // -----------------------------------------------------------------
         // setting a header and foooter 
@@ -259,7 +258,6 @@ class ContractController extends Controller
         ];
         // -----------------------------------------------------------------
         // Content
-        $doc_name = 'supervision';
         $pdf_view = 'contract.pdf.supervision';
         // -----------------------------------------------------------------
         // View
@@ -315,7 +313,6 @@ class ContractController extends Controller
         ];
         // -----------------------------------------------------------------
         // Content
-        $doc_name = 'supervision_full';
         $pdf_view = 'contract.pdf.supervision_full';
         // -----------------------------------------------------------------
         // View
@@ -370,7 +367,6 @@ class ContractController extends Controller
         ];
         // -----------------------------------------------------------------
         // Content
-        $doc_name = 'qarar_masahe';
         $pdf_view = 'contract.pdf.qarar_masahe';
         // -----------------------------------------------------------------
         // View
@@ -424,7 +420,6 @@ class ContractController extends Controller
         ];
         // -----------------------------------------------------------------
         // Content
-        $doc_name = 'mahder_tathbeet';
         $pdf_view = 'contract.pdf.mahder_tathbeet';
         // -----------------------------------------------------------------
         // View

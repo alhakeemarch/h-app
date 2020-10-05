@@ -16,6 +16,7 @@ use \Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
+use function PHPSTORM_META\override;
 
 class ProjectDocController extends Controller
 {
@@ -140,7 +141,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -164,13 +165,14 @@ class ProjectDocController extends Controller
         $newPDF::SetSubject('تفويض مساحة');
         // overriding som settings
         $newPDF::SetMargins(15, 15, 15);
-        $newPDF::SetFont('al-mohanad', '', 9, '', false);
+        $newPDF::SetFont('al-mohanad', '', 11, '', false);
+        $newPDF::setCellHeightRatio(1.55);
         // -----------------------------------------------------------------
         $the_view = View::make($pdf_view)->with($data);
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -204,7 +206,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -237,7 +239,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -270,7 +272,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -300,6 +302,11 @@ class ProjectDocController extends Controller
         // setting main sittings
         $newPDF = $this->set_common_settings($newPDF);
         // -----------------------------------------------------------------
+        // overriding som settings
+        // $newPDF::SetMargins(15, 15, 15);
+        $newPDF::SetFont('al-mohanad', '', 16, '', false);
+        $newPDF::setCellHeightRatio(3);
+        // -----------------------------------------------------------------
         // pdf title
         $newPDF::SetTitle('غلاف المذكرة الإنشائية');
         $newPDF::SetSubject('غلاف المذكرة الإنشائية');
@@ -308,7 +315,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -318,9 +325,11 @@ class ProjectDocController extends Controller
         // data needed in document
         $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
+        $date_and_time = DateAndTime::get_date_time_arr();
         $data = [
             'project' => $project,
             'office_data' => $office_data,
+            'date_and_time' => $date_and_time,
         ];
         // creating pdf 
         $newPDF = new TCPDF();
@@ -341,7 +350,52 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        exit;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function t_azel(Request $request)
+    {
+        // data needed in document
+        $project = Project::findOrFail($request->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'date_and_time' => $date_and_time,
+        ];
+        // creating pdf 
+        $newPDF = new TCPDF();
+        $pdf_view = 'projectDoc.t_azel';
+        // -----------------------------------------------------------------
+        // set some language dependent data:
+        $lg = array();
+        $lg['a_meta_charset'] = 'UTF-8';
+        $lg['a_meta_dir'] = 'rtl';
+        $lg['a_meta_language'] = 'ar';
+        $lg['w_page'] = 'page';
+        $newPDF::setLanguageArray($lg);
+        // -----------------------------------------------------------------
+        $newPDF::SetAuthor('Hakeem-App');
+        $newPDF::SetTitle('تعهد العزل');
+        $newPDF::SetSubject('تعهد العزل');
+        $newPDF::SetFooterMargin(0);
+        $newPDF::SetAutoPageBreak(TRUE, 24);
+        $newPDF::SetMargins(20, 30, 20, true);
+        $newPDF::setCellHeightRatio(1.1);
+        // $newPDF::Ln(10);
+        // -----------------------------------------------------------------
+        // set arabic font
+        $newPDF::SetFont('al-mohanad', '', 12, '', false);
+        // -----------------------------------------------------------------
+        $newPDF::AddPage('P', 'A4');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'I');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -357,11 +411,28 @@ class ProjectDocController extends Controller
         if (!($project->project_str_hight)) {
             array_push($missing_data, 'يجب تسجيل معلومات الإرتفاع الإنشائي المصمم');
         }
-        if (!($project->str_designed_id)) {
+        if (!($project->str_designed_by)) {
             array_push($missing_data, 'يجب تسجيل المهندس الإنشائي المصمم');
         }
         return $missing_data;
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function get_project_docs()
+    {
+        return [
+            'تفويض' => 'projectDoc.tafweed',
+            'تفويض المساحة' => 'projectDoc.tafweed_masaha',
+            'تعهد المخاطر' => 'projectDoc.t_makhater',
+            'تعهد السور' => 'projectDoc.t_soor',
+            'تعهد العزل' => 'projectDoc.t_azel',
+            'تعهد المياه' => 'projectDoc.t_meyaah',
+            'تقرير ارض فضاء' => 'projectDoc.report_empty_land',
+            // 'طلب ربط رخصة بالقرار المساحي' => '',
+            'غلاف المذكرة الإنشائية' => 'projectDoc.str_notes_cover',
+        ];
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+
     // -----------------------------------------------------------------------------------------------------------------
     public static function set_common_settings($newPDF)
     {
@@ -638,7 +709,7 @@ class ProjectDocController extends Controller
         // dd($html);
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output($doc_name . '.pdf');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         exit;
 
         // --------------------------------------------------------------------------------------------------------------

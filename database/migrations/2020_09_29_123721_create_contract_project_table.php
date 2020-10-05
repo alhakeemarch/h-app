@@ -19,7 +19,9 @@ class CreateContractProjectTable extends Migration
             $table->foreignId('contract_id')->references('id')->on('contracts');
             $table->foreignId('contract_type_id')->references('id')->on('contract_types');
             $table->string('description')->nullable();
-            
+
+
+            $table->unique(['project_id', 'contract_type_id']);
 
             // =============================
             // -----------------------------

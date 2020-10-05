@@ -30,7 +30,6 @@ Route::get('/', function () {
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/f', function () {
 
-
     //////////////////////////////////////////////////////////    
     // $h = new App\HijriDate();
     // return $h->get_date(12 - 01 - 2020);
@@ -370,6 +369,7 @@ Route::group(['prefix' => 'projectDoc'], function () {
     Route::any('t_meyaah', 'ProjectDocController@t_meyaah')->name('projectDoc.t_meyaah');
     Route::any('report_empty_land', 'ProjectDocController@report_empty_land')->name('projectDoc.report_empty_land');
     Route::any('str_notes_cover', 'ProjectDocController@str_notes_cover')->name('projectDoc.str_notes_cover');
+    Route::any('t_azel', 'ProjectDocController@t_azel')->name('projectDoc.t_azel');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'contract'], function () {

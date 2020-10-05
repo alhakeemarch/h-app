@@ -125,6 +125,7 @@ class ProjectController extends Controller
         $contract = new Contract();
         $contract_types = ContractType::all();
         $quick_form_contracts = $this->get_quick_form_contracts();
+        $project_docs = ProjectDocController::get_project_docs();
 
         // to remove contract that already added from the list
         foreach ($quick_form_contracts as $key => $value) {
@@ -143,6 +144,7 @@ class ProjectController extends Controller
             'contract_types' => $contract_types,
             'quick_form_contracts' => $quick_form_contracts,
             'project_contracts' => $project_contracts,
+            'project_docs' => $project_docs,
         ]);
     }
 
