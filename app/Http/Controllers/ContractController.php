@@ -49,6 +49,7 @@ class ContractController extends Controller
         // -----------------------------------------------------------------
         $project = Project::findOrFail($request->project_id);
         $found_contract = false;
+        $contract_data = [];
         // -----------------------------------------------------------------
         $found_contract = Contract::where([
             'project_id' => $project->id,
@@ -63,15 +64,15 @@ class ContractController extends Controller
         }
         // -----------------------------------------------------------------
         if ($request->contract_type_id == 1) {
-            return $this->design($project, $request->cost);
+            $contract_data = $this->design($project, $request->cost);
         }
         // -----------------------------------------------------------------
         if ($request->contract_type_id == 2) {
-            return $this->qarar_masahe($project, $request->cost);
+            $contract_data =  $this->qarar_masahe($project, $request->cost);
         }
         // -----------------------------------------------------------------
         if ($request->contract_type_id == 3) {
-            return $this->mahder_tathbeet($project, $request->cost);
+            $contract_data =  $this->mahder_tathbeet($project, $request->cost);
         }
         // -----------------------------------------------------------------
         if ($request->contract_type_id == 4) {
@@ -85,7 +86,7 @@ class ContractController extends Controller
                     'يوجد عقد اشراف كامل لهذا المشروع',
                 ]);
             }
-            return $this->supervision($project, $request->cost);
+            $contract_data =  $this->supervision($project, $request->cost);
         }
         // -----------------------------------------------------------------
         if ($request->contract_type_id == 5) {
@@ -99,8 +100,39 @@ class ContractController extends Controller
                     'يوجد عقد اشراف عادي لهذا المشروع',
                 ]);
             }
-            return $this->supervision_full($project, $request->cost);
+            $contract_data =  $this->supervision_full($project, $request->cost);
         }
+        // -----------------------------------------------------------------
+
+        $contract = Contract::create($contract_data);
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'contracts',
+            'model' => 'Contract',
+            'model_id' => $contract->id,
+            'action' => 'create',
+            'description' => 'new contract' . $contract->contract_type()->name_ar
+                . ' => added to project with id= ' . $project->id . ', by cost = ' . $contract->cost,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        // creating the relationship
+        $project->contracts()->attach([$contract->id => [
+            'contract_type_id' => $contract->contract_type_id,
+            'created_by_id' => auth()->user()->id,
+            'created_by_name' => auth()->user()->user_name,
+        ]]);
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'contract_project',
+            'action' => 'create',
+            'description' => 'added new relation mony to mony for project with id= ' . $project->id . ',and contract withe id = ' . $contract->id,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
         // -----------------------------------------------------------------
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -138,39 +170,46 @@ class ContractController extends Controller
         $request->validate([
             'cost' => 'required|numeric',
         ]);
+        // -----------------------------------------------------------------
+        $old_price = $contract->cost;
+        $new_price = $request->cost;
+        $project = Project::findOrFail($contract->project_id);
+        $edit = true;
+        $data = [];
+        // -----------------------------------------------------------------
+        if ($contract->contract_type_id == 1) {
+            $data = $this->design($project, $request->cost, $edit);
+        }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 2) {
+            $data = $this->qarar_masahe($project, $request->cost, $edit);
+        }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 3) {
+            $data = $this->mahder_tathbeet($project, $request->cost, $edit);
+        }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 4) {
+            $data = $this->supervision($project, $request->cost, $edit);
+        }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 5) {
+            $data = $this->supervision_full($project, $request->cost, $edit);
+        }
 
-        return 'جاري التجهيز';
-
-        $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_tame($project);
-        $date_and_time = DateAndTime::get_date_time_arr();
-        $pyment_arr = self::get_payment_arr($price);
-        $contract_title = 'عقد تصميم';
-        $contract_type_id = 1;
-        $pdf_data = [
-            'project' => $project,
-            'office_data' => $office_data,
-            'project_tame' => $project_tame,
-            'date_and_time' => $date_and_time,
-            'pyment_arr' => $pyment_arr,
-            'contract_title' => $contract_title,
-        ];
-
-
-
-
-
-        $data = [
-            'cost' => $pyment_arr['cost'],
-            'vat_value' => $pyment_arr['vat_value'],
-            'price_withe_vat' => $pyment_arr['price_withe_vat'],
-            'date' => $date_and_time['g_date_en'],
-            'html' => $html,
-            'last_edit_by_id' => auth()->user()->id,
-            'last_edit_by_name' => auth()->user()->user_name,
-        ];
-
+        // -----------------------------------------------------------------
         $contract->update($data);
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'contracts',
+            'model' => 'Contract',
+            'model_id' => $contract->id,
+            'action' => 'update',
+            'description' => 'price of contract withe id = ' . $contract->id . 'from =' . $old_price . '=> to= ' . $new_price,
+        ];
+        DbLogController::add_record($db_record_data);
+        return redirect()->route('project.show', $project)->with('success', 'contract edited successfully - تم تعديل العقد بنجاح');
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -205,7 +244,7 @@ class ContractController extends Controller
         ];
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function design($project, $price)
+    public function design($project, $price, $edit = false)
     {
         // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
@@ -228,33 +267,36 @@ class ContractController extends Controller
         $the_view = View::make($pdf_view)->with($pdf_data);
         $html = $the_view->render();
         // -----------------------------------------------------------------
-        // creating a contract
-        $last_contract_no = Contract::max('contract_no');
-        $data = [
-            'project_id' => $project->id,
-            'contract_type_id' => $contract_type_id,
-            'contract_no' => $last_contract_no + 1,
-            'cost' => $pyment_arr['cost'],
-            'vat_percentage' => $pyment_arr['vat_percentage'],
-            'vat_value' => $pyment_arr['vat_value'],
-            'price_withe_vat' => $pyment_arr['price_withe_vat'],
-            'date' => $date_and_time['g_date_en'],
-            'html' => $html,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ];
-        $contract = Contract::create($data);
-        // -----------------------------------------------------------------
-        // creating the relationship
-        $project->contracts()->attach([$contract->id => [
-            'contract_type_id' => $contract_type_id,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ]]);
-        // $contract->projects()->attach($project);
-        // $project->contracts()->sync($contract);
-
-        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
+        if ($edit) {
+            $data = [
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $last_contract_no = Contract::max('contract_no');
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $last_contract_no + 1,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function contract_to_pdf(Request $request, $contract = null)
@@ -289,7 +331,7 @@ class ContractController extends Controller
         // -----------------------------------------------------------------
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function supervision($project, $price)
+    public function supervision($project, $price, $edit = false)
     {
         // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
@@ -314,37 +356,40 @@ class ContractController extends Controller
         $the_view = View::make($pdf_view)->with($pdf_data);
         $html = $the_view->render();
         // -----------------------------------------------------------------
-        // creating a contract
-        $last_contract_no = Contract::max('contract_no');
-        $data = [
-            'project_id' => $project->id,
-            'contract_type_id' => $contract_type_id,
-            'contract_no' => $last_contract_no + 1,
-            'cost' => $pyment_arr['cost'],
-            'vat_percentage' => $pyment_arr['vat_percentage'],
-            'vat_value' => $pyment_arr['vat_value'],
-            'price_withe_vat' => $pyment_arr['price_withe_vat'],
-            'date' => $date_and_time['g_date_en'],
-            'html' => $html,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ];
-        $contract = Contract::create($data);
-        // -----------------------------------------------------------------
-        // creating the relationship
-        $project->contracts()->attach([$contract->id => [
-            'contract_type_id' => $contract_type_id,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ]]);
+        if ($edit) {
+            $data = [
 
-        // -----------------------------------------------------------------
-        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
-        // -----------------------------------------------------------------
-
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $last_contract_no = Contract::max('contract_no');
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $last_contract_no + 1,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function supervision_full($project, $price)
+    public function supervision_full($project, $price, $edit = false)
     {
         // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
@@ -369,36 +414,41 @@ class ContractController extends Controller
         $the_view = View::make($pdf_view)->with($pdf_data);
         $html = $the_view->render();
         // -----------------------------------------------------------------
-        // creating a contract
-        $last_contract_no = Contract::max('contract_no');
-        $data = [
-            'project_id' => $project->id,
-            'contract_type_id' => $contract_type_id,
-            'contract_no' => $last_contract_no + 1,
-            'cost' => $pyment_arr['cost'],
-            'vat_percentage' => $pyment_arr['vat_percentage'],
-            'vat_value' => $pyment_arr['vat_value'],
-            'price_withe_vat' => $pyment_arr['price_withe_vat'],
-            'date' => $date_and_time['g_date_en'],
-            'html' => $html,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ];
-        $contract = Contract::create($data);
         // -----------------------------------------------------------------
-        // creating the relationship
-        $project->contracts()->attach([$contract->id => [
-            'contract_type_id' => $contract_type_id,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ]]);
+        if ($edit) {
+            $data = [
 
-        // -----------------------------------------------------------------
-        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
-        // -----------------------------------------------------------------
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $last_contract_no = Contract::max('contract_no');
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $last_contract_no + 1,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function qarar_masahe($project, $price)
+    public function qarar_masahe($project, $price, $edit = false)
     {
         // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
@@ -423,35 +473,40 @@ class ContractController extends Controller
         $the_view = View::make($pdf_view)->with($pdf_data);
         $html = $the_view->render();
         // -----------------------------------------------------------------
-        // creating a contract
-        $last_contract_no = Contract::max('contract_no');
-        $data = [
-            'project_id' => $project->id,
-            'contract_type_id' => $contract_type_id,
-            'contract_no' => $last_contract_no + 1,
-            'cost' => $pyment_arr['cost'],
-            'vat_percentage' => $pyment_arr['vat_percentage'],
-            'vat_value' => $pyment_arr['vat_value'],
-            'price_withe_vat' => $pyment_arr['price_withe_vat'],
-            'date' => $date_and_time['g_date_en'],
-            'html' => $html,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ];
-        $contract = Contract::create($data);
-        // -----------------------------------------------------------------
-        // creating the relationship
-        $project->contracts()->attach([$contract->id => [
-            'contract_type_id' => $contract_type_id,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ]]);
-        // -----------------------------------------------------------------
-        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
-        // -----------------------------------------------------------------
+        if ($edit) {
+            $data = [
+
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $last_contract_no = Contract::max('contract_no');
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $last_contract_no + 1,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function mahder_tathbeet($project, $price)
+    public function mahder_tathbeet($project, $price, $edit = false)
     {
         // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
@@ -476,36 +531,37 @@ class ContractController extends Controller
         $the_view = View::make($pdf_view)->with($pdf_data);
         $html = $the_view->render();
         // -----------------------------------------------------------------
-        // creating a contract
-        $last_contract_no = Contract::max('contract_no');
-        $data = [
-            'project_id' => $project->id,
-            'contract_type_id' => $contract_type_id,
-            'contract_no' => $last_contract_no + 1,
-            'cost' => $pyment_arr['cost'],
-            'vat_percentage' => $pyment_arr['vat_percentage'],
-            'vat_value' => $pyment_arr['vat_value'],
-            'price_withe_vat' => $pyment_arr['price_withe_vat'],
-            'date' => $date_and_time['g_date_en'],
-            'html' => $html,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ];
-        $contract = Contract::create($data);
-        // -----------------------------------------------------------------
-        // creating the relationship
-        $project->contracts()->attach([$contract->id => [
-            'contract_type_id' => $contract_type_id,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ]]);
-        // ----------------------------------------------------------------- هذا الأمر ماشي بس ما يعمل ريفرش للصفحة
-        // return redirect()->route('contract.contract_to_pdf', [
-        //     'contract_id' => $contract->id
-        // ]);
-        // -----------------------------------------------------------------
-        return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
-        // -----------------------------------------------------------------
+        if ($edit) {
+            $data = [
+
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $last_contract_no = Contract::max('contract_no');
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $last_contract_no + 1,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_payment_arr($price, $visit_fee = null)

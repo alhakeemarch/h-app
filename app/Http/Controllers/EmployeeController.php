@@ -193,6 +193,29 @@ class EmployeeController extends PersonController
         $employees = array(
             // --------------------------------------------------
             [
+                'national_id' => '1000676971',
+                'ar_name1' => 'عبدالرزاق',
+                'ar_name2' => 'عبدالمطلب',
+                'ar_name3' => 'صالح',
+                'ar_name5' => 'حكيم',
+                'en_name1' => 'Abdulrazaq',
+                'en_name5' => 'Hakim',
+                'nationality_code' => 'SA',
+                'nationality_ar' => 'المملكة العربية السعودية',
+                'nationality_en' => 'Saudi Arabia',
+                'mobile' => '0540404040',
+                'email' => 'athakim@hotmail.com',
+                'phone' => '0148650000',
+                'phone_extension' => '200',
+                'is_employee' => true,
+                'is_customer' => true,
+                'job_title' => '',
+                'job_level' => 0,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ],
+            // --------------------------------------------------
+            [
                 'national_id' => '1000000001',
                 'ar_name1' => 'تجربة',
                 'ar_name5' => '-1',

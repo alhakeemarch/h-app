@@ -17,7 +17,7 @@ class CreateDbLogsTable extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->string('table')->nullable();
             $table->string('model')->nullable();
-            $table->string('Model_id')->nullable();
+            $table->string('model_id')->nullable();
             $table->string('action')->nullable();
             $table->string('request')->nullable();
             $table->string('sql')->nullable();

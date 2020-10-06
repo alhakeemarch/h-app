@@ -2,16 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 
 class DateAndTime extends Controller
 {
     public static function get_date_time_arr($date = null)
     {
-        $date = ($date) ? $date : now();
-        $gregorian_date_ar = date("yy-m-d", strtotime($date));
-        $gregorian_date_en = date("d-m-yy", strtotime($date));
-        $day_of_week_en = date("l", strtotime($date));
+
+        // $x = new DateTime('11.4.1987');
+        // dd(date('d-m-yy', strtotime($x)));
+        //date in mm/dd/yyyy format; or it can be in other formats as well
+        // $birthDate = "25/08/1983";
+        //explode the date to get month, day and year
+        // $birthDate = explode("/", $birthDate);
+        //get age from date or birthdate
+        // return date("md");
+        // return (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))));
+        // $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
+        //     ? ((date("Y") - $birthDate[2]) - 1)
+        //     : (date("Y") - $birthDate[2]));
+        // return "Age is:" . $age;
+
+        // $date = ($date) ? $a : strtotime(now());
+
+        $gregorian_date_ar = date("yy-m-d", strtotime(now()));
+        $gregorian_date_en = date("d-m-yy", strtotime(now()));
+        $day_of_week_en = date("l", strtotime(now()));
         // $day_of_week_en = date("l", strtotime('2020-09-20'));
         // ----------------------------------------------------------
         $arabic_week_days = [

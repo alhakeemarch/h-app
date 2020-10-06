@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\DbLog;
+use App\ContractClass;
 use Illuminate\Http\Request;
 
-class DbLogController extends Controller
+class ContractClassController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,23 +35,16 @@ class DbLogController extends Controller
      */
     public function store(Request $request)
     {
-        // 
-    }
-
-    public static function add_record($data)
-    {
-        $data['created_by_id'] = auth()->user()->id;
-        $data['created_by_name'] = auth()->user()->user_name;
-        DbLog::create($data);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\DbLog  $dbLog
+     * @param  \App\ContractClass  $contractClass
      * @return \Illuminate\Http\Response
      */
-    public function show(DbLog $dbLog)
+    public function show(ContractClass $contractClass)
     {
         //
     }
@@ -59,10 +52,10 @@ class DbLogController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\DbLog  $dbLog
+     * @param  \App\ContractClass  $contractClass
      * @return \Illuminate\Http\Response
      */
-    public function edit(DbLog $dbLog)
+    public function edit(ContractClass $contractClass)
     {
         //
     }
@@ -71,10 +64,10 @@ class DbLogController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\DbLog  $dbLog
+     * @param  \App\ContractClass  $contractClass
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DbLog $dbLog)
+    public function update(Request $request, ContractClass $contractClass)
     {
         //
     }
@@ -82,10 +75,10 @@ class DbLogController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\DbLog  $dbLog
+     * @param  \App\ContractClass  $contractClass
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DbLog $dbLog)
+    public function destroy(ContractClass $contractClass)
     {
         //
     }

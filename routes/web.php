@@ -30,7 +30,7 @@ Route::get('/', function () {
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/f', function () {
 
-    return App\Http\Controllers\DateAndTime::get_date_time_arr('25-08-1983');
+    // return App\Http\Controllers\DateAndTime::get_date_time_arr('1983-25-08');
 
     //////////////////////////////////////////////////////////    
     // $h = new App\HijriDate();
@@ -169,13 +169,13 @@ function firstInsertion()
         array_push($feed_back, ['Plans records = ' => App\Plan::all()->count()]);
     }
     // -------------------------------------------------------------------
-    // if (App\Http\Controllers\StreetController::firstInsertion() || false) {
-    //     array_push($feed_back, ['streets' => true]);
-    //     array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
-    // } else {
-    //     array_push($feed_back, ['streets' => false]);
-    //     array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
-    // }
+    if (App\Http\Controllers\StreetController::firstInsertion() || false) {
+        array_push($feed_back, ['streets' => true]);
+        array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
+    } else {
+        array_push($feed_back, ['streets' => false]);
+        array_push($feed_back, ['Streets records = ' => App\Street::all()->count(),]);
+    }
     // -------------------------------------------------------------------
     if (App\Http\Controllers\AllowedUsageController::firstInsertion()) {
         array_push($feed_back, ['allowedUsages' => true]);

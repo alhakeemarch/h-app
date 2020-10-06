@@ -78,16 +78,18 @@ label {
 // ========================END TAGS===============================================++
 
 // ========================START Pseudo Selectors ================================++
-::-webkit-input-placeholder { /* Edge */
-  color: #D3D3D3 !important;
+::-webkit-input-placeholder {
+  /* Edge */
+  color: #d3d3d3 !important;
   text-transform: lowercase;
 }
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #D3D3D3 !important;
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #d3d3d3 !important;
   text-transform: lowercase;
 }
 ::placeholder {
-  color: #D3D3D3 !important;
+  color: #d3d3d3 !important;
   text-transform: lowercase;
 }
 // ========================End Pseudo Selectors ==================================++

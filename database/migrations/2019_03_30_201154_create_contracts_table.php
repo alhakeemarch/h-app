@@ -17,6 +17,7 @@ class CreateContractsTable extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->foreignId('project_id')->references('id')->on('projects');
             $table->foreignId('contract_type_id')->references('id')->on('contract_types');
+            $table->foreignId('contract_class_id')->references('id')->on('contract_classes');
             $table->bigInteger('contract_no')->nullable()->unique();
             $table->bigInteger('contract_no_acc')->nullable()->unique();
             // -----------------------------
