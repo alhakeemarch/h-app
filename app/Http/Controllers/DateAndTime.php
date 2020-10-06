@@ -9,26 +9,13 @@ class DateAndTime extends Controller
 {
     public static function get_date_time_arr($date = null)
     {
+        $date = ($date) ? strtotime($date) : strtotime(now());
 
-        // $x = new DateTime('11.4.1987');
-        // dd(date('d-m-yy', strtotime($x)));
-        //date in mm/dd/yyyy format; or it can be in other formats as well
-        // $birthDate = "25/08/1983";
-        //explode the date to get month, day and year
-        // $birthDate = explode("/", $birthDate);
-        //get age from date or birthdate
-        // return date("md");
-        // return (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))));
-        // $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
-        //     ? ((date("Y") - $birthDate[2]) - 1)
-        //     : (date("Y") - $birthDate[2]));
-        // return "Age is:" . $age;
-
-        // $date = ($date) ? $a : strtotime(now());
-
-        $gregorian_date_ar = date("yy-m-d", strtotime(now()));
-        $gregorian_date_en = date("d-m-yy", strtotime(now()));
-        $day_of_week_en = date("l", strtotime(now()));
+        $gregorian_date_ar = date("Y-m-d", $date);
+        $gregorian_date_en = date("d-m-Y", $date);
+        $day_of_week_en = date("l", $date);
+        $month_short_en = date("M", $date);
+        $month_full_en = date("F", $date);
         // $day_of_week_en = date("l", strtotime('2020-09-20'));
         // ----------------------------------------------------------
         $arabic_week_days = [
@@ -46,10 +33,18 @@ class DateAndTime extends Controller
             if ($en_day == $day_of_week_en)
                 $day_of_week_ar = $ar_day;
         }
+
         // ----------------------------------------------------------
-        $h = new \App\HijriDate();
-        $hijri_date_en = $h->get_date($gregorian_date_en);
+        $h = new \App\HijriDate($date);
+        $hijri_date_en = $h->get_date();
         $hijri_date_ar = self::reverse_date($hijri_date_en);
+        $hijri_day_no = $h->get_day();
+        $hijri_month_no = $h->get_month();
+        $hijri_year_no = $h->get_year();
+        $hijri_month_name_en = $h->get_month_name($hijri_month_no);
+        $hijri_month_name_ar = $h->get_month_name_ar($hijri_month_no);
+
+
 
 
         // ----------------------------------------------------------
@@ -57,7 +52,15 @@ class DateAndTime extends Controller
         $date_and_time['g_date_ar'] = $gregorian_date_ar;
         $date_and_time['g_date_en'] = $gregorian_date_en;
         $date_and_time['day_en'] = $day_of_week_en;
+        $date_and_time['month_short_en'] = $month_short_en;
+        $date_and_time['month_full_en'] = $month_full_en;
+
         $date_and_time['day_ar'] = $day_of_week_ar;
+        $date_and_time['hijri_day_no'] = $hijri_day_no;
+        $date_and_time['hijri_month_no'] = $hijri_month_no;
+        $date_and_time['hijri_month_name_en'] = $hijri_month_name_en;
+        $date_and_time['hijri_month_name_ar'] = $hijri_month_name_ar;
+        $date_and_time['hijri_year_no'] = $hijri_year_no;
         $date_and_time['h_date_en'] = $hijri_date_en;
         $date_and_time['h_date_ar'] = $hijri_date_ar;
 

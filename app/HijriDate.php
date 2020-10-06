@@ -106,6 +106,15 @@ class HijriDate
         );
         return $month[$i - 1];
     }
+    public function get_month_name_ar($i)
+    {
+        static $month = array(
+            "محرم", "صفر", "ربيع الأول", "ربيع الآخر",
+            "جمادالأول", "جماد الآخر", "رجب", "شعبان",
+            "رمضان", "شوال", "ذي القعدة", "ذي الحجة"
+        );
+        return $month[$i - 1];
+    }
     private function GregorianToHijri($time = null)
     {
         if ($time === null) $time = time();

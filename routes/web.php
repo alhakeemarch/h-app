@@ -30,7 +30,9 @@ Route::get('/', function () {
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/f', function () {
 
-    // return App\Http\Controllers\DateAndTime::get_date_time_arr('1983-25-08');
+    // return App\Http\Controllers\ProjectController::firstInsertion();
+
+    // return App\Http\Controllers\DateAndTime::get_date_time_arr('1983-08-25');
 
     //////////////////////////////////////////////////////////    
     // $h = new App\HijriDate();
@@ -45,15 +47,15 @@ Route::any('/f', function () {
     // return time();
     //////////////////////////////////////////////////////////    
 
-    if (true) {
+    if (false) {
         Artisan::call('migrate:fresh');
         Artisan::call('cache:clear');
         Artisan::call('view:clear');
-        makeUser('admin');
-        makeUser('fahd');
-        makeUser('hanadi');
+        // makeUser('admin');
+        // makeUser('fahd');
+        // makeUser('hanadi');
         // return 'done....!';
-        return firstInsertion();
+        // return firstInsertion();
     }
 
 

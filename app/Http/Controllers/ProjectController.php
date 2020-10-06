@@ -594,4 +594,50 @@ class ProjectController extends Controller
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public static function firstInsertion()
+    {
+        $all_projects = \App\Data\Projects_arr::git_projects();
+
+        if (Project::all()->count() >= count($all_projects)) {
+            return false;
+        }
+
+        foreach ($all_projects as $project) {
+            $new_project = new Project();
+
+            foreach ($project as $key => $value) {
+                if ($value && !($key == 'id')) {
+                    if (strpos($key, 'old_exl') !== false) {
+                        // echo $key . '=>' . $value . '<br>';
+                        $new_project->notes = $new_project->notes . ' | ' . $key . '=>' . $value;
+                    } else {
+                        $new_project->$key = $value;
+                    }
+                }
+            }
+            $new_project->created_by_id = auth()->user()->id;
+            $new_project->created_by_name = auth()->user()->user_name;
+            $new_project->save();
+        }
+        return 'true';
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function get_all_projects_as_arr()
+    {
+        $all_projects = Project::all();
+        foreach ($all_projects as $project) {
+            $obj = json_decode($project, TRUE);
+            echo '[';
+            foreach ($obj as $a => $b) {
+                if ($b) {
+                    echo "'" . ($a) . "'=>'" . $b . "',";
+                    echo '<br>';
+                }
+            }
+            echo '],';
+            echo '<br>';
+        }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+
 }

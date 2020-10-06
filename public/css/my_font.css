@@ -1,0 +1,12 @@
+@font-face {
+	font-family: Markazi;
+	src: url("../fonts/Markazi.ttf");
+	/* src: url("../fonts/Markazi2.ttf"); */
+	/* src: url("../fonts/majalla.ttf"); */
+	/* font-weight: 500; */
+}
+
+html,
+body {
+	font-family: "Markazi", sans-serif;
+}

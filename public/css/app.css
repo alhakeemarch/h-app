@@ -932,12 +932,3 @@ main {
   padding: 0.25rem;
 }
 
-@font-face {
-  font-family: Markazi;
-  src: url(/fonts/majalla.ttf?3fc03601b79c3606d82297119af71a41);
-}
-
-body {
-  font-family: "Markazi", sans-serif;
-}
-
