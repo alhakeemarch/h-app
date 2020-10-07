@@ -114,13 +114,13 @@
             new project
         </div>
     </a>
-    @if (auth()->user()->is_admin)
     <a class="" href="{{route ('project.index')}}">
         <div class="sidebar-item {{ (request()->is('project*')) ? 'active' : '' }}">
 
             projects
         </div>
     </a>
+    @if (auth()->user()->is_admin)
     <a href="{{route ('contract.index')}}">
         <div class="sidebar-item {{ (request()->is('contract*')) ? 'active' : '' }}">
             contracts

@@ -42,14 +42,20 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        if (!auth()->user()->is_admin) {
-            return redirect()->action(
-                'FileAndFolderController@runningProjects'
-            );
+        // if (!auth()->user()->is_admin) {
+        //     return redirect()->action(
+        //         'FileAndFolderController@runningProjects'
+        //     );
+        // }
+        if (auth()->user()->is_admin) {
+            $allProjectsCount = Project::all()->count();
+            $allProjects = Project::orderBy('id', 'desc')->paginate(300);
+        } else {
+            $allProjects = Project::whereNotNull('project_manager_id')->get();
+            // $allProjectsCount = $allProjects->count();
+            $allProjectsCount = 30;
         }
 
-        $allProjectsCount = Project::all()->count();
-        $allProjects = Project::orderBy('id', 'desc')->paginate(300);
         return view('project.index')->with([
             'projects' => $allProjects,
             'allProjectsCount' => $allProjectsCount,
@@ -69,7 +75,7 @@ class ProjectController extends Controller
         $plot = Plot::findOrFail($request['plot']);
         // return $plot;
         $project = new Project;
-        $found_project = $project->where('plot_id', $plot->plot_id)->first();
+        $found_project = $project->where('plot_id', $plot->id)->first();
         $project = ($found_project) ? $found_project : $project;
         $formsData = array_merge(PlotController::formsData(), [
             'new_deed_no' => $plot->deed_no,

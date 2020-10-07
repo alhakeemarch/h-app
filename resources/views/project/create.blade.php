@@ -5,7 +5,7 @@
 <div class="card">
     <h5 class="card-header">{{ __('crating project') }}</h5>
     <div class="card-body">
-        @if ($project->id)
+        @if ($project->id &&false)
         <div class=" alert alert-info">
             <p>this deed is allredy regestered for onother project</p>
             <p>هذا الصك مسجل لمشروع سابق</p>

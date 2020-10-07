@@ -66,12 +66,11 @@ $is_read_only = false;
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
-        <label for="area">{{__( 'area')}} <span class="small text-danger">({{__('required')}})</span>
-            :</label>
+        <label for="area">{{__( 'area')}}
+            <span class="small text-muted">({{__('optional')}})</span> :</label>
         <input type="text" name="area" class="form-control @error ('area') is-invalid @enderror"
-            value="{{old('area') ?? $plot->area }}" onkeypress="onlyNumber(event)" required @if($is_read_only)readonly
-            @endif placeholder="{{__( 'Area')}}.." onfocus="this.placeholder=''"
-            onblur="this.placeholder='{{__( 'Area')}}..'">
+            value="{{old('area') ?? $plot->area }}" onkeypress="onlyNumber(event)" @if($is_read_only)readonly @endif
+            placeholder="{{__( 'Area')}}.." onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'Area')}}..'">
         @error('area')
         <small class="text-danger"> {{$errors->first('area')}} </small>
         @enderror

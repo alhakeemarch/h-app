@@ -32,7 +32,7 @@ Route::any('/f', function () {
 
     // return App\Http\Controllers\ProjectController::firstInsertion();
 
-    // return App\Http\Controllers\DateAndTime::get_date_time_arr('1983-08-25');
+    return App\Http\Controllers\DateAndTime::get_date_time_arr();
 
     //////////////////////////////////////////////////////////    
     // $h = new App\HijriDate();

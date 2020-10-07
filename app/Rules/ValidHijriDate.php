@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Http\Controllers\DateAndTime;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidHijriDate implements Rule
@@ -29,25 +30,25 @@ class ValidHijriDate implements Rule
             return false;
         }
         // -----------------------------------------------------
-        $input_date = $value;
-        $input_year = (int) substr($input_date, 6, 4);
-        $input_month = (int) substr($input_date, 3, 2);
-        $input_day = (int) substr($input_date, 0, 2);
+
+        $input_date = explode('-', $value);
+        $input_year = (int) $input_date['2'];
+        $input_month = (int) $input_date['1'];
+        $input_day = (int) $input_date['0'];
         // -----------------------------------------------------
-        $hijri = new \App\HijriDate();
-        $current_hijri_date = $hijri->get_date();
-        $current_hijri_year = (int) substr($current_hijri_date, 6, 4);
-        $current_hijri_month = (int) substr($current_hijri_date, 3, 2);
-        $current_hijri_day = (int) substr($current_hijri_date, 0, 2);
+        $date_arr = DateAndTime::get_date_time_arr();
+        $current_hijri_year = (int)  $date_arr['hijri_year_no'];
+        $current_hijri_month = (int)$date_arr['hijri_month_no'];
+        $current_hijri_day = (int)$date_arr['hijri_day_no'];
         // -----------------------------------------------------
 
         if ($input_year > $current_hijri_year || $input_year < $current_hijri_year - 100) {
             return false;
         }
-        if ($input_year == $current_hijri_year && $input_month > $current_hijri_month) {
+        if ($input_year ==  $current_hijri_year && $input_month > $current_hijri_month) {
             return false;
         }
-        if ($input_year == $current_hijri_year && $input_month = $current_hijri_month && $input_day > $current_hijri_day) {
+        if ($input_year ==  $current_hijri_year && $input_month ==  $current_hijri_month && $input_day > $current_hijri_day) {
             return false;
         }
 
