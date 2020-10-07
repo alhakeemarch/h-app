@@ -79,7 +79,7 @@
         btn-block "> <i class="fas fa-pen"></i> Edit</a>
     </div>
     <div class="col-4">
-        @include('person.destroy')
+        {{-- @include('person.destroy') --}}
     </div>
 
 </div>
@@ -88,9 +88,4 @@
 
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 @endsection

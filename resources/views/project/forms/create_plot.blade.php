@@ -19,7 +19,7 @@
             {{-- --------------------------------------------------------------------------- --}}
             @include('plot.forms.deed_info')
             @include('plot.forms.plan_info')
-            @include('plot.forms.regulations')
+            {{-- @include('plot.forms.regulations') --}}
             @include('plot.forms.coordinates')
             {{-- --------------------------------------------------------------------------- --}}
             <button type="submit" class="btn btn-info btn-block my-3">{{__('next')}}</button>
@@ -27,10 +27,6 @@
     </div>
 </div>
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
+
 
 @endsection

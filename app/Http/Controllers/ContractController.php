@@ -15,6 +15,20 @@ class ContractController extends Controller
 {
     // -----------------------------------------------------------------------------------------------------------------
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+        // $this->authorizeResource(Person::class, 'person');
+        // $this->middleware('signed')->only('verify');
+        // $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -105,6 +119,7 @@ class ContractController extends Controller
         // -----------------------------------------------------------------
 
         $contract = Contract::create($contract_data);
+
         // -----------------------------------------------------------------
         // add record to db_log
         $db_record_data = [
@@ -112,7 +127,7 @@ class ContractController extends Controller
             'model' => 'Contract',
             'model_id' => $contract->id,
             'action' => 'create',
-            'description' => 'new contract' . $contract->contract_type()->name_ar
+            'description' => 'new contract' . $contract->contract_type()->first()->name_ar
                 . ' => added to project with id= ' . $project->id . ', by cost = ' . $contract->cost,
         ];
         DbLogController::add_record($db_record_data);

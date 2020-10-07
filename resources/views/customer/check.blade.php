@@ -16,14 +16,6 @@
                             title="{{__('must be 10 digits')}}">
                         <input type="submit" value="{{__('next')}}" class="btn btn-info btn-block my-3">
                     </form>
-
-
-                    <!-- ///////////////////////////////-->
-                    @if ($errors->any())
-                    @include('layouts.errors')
-                    @endif
-                    <!-- ///////////////////////////////-->
-
                 </div>
                 <!-- end card-body -->
             </div>

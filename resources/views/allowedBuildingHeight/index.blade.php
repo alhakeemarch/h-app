@@ -94,10 +94,4 @@ $obj = json_decode($allowed_building_height, TRUE);
 
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
-
 @endsection

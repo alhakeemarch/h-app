@@ -122,7 +122,7 @@
 
 
 
-@if (auth()->user()->is_admin AND false)
+@if (auth()->user()->is_admin)
 <h1> this is show project view</h1>
 
 @php

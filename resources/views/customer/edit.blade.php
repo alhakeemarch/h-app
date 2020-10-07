@@ -25,14 +25,4 @@
         © Editing customer Form..
     </div>
 </div>
-
-
-
-
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
-
 @endsection

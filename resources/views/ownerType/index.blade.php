@@ -102,10 +102,4 @@ $obj = json_decode($ownerType, TRUE);
 
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
-
 @endsection

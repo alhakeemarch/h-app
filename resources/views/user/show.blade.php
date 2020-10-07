@@ -41,10 +41,5 @@ $obj = json_decode($user, TRUE);
 </div>
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 
 @endsection

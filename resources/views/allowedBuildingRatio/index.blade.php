@@ -93,10 +93,5 @@ $obj = json_decode($building_ratio, TRUE);
 
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 
 @endsection

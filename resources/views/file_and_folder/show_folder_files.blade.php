@@ -10,11 +10,6 @@
 
 @include('project.folder_files')
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 @endsection
 
 @section('script')

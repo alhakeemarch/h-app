@@ -42,12 +42,6 @@ $obj = json_decode($saudiCity, TRUE);
 
 
 
-
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 @endsection
 
 @section('script')

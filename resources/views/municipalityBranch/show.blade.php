@@ -39,10 +39,4 @@ $obj = json_decode($municipalityBranch, TRUE);
 </div>
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
-
 @endsection

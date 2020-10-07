@@ -36,10 +36,5 @@ $obj = json_decode($neighbor, TRUE);
 </div>
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 
 @endsection

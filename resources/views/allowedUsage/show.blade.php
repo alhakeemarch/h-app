@@ -36,10 +36,6 @@ $obj = json_decode($allowedUsage, TRUE);
 </div>
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
+
 
 @endsection

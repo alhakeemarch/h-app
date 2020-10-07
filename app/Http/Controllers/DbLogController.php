@@ -7,6 +7,21 @@ use Illuminate\Http\Request;
 
 class DbLogController extends Controller
 {
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+        // $this->authorizeResource(Person::class, 'person');
+        // $this->middleware('signed')->only('verify');
+        // $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +29,9 @@ class DbLogController extends Controller
      */
     public function index()
     {
-        //
+        return view('db_log.index')->with([
+            'db_logs' => DbLog::all()->reverse(),
+        ]);
     }
 
     /**
@@ -53,7 +70,9 @@ class DbLogController extends Controller
      */
     public function show(DbLog $dbLog)
     {
-        //
+        return view('db_log.show')->with([
+            'db_log' => $dbLog,
+        ]);
     }
 
     /**

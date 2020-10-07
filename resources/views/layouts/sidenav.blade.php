@@ -33,9 +33,9 @@
             link
         </div>
     </a>
-    <a href="{{route ('home')}}">
-        <div class="sidebar-item {{ (request()->is('link*')) ? 'active' : '' }}">
-            link
+    <a href="{{route ('dbLog.index')}}">
+        <div class="sidebar-item {{ (request()->is('dbLog*')) ? 'active' : '' }}">
+            log
         </div>
     </a>
     @endif

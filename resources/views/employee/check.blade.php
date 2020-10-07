@@ -18,12 +18,6 @@
                     </form>
 
 
-                    <!-- ///////////////////////////////-->
-                    @if ($errors->any())
-                    @include('layouts.errors')
-                    @endif
-                    <!-- ///////////////////////////////-->
-
                 </div>
                 <!-- end card-body -->
             </div>

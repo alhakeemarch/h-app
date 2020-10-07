@@ -71,13 +71,6 @@
     </div>
 </div><!-- /End of container-fluid  -->
 
-
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
-
 @endsection
 
 @section('script')

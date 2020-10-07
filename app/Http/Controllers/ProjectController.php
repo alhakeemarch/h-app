@@ -42,17 +42,11 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        // if (!auth()->user()->is_admin) {
-        //     return redirect()->action(
-        //         'FileAndFolderController@runningProjects'
-        //     );
-        // }
         if (auth()->user()->is_admin) {
             $allProjectsCount = Project::all()->count();
             $allProjects = Project::orderBy('id', 'desc')->paginate(300);
         } else {
-            $allProjects = Project::whereNotNull('project_manager_id')->get();
-            // $allProjectsCount = $allProjects->count();
+            $allProjects = Project::whereNotNull('project_manager_id')->paginate(300);
             $allProjectsCount = 30;
         }
 
@@ -112,8 +106,31 @@ class ProjectController extends Controller
         $validated_project->put('plot_id', $plot->id);
 
         $project = Project::create($validated_project->all());
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'projects',
+            'model' => 'Project',
+            'model_id' => $project->id,
+            'action' => 'create',
+            'description' => 'new project created name =>'  . $project->project_name_ar  . ', plot_id = ' . $project->plot_id,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+
         $plot->project_id = $project->id;
         $plot->save();
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'plots',
+            'model' => 'Plot',
+            'model_id' => $plot->id,
+            'action' => 'update',
+            'description' => 'set foreignID in plot table, plot_id = '  . $plot->id  . ', project_id = ' . $project->id,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
         return redirect()->action('ProjectController@show', $project->id);
     }
 
@@ -299,6 +316,17 @@ class ProjectController extends Controller
 
             $person = $person->create($validatedData->all());
             $person->save();
+            // -----------------------------------------------------------------
+            // add record to db_log
+            $db_record_data = [
+                'table' => 'people',
+                'model' => 'Person',
+                'model_id' => $person->id,
+                'action' => 'create',
+                'description' => 'new person as customer created national_id =>'  . $person->national_id,
+            ];
+            DbLogController::add_record($db_record_data);
+            // -----------------------------------------------------------------
             return view('project.forms.check_plot_no')->with([
                 'person' => $person,
             ]);
@@ -341,6 +369,17 @@ class ProjectController extends Controller
             $validatedData['created_by_id'] = $created_by_id;
             $validatedData['created_by_name'] =  $created_by_name;
             $plot = Plot::create($validatedData);
+            // -----------------------------------------------------------------
+            // add record to db_log
+            $db_record_data = [
+                'table' => 'plots',
+                'model' => 'plot',
+                'model_id' => $plot->id,
+                'action' => 'create',
+                'description' => 'new plot created plot_no =>' . $plot->plot_no . ', deed_no =>'  . $plot->deed_no,
+            ];
+            DbLogController::add_record($db_record_data);
+            // -----------------------------------------------------------------
             return redirect()->route('project.create', [
                 'person' => $found_person,
                 'plot' => $plot,

@@ -31,11 +31,4 @@ $person = $employee;
 
 
 
-
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
-
 @endsection

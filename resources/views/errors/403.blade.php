@@ -61,10 +61,5 @@ function goBack(){
 </script>
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 
 @endsection

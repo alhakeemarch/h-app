@@ -90,12 +90,4 @@ $obj = json_decode($major, TRUE);
 
 
 
-
-
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
-
 @endsection

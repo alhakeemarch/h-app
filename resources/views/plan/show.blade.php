@@ -39,10 +39,6 @@ $obj = json_decode($plan, TRUE);
 </div>
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
+
 
 @endsection

@@ -61,9 +61,5 @@
     </div><!-- /End of container-fluid  -->
 </div><!-- /End of container-fluid  -->
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
+
 @endsection

@@ -58,12 +58,4 @@
         </tbody>
     </table>
 </div><!-- /End of card  -->
-
-
-
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 @endsection

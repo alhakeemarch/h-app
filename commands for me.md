@@ -643,4 +643,18 @@ required title -----> to add
 
 
 ================================
+        <x-search_input name='asd'>
+            {{-- ------------------------------------------------------- --}}
+            {{-- <x-slot name='onkeypress_fun'>onlyNumber(event)</x-slot> --}}
+            {{-- <x-slot name='onkeypress_fun'>userNameString(event)</x-slot> --}}
+            {{-- <x-slot name='onkeypress_fun'>onlyCapitalString(event)</x-slot> --}}
+            {{-- <x-slot name='onkeypress_fun'>onlyEnglishString(event)</x-slot> --}}
+            {{-- <x-slot name='onkeypress_fun'>onlyArabicString(event)</x-slot> --}}
+            {{-- <x-slot name='onkeypress_fun'>onlyString(event)</x-slot> --}}
+            {{-- @slot('onkeypress_fun') onlyArabicString(event) @endslot  --}}
+            {{-- ------------------------------------------------------- --}}
+        </x-search_input>
+================================
+        <x-search_input name='asd' />
+================================
 # APP_DEBUG = false

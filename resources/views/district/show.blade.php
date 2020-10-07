@@ -39,10 +39,5 @@ $obj = json_decode($district, TRUE);
 </div>
 
 
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 
 @endsection

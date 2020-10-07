@@ -10,12 +10,6 @@
 <h1>receipt in index</h1>
 
 
-
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 @endsection
 
 @section('script')

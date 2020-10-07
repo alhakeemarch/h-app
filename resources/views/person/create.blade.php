@@ -11,10 +11,7 @@
                     @include('person.forms.q_form')
                     <button class="btn btn-info btn-block w-75 my-2 mx-auto" type="submit">{{__('submit')}}</button>
                 </form>
-                <!-- ///////////////////////////////-->
-                @if ($errors->any())
-                @include('layouts.errors') @endif
-                <!-- ///////////////////////////////-->
+
             </div>
             <!-- end card-body -->
         </div>

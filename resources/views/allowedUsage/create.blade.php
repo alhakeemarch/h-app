@@ -10,12 +10,6 @@
 
 
 
-
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
 @endsection
 
 @section('script')
