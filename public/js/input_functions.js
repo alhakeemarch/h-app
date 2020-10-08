@@ -197,6 +197,46 @@ function filterNames(event) {
 }
 
 // ================================
+function filterSselect(event) {
+    let inputID = event.target.id;
+    let inputName = event.target.name;
+    let inputValue = event.target.value.toLowerCase();
+    let tds = document.querySelectorAll('.sidebar-item');
+    // ---------------------------------------------------
+    // to remove extra spaces in text
+    while (inputValue.indexOf('  ') > -1) {
+        inputValue = inputValue.replace('  ', ' ');
+    }
+    inputValue = inputValue.trim();
+    // ---------------------------------------------------
+    if (inputValue.indexOf(' ') > -1) {
+        let inputValueArr = inputValue.split(" ");
+        let testValue = '';
+        inputValueArr.forEach(inputValue => {
+            // testValue += '(' + inputValue + ')' + '.*?\\w?.*?';
+            testValue += '(' + inputValue + ')' + '.*?';
+        });
+        tds.forEach(td => {
+            let matchFound = new RegExp(testValue, 'gi').test(td.innerHTML.toLowerCase());
+            if (matchFound) {
+                td.parentNode.style.display = '';
+            } else {
+                td.parentNode.style.display = 'none';
+            }
+        });
+
+    } else {
+        tds.forEach(td => {
+            let matchFound = new RegExp(inputValue, 'gi').test(td.innerHTML.toLowerCase());
+            if (matchFound) {
+                td.parentNode.style.display = '';
+            } else {
+                td.parentNode.style.display = 'none';
+            }
+        });
+    }
+}
+// ================================
 function filterSidebar(event) {
     let inputID = event.target.id;
     let inputName = event.target.name;

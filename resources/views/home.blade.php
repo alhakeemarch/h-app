@@ -11,32 +11,48 @@
         <p class="text-center">
             {{-- هنا راح يكون الداش بورد للموظف --}}
         </p>
-        {{-- 
-        @php
-        $user = Auth::user();
-        $obj = json_decode($user, TRUE);
-        @endphp
-        <ul class="">
-            @foreach ($obj as $a=>$b )
-            <li>
-                {{ $a}} : {{$b}}
-        </li>
-        @endforeach
-        <hr>
-        <li>
-            {{__('your Password is : ')}} {{Auth::user()->password}}
-        </li>
-        <li>
-            {{__('your user Remember Token is : ')}}{{Auth::user()->remember_token}}
-        </li>
-        </ul> --}}
     </div>
+    {{-- 
+    @php
+    $list =[
+    ['id'=>1,'name'=>'Fahad Bakhsh',],
+    ['id'=>2,'name'=>'Almann Hakeem',],
+    ['id'=>3,'name'=>'Ayham Alhaje',],
+    ['id'=>4,'name'=>'Samher Almadani',],
+    ['id'=>5,'name'=>'Abdullah Turkustani',],
+    ];
+    @endphp
 
 
-    <!-- ///////////////////////////////-->
-    @if ($errors->any())
-    @include('layouts.errors')
-    @endif
-    <!-- ///////////////////////////////-->
+    <div class="col-md form-group">
+        <label for="municipality_branch_id">{{__('municipality branch')}}
+    <span class="small text-muted">({{__('optional')}})</span> :</label>
+    <select class="form-control" name="municipality_branch_id">
+        <option selected disabled>choose..</option>
+        <input type="text">
+        @foreach ($list as $item)
+        <option value="{{$item['id']}}"> {{$item['name']}}</option>
+        @endforeach
+    </select>
+</div>
+--}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ///////////////////////////////-->
+@if ($errors->any())
+@include('layouts.errors')
+@endif
+<!-- ///////////////////////////////-->
 </div>
 @endsection

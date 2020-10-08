@@ -116,6 +116,16 @@
     </div>
 </div>
 
+{{-- <div class="row container-fluid">
+    <div class="card-body">
+        <a href="#" class="btn btn-link">add project teem member</a>
+        <a href="#" class="btn btn-link">add strucutral information</a>
+        <a href="#" class="btn btn-link">add plot information</a>
+        <a href="#" class="btn btn-link">give a number</a>
+        <a href="#" class="btn btn-link">give change a status</a>
+    </div>
+</div> --}}
+
 
 
 

@@ -393,12 +393,12 @@ class ProjectDocController extends Controller
         $newPDF::SetSubject('تعهد العزل');
         $newPDF::SetFooterMargin(0);
         $newPDF::SetAutoPageBreak(TRUE, 24);
-        $newPDF::SetMargins(20, 25, 20, true);
+        $newPDF::SetMargins(20, 20, 20, true);
         $newPDF::setCellHeightRatio(1.3);
         // $newPDF::Ln(10);
         // -----------------------------------------------------------------
         // set arabic font
-        $newPDF::SetFont('al-mohanad', 'B', 10, '', false);
+        $newPDF::SetFont('al-mohanad', 'B', 11, '', false);
         // $newPDF::SetFont('traditionalarabic', 'B', 14, '', false);
         // -----------------------------------------------------------------
         $the_view = View::make($pdf_view)->with($data_for_pdf);

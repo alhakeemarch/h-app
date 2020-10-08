@@ -196,19 +196,20 @@ class ContractController extends Controller
             $data = $this->design($project, $request->cost, $edit);
         }
         // -----------------------------------------------------------------
-        if ($request->contract_type_id == 2) {
+        if ($contract->contract_type_id == 2) {
             $data = $this->qarar_masahe($project, $request->cost, $edit);
         }
         // -----------------------------------------------------------------
-        if ($request->contract_type_id == 3) {
+        if ($contract->contract_type_id == 3) {
             $data = $this->mahder_tathbeet($project, $request->cost, $edit);
         }
         // -----------------------------------------------------------------
-        if ($request->contract_type_id == 4) {
+        if ($contract->contract_type_id == 4) {
+
             $data = $this->supervision($project, $request->cost, $edit);
         }
         // -----------------------------------------------------------------
-        if ($request->contract_type_id == 5) {
+        if ($contract->contract_type_id == 5) {
             $data = $this->supervision_full($project, $request->cost, $edit);
         }
 
