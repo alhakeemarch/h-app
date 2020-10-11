@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('title', 'home')
+@section('head')
+
+@endsection
 @section('content')
 
 <div class="card">
@@ -12,7 +15,7 @@
             {{-- هنا راح يكون الداش بورد للموظف --}}
         </p>
     </div>
-    {{-- 
+
     @php
     $list =[
     ['id'=>1,'name'=>'Fahad Bakhsh',],
@@ -26,33 +29,31 @@
 
     <div class="col-md form-group">
         <label for="municipality_branch_id">{{__('municipality branch')}}
-    <span class="small text-muted">({{__('optional')}})</span> :</label>
-    <select class="form-control" name="municipality_branch_id">
-        <option selected disabled>choose..</option>
-        <input type="text">
-        @foreach ($list as $item)
-        <option value="{{$item['id']}}"> {{$item['name']}}</option>
-        @endforeach
-    </select>
+            <span class="small text-muted">({{__('optional')}})</span> :</label>
+        <select class="form-control" name="municipality_branch_id">
+            <option selected disabled>choose..</option>
+            <input type="text" class="w-100 border" placeholder="search..">
+            @foreach ($list as $item)
+            <option value="{{$item['id']}}"> {{$item['name']}}</option>
+            @endforeach
+        </select>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
---}}
+@endsection
+
+@section('script')
 
 
-
-
-
-
-
-
-
-
-
-
-
-<!-- ///////////////////////////////-->
-@if ($errors->any())
-@include('layouts.errors')
-@endif
-<!-- ///////////////////////////////-->
-</div>
 @endsection

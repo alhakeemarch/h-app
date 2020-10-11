@@ -11,11 +11,13 @@
                 <span class="font-weight-bold">project name: </span>
                 {{$project->project_name_ar}}</li>
             <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">project number: </span> <span>
-                    {{$project->project_no}}</span>
-                @if (auth()->user()->is_admin)
-                <button class=" btn btn-link">giv</button>
-                @endif
+                <span class="font-weight-bold align-self-center">project number: </span> <span>
+                    @if ($project->project_no)
+                    {{$project->project_no}}
+                    @elseif(auth()->user()->is_admin)
+                    @include('project.forms.giv_project_no')
+                    @else
+                    @endif
             </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('required use')}}: </span>
@@ -26,6 +28,14 @@
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('status')}}: </span>
                 {{$project->project_status}}</li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="font-weight-bold align-self-center">{{__('project str hight')}}: </span>
+                @if ($project->project_str_hight)
+                {{$project->project_str_hight}}
+                @else
+                @include('project.forms.str_hight')
+                @endif
+            </li>
         </ul>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
@@ -77,10 +87,10 @@
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-3">
         <h3 class="card-header d-flex justify-content-between">
-            <span>فريق العمل</span> <span>tame info</span>
+            <span>فريق العمل</span> <span>team info</span>
         </h3>
         <ul class="list-group card-body">
-            @foreach ($project_tame as $job => $employee)
+            @foreach ($project_team as $job => $employee)
             @if($employee)
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__(str_replace('_', ' ' , $job))}}:</span>
@@ -89,6 +99,11 @@
             @endif
             @endforeach
         </ul>
+        <div class="list-group m-0">
+            <div class="list-group-item m-0">
+                @include('project.forms.add_emp_to_tame')
+            </div>
+        </div>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
 </div>

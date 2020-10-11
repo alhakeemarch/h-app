@@ -351,7 +351,7 @@ class ContractController extends Controller
     {
         // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_tame($project);
+        $project_tame = ProjectController::get_project_team($project);
         $date_and_time = DateAndTime::get_date_time_arr();
         $pyment_arr = self::get_payment_arr($price);
         $contract_title = 'عقد اشراف هندسي (عظم ومباني)';
@@ -409,7 +409,7 @@ class ContractController extends Controller
     {
         // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_tame($project);
+        $project_tame = ProjectController::get_project_team($project);
         $date_and_time = DateAndTime::get_date_time_arr();
         $pyment_arr = self::get_payment_arr($price);
         $contract_title = 'عقد اشراف هندسي (كامل)';
@@ -468,7 +468,7 @@ class ContractController extends Controller
     {
         // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_tame($project);
+        $project_tame = ProjectController::get_project_team($project);
         $date_and_time = DateAndTime::get_date_time_arr();
         $pyment_arr = self::get_payment_arr($price);
         $contract_title = 'عقد خدمات هندسية (اصدار قرار مساحي)';
@@ -526,7 +526,7 @@ class ContractController extends Controller
     {
         // -----------------------------------------------------------------
         $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_tame($project);
+        $project_tame = ProjectController::get_project_team($project);
         $date_and_time = DateAndTime::get_date_time_arr();
         $pyment_arr = self::get_payment_arr($price);
         $contract_title = 'عقد خدمات هندسية (تثبيت موقع)';

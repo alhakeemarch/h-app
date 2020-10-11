@@ -115,7 +115,7 @@ class ProjectDocController extends Controller
         // data needed in document
         $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_tame($project);
+        $project_tame = ProjectController::get_project_team($project);
         $data = [
             'project' => $project,
             'office_data' => $office_data,
@@ -343,8 +343,8 @@ class ProjectDocController extends Controller
         $newPDF = $this->set_common_settings($newPDF);
         // -----------------------------------------------------------------
         // pdf title
-        $newPDF::SetTitle('تعهد المياه');
-        $newPDF::SetSubject('تعهد المياه');
+        $newPDF::SetTitle('تقرير أرض فضاء');
+        $newPDF::SetSubject('تقرير أرض فضاء');
         // -----------------------------------------------------------------
         $the_view = View::make($pdf_view)->with($data);
         $html = $the_view->render();

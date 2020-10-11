@@ -18,6 +18,8 @@ use App\Rules\ValidDate;
 use App\Street;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+
 
 
 use function PHPSTORM_META\map;
@@ -144,11 +146,12 @@ class ProjectController extends Controller
     {
         $project_contracts = ContractController::get_project_contracts($project);
         // return $project_contracts;
-        $project_tame = $this->get_project_tame($project);
+        $project_team = $this->get_project_team($project);
         $contract = new Contract();
         $contract_types = ContractType::all();
         $quick_form_contracts = ContractController::get_quick_form_contracts();
         $project_docs = ProjectDocController::get_project_docs();
+        $employees = Person::where('job_division', 'design')->get()->sortBy('ar_name1');
 
         // to remove contract that already added from the list
         foreach ($quick_form_contracts as $key => $value) {
@@ -162,12 +165,13 @@ class ProjectController extends Controller
 
         return view('project.show')->with([
             'project' => $project,
-            'project_tame' => $project_tame,
+            'project_team' => $project_team,
             'contract' => $contract,
             'contract_types' => $contract_types,
             'quick_form_contracts' => $quick_form_contracts,
             'project_contracts' => $project_contracts,
             'project_docs' => $project_docs,
+            'employees' => $employees,
         ]);
     }
 
@@ -200,7 +204,37 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+
+        if ($request->form_action == 'update_project_team_member') {
+            $request->validate(
+                [
+                    'position' => 'string|required',
+                    'member_id' => 'numeric|required',
+                ]
+            );
+            $position = $request->position;
+            $emp_id = $request->member_id;
+            $project->$position = $emp_id;
+            $project->last_edit_by_id = auth()->user()->id;
+            $project->last_edit_by_name = auth()->user()->user_name;
+            $project->save();
+            return redirect()->back()->with('success', 'team member added successfully - تم اضافة الموظف بنجاح');
+        }
+        if ($request->form_action == 'update_project_str_hight') {
+            $request->validate(['str_hight' => 'string|required',]);
+            $project->project_str_hight = $request->str_hight;
+            $project->last_edit_by_id = auth()->user()->id;
+            $project->last_edit_by_name = auth()->user()->user_name;
+            $project->save();
+            return redirect()->back()->with('success', 'structural hight added successfully - تم اضافة الإرتفاع الإنشائي بنجاح');
+        }
+        if ($request->form_action == 'update_project_number') {
+            $project->project_no = $this->get_new_project_no();
+            $project->last_edit_by_id = auth()->user()->id;
+            $project->last_edit_by_name = auth()->user()->user_name;
+            $project->save();
+            return redirect()->back()->with('success', 'structural hight added successfully - تم اضافة الإرتفاع الإنشائي بنجاح');
+        }
     }
 
     /**
@@ -414,7 +448,7 @@ class ProjectController extends Controller
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public static function get_project_tame($project)
+    public static function get_project_team($project)
     {
 
         $project_tame = [
@@ -526,6 +560,32 @@ class ProjectController extends Controller
         ];
 
         return $project_tame;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_new_project_no()
+    {
+        $all_project_no = Project::all(['project_no'])->toArray();
+        $project_no_arr = [];
+        $contrer = 1;
+        $avalable_no = [];
+        foreach ($all_project_no as $value) {
+            if ($value['project_no'] == null) {
+            } elseif (is_integer((int)(Str::before($value['project_no'], '_')))) {
+                array_push($project_no_arr, (int) (Str::before($value['project_no'], '_')));
+            }
+        }
+        sort($project_no_arr);
+        foreach ($project_no_arr as $number) {
+            if (!(in_array($contrer, $project_no_arr))) {
+                array_push($avalable_no, $contrer);
+            }
+            $contrer++;
+        }
+        dd($avalable_no);
+        exit;
+        // $last_project_no = Project::max('project_no');
+        // dd($last_project_no);
+        // return $last_project_no + 5;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function validate_project(Request $request)
