@@ -16,7 +16,7 @@
         </p>
     </div>
 
-    @php
+    {{-- @php
     $list =[
     ['id'=>1,'name'=>'Fahad Bakhsh',],
     ['id'=>2,'name'=>'Almann Hakeem',],
@@ -29,15 +29,15 @@
 
     <div class="col-md form-group">
         <label for="municipality_branch_id">{{__('municipality branch')}}
-            <span class="small text-muted">({{__('optional')}})</span> :</label>
-        <select class="form-control" name="municipality_branch_id">
-            <option selected disabled>choose..</option>
-            <input type="text" class="w-100 border" placeholder="search..">
-            @foreach ($list as $item)
-            <option value="{{$item['id']}}"> {{$item['name']}}</option>
-            @endforeach
-        </select>
-    </div>
+    <span class="small text-muted">({{__('optional')}})</span> :</label>
+    <select class="form-control" name="municipality_branch_id">
+        <option selected disabled>choose..</option>
+        <input type="text" class="w-100 border" placeholder="search..">
+        @foreach ($list as $item)
+        <option value="{{$item['id']}}"> {{$item['name']}}</option>
+        @endforeach
+    </select>
+</div> --}}
 
 
 
