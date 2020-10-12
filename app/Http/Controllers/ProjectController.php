@@ -45,13 +45,15 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         if (auth()->user()->is_admin) {
-            $allProjectsCount = Project::all()->count();
-            $allProjects = Project::orderBy('id', 'desc')->paginate(300);
+            // $allProjectsCount = Project::all()->count();
+            // $allProjects = Project::orderBy('id', 'desc')->paginate(300);
         } else {
-            $allProjects = Project::whereNotNull('project_manager_id')->paginate(300);
-            $allProjectsCount = 30;
+            // $allProjects = Project::whereNotNull('project_manager_id')->paginate(300);
+            // $allProjectsCount = 30;
         }
 
+        $allProjectsCount = Project::all()->count();
+        $allProjects = Project::orderBy('id', 'desc')->paginate(300);
         return view('project.index')->with([
             'projects' => $allProjects,
             'allProjectsCount' => $allProjectsCount,

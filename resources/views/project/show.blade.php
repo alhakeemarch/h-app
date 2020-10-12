@@ -4,12 +4,12 @@
 
 <div class="row container-fluid">
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
-    <div class="card col-md-3">
+    <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header">project info</h3>
         <ul class="list-group card-body">
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">project name: </span>
-                {{$project->project_name_ar}}</li>
+                {{$project->project_name_ar ?? '?'}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold align-self-center">project number: </span> <span>
                     @if ($project->project_no)
@@ -21,17 +21,17 @@
             </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('required use')}}: </span>
-                {{$project->project_type}}</li>
+                {{$project->project_type ?? '?'}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('required hight')}}: </span>
-                {{$project->project_arch_hight}}</li>
+                {{$project->project_arch_hight ?? '?'}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('status')}}: </span>
-                {{$project->project_status}}</li>
+                {{$project->project_status ?? '?'}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold align-self-center">{{__('project str hight')}}: </span>
                 @if ($project->project_str_hight)
-                {{$project->project_str_hight}}
+                {{$project->project_str_hight ?? '?'}}
                 @else
                 @include('project.forms.str_hight')
                 @endif
@@ -39,53 +39,26 @@
         </ul>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
-    <div class="card col-md-3">
+    <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header">owoner info</h3>
         <ul class="list-group card-body">
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('nId')}}: </span>
-                {{$project->owner_national_id}}</li>
+                {{$project->owner_national_id ?? '?'}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('the name')}}: </span>
-                {{$project->owner_name_ar}}</li>
+                {{$project->owner_name_ar ?? '?'}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('mobile')}}: </span>
-                {{$project->person()->first()->mobile}}</li>
+                {{$project->person()->first()->mobile ?? '?'}}</li>
         </ul>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
-    <div class="card col-md-3">
-        <h3 class="card-header">plot info</h3>
-        <ul class="list-group card-body">
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('deed number')}}: </span>
-                {{$project->plot()->first()->deed_no}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('deed date')}}: </span>
-                {{$project->plot()->first()->deed_date}}
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('plot number')}}: </span>
-                {{$project->plot()->first()->plot_no}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('total area')}}: </span>
-                {{$project->plot()->first()->area ?? ''}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('neighbor_id')}}: </span>
-                {{$project->plot()->first()->neighbor()->first()->ar_name ?? ''}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('district_id')}}: </span>
-                {{$project->plot()->first()->district()->first()->ar_name ?? ''}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('plan number')}}: </span>
-                {{$project->plot()->first()->plan()->first()->plan_no ?? ''}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('plan name')}}: </span>
-                {{$project->plot()->first()->plan()->first()->plan_ar_name ?? ''}}</li>
-        </ul>
+    <div class="card col-md-12 col-lg-6 col-xl-3">
+        @include('plot.show_main_info')
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
-    <div class="card col-md-3">
+    <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header d-flex justify-content-between">
             <span>فريق العمل</span> <span>team info</span>
         </h3>

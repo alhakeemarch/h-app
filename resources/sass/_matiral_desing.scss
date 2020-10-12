@@ -1,40 +1,19 @@
 /* ============================================================ */
 /* matiral desing  */
 
-.btn,
+input,
 .nav-tabs,
-.navbar,
-input,
-textarea,
-.card,
-.card-header {
-    border-radius: 2px !important;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
-}
-
-.btn {
-    margin: 0.375rem;
-    text-transform: uppercase;
-    word-wrap: break-word;
-    cursor: pointer;
-    border: 0;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-        box-shadow 0.15s ease-in-out;
-    /* padding: .84rem 2.14rem; */
-    border-radius: 300px !important;
-}
-
-input,
 hr,
 .navbar,
 textarea,
 .card,
 .card-header,
 .alert {
-    border-radius: 0 !important;
+    border-radius: 4px !important;
+    // border-radius: 0 !important;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
     //   background-color: #465573;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 input[type="file"] {
@@ -44,8 +23,21 @@ input[type="file"] {
 
 .card,
 .card-header,
+.card-footer,
 .card-body {
     background-color: $main_white;
+}
+.card-body {
+    padding: 0;
+    padding-top: 5px;
+    padding-bottom: 3px;
+}
+.card-header {
+    font-size: 110%;
+}
+.card-footer {
+    margin: 0;
+    padding: 0;
 }
 
 input,
@@ -66,6 +58,17 @@ input.form-check-input {
     margin-bottom: 0;
 }
 
+.btn {
+    margin: 0.375rem;
+    text-transform: uppercase;
+    word-wrap: break-word;
+    cursor: pointer;
+    border: 0;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
+    /* padding: .84rem 2.14rem; */
+    border-radius: 300px !important;
+}
 .btn {
     margin-top: 1em;
     /* margin-bottom: 0.5em; */

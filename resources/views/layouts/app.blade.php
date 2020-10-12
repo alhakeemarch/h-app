@@ -99,9 +99,9 @@
                 &copy; {{__('the_rights')}}
                 {{-- <a href="www.hakeemarch.com"> HakeemArch.com</a> --}}
             </div>
-            <div class="text-center">
+            <div class="text-center Scroll-up-btn-container">
                 <a class="Scroll-up-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
-                    <i class="fas fa-angle-double-up"></i>
+                    <i class="fas fa-angle-double-up Scroll-up-btn-icon"></i>
                     <small class="px-2">UP</small>
                 </a>
             </div>

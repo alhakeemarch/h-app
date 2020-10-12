@@ -45,9 +45,32 @@ footer {
   //   grid-template-columns: min-content 1fr min-content;
   grid-template-columns: 1fr 1fr 1fr;
 }
+
+.Scroll-up-btn-container {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #335589;
+  display: inline-block;
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+  opacity: 0.3;
+  &:hover {
+    opacity: 1;
+  }
+}
+
 .Scroll-up-btn {
   cursor: pointer;
+
   & :hover {
     cursor: pointer;
   }
+}
+
+.Scroll-up-btn-icon {
+  margin-top: 20px;
 }
