@@ -31,7 +31,7 @@ Route::get('/', function () {
 Route::any('/f', function () {
 
 
-    return App\Http\Controllers\ProjectController::added_projects();
+    // return App\Http\Controllers\ProjectController::added_projects();
     // return App\Http\Controllers\ProjectController::firstInsertion();
 
     return App\Http\Controllers\DateAndTime::get_date_time_arr();
