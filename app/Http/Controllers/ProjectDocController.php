@@ -326,15 +326,20 @@ class ProjectDocController extends Controller
         $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $date_and_time = DateAndTime::get_date_time_arr();
+        $doc_name = 'report_empty_land';
         $data = [
             'project' => $project,
             'office_data' => $office_data,
             'date_and_time' => $date_and_time,
         ];
         // creating pdf 
+        $missing_dat = $this->get_missing_data($doc_name, $project);
+        if (!empty($missing_dat)) {
+            return redirect()->back()->withErrors($missing_dat);
+        }
         $newPDF = new TCPDF();
         // Content
-        $doc_name = 'report_empty_land';
+
         $pdf_view = 'projectDoc.report_empty_land';
         // setting a header and foooter 
         $newPDF = $this->set_hakeem_header_footer($newPDF);
@@ -360,6 +365,7 @@ class ProjectDocController extends Controller
         $project = Project::findOrFail($request->project_id);
         $office_data = OfficeData::findOrFail(1);
         $date_and_time = DateAndTime::get_date_time_arr();
+        $doc_name = 't_azel';
         $azel_data = [
             'walls_material' => 'بولسترين',
             'walls_value' => '0.53',
@@ -375,6 +381,11 @@ class ProjectDocController extends Controller
             'date_and_time' => $date_and_time,
             'azel_data' => $azel_data,
         ];
+        // check if there is data missing for the pdf file
+        $missing_dat = $this->get_missing_data($doc_name, $project);
+        if (!empty($missing_dat)) {
+            return redirect()->back()->withErrors($missing_dat);
+        }
         // creating pdf 
         $newPDF = new TCPDF();
         $pdf_view = 'projectDoc.t_azel';
@@ -414,17 +425,52 @@ class ProjectDocController extends Controller
     public static function get_missing_data($doc_name, $project)
     {
         $missing_data = [];
-        if (!($project->plot()->first()->neighbor()->first())) {
-            array_push($missing_data, 'يجب تسجيل معلومات الحي');
+        // dd($doc_name);
+        if ($doc_name == 't_azel') {
+            if (!($project->plot()->first()->neighbor()->first())) {
+                array_push($missing_data, 'يجب تسجيل معلومات الحي');
+            }
+            if (!($project->plot()->first()->district()->first())) {
+                array_push($missing_data, 'يجب تسجيل معلومات المنطقة');
+            }
+            if (!($project->plot()->first()->x_coordinate)) {
+                array_push($missing_data, 'يجب تسجيل الإحداثي X');
+            }
+            if (!($project->plot()->first()->y_coordinate)) {
+                array_push($missing_data, 'يجب تسجيل الإحداثي Y');
+            }
         }
-        if (!($project->plot()->first()->district()->first())) {
-            array_push($missing_data, 'يجب تسجيل معلومات المنطقة');
+
+        if ($doc_name == 'str_notes_cover') {
+            if (!($project->plot()->first()->neighbor()->first())) {
+                array_push($missing_data, 'يجب تسجيل معلومات الحي');
+            }
+            if (!($project->plot()->first()->district()->first())) {
+                array_push($missing_data, 'يجب تسجيل معلومات المنطقة');
+            }
+            if (!($project->project_str_hight)) {
+                array_push($missing_data, 'يجب تسجيل معلومات الإرتفاع الإنشائي المصمم');
+            }
+            if (!($project->str_designed_by)) {
+                array_push($missing_data, 'يجب تسجيل المهندس الإنشائي المصمم');
+            }
         }
-        if (!($project->project_str_hight)) {
-            array_push($missing_data, 'يجب تسجيل معلومات الإرتفاع الإنشائي المصمم');
-        }
-        if (!($project->str_designed_by)) {
-            array_push($missing_data, 'يجب تسجيل المهندس الإنشائي المصمم');
+        if ($doc_name == 'report_empty_land') {
+            if (!($project->plot()->first()->neighbor()->first())) {
+                array_push($missing_data, 'يجب تسجيل معلومات الحي');
+            }
+            if (!($project->plot()->first()->district()->first())) {
+                array_push($missing_data, 'يجب تسجيل معلومات المنطقة');
+            }
+            if (!($project->plot()->first()->plan()->first())) {
+                array_push($missing_data, 'يجب تسجيل معلومات المخطط');
+            }
+            if (!($project->last_rokhsa_no)) {
+                array_push($missing_data, 'يجب تسجيل رقم الرخصة ');
+            }
+            if (!($project->last_rokhsa_issue_date)) {
+                array_push($missing_data, 'يجب تسجيل تاريخ اصدار الرخصة');
+            }
         }
         return $missing_data;
     }

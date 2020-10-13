@@ -245,14 +245,31 @@ class ContractController extends Controller
      */
     public function destroy(Contract $contract)
     {
-        //
+        // dd($contract);
+        $project = Project::findOrFail($contract->project_id);
+        // removing the relationship
+        $project->contracts()->detach([$contract->id => [
+            'contract_type_id' => $contract->contract_type_id,
+            'created_by_id' => $contract->created_by_id,
+            'created_by_name' => $contract->created_by_name,
+        ]]);
+        // $project->contracts()->attach([$contract->id => [
+        //     'contract_type_id' => $contract->contract_type_id,
+        //     'created_by_id' => auth()->user()->id,
+        //     'created_by_name' => auth()->user()->user_name,
+        // ]]);
+        // soft deleting the contract 
+
+        // logint the action
+
+        return 'من جد صح';
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_project_contracts($project)
     {
         $found_contract = Contract::where([
             'project_id' => $project->id,
-        ])->get();
+        ])->get()->sortBy('contract_type_id');
         return  $found_contract;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -352,7 +369,7 @@ class ContractController extends Controller
         $html = $contract->html;
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'I');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         // -----------------------------------------------------------------
         return;
         // return redirect()->back();

@@ -1,28 +1,105 @@
 {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+@php
+$total_price = 0;
+$total_vat = 0;
+$total_price_with_vat = 0;
+$total_1st_payment = 0;
+@endphp
 <ul class="list-group mb-2">
-    @foreach ($project_contracts as $contract)
-    <li class="list-group-item d-flex justify-content-between">
-        <span class="align-self-center">
-            {{$contract->contract_type()->first()->name_ar}}
-        </span>
-        <div class="d-flex">
-            @if (!($project->project_no))
-            <form action="{{route('contract.edit',[$contract->id])}}" method="get">
-                <input type="hidden" name="edit_needed" value="edit_price">
-                <button type="submit" class="btn btn-link align-self-center">edit |
-                    <i class="far fa-edit"></i>
-                </button>
-            </form>
-            @endif
-            <form action="{{route('contract.contract_to_pdf')}}" method="get" class="align-self-center">
-                @csrf
-                <input type="hidden" name="project_id" value="{{$project->id}}">
-                <input type="hidden" name="contract_id" value="{{$contract->id}}">
-                <button type="submit" class="btn btn-link align-self-center">print |
-                    <i class="fa fa-print" aria-hidden="true"></i>
-                </button>
-            </form>
-        </div>
+    <li class="list-group-item">
+        <table class="table table-bordered table-hover">
+            <thead class="bg-thead">
+                <th>اسم العقد</th>
+                <th>القيمة</th>
+                <th>الضريبة</th>
+                <th>الإجمالي</th>
+                <th>إجراءات</th>
+            </thead>
+            @foreach ($project_contracts as $contract)
+            <tr>
+                <td>
+                    <span class="align-self-center">
+                        {{$contract->contract_type()->first()->name_ar}}
+                    </span>
+                </td>
+                <td>
+                    <span class="align-self-center">
+                        {{$contract->cost}}
+                    </span>
+                </td>
+                <td>
+                    <span class="align-self-center">
+                        {{$contract->vat_value}}
+                    </span>
+                </td>
+                <td>
+                    <span class="align-self-center">
+                        {{$contract->price_withe_vat}}
+                    </span>
+                </td>
+                <td>
+                    <div class="d-flex justify-content-between">
+                        @if (!($project->project_no))
+                        <form action="{{route('contract.destroy',[$contract->id])}}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <input type="hidden" name="edit_needed" value="edit_price">
+                            <button type="submit" class="btn btn-link align-self-center text-danger"
+                                onclick="return confirm('Are you sure?')">delet |
+                                <i class="far fa-edit"></i>
+                            </button>
+                        </form>
+                        <form action="{{route('contract.edit',[$contract->id])}}" method="get">
+                            <input type="hidden" name="edit_needed" value="edit_price">
+                            <button type="submit" class="btn btn-link align-self-center">edit |
+                                <i class="far fa-edit"></i>
+                            </button>
+                        </form>
+                        @endif
+                        <form action="{{route('contract.contract_to_pdf')}}" method="get" class="align-self-center">
+                            @csrf
+                            <input type="hidden" name="project_id" value="{{$project->id}}">
+                            <input type="hidden" name="contract_id" value="{{$contract->id}}">
+                            <button type="submit" class="btn btn-link align-self-center">print |
+                                <i class="fa fa-print" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            @php
+            $total_price = $total_price + $contract->cost;
+            $total_vat = $total_vat + $contract->vat_value;
+            $total_price_with_vat = $total_price_with_vat + $contract->price_withe_vat;
+            if ($contract->contract_type_id == '1') {
+            $total_1st_payment = $total_1st_payment + ($contract->cost*0.5) + $contract->vat_value;
+            } else{
+            $total_1st_payment = $total_1st_payment + $contract->price_withe_vat;
+            }
+            @endphp
+            @endforeach
+        </table>
     </li>
-    @endforeach
-    {{-- ------------------------------------------------------------ --}}
+    <li class="list-group-item">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <td class=" col-md-6">اجمالي الأتعاب بدون ضريبة</td>
+                <td>{{$total_price}}</td>
+            </tr>
+            <tr>
+                <td>اجمالي الضريبة</td>
+                <td>{{$total_vat}}</td>
+            </tr>
+            <tr>
+                <td>اجمالي القيمة مع الضريبة</td>
+                <td>{{$total_price_with_vat}}</td>
+            </tr>
+            <tr>
+                <td>اجمالي الدفعة الأولى</td>
+                <td>{{$total_1st_payment}}</td>
+            </tr>
+        </table>
+    </li>
+</ul>
+
+{{-- ------------------------------------------------------------ --}}

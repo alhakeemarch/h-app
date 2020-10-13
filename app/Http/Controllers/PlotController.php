@@ -103,8 +103,11 @@ class PlotController extends Controller
      * @param  \App\plot  $plot
      * @return \Illuminate\Http\Response
      */
-    public function edit(plot $plot)
+    public function edit(plot $plot, Request $request)
     {
+        // if ($request->from_project) {
+        //     return 'new form for edit';
+        // }
         $project = new Project();
         if ($project->where('id', $plot->project_id)->first()) {
             $project = $project->where('id', $plot->project_id)->first();
@@ -142,6 +145,10 @@ class PlotController extends Controller
 
         // this returns true if don
         Plot::where('id', $plot->id)->update($validatedData);
+
+        if ($plot->project()->first()) {
+            return redirect()->action('ProjectController@show', [$plot->project()->first()]);
+        }
 
         return redirect()->action('PlotController@show', [$plot]);
     }

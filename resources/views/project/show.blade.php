@@ -5,7 +5,10 @@
 <div class="row container-fluid">
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
-        <h3 class="card-header">project info</h3>
+        <h3 class="card-header d-flex justify-content-between">
+            <span>project info</span>
+            <span>بيانات المشروع</span>
+        </h3>
         <ul class="list-group card-body p-0 py-1">
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">project name: </span>
@@ -40,7 +43,10 @@
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
-        <h3 class="card-header">owoner info</h3>
+        <h3 class="card-header d-flex justify-content-between">
+            <span>owoner info</span>
+            <span>بيانات المالك</span>
+        </h3>
         <ul class="list-group card-body p-0 py-1">
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('nId')}}: </span>
@@ -64,9 +70,14 @@
             @include('plot.show_main_info')
         </div>
         <div class=" card-footer d-flex justify-content-end m-0">
-            <a href="#" class="btn btn-link m-0">edit |
-                <i class="far fa-edit"></i>
-            </a>
+            <form action="{{route('plot.edit',$project->plot()->first())}}" method="get">
+                <input type="hidden" name="from_project" value="1">
+                <button type="submit" class="btn btn-link m-0">
+                    <span>edit |</span>
+                    <i class="far fa-edit"></i>
+                </button>
+            </form>
+
         </div>
         @endif
     </div>
@@ -95,7 +106,7 @@
 </div>
 <hr class="my-2">
 <div class="row container-fluid">
-    <div class="card col-md-6">
+    <div class="card col-md-4">
         <div class="card-header d-flex justify-content-between">
             <span>document list</span>
             <span>قائمة المستندات</span>
@@ -105,7 +116,7 @@
         </div>
     </div>
     {{-- =================================================================================================================== --}}
-    <div class="card col-md-6">
+    <div class="card col-md-8">
         <div class="card-header d-flex justify-content-between">
             <span>contracts list</span>
             <span>قائمة العقود</span>
