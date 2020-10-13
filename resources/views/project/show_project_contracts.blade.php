@@ -7,7 +7,7 @@ $total_1st_payment = 0;
 @endphp
 <ul class="list-group mb-2">
     <li class="list-group-item">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover text-center">
             <thead class="bg-thead">
                 <th>اسم العقد</th>
                 <th>القيمة</th>
@@ -44,23 +44,23 @@ $total_1st_payment = 0;
                             @method('DELETE')
                             @csrf
                             <input type="hidden" name="edit_needed" value="edit_price">
-                            <button type="submit" class="btn btn-link align-self-center text-danger"
-                                onclick="return confirm('Are you sure?')">delet |
+                            <button type="submit" class="btn btn-link align-self-center text-danger p-0 m-0"
+                                onclick="return confirm('Are you sure?')">{{__('delet')}} |
                                 <i class="far fa-edit"></i>
                             </button>
                         </form>
                         <form action="{{route('contract.edit',[$contract->id])}}" method="get">
                             <input type="hidden" name="edit_needed" value="edit_price">
-                            <button type="submit" class="btn btn-link align-self-center">edit |
+                            <button type="submit" class="btn btn-link align-self-center p-0 m-0">{{__('edit')}} |
                                 <i class="far fa-edit"></i>
                             </button>
                         </form>
                         @endif
-                        <form action="{{route('contract.contract_to_pdf')}}" method="get" class="align-self-center">
+                        <form action="{{route('contract.contract_to_pdf')}}" method="get" class="">
                             @csrf
                             <input type="hidden" name="project_id" value="{{$project->id}}">
                             <input type="hidden" name="contract_id" value="{{$contract->id}}">
-                            <button type="submit" class="btn btn-link align-self-center">print |
+                            <button type="submit" class="btn btn-link align-self-center p-0 m-0">{{__('print')}} |
                                 <i class="fa fa-print" aria-hidden="true"></i>
                             </button>
                         </form>
@@ -81,7 +81,12 @@ $total_1st_payment = 0;
         </table>
     </li>
     <li class="list-group-item">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover text-center">
+            <thead class="bg-thead">
+                <th colspan="2">
+                    ملخص الأسعار
+                </th>
+            </thead>
             <tr>
                 <td class=" col-md-6">اجمالي الأتعاب بدون ضريبة</td>
                 <td>{{$total_price}}</td>

@@ -1,5 +1,5 @@
-<form class=" container form-group form-row" action="{{ action('ProjectController@search') }}" accept-charset="UTF-8"
-    method="POST">
+<form class=" container form-group form-row m-0" action="{{ action('ProjectController@search') }}"
+    accept-charset="UTF-8" method="POST">
     @csrf
     <div class="col-md-9">
         <label for="fname">{{__( 'project name in arabic')}}
@@ -12,8 +12,8 @@
         @enderror
     </div>
     <div class="col-md-3">
-        <button class=" btn btn-info btn-block" type="submit">
-            serch
+        <button class=" btn btn-info btn-block" type="submit"> {{__('search')}} |
+            <i class="fas fa-search"></i>
         </button>
     </div>
 </form>

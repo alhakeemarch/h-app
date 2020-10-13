@@ -170,7 +170,12 @@ class Project extends Model
     public function contracts()
     {
         // return $this->hasMany(Contract::class)->withTimestamps();
-        return $this->belongsToMany(Contract::class)->withTimestamps();
+        return $this->hasMany(Contract::class)->withTimestamps();
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function status()
+    {
+        return $this->belongsTo(ProjectStatus::class, 'project_status_id');
     }
     // -----------------------------------------------------------------------------------------------------------------
 

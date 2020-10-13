@@ -3,17 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Contract extends Model
 {
+    use SoftDeletes;
     // -----------------------------------------------------------------------------------------------------------------
     protected $guarded = [
         'id',
+        'deleted_at'
     ];
     // -----------------------------------------------------------------------------------------------------------------
-    public function projects()
+    public function project()
     {
-        return $this->belongsToMany(Project::class)->withTimestamps();
+        return $this->belongsTo(Project::class);
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function contract_type()

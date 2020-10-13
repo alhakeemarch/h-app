@@ -5,7 +5,7 @@
         <form action="{{route($doc_route)}}" method="get">
             @csrf
             <input type="hidden" name="project_id" value="{{$project->id}}">
-            <button type="submit" class="btn btn-link">print |
+            <button type="submit" class="btn btn-link m-0 p-0">{{__('print')}} |
                 <i class="fa fa-print" aria-hidden="true"></i>
             </button>
         </form>

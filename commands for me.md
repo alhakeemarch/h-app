@@ -325,6 +325,7 @@ php artisan make:model ContractClass -a  // تصنيف لدرجات العقد
 ============== 
 لعمل علاقة Many to many
 php artisan make:migration create_contract_project_table --create contract_project
+DROP TABLE contract_project;
 ============== 
 # to do
 php artisan make:model DbLog -a  // الحركات في قاعدة البيانات

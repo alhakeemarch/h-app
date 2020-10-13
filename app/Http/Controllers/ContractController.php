@@ -142,19 +142,19 @@ class ContractController extends Controller
         DbLogController::add_record($db_record_data);
         // -----------------------------------------------------------------
         // creating the relationship
-        $project->contracts()->attach([$contract->id => [
-            'contract_type_id' => $contract->contract_type_id,
-            'created_by_id' => auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ]]);
+        // $project->contracts()->attach([$contract->id => [
+        //     'contract_type_id' => $contract->contract_type_id,
+        //     'created_by_id' => auth()->user()->id,
+        //     'created_by_name' => auth()->user()->user_name,
+        // ]]);
         // -----------------------------------------------------------------
         // add record to db_log
-        $db_record_data = [
-            'table' => 'contract_project',
-            'action' => 'create',
-            'description' => 'added new relation mony to mony for project with id= ' . $project->id . ',and contract withe id = ' . $contract->id,
-        ];
-        DbLogController::add_record($db_record_data);
+        // $db_record_data = [
+        //     'table' => 'contract_project',
+        //     'action' => 'create',
+        //     'description' => 'added new relation mony to mony for project with id= ' . $project->id . ',and contract withe id = ' . $contract->id,
+        // ];
+        // DbLogController::add_record($db_record_data);
         // -----------------------------------------------------------------
         return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
         // -----------------------------------------------------------------
@@ -221,6 +221,15 @@ class ContractController extends Controller
         if ($contract->contract_type_id == 5) {
             $data = $this->supervision_full($project, $request->cost, $edit);
         }
+        // -----------------------------------------------------------------
+        if ($contract->contract_type_id == 6) {
+            $data =  $this->elevation_3d($project, $request->cost);
+        }
+        // -----------------------------------------------------------------
+        if ($contract->contract_type_id == 7) {
+            $data =  $this->safety_design($project, $request->cost);
+        }
+        // -----------------------------------------------------------------
 
         // -----------------------------------------------------------------
         $contract->update($data);
@@ -246,23 +255,18 @@ class ContractController extends Controller
     public function destroy(Contract $contract)
     {
         // dd($contract);
-        $project = Project::findOrFail($contract->project_id);
-        // removing the relationship
-        $project->contracts()->detach([$contract->id => [
-            'contract_type_id' => $contract->contract_type_id,
-            'created_by_id' => $contract->created_by_id,
-            'created_by_name' => $contract->created_by_name,
-        ]]);
-        // $project->contracts()->attach([$contract->id => [
-        //     'contract_type_id' => $contract->contract_type_id,
-        //     'created_by_id' => auth()->user()->id,
-        //     'created_by_name' => auth()->user()->user_name,
-        // ]]);
-        // soft deleting the contract 
+        // $project = Project::findOrFail($contract->project_id);
+        $contract->delete();
+        $db_record_data = [
+            'table' => 'contracts',
+            'model' => 'Contract',
+            'model_id' => $contract->id,
+            'action' => 'soft_delete',
+            'description' => 'contract withe id = ' . $contract->id . ' deleted',
+        ];
+        DbLogController::add_record($db_record_data);
 
-        // logint the action
-
-        return 'من جد صح';
+        return redirect()->back()->with('success', 'contract deleted successfully - تم حذف العقد بنجاح');
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_project_contracts($project)
@@ -271,6 +275,12 @@ class ContractController extends Controller
             'project_id' => $project->id,
         ])->get()->sortBy('contract_type_id');
         return  $found_contract;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function get_new_contract_no()
+    {
+        $contract = new Contract;
+        return ($contract->withTrashed()->get()->max('contract_no')) + 1;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_quick_form_contracts()
@@ -323,11 +333,14 @@ class ContractController extends Controller
             return $data;
         } else {
             // creating a contract
-            $last_contract_no = Contract::max('contract_no');
+
+            // $new_contract_no = self::get_new_contract_no();
+
+            $new_contract_no = self::get_new_contract_no();
             $data = [
                 'project_id' => $project->id,
                 'contract_type_id' => $contract_type_id,
-                'contract_no' => $last_contract_no + 1,
+                'contract_no' => $new_contract_no,
                 'cost' => $pyment_arr['cost'],
                 'vat_percentage' => $pyment_arr['vat_percentage'],
                 'vat_value' => $pyment_arr['vat_value'],
@@ -417,11 +430,11 @@ class ContractController extends Controller
             return $data;
         } else {
             // creating a contract
-            $last_contract_no = Contract::max('contract_no');
+            $new_contract_no = self::get_new_contract_no();
             $data = [
                 'project_id' => $project->id,
                 'contract_type_id' => $contract_type_id,
-                'contract_no' => $last_contract_no + 1,
+                'contract_no' => $new_contract_no,
                 'cost' => $pyment_arr['cost'],
                 'vat_percentage' => $pyment_arr['vat_percentage'],
                 'vat_value' => $pyment_arr['vat_value'],
@@ -476,11 +489,11 @@ class ContractController extends Controller
             return $data;
         } else {
             // creating a contract
-            $last_contract_no = Contract::max('contract_no');
+            $new_contract_no = self::get_new_contract_no();
             $data = [
                 'project_id' => $project->id,
                 'contract_type_id' => $contract_type_id,
-                'contract_no' => $last_contract_no + 1,
+                'contract_no' => $new_contract_no,
                 'cost' => $pyment_arr['cost'],
                 'vat_percentage' => $pyment_arr['vat_percentage'],
                 'vat_value' => $pyment_arr['vat_value'],
@@ -534,11 +547,11 @@ class ContractController extends Controller
             return $data;
         } else {
             // creating a contract
-            $last_contract_no = Contract::max('contract_no');
+            $new_contract_no = self::get_new_contract_no();
             $data = [
                 'project_id' => $project->id,
                 'contract_type_id' => $contract_type_id,
-                'contract_no' => $last_contract_no + 1,
+                'contract_no' => $new_contract_no,
                 'cost' => $pyment_arr['cost'],
                 'vat_percentage' => $pyment_arr['vat_percentage'],
                 'vat_value' => $pyment_arr['vat_value'],
@@ -592,11 +605,11 @@ class ContractController extends Controller
             return $data;
         } else {
             // creating a contract
-            $last_contract_no = Contract::max('contract_no');
+            $new_contract_no = self::get_new_contract_no();
             $data = [
                 'project_id' => $project->id,
                 'contract_type_id' => $contract_type_id,
-                'contract_no' => $last_contract_no + 1,
+                'contract_no' => $new_contract_no,
                 'cost' => $pyment_arr['cost'],
                 'vat_percentage' => $pyment_arr['vat_percentage'],
                 'vat_value' => $pyment_arr['vat_value'],
@@ -650,11 +663,11 @@ class ContractController extends Controller
             return $data;
         } else {
             // creating a contract
-            $last_contract_no = Contract::max('contract_no');
+            $new_contract_no = self::get_new_contract_no();
             $data = [
                 'project_id' => $project->id,
                 'contract_type_id' => $contract_type_id,
-                'contract_no' => $last_contract_no + 1,
+                'contract_no' => $new_contract_no,
                 'cost' => $pyment_arr['cost'],
                 'vat_percentage' => $pyment_arr['vat_percentage'],
                 'vat_value' => $pyment_arr['vat_value'],
@@ -708,11 +721,11 @@ class ContractController extends Controller
             return $data;
         } else {
             // creating a contract
-            $last_contract_no = Contract::max('contract_no');
+            $new_contract_no = self::get_new_contract_no();
             $data = [
                 'project_id' => $project->id,
                 'contract_type_id' => $contract_type_id,
-                'contract_no' => $last_contract_no + 1,
+                'contract_no' => $new_contract_no,
                 'cost' => $pyment_arr['cost'],
                 'vat_percentage' => $pyment_arr['vat_percentage'],
                 'vat_value' => $pyment_arr['vat_value'],

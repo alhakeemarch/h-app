@@ -10,8 +10,9 @@
 
 <div class="container-fluid">
     <div class="card">
-        <h3 class="h3 text-center">
-            list of all projects <p class="small">total = {{ $allProjectsCount }}</p>
+        <h3 class="h3 card-header text-center text-capitalize">
+            <div>list of all projects</div>
+            <div class="small">(total = {{$allProjectsCount}})</div>
         </h3>
         @if (auth()->user()->is_admin)
         <a class="btn btn-info btn-block w-75 mx-auto mb-4" href="{{route('project.check')}}">crate new project</a>

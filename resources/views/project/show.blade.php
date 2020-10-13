@@ -30,7 +30,12 @@
                 {{$project->project_arch_hight ?? '?'}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('status')}}: </span>
-                {{$project->project_status ?? '?'}}</li>
+                @if ($project->project_status_id)
+                {{$project->status()->first()->name_ar}}
+                @else
+                ?
+                @endif
+            </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold align-self-center">{{__('project str hight')}}: </span>
                 @if ($project->project_str_hight)
@@ -84,7 +89,8 @@
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header d-flex justify-content-between">
-            <span>فريق العمل</span> <span>team info</span>
+            <span>team info</span>
+            <span>فريق العمل</span>
         </h3>
         <ul class="list-group card-body p-0 py-1">
             @foreach ($project_team as $job => $employee)
@@ -96,8 +102,7 @@
             @endif
             @endforeach
         </ul>
-
-        <div class=" card-footer d-flex justify-content-center m-0">
+        <div class="card-footer m-0">
             @include('project.forms.add_emp_to_tame')
         </div>
 

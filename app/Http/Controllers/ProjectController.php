@@ -232,6 +232,7 @@ class ProjectController extends Controller
         }
         if ($request->form_action == 'update_project_number') {
             $project->project_no = $this->get_new_project_no();
+            $project->project_status_id = 3;
             $project->last_edit_by_id = auth()->user()->id;
             $project->last_edit_by_name = auth()->user()->user_name;
             $project->save();
