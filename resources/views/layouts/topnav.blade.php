@@ -27,7 +27,9 @@
     <!--/END nav-collapse-btn -->
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        @if (env('DEVELOPMENT'))
         <span class="alert alert-danger">development version</span>
+        @endif
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav mr-auto">
             @auth
