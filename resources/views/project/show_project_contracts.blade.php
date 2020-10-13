@@ -1,5 +1,5 @@
 {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
-<ul class="card-body list-group">
+<ul class="list-group mb-2">
     @foreach ($project_contracts as $contract)
     <li class="list-group-item d-flex justify-content-between">
         <span class="align-self-center">

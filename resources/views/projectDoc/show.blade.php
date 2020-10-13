@@ -1,4 +1,4 @@
-<ul class="card-body list-group">
+<ul class="list-group">
     @foreach ($project_docs as $doc_name => $doc_route)
     <li class="list-group-item d-flex justify-content-between">
         <span class=" align-self-center">{{$doc_name}}</span>

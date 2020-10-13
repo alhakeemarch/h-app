@@ -59,6 +59,7 @@ class ContractController extends Controller
     {
         $request->validate([
             'cost' => 'required|numeric',
+            'contract_type_id' => 'required|numeric',
         ]);
         // -----------------------------------------------------------------
         $project = Project::findOrFail($request->project_id);
@@ -115,6 +116,14 @@ class ContractController extends Controller
                 ]);
             }
             $contract_data =  $this->supervision_full($project, $request->cost);
+        }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 6) {
+            $contract_data =  $this->elevation_3d($project, $request->cost);
+        }
+        // -----------------------------------------------------------------
+        if ($request->contract_type_id == 7) {
+            $contract_data =  $this->safety_design($project, $request->cost);
         }
         // -----------------------------------------------------------------
 
@@ -255,8 +264,8 @@ class ContractController extends Controller
             'عقد محضر تثبيت',
             'عقد اشراف عظم',
             'عقد اشراف كامل',
-            // 'عقد تصميم واجهة ثلاثية الابعاد',
-            // 'عقد تصميم سلامة',
+            'عقد تصميم واجهة ثلاثية الابعاد',
+            'عقد تصميم سلامة',
         ];
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -335,11 +344,15 @@ class ContractController extends Controller
             $newPDF::SetFontSize(11);
             $newPDF::setCellHeightRatio(1.4);
         }
+        if ($contract->contract_type_id == 7) {
+            $newPDF::SetFontSize(12);
+            $newPDF::setCellHeightRatio(1.4);
+        }
         // -----------------------------------------------------------------
         $html = $contract->html;
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'I');
         // -----------------------------------------------------------------
         return;
         // return redirect()->back();
@@ -542,6 +555,122 @@ class ContractController extends Controller
         // -----------------------------------------------------------------
         // Content
         $pdf_view = 'contract.pdf.mahder_tathbeet';
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
+        // -----------------------------------------------------------------
+        if ($edit) {
+            $data = [
+
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $last_contract_no = Contract::max('contract_no');
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $last_contract_no + 1,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function elevation_3d($project, $price, $edit = false)
+    {
+        // -----------------------------------------------------------------
+        $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_team($project);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد تصميم منظور خارجي';
+        $contract_type_id = 6;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'project_tame' => $project_tame,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+        // -----------------------------------------------------------------
+        // Content
+        $pdf_view = 'contract.pdf.elevation_3d';
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
+        // -----------------------------------------------------------------
+        if ($edit) {
+            $data = [
+
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $last_contract_no = Contract::max('contract_no');
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $last_contract_no + 1,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function safety_design($project, $price, $edit = false)
+    {
+        // -----------------------------------------------------------------
+        $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_team($project);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد تصميم مخططات سلامة';
+        $contract_type_id = 7;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'project_tame' => $project_tame,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+        // -----------------------------------------------------------------
+        // Content
+        $pdf_view = 'contract.pdf.safety_design';
         // -----------------------------------------------------------------
         // View
         $the_view = View::make($pdf_view)->with($pdf_data);

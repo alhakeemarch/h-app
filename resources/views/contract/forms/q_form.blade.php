@@ -1,4 +1,4 @@
-<ul class="card-body list-group">
+<ul class="list-group my-2">
     @foreach ($contract_types as $contract_type)
     @if (in_array( $contract_type->name_ar , $quick_form_contracts))
     <li class="list-group-item">

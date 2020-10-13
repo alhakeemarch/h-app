@@ -6,7 +6,7 @@
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header">project info</h3>
-        <ul class="list-group card-body">
+        <ul class="list-group card-body p-0 py-1">
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">project name: </span>
                 {{$project->project_name_ar ?? '?'}}</li>
@@ -41,7 +41,7 @@
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header">owoner info</h3>
-        <ul class="list-group card-body">
+        <ul class="list-group card-body p-0 py-1">
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('nId')}}: </span>
                 {{$project->owner_national_id ?? '?'}}</li>
@@ -55,14 +55,27 @@
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
-        @include('plot.show_main_info')
+        <h3 class="card-header d-flex justify-content-between">
+            <span>plot info</span>
+            <span>بيانات الأرض</span>
+        </h3>
+        @if ($project->plot_id)
+        <div class="card-body p-0 py-1">
+            @include('plot.show_main_info')
+        </div>
+        <div class=" card-footer d-flex justify-content-end m-0">
+            <a href="#" class="btn btn-link m-0">edit |
+                <i class="far fa-edit"></i>
+            </a>
+        </div>
+        @endif
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header d-flex justify-content-between">
             <span>فريق العمل</span> <span>team info</span>
         </h3>
-        <ul class="list-group card-body">
+        <ul class="list-group card-body p-0 py-1">
             @foreach ($project_team as $job => $employee)
             @if($employee)
             <li class="list-group-item d-flex justify-content-between">
@@ -72,11 +85,11 @@
             @endif
             @endforeach
         </ul>
-        <div class="list-group m-0">
-            <div class="list-group-item m-0">
-                @include('project.forms.add_emp_to_tame')
-            </div>
+
+        <div class=" card-footer d-flex justify-content-center m-0">
+            @include('project.forms.add_emp_to_tame')
         </div>
+
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
 </div>
@@ -87,7 +100,9 @@
             <span>document list</span>
             <span>قائمة المستندات</span>
         </div>
-        @include('projectDoc.show')
+        <div class="card-body p-0 py-1">
+            @include('projectDoc.show')
+        </div>
     </div>
     {{-- =================================================================================================================== --}}
     <div class="card col-md-6">
@@ -95,17 +110,19 @@
             <span>contracts list</span>
             <span>قائمة العقود</span>
         </div>
-        {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
-        @include('project.show_project_contracts')
-        {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
-        @include('contract.forms.q_form')
-        {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+        <div class="card-body p-0 py-1">
+            {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+            @include('project.show_project_contracts')
+            {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+            @include('contract.forms.q_form')
+            {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+        </div>
 
     </div>
 </div>
 
 {{-- <div class="row container-fluid">
-    <div class="card-body">
+    <div class="card-body p-0 py-1">
         <a href="#" class="btn btn-link">add project teem member</a>
         <a href="#" class="btn btn-link">add strucutral information</a>
         <a href="#" class="btn btn-link">add plot information</a>
@@ -126,7 +143,7 @@
 @php
 $obj = json_decode($project, TRUE);
 @endphp
-<ul class="card-body">
+<ul class="card-body p-0 py-1">
     @foreach ($obj as $a=>$b )
     <li>
         {{ $a}} : {{$b}}

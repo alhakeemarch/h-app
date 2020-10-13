@@ -1,9 +1,4 @@
-<h3 class="card-header d-flex justify-content-between">
-    <span>plot info</span>
-    <span>بيانات الأرض</span>
-</h3>
-@if ($project->plot_id)
-<ul class="list-group card-body">
+<ul class="list-group">
     <li class="list-group-item d-flex justify-content-between">
         <span class="font-weight-bold">{{__('deed number')}}: </span>
         {{$project->plot()->first()->deed_no ?? '?'}}</li>
@@ -31,11 +26,3 @@
         {{$project->plot()->first()->plan()->first()->plan_ar_name ?? '?'}}</li>
     {{-- <hr> --}}
 </ul>
-<div class=" card-footer d-flex justify-content-end m-0">
-
-    <a href="#" class="btn btn-link m-0">edit |
-        <i class="far fa-edit"></i>
-    </a>
-
-</div>
-@endif

@@ -17,7 +17,6 @@ $project_tame = [
 ]
 @endphp
 
-
 <form action="{{route('project.update',$project)}}" method="POST" class=" form-group form-inline m-0">
     @csrf
     @method('PATCH')
@@ -36,5 +35,7 @@ $project_tame = [
         <option value="{{$employee->id}}">{{$employee->ar_name1.' '.$employee->ar_name5}}</option>
         @endforeach
     </select>
-    <button type="submit" class="btn btn-link m-0">add</button>
+    <button type="submit" class="btn btn-link m-0">add |
+        <i class="far fa-plus-square"></i>
+    </button>
 </form>
