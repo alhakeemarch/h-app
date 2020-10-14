@@ -88,8 +88,8 @@ $total_1st_payment = 0;
                 </th>
             </thead>
             <tr>
-                <td class=" col-md-6">اجمالي الأتعاب بدون ضريبة</td>
-                <td>{{$total_price}}</td>
+                <td class="col-md w-50">اجمالي الأتعاب بدون ضريبة</td>
+                <td class="col-md w-50">{{$total_price}}</td>
             </tr>
             <tr>
                 <td>اجمالي الضريبة</td>

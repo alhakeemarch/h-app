@@ -376,6 +376,7 @@ Route::group(['prefix' => 'projectDoc'], function () {
     Route::any('report_empty_land', 'ProjectDocController@report_empty_land')->name('projectDoc.report_empty_land');
     Route::any('str_notes_cover', 'ProjectDocController@str_notes_cover')->name('projectDoc.str_notes_cover');
     Route::any('t_azel', 'ProjectDocController@t_azel')->name('projectDoc.t_azel');
+    Route::any('request_bind_to_baladi', 'ProjectDocController@request_bind_to_baladi')->name('projectDoc.request_bind_to_baladi');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'contract'], function () {

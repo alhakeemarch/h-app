@@ -359,6 +359,46 @@ class ProjectDocController extends Controller
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function request_bind_to_baladi(Request $request)
+    {
+        // return view('projectDoc.report_empty_land');
+        // data needed in document
+        $project = Project::findOrFail($request->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $doc_name = 'request_bind_to_baladi';
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'date_and_time' => $date_and_time,
+        ];
+        // creating pdf 
+        $missing_dat = $this->get_missing_data($doc_name, $project);
+        if (!empty($missing_dat)) {
+            // return redirect()->back()->withErrors($missing_dat);
+        }
+        $newPDF = new TCPDF();
+        // Content
+
+        $pdf_view = 'projectDoc.request_bind_to_baladi';
+        // setting a header and foooter 
+        $newPDF = $this->set_hakeem_header_footer($newPDF);
+        // -----------------------------------------------------------------
+        // setting main sittings
+        $newPDF = $this->set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle('طلب ربط ببلدي');
+        $newPDF::SetSubject('طلب ربط ببلدي');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'I');
+        exit;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function t_azel(Request $request)
     {
         // data needed in document
@@ -426,6 +466,7 @@ class ProjectDocController extends Controller
     {
         $missing_data = [];
         // dd($doc_name);
+        // -----------------------------------------------------------------
         if ($doc_name == 't_azel') {
             if (!($project->plot()->first()->neighbor()->first())) {
                 array_push($missing_data, 'يجب تسجيل معلومات الحي');
@@ -440,7 +481,7 @@ class ProjectDocController extends Controller
                 array_push($missing_data, 'يجب تسجيل الإحداثي Y');
             }
         }
-
+        // -----------------------------------------------------------------
         if ($doc_name == 'str_notes_cover') {
             if (!($project->plot()->first()->neighbor()->first())) {
                 array_push($missing_data, 'يجب تسجيل معلومات الحي');
@@ -455,13 +496,8 @@ class ProjectDocController extends Controller
                 array_push($missing_data, 'يجب تسجيل المهندس الإنشائي المصمم');
             }
         }
+        // -----------------------------------------------------------------
         if ($doc_name == 'report_empty_land') {
-            if (!($project->plot()->first()->neighbor()->first())) {
-                array_push($missing_data, 'يجب تسجيل معلومات الحي');
-            }
-            if (!($project->plot()->first()->district()->first())) {
-                array_push($missing_data, 'يجب تسجيل معلومات المنطقة');
-            }
             if (!($project->plot()->first()->plan()->first())) {
                 array_push($missing_data, 'يجب تسجيل معلومات المخطط');
             }
@@ -472,6 +508,26 @@ class ProjectDocController extends Controller
                 array_push($missing_data, 'يجب تسجيل تاريخ اصدار الرخصة');
             }
         }
+        // -----------------------------------------------------------------
+        if ($doc_name == 'request_bind_to_baladi') {
+
+            if (!($project->plot()->first()->plan()->first())) {
+                array_push($missing_data, 'يجب تسجيل معلومات المخطط');
+            }
+            if (!($project->last_rokhsa_no)) {
+                array_push($missing_data, 'يجب تسجيل رقم الرخصة ');
+            }
+            if (!($project->last_rokhsa_issue_date)) {
+                array_push($missing_data, 'يجب تسجيل تاريخ اصدار الرخصة');
+            }
+            if (!($project->qarar_masahe_no)) {
+                array_push($missing_data, 'يجب تسجيل رقم القرار المساحي');
+            }
+            if (!($project->qarar_masahe_issue_date)) {
+                array_push($missing_data, 'يجب تسجيل تاريخ اصدار القرار المساحي');
+            }
+        }
+        // -----------------------------------------------------------------
         return $missing_data;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -484,9 +540,9 @@ class ProjectDocController extends Controller
             'تعهد السور' => 'projectDoc.t_soor',
             'تعهد العزل' => 'projectDoc.t_azel',
             'تعهد المياه' => 'projectDoc.t_meyaah',
-            'تقرير ارض فضاء' => 'projectDoc.report_empty_land',
-            // 'طلب ربط رخصة بالقرار المساحي' => '',
             'غلاف المذكرة الإنشائية' => 'projectDoc.str_notes_cover',
+            'تقرير ارض فضاء' => 'projectDoc.report_empty_land',
+            'طلب ربط رخصة بالقرار المساحي' => 'projectDoc.request_bind_to_baladi',
         ];
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -573,6 +629,25 @@ class ProjectDocController extends Controller
                 // image of footer
                 $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
                 // $pdf->setCellHeightRatio(0.5);
+
+
+
+                // $pdf->SetY(-150);
+                // $pdf->SetX(205);
+
+                // $pdf->StartTransform();
+                // $pdf->Rotate(+90);
+                // $pdf->SetFont('helvetica', '', 8);
+                // $pdf->Cell(0, 0, 'This is a sample data 1', 0, 0, 'C', 0, '', 0, false, 'B', 'B');
+                // // $pdf->Cell(0, 0, 'This is a sample data 2', 0, 0, 'C', 0, '');
+                // $pdf->StopTransform();
+
+                // -----------------------------------------------------------------
+
+
+
+
+
             });
         }
 

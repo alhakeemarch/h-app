@@ -741,20 +741,9 @@ label {
 
 /* matiral desing  */
 
-input,
-.nav-tabs,
-hr,
-.navbar,
-textarea,
-.card,
-.alert {
+.card {
   border-radius: 4px !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-input[type=file] {
-  box-shadow: none !important;
-  min-height: 0 !important;
 }
 
 .card,
@@ -776,12 +765,26 @@ input[type=file] {
   padding: 0;
 }
 
+.alert {
+  border-radius: 4px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+hr {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+input[type=file] {
+  box-shadow: none !important;
+  min-height: 0 !important;
+}
+
 input,
 select,
 textarea {
   min-height: 3rem !important;
   border: none;
-  box-shadow: inset 1px 1px 10px rgba(150, 180, 200, 0.2), 2px 4px 10px rgba(150, 180, 200, 0.2) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 input.form-check-input {
@@ -792,6 +795,32 @@ input.form-check-input {
 .navbar {
   margin: 0;
   margin-bottom: 0;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+
+.nav-tabs {
+  position: relative;
+  z-index: 1;
+  padding: 0.8rem;
+  margin-right: 1rem;
+  margin-bottom: -20px;
+  margin-left: 1rem;
+  background-color: #465573;
+  border: 0;
+  border-radius: 0.25rem;
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+.nav-link {
+  color: #add8e6;
+}
+
+.nav-tabs > .nav-item > .active {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  -webkit-transition: all 1s;
+  transition: all 1s;
 }
 
 .btn {
@@ -819,31 +848,6 @@ input.form-check-input {
   border-radius: 0 !important;
   box-shadow: none !important;
   text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
-}
-
-.nav-tabs {
-  position: relative;
-  z-index: 1;
-  padding: 0.8rem;
-  margin-right: 1rem;
-  margin-bottom: -20px;
-  margin-left: 1rem;
-  background-color: #465573;
-  border: 0;
-  border-radius: 0.25rem;
-  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-}
-
-.nav-link {
-  color: #add8e6;
-}
-
-.nav-tabs > .nav-item > .active {
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 0.25rem;
-  -webkit-transition: all 1s;
-  transition: all 1s;
 }
 
 /* width */

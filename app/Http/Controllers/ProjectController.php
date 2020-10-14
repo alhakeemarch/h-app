@@ -16,9 +16,13 @@ use App\Plot;
 use App\Project;
 use App\Rules\ValidDate;
 use App\Street;
+// use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Gate;
+
+
 
 
 
@@ -308,6 +312,9 @@ class ProjectController extends Controller
 
     public function new_project(Request $request)
     {
+        Gate::authorize('create', Project::class);
+
+
         // step 1 to check if the customer is already registered
         if (!($request->has('_token'))) {
             return view('project.forms.check_n_id');

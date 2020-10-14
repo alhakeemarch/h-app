@@ -60,7 +60,7 @@ class PersonPolicy
         //
     }
 
-    /**
+    /** 
      * Determine whether the user can update the person.
      *
      * @param  \App\User  $user

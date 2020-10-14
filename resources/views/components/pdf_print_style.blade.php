@@ -22,6 +22,12 @@
         line-height: 140%;
     }
 
+    .office-signature {
+        font-family: "font", "Times New Roman", Times, serif;
+        font-size: 130%;
+        text-align: center;
+    }
+
     .txt-center {
         text-align: center;
     }

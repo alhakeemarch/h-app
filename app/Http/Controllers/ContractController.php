@@ -381,6 +381,24 @@ class ContractController extends Controller
         // -----------------------------------------------------------------
         $html = $contract->html;
         $newPDF::writeHTML($html, true, false, true, false, '');
+        // -----------------------------------------------------------------
+        // to print contract no and user id and contract creator id 
+        $text = 'Code="Cn' . $contract->contract_no
+            . '-Up' . auth()->user()->id
+            . '-P' . $contract->project_id
+            . '-Uc' . $contract->created_by_id
+            . '-Ue' . $contract->last_edit_by_id . '"';
+
+        // -----------------------------------------------------------------
+        $newPDF::SetY(150);
+        $newPDF::SetX(198);
+        $newPDF::StartTransform();
+        $newPDF::Rotate(+90);
+        $newPDF::SetFont('helvetica', '', 8);
+        $newPDF::SetTextColor(0, 0, 0, 25);;
+        $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
+        $newPDF::StopTransform();
+        // -----------------------------------------------------------------
         $newPDF::lastPage();
         $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         // -----------------------------------------------------------------
