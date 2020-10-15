@@ -37,12 +37,8 @@ hr {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 // ---------------------------------------------------------------------------------------------------
-// input
-input[type="file"] {
-    box-shadow: none !important;
-    min-height: 0 !important;
-}
-input,
+
+input [type="text"],
 select,
 textarea {
     min-height: 3rem !important;

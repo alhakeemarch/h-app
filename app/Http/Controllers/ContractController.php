@@ -35,7 +35,8 @@ class ContractController extends Controller
      */
     public function index()
     {
-        return view('contract.index');
+        $contracts = Contract::all()->reverse();
+        return view('contract.index')->with(['contracts' => $contracts]);
         // return 'this is contract controller / index method';
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -168,7 +169,7 @@ class ContractController extends Controller
      */
     public function show(Contract $contract)
     {
-        //
+        return view('contract.show')->with(['contract' => $contract]);
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**

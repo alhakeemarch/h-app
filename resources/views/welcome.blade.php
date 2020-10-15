@@ -4,19 +4,10 @@
 
 <div class="card">
     <div class="card-body">
-        <h1 class="text-center">
+        <h1 class="text-center card-header">
             {{__('Welcome to')}} {{__('app name')}}
         </h1>
-
-        <!-- ///////////////////////////////-->
-        @if ($errors->any())
-        @include('layouts.errors')
-        @endif
-        <!-- ///////////////////////////////-->
-
     </div>
-    <!-- /End of card body -->
 </div>
-<!-- /End of card -->
 
 @endsection
