@@ -197,11 +197,28 @@ function filterNames(event) {
 }
 
 // ================================
+function activeatList(event) {
+    event.target.nextElementSibling.classList.toggle('active');
+}
+// ---------------------------------------------------
+function selectOption(event) {
+    let labels = event.target.parentElement.parentElement.children;
+    event.target.parentElement.parentElement.previousSibling.previousSibling.value = event.target.parentElement.innerText;
+    event.target.parentElement.parentElement.classList.remove('active');
+    event.target.parentElement.classList.add('selected-optin');
+    for (let label of labels) {
+        if (label.firstChild.checked) {
+            label.classList.add('selected-optin');
+        } else {
+            label.classList.remove('selected-optin');
+        }
+    }
+}
+// ---------------------------------------------------
 function filterSselect(event) {
-    let inputID = event.target.id;
-    let inputName = event.target.name;
+    let labels = event.target.nextElementSibling.children
     let inputValue = event.target.value.toLowerCase();
-    let tds = document.querySelectorAll('.sidebar-item');
+    event.target.nextElementSibling.classList.add('active');
     // ---------------------------------------------------
     // to remove extra spaces in text
     while (inputValue.indexOf('  ') > -1) {
@@ -216,25 +233,58 @@ function filterSselect(event) {
             // testValue += '(' + inputValue + ')' + '.*?\\w?.*?';
             testValue += '(' + inputValue + ')' + '.*?';
         });
-        tds.forEach(td => {
-            let matchFound = new RegExp(testValue, 'gi').test(td.innerHTML.toLowerCase());
+        for (let label of labels) {
+            let matchFound = new RegExp(testValue, 'gi').test(label.innerText.toLowerCase());
             if (matchFound) {
-                td.parentNode.style.display = '';
+                label.style.display = 'block';
             } else {
-                td.parentNode.style.display = 'none';
+                label.style.display = 'none';
             }
-        });
-
+        }
     } else {
-        tds.forEach(td => {
-            let matchFound = new RegExp(inputValue, 'gi').test(td.innerHTML.toLowerCase());
-            if (matchFound) {
-                td.parentNode.style.display = '';
+        for (let label of labels) {
+            let matchFound = new RegExp(inputValue, 'gi').test(label.innerText.toLowerCase());
+            if (!matchFound) {
+                label.style.display = 'none';
             } else {
-                td.parentNode.style.display = 'none';
+                label.style.display = 'block';
             }
-        });
+        }
     }
+}
+// ---------------------------------------------------
+function checkSearchBoxValue(event) {
+    let labels = event.target.nextElementSibling.children
+    let inputValue = event.target.value.toLowerCase();
+    let labels_text_arr = Array();
+    let matchFound = false;
+    for (let label of labels) {
+        labels_text_arr.push(label.innerText.toLowerCase().trim());
+    }
+    // to remove extra spaces in text
+    while (inputValue.indexOf('  ') > -1) {
+        inputValue = inputValue.replace('  ', ' ');
+    }
+    inputValue = inputValue.trim();
+    // to clear search box if not in the option
+    for (let label of labels_text_arr) {
+        if (labels_text_arr.includes(inputValue)) {
+            matchFound = true;
+        }
+    }
+    if (!matchFound) {
+        event.target.value = '';
+        for (let label of labels) {
+            label.firstChild.checked = false;
+        }
+    }
+    for (let label of labels) {
+        if (!label.firstChild.checked) {
+            label.classList.remove('selected-optin');
+        }
+    }
+    // to close the list
+    event.target.nextElementSibling.classList.remove('active');
 }
 // ================================
 function filterSidebar(event) {

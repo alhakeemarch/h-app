@@ -49672,6 +49672,165 @@ function userNameString(evt) {
 // }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ================================
+// ================================
+
+
+function activeatList(event) {
+  event.target.nextElementSibling.classList.toggle('active');
+}
+
+function selectOption(event) {
+  event.target.parentElement.parentElement.previousSibling.previousSibling.value = event.target.parentElement.innerText;
+  event.target.parentElement.parentElement.classList.toggle('active');
+}
+
+function filterSselect(event) {
+  var labels = event.target.nextElementSibling.children;
+  var inputValue = event.target.value.toLowerCase();
+  event.target.nextElementSibling.classList.add('active'); // ---------------------------------------------------
+  // to remove extra spaces in text
+
+  while (inputValue.indexOf('  ') > -1) {
+    inputValue = inputValue.replace('  ', ' ');
+  }
+
+  inputValue = inputValue.trim(); // ---------------------------------------------------
+
+  if (inputValue.indexOf(' ') > -1) {
+    var inputValueArr = inputValue.split(" ");
+    var testValue = '';
+    inputValueArr.forEach(function (inputValue) {
+      // testValue += '(' + inputValue + ')' + '.*?\\w?.*?';
+      testValue += '(' + inputValue + ')' + '.*?';
+    });
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = labels[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var label = _step.value;
+        var matchFound = new RegExp(testValue, 'gi').test(label.innerText.toLowerCase());
+
+        if (matchFound) {
+          label.style.display = 'block';
+        } else {
+          label.style.display = 'none';
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+          _iterator["return"]();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+  } else {
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = labels[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var _label = _step2.value;
+
+        var _matchFound = new RegExp(inputValue, 'gi').test(_label.innerText.toLowerCase());
+
+        if (!_matchFound) {
+          _label.style.display = 'none';
+        } else {
+          _label.style.display = 'block';
+        }
+      }
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+          _iterator2["return"]();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
+        }
+      }
+    }
+  }
+} // -------------------------------------------------------------------------------------------------------
+
+
+function checkSearchBoxValue(event) {
+  var labels = event.target.nextElementSibling.children;
+  var inputValue = event.target.value.toLowerCase(); // to remove extra spaces in text
+
+  while (inputValue.indexOf('  ') > -1) {
+    inputValue = inputValue.replace('  ', ' ');
+  }
+
+  inputValue = inputValue.trim(); // to close the list
+
+  event.target.nextElementSibling.classList.remove('active'); // to clear search box if not in the option
+
+  var _iteratorNormalCompletion3 = true;
+  var _didIteratorError3 = false;
+  var _iteratorError3 = undefined;
+
+  try {
+    for (var _iterator3 = labels[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+      var label = _step3.value;
+      var matchFound = new RegExp(inputValue, 'gi').test(label.innerText.toLowerCase());
+
+      if (!matchFound || inputValue.length < 1) {
+        event.target.value = '';
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
+
+        try {
+          for (var _iterator4 = labels[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+            var _label2 = _step4.value;
+            _label2.firstChild.checked = false;
+            _label2.style.display = 'block';
+          }
+        } catch (err) {
+          _didIteratorError4 = true;
+          _iteratorError4 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+              _iterator4["return"]();
+            }
+          } finally {
+            if (_didIteratorError4) {
+              throw _iteratorError4;
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    _didIteratorError3 = true;
+    _iteratorError3 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+        _iterator3["return"]();
+      }
+    } finally {
+      if (_didIteratorError3) {
+        throw _iteratorError3;
+      }
+    }
+  }
+} // ================================
 
 
 function filterNames(event) {
@@ -49779,8 +49938,8 @@ function filterSidebar(event) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\h-app-dev\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\h-app-dev\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\h-app\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\h-app\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

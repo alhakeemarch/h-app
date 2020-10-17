@@ -156,6 +156,76 @@ function userNameString(evt) {
 // }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ================================
+// ================================
+function activeatList(event) {
+    event.target.nextElementSibling.classList.toggle('active');
+}
+function selectOption(event) {
+    event.target.parentElement.parentElement.previousSibling.previousSibling.value = event.target.parentElement.innerText;
+    event.target.parentElement.parentElement.classList.toggle('active');
+}
+function filterSselect(event) {
+    let labels = event.target.nextElementSibling.children
+    let inputValue = event.target.value.toLowerCase();
+    event.target.nextElementSibling.classList.add('active');
+    // ---------------------------------------------------
+    // to remove extra spaces in text
+    while (inputValue.indexOf('  ') > -1) {
+        inputValue = inputValue.replace('  ', ' ');
+    }
+    inputValue = inputValue.trim();
+    // ---------------------------------------------------
+    if (inputValue.indexOf(' ') > -1) {
+        let inputValueArr = inputValue.split(" ");
+        let testValue = '';
+        inputValueArr.forEach(inputValue => {
+            // testValue += '(' + inputValue + ')' + '.*?\\w?.*?';
+            testValue += '(' + inputValue + ')' + '.*?';
+        });
+        for (let label of labels) {
+            let matchFound = new RegExp(testValue, 'gi').test(label.innerText.toLowerCase());
+            if (matchFound) {
+                label.style.display = 'block';
+            } else {
+                label.style.display = 'none';
+            }
+        }
+    } else {
+        for (let label of labels) {
+            let matchFound = new RegExp(inputValue, 'gi').test(label.innerText.toLowerCase());
+            if (!matchFound) {
+                label.style.display = 'none';
+            } else {
+                label.style.display = 'block';
+            }
+        }
+    }
+}
+// -------------------------------------------------------------------------------------------------------
+function checkSearchBoxValue(event) {
+    let labels = event.target.nextElementSibling.children
+    let inputValue = event.target.value.toLowerCase();
+    // to remove extra spaces in text
+    while (inputValue.indexOf('  ') > -1) {
+        inputValue = inputValue.replace('  ', ' ');
+    }
+    inputValue = inputValue.trim();
+    // to close the list
+    event.target.nextElementSibling.classList.remove('active');
+    // to clear search box if not in the option
+    for (let label of labels) {
+        let matchFound = new RegExp(inputValue, 'gi').test(label.innerText.toLowerCase());
+        if (!matchFound || (inputValue.length < 1)) {
+            event.target.value = ''
+            for (let label of labels) {
+                label.firstChild.checked = false;
+                label.style.display = 'block';
+            }
+        }
+    }
+
+}
+// ================================
 function filterNames(event) {
     let inputID = event.target.id;
     let inputName = event.target.name;

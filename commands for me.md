@@ -633,14 +633,13 @@ required title -----> to add
 ================================
 
 
-
-    <x-select name='municipality_branche_id' :resource=$project :list=$municipality_branches>
+<x-select name='municipality_branche_id' :resource=$project :list=$municipality_branches>
         <x-slot name='option_name'>ar_name</x-slot>
         <x-slot name='title'>{{__('municipality branche')}}</x-slot>
         <x-slot name='is_disabled'>true</x-slot>
         <x-slot name='is_hidden'>true</x-slot>
         <x-slot name='is_required'>true</x-slot>
-    </x-select>
+</x-select>
 
 
 
@@ -658,5 +657,14 @@ required title -----> to add
         </x-search_input>
 ================================
         <x-search_input name='asd' />
+================================
+    <x-select_searchable name='municipality_branch_id' title="" :resource=$project :list=$municipality_branchs>
+        <x-slot name='db_data_field'>id</x-slot>
+        <x-slot name='show_field'>ar_name</x-slot>
+        <x-slot name='resource_field'>municipality_branch_id</x-slot>
+        <x-slot name='title'>cool tital</x-slot>
+        <x-slot name='is_required'>true</x-slot>
+        <x-slot name='is_readonly'>true</x-slot>
+    </x-select_searchable>
 ================================
 # APP_DEBUG = false

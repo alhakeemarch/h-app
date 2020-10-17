@@ -612,6 +612,12 @@ label {
   text-transform: capitalize;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 ::-webkit-input-placeholder {
   /* Edge */
   color: #d3d3d3 !important;
@@ -735,6 +741,50 @@ label {
 
 .alert-warning > .btn-link {
   color: #fff;
+}
+
+.options-container {
+  max-height: 0;
+  opacity: 0;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  overflow: hidden;
+  background-color: white;
+}
+
+.options-container.active {
+  max-height: 15rem;
+  opacity: 1;
+  overflow-y: scroll;
+  padding-top: 0.5rem;
+}
+
+.select-optin-radio {
+  display: none;
+}
+
+.select-optin {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-bottom: 0.2px solid lightgray;
+}
+
+.select-optin:hover {
+  background: lightgray;
+}
+
+.selected-optin {
+  background: #bccad6;
+}
+
+.select-optin-search::after {
+  position: absolute;
+  content: "";
+  width: 0.8em;
+  height: 0.5em;
+  background-color: yellow;
+  -webkit-clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+          clip-path: polygon(100% 0%, 0 0%, 50% 100%);
 }
 
 /* ============================================================ */
