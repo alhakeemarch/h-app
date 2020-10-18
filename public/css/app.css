@@ -554,6 +554,8 @@ main {
   overflow-y: auto;
   min-width: 0vw;
   height: 100%;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
 }
 
 footer {
@@ -777,16 +779,6 @@ input[type=number]::-webkit-outer-spin-button {
   background: #bccad6;
 }
 
-.select-optin-search::after {
-  position: absolute;
-  content: "";
-  width: 0.8em;
-  height: 0.5em;
-  background-color: yellow;
-  -webkit-clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-          clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-}
-
 /* ============================================================ */
 
 /* matiral desing  */
@@ -959,6 +951,8 @@ main {
 .active-side-bar {
   width: 15vw;
   min-width: 30px;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
 }
 
 .show_side_bar_btn {
@@ -980,9 +974,13 @@ main {
   padding: 0.6rem;
   color: #F8F8FF;
   text-decoration: none;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
 }
 
 .sidebar-item {
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
   color: #0f0f0f;
   padding: 0.6rem;
   border-bottom: solid;
@@ -997,6 +995,8 @@ main {
 .sidebar-item.active {
   color: #F8F8FF;
   background-color: #4778c2;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
 }
 
 .sidbar-divider {

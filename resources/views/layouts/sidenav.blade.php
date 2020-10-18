@@ -99,25 +99,24 @@
     </a>
     <a class="" href="{{route ('customer.index')}}">
         <div class="sidebar-item {{ (request()->is('customer*')) ? 'active' : '' }}">
-            customers
+            {{__('customers')}}
         </div>
     </a>
 
 
     <a href="{{route ('plot.index')}}">
         <div class="sidebar-item {{ (request()->is('plot*')) ? 'active' : '' }}">
-            plots
+            {{__('plots')}}
         </div>
     </a>
     <a class="" href="{{route ('project.new_project')}}">
         <div class="sidebar-item {{ (request()->is('new_project*')) ? 'active' : '' }}">
-            new project
+            {{__('new project')}}
         </div>
     </a>
     <a class="" href="{{route ('project.index')}}">
         <div class="sidebar-item {{ (request()->is('project*')) ? 'active' : '' }}">
-
-            projects
+            {{__('projects')}}
         </div>
     </a>
     @if (auth()->user()->is_admin)

@@ -26,7 +26,7 @@
                 <span class="font-weight-bold">{{__('required use')}}: </span>
                 {{$project->project_type ?? '?'}}</li>
             <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('required hight')}}: </span>
+                <span class="font-weight-bold">{{__('required height')}}: </span>
                 {{$project->project_arch_hight ?? '?'}}</li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('status')}}: </span>
@@ -38,13 +38,18 @@
             </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold align-self-center">{{__('project str hight')}}: </span>
-                @if ($project->project_str_hight)
                 {{$project->project_str_hight ?? '?'}}
-                @else
-                @include('project.forms.str_hight')
-                @endif
             </li>
         </ul>
+        <div class="card-footer d-flex justify-content-end m-0">
+            <form action="{{route('project.edit',$project->id)}}" method="get">
+                <input type="hidden" name="from_project" value="1">
+                <button type="submit" class="btn btn-link m-0">
+                    <span>edit |</span>
+                    <i class="far fa-edit"></i>
+                </button>
+            </form>
+        </div>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
@@ -63,6 +68,11 @@
                 <span class="font-weight-bold">{{__('mobile')}}: </span>
                 {{$project->person()->first()->mobile ?? '?'}}</li>
         </ul>
+        @if (!($project->owner_national_id))
+        <div class="card-footer">
+            @include('project.forms.add_customer_to_project')
+        </div>
+        @endif
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
@@ -82,7 +92,11 @@
                     <i class="far fa-edit"></i>
                 </button>
             </form>
-
+        </div>
+        @else
+        <div class="card-body p-0 py-1"></div>
+        <div class="card-footer">
+            @include('project.forms.add_plot_to_project')
         </div>
         @endif
     </div>

@@ -19,6 +19,7 @@
 .active-side-bar {
   width: 15vw;
   min-width: 30px;
+  transition: all 0.4s;
 }
 .show_side_bar_btn {
   cursor: pointer;
@@ -38,9 +39,11 @@
   padding: 0.6rem;
   color: $main_white;
   text-decoration: none;
+  transition: all 0.4s;
 }
 
 .sidebar-item {
+  transition: all 0.4s;
   color: #0f0f0f;
   padding: 0.6rem;
   border-bottom: solid;
@@ -54,6 +57,7 @@
   &.active {
     color: $main_white;
     background-color: #4778c2;
+    transition: all 0.4s;
   }
 }
 

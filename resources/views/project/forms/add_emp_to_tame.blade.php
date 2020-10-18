@@ -21,6 +21,7 @@ $project_tame = [
     @csrf
     @method('PATCH')
     <input type="hidden" name="form_action" value="update_project_team_member">
+    <label>{{__('add employee to team')}}</label>
     <select name="position" class="form-control">
         <option disabled selected>position..</option>
         @foreach ($project_tame as $key=>$value)

@@ -46,8 +46,8 @@
 	"the project": "المشروع",
 	"accounting": "الحسابات",
 	"administratives": "الإداريات",
-	"plot": "قطعة",
-	"plots": "قطع",
+	"plot": "قطعة ارض",
+	"plots": "قطع الأراضي",
 	"name": "اسم",
 	"deed": "صك",
 	"add": "اضافة",
@@ -79,5 +79,9 @@
 	"edit": "تعديل",
 	"print": "طباعة",
 	"delet": "حذف",
+	"customers": "العملاء",
+	"new project": "مشروع جديد",
+	"str height": "الارتفاع الانشائي",
+	"add employee to team": "اضافة موظف لفريق العمل",
 	"": ""
 }

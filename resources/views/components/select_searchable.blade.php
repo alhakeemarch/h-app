@@ -23,7 +23,7 @@ $value=$item->$show_field;
 
 
 <div class="col-md">
-    <label for="{{$name}}">{{$title}}
+    <label for="{{$name}}" class="my-1">{{$title}}
         @if ($is_required)
         <span class="small text-danger">({{__('required')}})</span>
         @else

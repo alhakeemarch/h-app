@@ -127,6 +127,10 @@ class ContractController extends Controller
             $contract_data =  $this->safety_design($project, $request->cost);
         }
         // -----------------------------------------------------------------
+        if ($request->contract_type_id == 32) {
+            $contract_data =  $this->boq($project, $request->cost);
+        }
+        // -----------------------------------------------------------------
 
         $contract = Contract::create($contract_data);
 
@@ -141,22 +145,7 @@ class ContractController extends Controller
                 . ' => added to project with id= ' . $project->id . ', by cost = ' . $contract->cost,
         ];
         DbLogController::add_record($db_record_data);
-        // -----------------------------------------------------------------
-        // creating the relationship
-        // $project->contracts()->attach([$contract->id => [
-        //     'contract_type_id' => $contract->contract_type_id,
-        //     'created_by_id' => auth()->user()->id,
-        //     'created_by_name' => auth()->user()->user_name,
-        // ]]);
-        // -----------------------------------------------------------------
-        // add record to db_log
-        // $db_record_data = [
-        //     'table' => 'contract_project',
-        //     'action' => 'create',
-        //     'description' => 'added new relation mony to mony for project with id= ' . $project->id . ',and contract withe id = ' . $contract->id,
-        // ];
-        // DbLogController::add_record($db_record_data);
-        // -----------------------------------------------------------------
+
         return redirect()->back()->with('success', 'contract added  تم انشاء العقد بنجاح');
         // -----------------------------------------------------------------
     }
@@ -294,8 +283,64 @@ class ContractController extends Controller
             'عقد اشراف كامل',
             'عقد تصميم واجهة ثلاثية الابعاد',
             'عقد تصميم سلامة',
+            'عقد حصر كميات',
         ];
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function contract_to_pdf(Request $request, $contract = null)
+    {
+        $contract = ($contract) ? $contract : Contract::findOrFail($request->contract_id);
+        // -----------------------------------------------------------------
+        $newPDF = new TCPDF();
+        // -----------------------------------------------------------------
+        // setting a header and foooter 
+        $newPDF = ProjectDocController::set_hakeem_header_footer($newPDF);
+        // setting main sittings
+        $newPDF = ProjectDocController::set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle($contract->contract_type()->first()->name_ar);
+        $newPDF::SetSubject($contract->contract_type()->first()->name_ar);
+        // -----------------------------------------------------------------
+        // override some settings
+        if ($contract->contract_type_id == 1) {
+            $newPDF::SetFontSize(11);
+            $newPDF::setCellHeightRatio(1.4);
+        }
+        if ($contract->contract_type_id == 7) {
+            $newPDF::SetFontSize(12);
+            $newPDF::setCellHeightRatio(1.4);
+        }
+        // -----------------------------------------------------------------
+        $html = $contract->html;
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        // -----------------------------------------------------------------
+        // to print contract no and user id and contract creator id 
+        $text = 'Code="Cn' . $contract->contract_no
+            . '-Up' . auth()->user()->id
+            . '-P' . $contract->project_id
+            . '-Uc' . $contract->created_by_id
+            . '-Ue' . $contract->last_edit_by_id . '"';
+
+        // -----------------------------------------------------------------
+        $newPDF::SetY(150);
+        $newPDF::SetX(198);
+        $newPDF::StartTransform();
+        $newPDF::Rotate(+90);
+        $newPDF::SetFont('helvetica', '', 8);
+        $newPDF::SetTextColor(0, 0, 0, 25);;
+        $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
+        $newPDF::StopTransform();
+        // -----------------------------------------------------------------
+        $newPDF::lastPage();
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        // -----------------------------------------------------------------
+        return;
+        // return redirect()->back();
+        // exit;
+        // -----------------------------------------------------------------
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     public function design($project, $price, $edit = false)
     {
@@ -355,60 +400,62 @@ class ContractController extends Controller
         }
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public static function contract_to_pdf(Request $request, $contract = null)
+    public function boq($project, $price, $edit = false)
     {
-        $contract = ($contract) ? $contract : Contract::findOrFail($request->contract_id);
         // -----------------------------------------------------------------
-        $newPDF = new TCPDF();
+        $office_data = OfficeData::findOrFail(1);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد خدمات هندسية (حصر كميات)';
+        $contract_type_id = 32;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
         // -----------------------------------------------------------------
-        // setting a header and foooter 
-        $newPDF = ProjectDocController::set_hakeem_header_footer($newPDF);
-        // setting main sittings
-        $newPDF = ProjectDocController::set_common_settings($newPDF);
+        // Content
+        $pdf_view = 'contract.pdf.boq';
         // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle($contract->contract_type()->first()->name_ar);
-        $newPDF::SetSubject($contract->contract_type()->first()->name_ar);
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
         // -----------------------------------------------------------------
-        // override some settings
-        if ($contract->contract_type_id == 1) {
-            $newPDF::SetFontSize(11);
-            $newPDF::setCellHeightRatio(1.4);
+        if ($edit) {
+            $data = [
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $new_contract_no = self::get_new_contract_no();
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $new_contract_no,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
         }
-        if ($contract->contract_type_id == 7) {
-            $newPDF::SetFontSize(12);
-            $newPDF::setCellHeightRatio(1.4);
-        }
-        // -----------------------------------------------------------------
-        $html = $contract->html;
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        // -----------------------------------------------------------------
-        // to print contract no and user id and contract creator id 
-        $text = 'Code="Cn' . $contract->contract_no
-            . '-Up' . auth()->user()->id
-            . '-P' . $contract->project_id
-            . '-Uc' . $contract->created_by_id
-            . '-Ue' . $contract->last_edit_by_id . '"';
-
-        // -----------------------------------------------------------------
-        $newPDF::SetY(150);
-        $newPDF::SetX(198);
-        $newPDF::StartTransform();
-        $newPDF::Rotate(+90);
-        $newPDF::SetFont('helvetica', '', 8);
-        $newPDF::SetTextColor(0, 0, 0, 25);;
-        $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
-        $newPDF::StopTransform();
-        // -----------------------------------------------------------------
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
-        // -----------------------------------------------------------------
-        return;
-        // return redirect()->back();
-        // exit;
-        // -----------------------------------------------------------------
     }
     // -----------------------------------------------------------------------------------------------------------------
+
     public function supervision($project, $price, $edit = false)
     {
         // -----------------------------------------------------------------
