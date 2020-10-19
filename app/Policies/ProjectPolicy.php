@@ -44,7 +44,7 @@ class ProjectPolicy
         $users_allowed = [
             5,
         ];
-        if (in_array(auth()->id, $users_allowed)) {
+        if (in_array(auth()->user()->id, $users_allowed)) {
             return true;
         }
         return (($user->is_admin) || ($user->person()->first()->job_level >= 5));
