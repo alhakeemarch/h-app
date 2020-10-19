@@ -4,11 +4,10 @@
 @section('content')
 
 <div class="card">
-    <h3 class="h3 text-center">
+    <h3 class="h3 text-center card-header">
         list of all customer <p class="small">total = {{ count($customers) }}</p>
     </h3>
     <a class="btn btn-info w-75 mx-auto" href="{{ url('/customer/check')}}">
-        {{-- <i class="far fa-add"></i>  --}}
         <i class=" fas fa-plus"></i>
         <span class="d-none d-md-inline-block">&nbsp; {{__('add new customer')}}</span>
     </a>

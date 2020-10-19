@@ -198,7 +198,9 @@ function filterNames(event) {
 
 // ================================
 function activeatList(event) {
-    event.target.nextElementSibling.classList.toggle('active');
+    if (!(event.target.readOnly)) {
+        event.target.nextElementSibling.classList.toggle('active');
+    }
 }
 // ---------------------------------------------------
 function selectOption(event) {
@@ -218,7 +220,9 @@ function selectOption(event) {
 function filterSselect(event) {
     let labels = event.target.nextElementSibling.children
     let inputValue = event.target.value.toLowerCase();
-    event.target.nextElementSibling.classList.add('active');
+    if (!(event.target.readOnly)) {
+        event.target.nextElementSibling.classList.add('active');
+    }
     // ---------------------------------------------------
     // to remove extra spaces in text
     while (inputValue.indexOf('  ') > -1) {

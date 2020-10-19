@@ -5,11 +5,10 @@
 
 <div class="container-fluid">
     <div class="card">
-        <h3 class="h3 text-center">
+        <h3 class="h3 text-center card-header">
             list of all emplooyees <p class="small">total = {{ count($employees) }}</p>
         </h3>
         <a class="btn btn-info w-75 mx-auto" href="{{ url('/employee/check')}}">
-            {{-- <i class="far fa-add"></i>  --}}
             <i class=" fas fa-plus"></i>
             <span class="d-none d-md-inline-block">&nbsp; {{__('add new employee')}}</span>
         </a>

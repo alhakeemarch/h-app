@@ -34,6 +34,16 @@ class Project extends Model
         // 'password', 'remember_token',
     ];
     // -----------------------------------------------------------------------------------------------------------------
+    public function get_record_as_str()
+    {
+        $record = '';
+        $obj = json_decode($this, TRUE);
+        foreach ($obj as $a => $b) {
+            $record = $record . ' | ' . $a . '=>' . $b;
+        }
+        return $record;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function person()
     {
         return $this->belongsTo(Person::class);

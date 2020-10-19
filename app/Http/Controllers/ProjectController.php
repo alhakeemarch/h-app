@@ -198,6 +198,12 @@ class ProjectController extends Controller
                 'project_statuses' => ProjectStatus::all(),
             ]);
         }
+        if ($request->form_action == 'shwo_edit_owner_info_form') {
+            return view('project.forms.owners_form')->with([
+                'project' => $project,
+                'owner_types' => OwnerType::all(),
+            ]);
+        }
         // ----------------------------------------------------
         return view('project.edit')->with([
             'project' => $project,
@@ -268,35 +274,8 @@ class ProjectController extends Controller
             return redirect()->back()->with('success', 'project number has be assigned - تم اضافة رقم للمشروع');
         }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
-        if ($request->form_action == 'add_customer_to_project') {
-            $request->validate(['national_id' => 'required|numeric|starts_with:1,2|digits:10',]);
-            $found_person = Person::where('national_id', $request->national_id)->first();
-            if (!$found_person) {
-                return redirect()->back()->withErrors(['Employee not regesterd', 'يجب تسجيل العميل أولا']);
-            }
-            $owner_name = $found_person->ar_name1 . ' ' . $found_person->ar_name2 . ' ' . $found_person->ar_name3
-                . ' ' . $found_person->ar_name4 . ' ' . $found_person->ar_name5;
-            $owner_name = str_replace('  ', ' ', $owner_name);
-            $project->project_name_ar = $owner_name;
-            $project->person_id = $found_person->id;
-            $project->owner_national_id = $found_person->national_id;
-            $project->owner_name_ar = $owner_name;
-            $project->owner_main_mobile_no = $found_person->mobile;
-            $project->last_edit_by_id = auth()->user()->id;
-            $project->last_edit_by_name = auth()->user()->user_name;
-            $project->save();
-            // -----------------------------------------------------------------
-            // add record to db_log
-            $db_record_data = [
-                'table' => 'projects',
-                'model' => 'Project',
-                'model_id' => $project->id,
-                'action' => 'update',
-                'description' => 'project id =>' . $project->id . ', binded to a customer id =>'  . $found_person->id,
-            ];
-            DbLogController::add_record($db_record_data);
-            // -----------------------------------------------------------------
-            return redirect()->back()->with('success', 'project binded to a customer successfully - تم ربط المشروع بالعميل بنجاح');
+        if ($request->form_action == 'add_customer_to_project' || $request->form_action == 'change_owner_info') {
+            return $this->update_owner_info($request, $project);
         }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'add_plot_to_project') {
@@ -361,8 +340,50 @@ class ProjectController extends Controller
             // -----------------------------------------------------------------
             return redirect()->route('project.show', $project)->with('success', 'project info updated successfully - تم التعديل  بنجاح');
         }
-        // ------------------------------------------------------------------------------------------------------------------------------------- 
     }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
+    public function update_owner_info($request, $project)
+    {
+        $old_record = $project->get_record_as_str();
+        $found_owener = false;
+        if ($request->owner_type_id == 1) {
+            $request->validate([
+                'owner_national_id' => 'required|numeric|starts_with:1,2|digits:10',
+                'owner_type_id' => 'required',
+            ]);
+            $found_owener = Person::where('national_id', $request->owner_national_id)->first();
+            if (!$found_owener) {
+                return redirect()->back()->withErrors(['Employee not regesterd', 'يجب تسجيل العميل أولا']);
+            }
+        }
+        $owner_name = $found_owener->get_full_name_ar();
+        if (!$project->project_name_ar) {
+            $project->project_name_ar = $owner_name;
+        }
+        $project->owner_type_id = $request->owner_type_id;
+        $project->person_id = $found_owener->id;
+        $project->owner_national_id = $found_owener->national_id;
+        $project->owner_name_ar = $owner_name;
+        $project->owner_main_mobile_no = $found_owener->mobile;
+        $project->last_edit_by_id = auth()->user()->id;
+        $project->last_edit_by_name = auth()->user()->user_name;
+        $project->save();
+        $new_record = $project->get_record_as_str();
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'projects',
+            'model' => 'Project',
+            'model_id' => $project->id,
+            'action' => 'update',
+            'notes' => $old_record . 'changed to' . $new_record,
+            'description' => 'project id =>' . $project->id . ', updated to a customer id =>'  . $found_owener->id,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        return redirect()->back()->with('success', 'owner info updated successfully - تم تحديث بيانات العميل بنجاح');
+    }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
 
     /**
      * Remove the specified resource from storage.

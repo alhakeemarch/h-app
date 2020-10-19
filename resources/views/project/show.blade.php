@@ -68,11 +68,15 @@
                 <span class="font-weight-bold">{{__('mobile')}}: </span>
                 {{$project->person()->first()->mobile ?? '?'}}</li>
         </ul>
-        @if (!($project->owner_national_id))
-        <div class="card-footer">
-            @include('project.forms.add_customer_to_project')
+        <div class="card-footer d-flex justify-content-end">
+            <form action="{{route('project.edit',$project->id)}}" method="get">
+                <input type="hidden" name="form_action" value="shwo_edit_owner_info_form">
+                <button type="submit" class="btn btn-link m-0">
+                    <span>edit |</span>
+                    <i class="far fa-edit"></i>
+                </button>
+            </form>
         </div>
-        @endif
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">

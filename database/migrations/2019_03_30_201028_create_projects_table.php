@@ -23,7 +23,8 @@ class CreateProjectsTable extends Migration
             $table->foreignID('person_id')->nullable()->references('id')->on('people'); // المالك أو ممثل المالك
             $table->foreignId('owner_id')->nullable();
             $table->foreignId('owner_national_id')->nullable();
-            $table->string('owner_type')->nullable(); // فرد - شركة - ورثة - وقف - جهة 
+            // $table->string('owner_type')->nullable(); // فرد - شركة - ورثة - وقف - جهة 
+            $table->foreignId('owner_type_id')->nullable()->default(1)->references('id')->on('owner_types'); // فرد - شركة - ورثة - وقف - جهة 
             $table->string('owner_name_ar')->nullable();
             $table->string('owner_name_en')->nullable();
             $table->string('owner_main_mobile_no')->nullable();

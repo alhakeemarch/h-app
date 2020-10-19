@@ -22,6 +22,12 @@ class Person extends Model
         return $qury->where('national_id', $id);
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function get_full_name_ar()
+    {
+        return str_replace('  ', ' ',  $this->ar_name1 . ' ' . $this->ar_name2 . ' ' . $this->ar_name3
+            . ' ' . $this->ar_name4 . ' ' . $this->ar_name5);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function user()
     {
         return $this->hasOne(User::class);

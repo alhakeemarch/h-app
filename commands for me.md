@@ -328,6 +328,10 @@ php artisan make:model ContractClass -a  // تصنيف لدرجات العقد
 php artisan make:migration create_contract_project_table --create contract_project
 DROP TABLE contract_project;
 ============== 
+# SQL ==> applyed
+ALTER TABLE `projects` CHANGE `owner_type` `owner_type_id` BIGINT(20) UNSIGNED NULL DEFAULT '1';
+ALTER TABLE `projects` ADD CONSTRAINT projects_owner_type_id_foreign FOREIGN KEY (owner_type_id) REFERENCES owner_types(id);
+============== 
 # to do
 php artisan make:model DbLog -a  // الحركات في قاعدة البيانات
 php artisan make:model ProjectLog -a  // الحركات على الجداول
@@ -612,7 +616,7 @@ required title -----> to add
         <x-slot name='is_required'>true</x-slot>
         {{-- <x-slot name='is_readonly'>true</x-slot> --}}
         {{-- //// if it is disabled then it will not be required or readonly --}}
-        {{-- <x-slot name='is_disabled'>true</x-slot> --}}
+        {{-- <x-slot name='is_disabled'>true</x-slot> --}} 
         {{-- <x-slot name='is_hidden'>true</x-slot> --}}
         {{-- ------------------------------------------------------- --}}
         {{-- <x-slot name='input_pattern'>.{2,}</x-slot> --}}

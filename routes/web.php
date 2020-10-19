@@ -49,10 +49,10 @@ Route::any('/f', function () {
     // return time();
     //////////////////////////////////////////////////////////    
 
-    if (false) {
-        Artisan::call('migrate:fresh');
-        Artisan::call('cache:clear');
-        Artisan::call('view:clear');
+    if (true) {
+        // Artisan::call('migrate:fresh');
+        // Artisan::call('cache:clear');
+        // Artisan::call('view:clear');
         // makeUser('admin');
         // makeUser('fahd');
         // makeUser('hanadi');
