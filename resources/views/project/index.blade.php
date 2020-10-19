@@ -87,11 +87,11 @@
                     <td class="project_notes">{{$project->notes}}</td>
                     <td scope="link">
 
-                        @if(($project->plot_id && $project->person_id)|| auth()->user()->is_admin)
+                        {{-- @if(($project->plot_id && $project->person_id)|| auth()->user()->is_admin) --}}
                         <a href="{{ url('/project/'.$project->id) }}">
                             <i class="far fa-eye"></i>
                         </a>
-                        @endif
+                        {{-- @endif --}}
                     </td>
                 </tr>
                 @php $i ++ @endphp

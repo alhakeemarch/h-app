@@ -466,6 +466,7 @@ Route::resources([
     'gradeRank' => 'GradeRankController',
     'major' => 'MajorController',
     'dbLog' => 'DbLogController',
+    'contractType' => 'ContractTypeController',
 
 ]);
 // -----------------------------------------------------------------------------------------------------------------

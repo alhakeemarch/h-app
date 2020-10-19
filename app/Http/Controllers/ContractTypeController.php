@@ -4,9 +4,22 @@ namespace App\Http\Controllers;
 
 use App\ContractType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContractTypeController extends Controller
 {
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->middleware('active_user');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display a listing of the resource.
      *
@@ -14,19 +27,20 @@ class ContractTypeController extends Controller
      */
     public function index()
     {
-        //
+        $contract_types = ContractType::all();
+        return view('contractType.index')->with(['contract_types' => $contract_types]);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(ContractType $contractType)
     {
-        //
+        return view('contractType.create')->with(['contractType' => $contractType]);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -35,9 +49,26 @@ class ContractTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $this->validate_contractType($request);
+        $validatedData['created_by_id'] = auth()->user()->id;
+        $validatedData['created_by_name'] = auth()->user()->user_name;
+        $contract_type = ContractType::create($validatedData);
+        $contract_type->save();
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'contract_types',
+            'model' => 'ContractType',
+            'model_id' => $contract_type->id,
+            'action' => 'create',
+            'description' => 'contract_type wite id =>'  . $contract_type->id  . ', created',
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        return redirect()->route('contractType.index');
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Display the specified resource.
      *
@@ -46,9 +77,9 @@ class ContractTypeController extends Controller
      */
     public function show(ContractType $contractType)
     {
-        //
+        return view('contractType.show')->with(['contractType' => $contractType]);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Show the form for editing the specified resource.
      *
@@ -57,9 +88,9 @@ class ContractTypeController extends Controller
      */
     public function edit(ContractType $contractType)
     {
-        //
+        return view('contractType.edit')->with(['contractType' => $contractType]);
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Update the specified resource in storage.
      *
@@ -69,9 +100,27 @@ class ContractTypeController extends Controller
      */
     public function update(Request $request, ContractType $contractType)
     {
-        //
+        $old_record = $this->get_record_as_str($contractType);
+        $validatedData = $this->validate_contractType($request);
+        $validatedData['last_edit_by_id'] = auth()->user()->id;
+        $validatedData['last_edit_by_name'] = auth()->user()->user_name;
+        $contractType->update($validatedData);
+        $new_record = $this->get_record_as_str($contractType);
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'contract_types',
+            'model' => 'ContractType',
+            'model_id' => $contractType->id,
+            'action' => 'update',
+            'notes' => 'a record was ::>' . $old_record . ', and become::>' . $new_record,
+            'description' => 'contract_type wite id =>'  . $contractType->id  . ', updated',
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        return redirect()->route('contractType.index')->with('success', 'contract type updated successfully - تم تعديل نوع العقد بنجاح');
     }
-
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Remove the specified resource from storage.
      *
@@ -80,8 +129,44 @@ class ContractTypeController extends Controller
      */
     public function destroy(ContractType $contractType)
     {
-        //
+        $record = $this->get_record_as_str($contractType);
+        $contractType->delete();
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'contract_types',
+            'model' => 'ContractType',
+            'model_id' => $contractType->id,
+            'action' => 'Delete',
+            'notes' => 'Delete a record ::' . $record,
+            'description' => 'contract_type wite id =>'  . $contractType->id  . ', deletet',
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        return redirect()->route('contractType.index')->with('success', 'contract type deleted successfully - تم حذف نوع العقد بنجاح');
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function validate_contractType($request)
+    {
+        return $request->validate([
+            'name_ar' => 'required|string|min:2',
+            'name_en' => 'nullable|string',
+            'description' => 'nullable|string',
+            'notes' => 'nullable|string',
+            'private_notes' => 'nullable|string',
+        ]);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_record_as_str($contractType)
+    {
+        $record = '';
+        $obj = json_decode($contractType, TRUE);
+        foreach ($obj as $a => $b) {
+            $record = $record . ' | ' . $a . '=>' . $b;
+        }
+        return $record;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public static function firstInsertion()
     {
         $created_by_id = auth()->user()->id;

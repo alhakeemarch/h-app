@@ -2,6 +2,7 @@
 @section('title','Customers index')
 
 @section('content')
+
 <div class="card">
     <h3 class="h3 text-center">
         list of all customer <p class="small">total = {{ count($customers) }}</p>

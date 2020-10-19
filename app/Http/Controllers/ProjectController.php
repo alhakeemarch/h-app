@@ -331,7 +331,7 @@ class ProjectController extends Controller
                 'project_name_ar' => 'nullable|string',
                 'project_arch_hight' => 'required|string',
                 'project_type' => 'required|string',
-                'project_str_hight' => 'required|string',
+                'project_str_hight' => 'nullable|string',
                 'last_rokhsa_no' => 'nullable|string',
                 'last_rokhsa_issue_date' => ['nullable', 'string', new ValidHijriDate],
                 'project_status_id' => 'nullable|numeric',

@@ -152,6 +152,11 @@
             office data
         </div>
     </a>
+    <a class="" href="{{route ('contractType.index')}}">
+        <div class="sidebar-item {{ (request()->is('contractType*')) ? 'active' : '' }}">
+            {{__('contract types')}}
+        </div>
+    </a>
     <a class="" href="{{route ('country.index')}}">
         <div class="sidebar-item {{ (request()->is('country*')) ? 'active' : '' }}">
             countries

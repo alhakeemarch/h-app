@@ -41,6 +41,12 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
+        $users_allowed = [
+            5,
+        ];
+        if (in_array(auth()->id, $users_allowed)) {
+            return true;
+        }
         return (($user->is_admin) || ($user->person()->first()->job_level >= 5));
     }
 
@@ -53,7 +59,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project)
     {
-        //
+        return (($user->is_admin) || ($user->person()->first()->job_level >= 5));
     }
 
     /**
