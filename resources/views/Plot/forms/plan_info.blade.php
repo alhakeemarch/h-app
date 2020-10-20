@@ -32,7 +32,7 @@ $is_read_only = false;
         <x-slot name='show_field'>plan_no</x-slot>
     </x-select_searchable>
     {{-- --------------------------------------------------------------------------------------------- --}}
-    @if (auth()->user()->is_admin)
+    @if (auth()->user()->is_admin && false)
     <x-select_searchable name='street_id' title="street" :resource=$plot :list=$streets>
         <x-slot name='db_data_field'>id</x-slot>
         <x-slot name='show_field'>ar_name</x-slot>

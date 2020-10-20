@@ -100,7 +100,6 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-
         $plot = Plot::where('deed_no', $request->deed_no)->first();
         $validated_project = collect($this->validate_project($request));
         $validated_plot = PlotController::validatePlot($request);
@@ -108,9 +107,14 @@ class ProjectController extends Controller
         // dd($validated_project, $validated_plot, $request->all());
         $created_by_id = auth()->user()->id;
         $created_by_name = auth()->user()->user_name;
+
         if (!$created_by_id and !$created_by_name) {
             return abort(403);
         }
+        $current_date = DateAndTime::get_date_time_arr();
+        $created_at_note = $current_date['hijri_month_name_ar'] . '-' . $current_date['hijri_year_no'];
+        $validated_project->put('owner_id', $request->person_id);
+        $validated_project->put('created_at_note', $created_at_note);
         $validated_project->put('created_by_id', $created_by_id);
         $validated_project->put('created_by_name', $created_by_name);
         $validated_project->put('plot_id', $plot->id);
@@ -256,6 +260,9 @@ class ProjectController extends Controller
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'update_project_number') {
             $project->project_no = $this->get_new_project_no();
+            $current_date = DateAndTime::get_date_time_arr();
+            $created_at_note = $current_date['hijri_month_name_ar'] . '-' . $current_date['hijri_year_no'];
+            $project->created_at_note = $created_at_note;
             $project->project_status_id = 3;
             $project->last_edit_by_id = auth()->user()->id;
             $project->last_edit_by_name = auth()->user()->user_name;
@@ -306,43 +313,7 @@ class ProjectController extends Controller
         }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'update_project_main_info') {
-            $request->validate([
-                'project_name_ar' => 'nullable|string',
-                'project_arch_hight' => 'required|string',
-                'project_type' => 'required|string',
-                'project_str_hight' => 'nullable|string',
-                'last_rokhsa_no' => 'nullable|string',
-                'last_rokhsa_issue_date' => ['nullable', 'string', new ValidHijriDate],
-                'project_status_id' => 'nullable|numeric',
-                'notes' => 'nullable|string',
-            ]);
-            if ($request->project_name_ar) {
-                $project->project_name_ar = $request->project_name_ar;
-            }
-            $project->project_arch_hight = $request->project_arch_hight;
-            $project->project_type = $request->project_type;
-            $project->project_str_hight = $request->project_str_hight;
-            $project->last_rokhsa_no = $request->last_rokhsa_no;
-            $project->last_rokhsa_issue_date = $request->last_rokhsa_issue_date;
-            $project->project_status_id = $request->project_status_id;
-            if ($request->notes) {
-                $project->notes = $project->notes . ' | ' . $request->notes;
-            }
-            $project->last_edit_by_id = auth()->user()->id;
-            $project->last_edit_by_name = auth()->user()->user_name;
-            $project->save();
-            // -----------------------------------------------------------------
-            // add record to db_log
-            $db_record_data = [
-                'table' => 'projects',
-                'model' => 'Project',
-                'model_id' => $project->id,
-                'action' => 'update',
-                'description' => 'project id =>' . $project->id . ', updated some of main info',
-            ];
-            DbLogController::add_record($db_record_data);
-            // -----------------------------------------------------------------
-            return redirect()->route('project.show', $project)->with('success', 'project info updated successfully - تم التعديل  بنجاح');
+            return $this->update_project_main_info($request, $project);
         }
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
@@ -386,6 +357,47 @@ class ProjectController extends Controller
         DbLogController::add_record($db_record_data);
         // -----------------------------------------------------------------
         return redirect()->back()->with('success', 'owner info updated successfully - تم تحديث بيانات العميل بنجاح');
+    }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
+    public function FunctionName($request, $project)
+    {
+        $request->update_project_main_info([
+            'project_name_ar' => 'nullable|string',
+            'project_arch_hight' => 'required|string',
+            'project_type' => 'required|string',
+            'project_str_hight' => 'nullable|string',
+            'last_rokhsa_no' => 'nullable|string',
+            'last_rokhsa_issue_date' => ['nullable', 'string', new ValidHijriDate],
+            'project_status_id' => 'nullable|numeric',
+            'notes' => 'nullable|string',
+        ]);
+        if ($request->project_name_ar) {
+            $project->project_name_ar = $request->project_name_ar;
+        }
+        $project->project_arch_hight = $request->project_arch_hight;
+        $project->project_type = $request->project_type;
+        $project->project_str_hight = $request->project_str_hight;
+        $project->last_rokhsa_no = $request->last_rokhsa_no;
+        $project->last_rokhsa_issue_date = $request->last_rokhsa_issue_date;
+        $project->project_status_id = $request->project_status_id;
+        if ($request->notes) {
+            $project->notes = $project->notes . ' | ' . $request->notes;
+        }
+        $project->last_edit_by_id = auth()->user()->id;
+        $project->last_edit_by_name = auth()->user()->user_name;
+        $project->save();
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'projects',
+            'model' => 'Project',
+            'model_id' => $project->id,
+            'action' => 'update',
+            'description' => 'project id =>' . $project->id . ', updated some of main info',
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        return redirect()->route('project.show', $project)->with('success', 'project info updated successfully - تم التعديل  بنجاح');
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
 

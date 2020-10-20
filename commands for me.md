@@ -322,6 +322,7 @@ php artisan make:model FileSpecialty -a  // قائمة انواع المستخد
 php artisan make:model SoilLaboratory -a  // قائمة بمكاتب تحليل التربة
 php artisan make:model PersonTitles -a  // قائمة بألقاب العملاء السيد الدكتور المهندس
 php artisan make:model ContractClass -a  // تصنيف لدرجات العقد
+php artisan make:model RepresentativeType  -a  // تصنيف لدرجات العقد
 
 ============== 
 لعمل علاقة Many to many
@@ -331,6 +332,9 @@ DROP TABLE contract_project;
 # SQL ==> applyed
 ALTER TABLE `projects` CHANGE `owner_type` `owner_type_id` BIGINT(20) UNSIGNED NULL DEFAULT '1';
 ALTER TABLE `projects` ADD CONSTRAINT projects_owner_type_id_foreign FOREIGN KEY (owner_type_id) REFERENCES owner_types(id);
+<!-- ------------------------------------------------------------------------ -->
+ALTER TABLE `projects` CHANGE `representative_type` `representative_type_id` BIGINT(20) UNSIGNED NULL ;
+ALTER TABLE `projects` ADD CONSTRAINT projects_representative_type_id_foreign FOREIGN KEY (representative_type_id) REFERENCES representative_types(id);
 ============== 
 # to do
 php artisan make:model DbLog -a  // الحركات في قاعدة البيانات
@@ -672,3 +676,5 @@ required title -----> to add
     </x-select_searchable>
 ================================
 # APP_DEBUG = false
+
+

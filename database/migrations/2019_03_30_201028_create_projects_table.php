@@ -37,7 +37,7 @@ class CreateProjectsTable extends Migration
             // -----------------------------
             $table->foreignId('representative_id')->nullable()->references('id')->on('people');
             $table->foreignId('representative_national_id')->nullable();
-            $table->string('representative_type')->nullable(); // وكيل شرعي - مفوض - ناظر الوقف - ولي على قصر - 
+            $table->string('representative_type_id')->nullable()->references('id')->on('representative_types'); // وكيل شرعي - مفوض - ناظر الوقف - ولي على قصر - 
             $table->string('representative_name_ar')->nullable();
             $table->string('representative_name_en')->nullable();
             $table->string('representative_main_mobile_no')->nullable();
