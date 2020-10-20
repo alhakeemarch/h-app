@@ -58,6 +58,18 @@
                     <x-slot name='title'>{{__('project status')}}</x-slot>
                 </x-select_searchable>
             </div>
+            <hr>
+            <div class="row">
+                <x-input name='created_at_note' title="">
+                    <x-slot name='title'>{{__('notes')}}</x-slot>
+                    <x-slot name='type'>textarea</x-slot>
+                    <x-slot name='is_readonly'>true</x-slot>
+                    <x-slot name='input_value'>{{old('created_at_note') ?? $project->created_at_note}}</x-slot>
+                </x-input>
+                <x-input name='created_at_note' title="">
+                    <x-slot name='title'>{{__('add notes')}}</x-slot>
+                </x-input>
+            </div>
             <button type="submit" class="btn btn-block btn-info">{{__('save')}}</button>
         </form>
     </div>
