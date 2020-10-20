@@ -314,7 +314,7 @@ class ProjectController extends Controller
                 'last_rokhsa_no' => 'nullable|string',
                 'last_rokhsa_issue_date' => ['nullable', 'string', new ValidHijriDate],
                 'project_status_id' => 'nullable|numeric',
-                'created_at_note' => 'nullable|string',
+                'notes' => 'nullable|string',
             ]);
             if ($request->project_name_ar) {
                 $project->project_name_ar = $request->project_name_ar;
@@ -325,7 +325,9 @@ class ProjectController extends Controller
             $project->last_rokhsa_no = $request->last_rokhsa_no;
             $project->last_rokhsa_issue_date = $request->last_rokhsa_issue_date;
             $project->project_status_id = $request->project_status_id;
-            $project->created_at_note = $project->created_at_note . ' | ' . $request->created_at_note;
+            if ($request->notes) {
+                $project->notes = $project->notes . ' | ' . $request->notes;
+            }
             $project->last_edit_by_id = auth()->user()->id;
             $project->last_edit_by_name = auth()->user()->user_name;
             $project->save();

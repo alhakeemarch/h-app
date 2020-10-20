@@ -60,13 +60,13 @@
             </div>
             <hr>
             <div class="row">
-                <x-input name='created_at_note' title="">
+                <x-input name='notes' title="">
                     <x-slot name='title'>{{__('notes')}}</x-slot>
                     <x-slot name='type'>textarea</x-slot>
                     <x-slot name='is_readonly'>true</x-slot>
-                    <x-slot name='input_value'>{{old('created_at_note') ?? $project->created_at_note}}</x-slot>
+                    <x-slot name='input_value'>{{old('notes') ?? $project->notes}}</x-slot>
                 </x-input>
-                <x-input name='created_at_note' title="">
+                <x-input name='notes' title="">
                     <x-slot name='title'>{{__('add notes')}}</x-slot>
                 </x-input>
             </div>
