@@ -15,6 +15,7 @@ use App\Plan;
 use App\Plot;
 use App\Project;
 use App\ProjectStatus;
+use App\RepresentativeType;
 use App\Rules\ValidDate;
 use App\Rules\ValidHijriDate;
 use App\Street;
@@ -206,6 +207,7 @@ class ProjectController extends Controller
             return view('project.forms.owners_form')->with([
                 'project' => $project,
                 'owner_types' => OwnerType::all(),
+                'representative_types' => RepresentativeType::all(),
             ]);
         }
         // ----------------------------------------------------

@@ -330,11 +330,16 @@ php artisan make:migration create_contract_project_table --create contract_proje
 DROP TABLE contract_project;
 ============== 
 # SQL ==> applyed
+**CURRENT_TIMESTAMP()** 
 ALTER TABLE `projects` CHANGE `owner_type` `owner_type_id` BIGINT(20) UNSIGNED NULL DEFAULT '1';
 ALTER TABLE `projects` ADD CONSTRAINT projects_owner_type_id_foreign FOREIGN KEY (owner_type_id) REFERENCES owner_types(id);
 <!-- ------------------------------------------------------------------------ -->
 ALTER TABLE `projects` CHANGE `representative_type` `representative_type_id` BIGINT(20) UNSIGNED NULL ;
 ALTER TABLE `projects` ADD CONSTRAINT projects_representative_type_id_foreign FOREIGN KEY (representative_type_id) REFERENCES representative_types(id);
+<!-- ------------------------------------------------------------------------ -->
+ALTER TABLE `representative_types`ADD COLUMN `authorization_type_ar` VARCHAR(191) NULL AFTER `name_en`;
+ALTER TABLE `representative_types`ADD COLUMN `authorization_type_en` VARCHAR(191) NULL AFTER `authorization_type_ar`;
+
 ============== 
 # to do
 php artisan make:model DbLog -a  // الحركات في قاعدة البيانات
