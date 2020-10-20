@@ -4,7 +4,7 @@
         <form action="{{route('project.update',$project)}}" method="POST" class=" form-group">
             @csrf
             @method('PATCH')
-            <input type="hidden" name="form_action" value="change_representative_info">
+            <input type="hidden" name="form_action" value="update_representative_info">
             <div class="row">
                 <x-input name='representative_id' title="">
                     <x-slot name='title'>representative_id</x-slot>
@@ -72,18 +72,18 @@
                     <x-slot name='input_value'>{{$project->extra_representatives_list}}</x-slot>
                 </x-input>
             </div>
-            <button type="submit" class="btn btn-info text-left">{{__('update')}} |
+            <button type="submit" class="btn btn-info btn-block">{{__('update')}} |
                 <i class="far fa-plus-square"></i>
             </button>
         </form>
     </div>
     <hr>
-    <div class="card-footer mb-5">
+    <div class="card-footer">
         <form action="{{route('project.update',$project)}}" method="POST"
-            class=" form-group m-0 row d-flex justify-content-between jumbotron">
+            class=" form-group m-0 row d-flex justify-content-between jumbotron my-2 py-3">
             @csrf
             @method('PATCH')
-            <input type="hidden" name="form_action" value="change_owner_info">
+            <input type="hidden" name="form_action" value="update_representative_info">
             <x-select_searchable name='representative_type_id' title="representative type" :resource=$project
                 :list=$representative_types>
                 <x-slot name='db_data_field'>id</x-slot>

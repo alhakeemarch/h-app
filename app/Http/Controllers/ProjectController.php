@@ -235,6 +235,10 @@ class ProjectController extends Controller
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         Gate::authorize('create', Project::class);
         // ------------------------------------------------------------------------------------------------------------------------------------- 
+        if ($request->form_action == 'update_representative_info') {
+            return $this->update_representative_info($request, $project);
+        }
+        // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'update_project_team_member') {
             $request->validate(
                 [
@@ -361,9 +365,9 @@ class ProjectController extends Controller
         return redirect()->back()->with('success', 'owner info updated successfully - تم تحديث بيانات العميل بنجاح');
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
-    public function FunctionName($request, $project)
+    public function update_project_main_info($request, $project)
     {
-        $request->update_project_main_info([
+        $request->validate([
             'project_name_ar' => 'nullable|string',
             'project_arch_hight' => 'required|string',
             'project_type' => 'required|string',
@@ -400,6 +404,62 @@ class ProjectController extends Controller
         DbLogController::add_record($db_record_data);
         // -----------------------------------------------------------------
         return redirect()->route('project.show', $project)->with('success', 'project info updated successfully - تم التعديل  بنجاح');
+    }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
+    public function update_representative_info($request, $project)
+    {
+        $request->validate([
+            'representative_type_id' => 'nullable|numeric',
+            'representative_national_id' => 'required|numeric|starts_with:1,2|digits:10',
+            'representative_id' => 'nullable|numeric',
+            'representative_name_ar' => 'nullable|string',
+            'representative_name_en' => 'nullable|string',
+            'representative_main_mobile_no' => 'nullable|string',
+            'representative_authorization_type' => 'nullable|string',
+            'representative_authorization_no' => 'nullable|string',
+            'representative_authorization_issue_date' => ['nullable', 'string', new ValidDate],
+            'representative_authorization_expire_date' => ['nullable', 'string', new ValidDate],
+            'extra_representatives_list' => 'nullable|string',
+        ]);
+
+        if (!($request->representative_id)) {
+            $found_representative = Person::where('national_id', $request->representative_national_id)->first();
+            if (!$found_representative) {
+                return redirect()->back()->withErrors(['Employee not regesterd', 'يجب تسجيل العميل أولا']);
+            }
+            $representative_type = RepresentativeType::findOrFail($request->representative_type_id);
+            $project->representative_id = $found_representative->id;
+            $project->representative_national_id = $found_representative->national_id;
+            $project->representative_national_id = $found_representative->national_id;
+            $project->representative_name_ar = $found_representative->get_full_name_ar();
+            $project->representative_name_en = $found_representative->get_full_name_en();
+            $project->representative_main_mobile_no = $found_representative->mobile;
+            $project->representative_type_id = $representative_type->id;
+            $project->representative_authorization_type = $representative_type->authorization_type_ar;
+            $project->last_edit_by_id = auth()->user()->id;
+            $project->last_edit_by_name = auth()->user()->user_name;
+            $project->save();
+        } else {
+            $project->representative_authorization_no = $request->representative_authorization_no;
+            $project->representative_authorization_issue_place = $request->representative_authorization_issue_place;
+            $project->representative_authorization_issue_date = $request->representative_authorization_issue_date;
+            $project->representative_authorization_expire_date = $request->representative_authorization_expire_date;
+            $project->last_edit_by_id = auth()->user()->id;
+            $project->last_edit_by_name = auth()->user()->user_name;
+            $project->save();
+        }
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'projects',
+            'model' => 'Project',
+            'model_id' => $project->id,
+            'action' => 'update',
+            'description' => 'project id =>' . $project->id . ', updated representative info',
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        return redirect()->back()->with('success', 'project info updated successfully - تم التعديل  بنجاح');
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
 

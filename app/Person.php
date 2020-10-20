@@ -24,8 +24,18 @@ class Person extends Model
     // -----------------------------------------------------------------------------------------------------------------
     public function get_full_name_ar()
     {
-        return str_replace('  ', ' ',  $this->ar_name1 . ' ' . $this->ar_name2 . ' ' . $this->ar_name3
-            . ' ' . $this->ar_name4 . ' ' . $this->ar_name5);
+        $name = $this->ar_name1 . ' ' . $this->ar_name2 . ' ' . $this->ar_name3
+            . ' ' . $this->ar_name4 . ' ' . $this->ar_name5;
+        $name = trim($name);
+        return preg_replace('/\s+/', ' ', $name);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_full_name_en()
+    {
+        $name = $this->en_name1 . ' ' . $this->en_name2 . ' ' . $this->en_name3
+            . ' ' . $this->en_name4 . ' ' . $this->en_name5;
+        $name = trim($name);
+        return preg_replace('/\s+/', ' ', $name);
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function user()
