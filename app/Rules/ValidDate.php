@@ -51,18 +51,18 @@ class ValidDate implements Rule
                 return false;
             }
         }
-        if ($input_year == $current_year && $input_month > $current_month) {
-            return false;
-        }
-        if ($input_year == $current_year && $input_month = $current_month && $input_day > $current_day) {
-            return false;
-        }
-        if ($input_year == $current_hijri_year && $input_month > $current_hijri_month) {
-            return false;
-        }
-        if ($input_year == $current_hijri_year && $input_month = $current_hijri_month && $input_day > $current_hijri_day) {
-            return false;
-        }
+        // if ($input_year == $current_year && $input_month > $current_month) {
+        //     return false;
+        // }
+        // if ($input_year == $current_year && $input_month = $current_month && $input_day > $current_day) {
+        //     return false;
+        // }
+        // if ($input_year == $current_hijri_year && $input_month > $current_hijri_month) {
+        //     return false;
+        // }
+        // if ($input_year == $current_hijri_year && $input_month = $current_hijri_month && $input_day > $current_hijri_day) {
+        //     return false;
+        // }
 
         return true;
     }

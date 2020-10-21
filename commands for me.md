@@ -339,6 +339,22 @@ ALTER TABLE `projects` ADD CONSTRAINT projects_representative_type_id_foreign FO
 <!-- ------------------------------------------------------------------------ -->
 ALTER TABLE `representative_types`ADD COLUMN `authorization_type_ar` VARCHAR(191) NULL AFTER `name_en`;
 ALTER TABLE `representative_types`ADD COLUMN `authorization_type_en` VARCHAR(191) NULL AFTER `authorization_type_ar`;
+<!-- ------------------------------------------------------------------------ -->
+ALTER TABLE `db_logs`ADD COLUMN `old_record` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `description`;
+ALTER TABLE `db_logs`ADD COLUMN `new_record` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `old_record`;
+<!-- ------------------------------------------------------------------------ -->
+ALTER TABLE `people` CHANGE `national_id_issue_date` `national_id_issue_date` VARCHAR(191) NULL DEFAULT NULL; 
+ALTER TABLE `people` CHANGE `national_id_expire_date` `national_id_expire_date` VARCHAR(191) NULL DEFAULT NULL; 
+ALTER TABLE `people` CHANGE `pasport_issue_date` `pasport_issue_date` VARCHAR(191) NULL DEFAULT NULL; 
+ALTER TABLE `people` CHANGE `pasport_expire_date` `pasport_expire_date` VARCHAR(191) NULL DEFAULT NULL; 
+ALTER TABLE `people` CHANGE `ah_birth_date` `ah_birth_date` VARCHAR(191) NULL DEFAULT NULL; 
+ALTER TABLE `people` CHANGE `ad_birth_date` `ad_birth_date` VARCHAR(191) NULL DEFAULT NULL; 
+ALTER TABLE `people` CHANGE `ah_hiring_date` `ah_hiring_date` VARCHAR(191) NULL DEFAULT NULL; 
+ALTER TABLE `people` CHANGE `ad_hiring_date` `ad_hiring_date` VARCHAR(191) NULL DEFAULT NULL; 
+ALTER TABLE `people` CHANGE `SCE_membership_type_id` `SCE_membership_type_id` VARCHAR(191) NULL DEFAULT NULL; 
+ALTER TABLE `people` CHANGE `SCE_membership_expire_date` `SCE_membership_expire_date` VARCHAR(191) NULL DEFAULT NULL; 
+ALTER TABLE `people` CHANGE `SCE_classification_expire_date` `SCE_classification_expire_date` VARCHAR(191) NULL DEFAULT NULL; 
+
 
 ============== 
 # to do

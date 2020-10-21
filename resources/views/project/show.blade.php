@@ -57,7 +57,7 @@
             <span>owoner info</span>
             <span>بيانات المالك</span>
         </h3>
-        <ul class="list-group card-body p-0 py-1">
+        <ul class="list-group card-body p-0 py-1 m-0">
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('nId')}}: </span>
                 {{$project->owner_national_id ?? '?'}}</li>
@@ -68,6 +68,29 @@
                 <span class="font-weight-bold">{{__('mobile')}}: </span>
                 {{$project->person()->first()->mobile ?? '?'}}</li>
         </ul>
+        @if ($project->representative_id)
+        <h3 class="card-header d-flex justify-content-between">
+            <span>representative info</span>
+            <span>بيانات ممثل المالك</span>
+        </h3>
+        <ul class="list-group card-body p-0 py-1 m-0">
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="font-weight-bold">{{__('nId')}}: </span>
+                {{$project->representative_national_id ?? '?'}}</li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="font-weight-bold">{{__('the name')}}: </span>
+                {{$project->representative_name_ar ?? '?'}}</li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="font-weight-bold">{{__('authorization type')}}: </span>
+                {{$project->representative_authorization_type ?? '?'}}</li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="font-weight-bold">{{__('authorization number')}}: </span>
+                {{$project->representative_authorization_no ?? '?'}}</li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="font-weight-bold">{{__('mobile')}}: </span>
+                {{$project->representative_main_mobile_no ?? '?'}}</li>
+        </ul>
+        @endif
         <div class="card-footer d-flex justify-content-end">
             <form action="{{route('project.edit',$project->id)}}" method="get">
                 <input type="hidden" name="form_action" value="shwo_edit_owner_info_form">
@@ -76,6 +99,7 @@
                     <i class="far fa-edit"></i>
                 </button>
             </form>
+
         </div>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}

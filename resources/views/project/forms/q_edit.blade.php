@@ -13,12 +13,23 @@
             @method('PATCH')
             <input type="hidden" name="form_action" value="update_project_main_info">
             <div class="row">
-                @if (auth()->user()->is_admin)
                 <x-input name='project_name_ar' title="">
                     <x-slot name='title'>{{__('project name')}}</x-slot>
+                    @if (!auth()->user()->is_admin)
+                    <x-slot name='is_readonly'>true</x-slot>
+                    @endif
                     <x-slot name='input_value'>{{old('project_name_ar') ?? $project->project_name_ar}}</x-slot>
                 </x-input>
-                @endif
+                <x-input name='project_name_en' title="">
+                    <x-slot name='title'>project_name_en</x-slot>
+                    <x-slot name='onkeypress_fun'>onlyEnglishString(event)</x-slot>
+                    @if (!auth()->user()->is_admin)
+                    <x-slot name='is_readonly'>true</x-slot>
+                    @endif
+                    <x-slot name='input_value'>{{$project->project_name_en}}</x-slot>
+                </x-input>
+            </div>
+            <div class="row">
                 <x-input name='project_arch_hight' title="">
                     <x-slot name='is_required'>true</x-slot>
                     <x-slot name='title'>{{__('required height')}}</x-slot>
@@ -70,7 +81,12 @@
                     <x-slot name='title'>{{__('add notes')}}</x-slot>
                 </x-input>
             </div>
-            <button type="submit" class="btn btn-block btn-info">{{__('save')}}</button>
+            <div class="row">
+                <button type="submit" class="btn btn-block btn-info col">
+                    <i class="fas fa-check"></i> | {{__('save')}}</button>
+                <a href="{{route('project.show', $project)}}" class="btn btn-secondary col">
+                    <i class="fas fa-undo"> | </i>{{__('back')}}</a>
+            </div>
         </form>
     </div>
 </div>

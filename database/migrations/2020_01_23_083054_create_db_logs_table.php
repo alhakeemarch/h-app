@@ -22,6 +22,8 @@ class CreateDbLogsTable extends Migration
             $table->string('request')->nullable();
             $table->string('sql')->nullable();
             $table->string('description')->nullable();
+            $table->longText('old_record')->nullable();
+            $table->longText('new_record')->nullable();
 
 
 

@@ -42,15 +42,15 @@ class ValidHijriDate implements Rule
         $current_hijri_day = (int)$date_arr['hijri_day_no'];
         // -----------------------------------------------------
 
-        if ($input_year > $current_hijri_year || $input_year < $current_hijri_year - 100) {
-            return false;
-        }
-        if ($input_year ==  $current_hijri_year && $input_month > $current_hijri_month) {
-            return false;
-        }
-        if ($input_year ==  $current_hijri_year && $input_month ==  $current_hijri_month && $input_day > $current_hijri_day) {
-            return false;
-        }
+        // if ($input_year > $current_hijri_year || $input_year < $current_hijri_year - 100) {
+        //     return false;
+        // }
+        // if ($input_year ==  $current_hijri_year && $input_month > $current_hijri_month) {
+        //     return false;
+        // }
+        // if ($input_year ==  $current_hijri_year && $input_month ==  $current_hijri_month && $input_day > $current_hijri_day) {
+        //     return false;
+        // }
 
         return true;
     }
