@@ -65,7 +65,11 @@
     <tr>
         <td colspan="5">
             <span class="txt-bold">اسم المفوض:</span>
+            @if ($project-> representative_name_ar)
+            <span>{{$project-> representative_name_ar}}</span>
+            @else
             <span>{{$project->owner_name_ar ?? '..............................................................'}}</span>
+            @endif
         </td>
         <td colspan="2">
             <span class="txt-bold highlight">التوقيع:</span>
@@ -79,9 +83,13 @@
         <td colspan="7">في حالة الوكيل</td>
     </tr>
     <tr>
-        <td colspan="3">رقم الوكالة {{'......................................'}}</td>
-        <td colspan="2">تاريخها: {{'.........................'}}</td>
-        <td colspan="2">مصدرها: {{'.......................'}}</td>
+        <td colspan="3">
+            <span>رقم الوكالة:</span>
+            <span>{{$project-> representative_authorization_no ??'......................................'}}</span>
+        </td>
+        <td colspan="2">تاريخها: {{$project-> representative_authorization_issue_date ??'.........................'}}
+        </td>
+        <td colspan="2">مصدرها: {{$project-> representative_authorization_issue_place ??'.......................'}}</td>
     </tr>
 </table>
 <br><br>

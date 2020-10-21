@@ -39,7 +39,7 @@ $total_1st_payment = 0;
                 </td>
                 <td>
                     <div class="d-flex justify-content-between">
-                        @if (!($project->project_no))
+                        @if (!($project->project_no) || auth()->user()->is_admin)
                         <form action="{{route('contract.destroy',[$contract->id])}}" method="post">
                             @method('DELETE')
                             @csrf

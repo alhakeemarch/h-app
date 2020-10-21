@@ -19,7 +19,13 @@
         <td>
             <span>مكتب م.</span> <span>{{$office_data->name_ar}}</span>
         </td>
-        <td>{{$project->owner_name_ar}}</td>
+        <td>
+            @if ($project-> representative_name_ar)
+            <span>{{$project-> representative_name_ar}}</span>
+            @else
+            <span>{{$project->owner_name_ar ?? ''}}</span>
+            @endif
+        </td>
     </tr>
     <tr>
         <td><span>التوقيع:</span></td>

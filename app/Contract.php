@@ -15,6 +15,16 @@ class Contract extends Model
         'deleted_at'
     ];
     // -----------------------------------------------------------------------------------------------------------------
+    public function get_record_as_str()
+    {
+        $record = '';
+        $obj = json_decode($this, TRUE);
+        foreach ($obj as $a => $b) {
+            $record = $record . ' | ' . $a . '=>' . $b;
+        }
+        return $record;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function project()
     {
         return $this->belongsTo(Project::class);

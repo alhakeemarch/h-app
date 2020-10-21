@@ -244,8 +244,7 @@ class ContractController extends Controller
      */
     public function destroy(Contract $contract)
     {
-        // dd($contract);
-        // $project = Project::findOrFail($contract->project_id);
+        $old_record = $contract->get_record_as_str();
         $contract->delete();
         $db_record_data = [
             'table' => 'contracts',
@@ -253,6 +252,7 @@ class ContractController extends Controller
             'model_id' => $contract->id,
             'action' => 'soft_delete',
             'description' => 'contract withe id = ' . $contract->id . ' deleted',
+            'old_record' => $old_record,
         ];
         DbLogController::add_record($db_record_data);
 
@@ -378,10 +378,6 @@ class ContractController extends Controller
             ];
             return $data;
         } else {
-            // creating a contract
-
-            // $new_contract_no = self::get_new_contract_no();
-
             $new_contract_no = self::get_new_contract_no();
             $data = [
                 'project_id' => $project->id,

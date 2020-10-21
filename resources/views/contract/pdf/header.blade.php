@@ -50,7 +50,7 @@
     <tr>
         <td colspan="4">
             <span>يمثله بالعقد:</span>
-            <span>{{$project->representative_id ?? '...................................................................'}}</span>
+            <span>{{$project->representative_name_ar  ?? '...................................................................'}}</span>
         </td>
     </tr>
 </table><br><br style="line-height: 30%;">
