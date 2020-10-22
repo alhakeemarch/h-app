@@ -34,11 +34,10 @@
         <small class="text-danger"> {{$errors->first('nationality_code')}} </small>
         @enderror
     </div>
-    {{-- --------------------------------------------------------------------------------------------- --}}
     {{-- END: of Sudi ID info --}}
-
+    {{-- --------------------------------------------------------------------------------------------- --}}
     @else
-
+    {{-- --------------------------------------------------------------------------------------------- --}}
     {{-- START: of Non Sudi ID info --}}
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
@@ -52,25 +51,17 @@
     </div>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <div class="col-md">
-        <label for="fname">{{__( 'nationality')}} <span class="small text-danger">({{__('required')}})</span>
-            :</label>
-        <select name="nationality_code" class="form-control @error ('nationality_code') is-invalid @enderror" required>
-            <option selected value="">{{__( 'nationality')}}..</option>
-            @foreach ($countries as $country)
-
+        <x-select_searchable name='nationality_code' title="" :resource=$person :list=$countries>
+            <x-slot name='db_data_field'>code_2chracters</x-slot>
             @if (App::isLocale('ar'))
-            <option value="{{$country->code_2chracters}}" @if(old('nationality_code')==$country->code_2chracters or
-                $person->nationality_code == $country->code_2chracters )selected
-                @endif >
-                {{$country->ar_name}} </option>
+            <x-slot name='show_field'>ar_name</x-slot>
             @else
-            <option value="{{$country->code_2chracters}}" @if(old('nationality_code')==$country->code_2chracters or
-                $person->nationality_code==$country->code_2chracters )selected
-                @endif>
-                {{$country->en_name}}</option>
+            <x-slot name='show_field'>en_name</x-slot>
             @endif
-            @endforeach
-        </select>
+            <x-slot name='resource_field'>nationality_code</x-slot>
+            <x-slot name='title'>nationality</x-slot>
+            <x-slot name='is_required'>true</x-slot>
+        </x-select_searchable>
     </div>{{-- END: of Non Sudi ID info --}}
     {{-- --------------------------------------------------------------------------------------------- --}}
     @endif

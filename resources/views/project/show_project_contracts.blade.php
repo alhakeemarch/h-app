@@ -64,6 +64,14 @@ $total_1st_payment = 0;
                                 <i class="fa fa-print" aria-hidden="true"></i>
                             </button>
                         </form>
+                        <form action="{{route('contract.re_render')}}" method="POST" class="">
+                            @csrf
+                            <input type="hidden" name="contract_id" value="{{$contract->id}}">
+                            <button type="submit" class="btn btn-link align-self-center p-0 m-0 text-secondary">
+                                {{__('refresh')}} |
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </form>
                     </div>
                 </td>
             </tr>

@@ -342,6 +342,47 @@ class ContractController extends Controller
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    public function re_render_contract(Request $request)
+    {
+        $contract = Contract::findOrFail($request->contract_id);
+        $project = Project::findOrFail($contract->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $date_and_time = DateAndTime::get_date_time_arr($contract->date);
+        $pyment_arr = self::get_payment_arr($contract->cost);
+        $contract_type_id = $contract->contract_type_id;
+        $contract_title = $contract->contract_type()->first()->name_ar;
+        $pdf_view = $contract->contract_type()->first()->view_template;
+        // -----------------------------------------------------------------
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
+        $data = [
+            'html' => $html,
+            'last_edit_by_id' => auth()->user()->id,
+            'last_edit_by_name' => auth()->user()->user_name,
+        ];
+        $contract->update($data);
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'contracts',
+            'model' => 'Contract',
+            'model_id' => $contract->id,
+            'action' => 'update',
+            'description' => 'contract re renderd',
+        ];
+        DbLogController::add_record($db_record_data);
+        return redirect()->route('project.show', $project)->with('success', 'contract refreshed successfully - تم تحديث العقد بنجاح');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function design($project, $price, $edit = false)
     {
         // -----------------------------------------------------------------

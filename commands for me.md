@@ -354,6 +354,8 @@ ALTER TABLE `people` CHANGE `ad_hiring_date` `ad_hiring_date` VARCHAR(191) NULL 
 ALTER TABLE `people` CHANGE `SCE_membership_type_id` `SCE_membership_type_id` VARCHAR(191) NULL DEFAULT NULL; 
 ALTER TABLE `people` CHANGE `SCE_membership_expire_date` `SCE_membership_expire_date` VARCHAR(191) NULL DEFAULT NULL; 
 ALTER TABLE `people` CHANGE `SCE_classification_expire_date` `SCE_classification_expire_date` VARCHAR(191) NULL DEFAULT NULL; 
+<!-- ------------------------------------------------------------------------ -->
+ALTER TABLE `contract_types`ADD COLUMN `view_template` VARCHAR(191) NULL AFTER `description`;
 
 
 ============== 

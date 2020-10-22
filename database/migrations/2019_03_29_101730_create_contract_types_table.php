@@ -18,6 +18,7 @@ class CreateContractTypesTable extends Migration
             $table->string('name_ar')->nullable();
             $table->string('name_en')->nullable();
             $table->string('description')->nullable();
+            $table->string('view_template')->nullable();
 
 
 

@@ -16,6 +16,10 @@
         <x-slot name='title'>{{__('description')}}</x-slot>
         <x-slot name='input_value'>{{$contractType->description}}</x-slot>
     </x-input>
+    <x-input name='view_template' title="">
+        <x-slot name='title'>{{__('view_template')}}</x-slot>
+        <x-slot name='input_value'>{{$contractType->view_template}}</x-slot>
+    </x-input>
 </div>
 <div class="row">
     <x-input name='notes' title="">
