@@ -161,6 +161,14 @@
         <div class="card-body p-0 py-1">
             @include('projectDoc.show')
         </div>
+        <hr>
+        <div class="card-header d-flex justify-content-between">
+            <span>quotations list</span>
+            <span>عروض الأسعار</span>
+        </div>
+        <div class="card-body p-0 py-1">
+            @include('quotation.show_project_quotations')
+        </div>
     </div>
     {{-- =================================================================================================================== --}}
     <div class="card col-md-8">

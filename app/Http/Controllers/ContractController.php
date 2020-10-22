@@ -220,7 +220,9 @@ class ContractController extends Controller
             $data =  $this->safety_design($project, $request->cost);
         }
         // -----------------------------------------------------------------
-
+        if ($contract->contract_type_id == 32) {
+            $data =  $this->boq($project, $request->cost);
+        }
         // -----------------------------------------------------------------
         $contract->update($data);
         // -----------------------------------------------------------------

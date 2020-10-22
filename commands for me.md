@@ -296,6 +296,7 @@ php artisan make:model Import -a
 php artisan make:model Export -a
 php artisan make:model Letter -a
 php artisan make:model Lettertype -a
+php artisan make:model Quotation -a
 
 php artisan make:controller UserController -m 'User' -r
 
@@ -356,6 +357,12 @@ ALTER TABLE `people` CHANGE `SCE_membership_expire_date` `SCE_membership_expire_
 ALTER TABLE `people` CHANGE `SCE_classification_expire_date` `SCE_classification_expire_date` VARCHAR(191) NULL DEFAULT NULL; 
 <!-- ------------------------------------------------------------------------ -->
 ALTER TABLE `contract_types`ADD COLUMN `view_template` VARCHAR(191) NULL AFTER `description`;
+<!-- ------------------------------------------------------------------------ -->
+ALTER TABLE `person_titles`ADD COLUMN `suffix_ar` VARCHAR(191) NULL AFTER `description_en`;
+ALTER TABLE `person_titles`ADD COLUMN `suffix_en` VARCHAR(191) NULL AFTER `suffix_ar`;
+<!-- ------------------------------------------------------------------------ -->
+
+
 
 
 ============== 
@@ -558,14 +565,31 @@ DB_CONNECTION=sqlite
 soft delet
 
 
-=====================================
-// --- plot --- //
-
-
 
 =====================================
 Maximum execution time of 30 seconds exceeded
 https://laracasts.com/discuss/channels/general-discussion/maximum-execution-time-of-30-seconds-exceeded?page=1
+=====================================
+
+**LIVEWIRE**
+composer require livewire/livewire
+
+
+</head>
+@section('head')
+    @livewireStyles
+@endsection
+</head>
+
+<body>
+@section('script')
+    @livewireScripts
+@endsection
+</body>
+
+php artisan make:livewire counter
+
+
 =====================================
 
 

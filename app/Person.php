@@ -43,9 +43,10 @@ class Person extends Model
         return $this->hasOne(User::class);
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function person_titles()
+    public function person_title()
     {
-        return $this->hasOne(PersonTitles::class);
+        return $this->belongsTo(PersonTitles::class, 'person_title_id');
+        // return $this->hasOne(PersonTitles::class, 'person_title_id');
     }
     // -----------------------------------------------------------------------------------------------------------------
 }

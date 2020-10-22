@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePersonTitlesTable extends Migration
+class CreateQuotationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,20 @@ class CreatePersonTitlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('person_titles', function (Blueprint $table) {
+        Schema::create('quotations', function (Blueprint $table) {
             $table->id();
-            $table->string('name_ar')->nullable();
-            $table->string('short_ar')->nullable();
-            $table->string('name_en')->nullable();
-            $table->string('short_en')->nullable();
-            $table->string('description_ar')->nullable();
-            $table->string('description_en')->nullable();
-            $table->string('suffix_ar')->nullable();
-            $table->string('suffix_en')->nullable();
+            $table->foreignId('project_id')->references('id')->on('projects');
+            $table->string('address_to')->nullable();
+            $table->string('date')->nullable();
+
+            $table->longText('text')->nullable();
+            $table->longText('html')->nullable();
 
 
             // =============================
             // -----------------------------
             $table->longText('notes')->nullable();
             $table->longText('private_notes')->nullable();
-            $table->longText('created_at_note')->nullable();
             // -----------------------------
             $table->foreignId('created_by_id')->references('id')->on('users');
             $table->string('created_by_name')->references('user_name')->on('users');
@@ -48,6 +45,6 @@ class CreatePersonTitlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('person_titles');
+        Schema::dropIfExists('quotations');
     }
 }

@@ -23,7 +23,6 @@ class CreateProjectStatusesTable extends Migration
             // -----------------------------
             $table->longText('notes')->nullable();
             $table->longText('private_notes')->nullable();
-            $table->longText('created_at_note')->nullable();
             // -----------------------------
             $table->foreignId('created_by_id')->references('id')->on('users');
             $table->string('created_by_name')->references('user_name')->on('users');

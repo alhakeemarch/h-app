@@ -426,6 +426,7 @@ Route::resources([
     'project' => 'ProjectController',
     'projectDoc' => 'ProjectDocController',
     'task' => 'TaskController',
+    'quotation' => 'QuotationController',
     'contract' => 'ContractController',
     'contractfield' => 'ContractfieldController',
 
