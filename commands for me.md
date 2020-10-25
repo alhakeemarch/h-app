@@ -361,6 +361,9 @@ ALTER TABLE `contract_types`ADD COLUMN `view_template` VARCHAR(191) NULL AFTER `
 ALTER TABLE `person_titles`ADD COLUMN `suffix_ar` VARCHAR(191) NULL AFTER `description_en`;
 ALTER TABLE `person_titles`ADD COLUMN `suffix_en` VARCHAR(191) NULL AFTER `suffix_ar`;
 <!-- ------------------------------------------------------------------------ -->
+ALTER TABLE `person_titles` ADD `prefix_ar` VARCHAR(191) NULL AFTER `id`; 
+ALTER TABLE `person_titles` ADD `prefix_en` VARCHAR(191) NULL AFTER `prefix_ar`; 
+<!-- ------------------------------------------------------------------------ -->
 
 
 
@@ -713,10 +716,10 @@ required title -----> to add
 ================================
         <x-search_input name='asd' />
 ================================
-    <x-select_searchable name='municipality_branch_id' title="" :resource=$project :list=$municipality_branchs>
+    <x-select_searchable name='is_address_to_before_owner' title="before owner" :resource=$quotation :list=$municipality_branchs>
         <x-slot name='db_data_field'>id</x-slot>
         <x-slot name='show_field'>ar_name</x-slot>
-        <x-slot name='resource_field'>municipality_branch_id</x-slot>
+        <x-slot name='resource_field'>is_address_to_before_owner</x-slot>
         <x-slot name='title'>cool tital</x-slot>
         <x-slot name='is_required'>true</x-slot>
         <x-slot name='is_readonly'>true</x-slot>

@@ -16,8 +16,12 @@ class CreateQuotationsTable extends Migration
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->references('id')->on('projects');
-            $table->string('address_to')->nullable();
-            $table->string('date')->nullable();
+
+            $table->string('address_to_title_id')->nullable()->references('id')->on('person_titles');
+            $table->string('address_to_name')->nullable();
+            $table->string('is_address_to_before_owner')->nullable();
+
+            $table->string('quotation_date')->nullable();
 
             $table->longText('text')->nullable();
             $table->longText('html')->nullable();

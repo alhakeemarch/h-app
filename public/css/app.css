@@ -798,8 +798,9 @@ input[type=number]::-webkit-outer-spin-button {
 .card-header {
   font-weight: bold;
   margin-top: 0.5rem;
-  border-bottom: #465573 solid 2px !important;
-  padding: 1rem;
+  border-bottom: #335589 solid 2px !important;
+  padding-top: 1rem;
+  padding-bottom: 0.2rem;
 }
 
 .card-footer {
@@ -817,7 +818,6 @@ hr {
 }
 
 input [type=text],
-select,
 textarea {
   min-height: 3rem !important;
   border: none;

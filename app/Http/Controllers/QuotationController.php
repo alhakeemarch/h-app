@@ -24,13 +24,14 @@ class QuotationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, Project $project)
+    public function create(Request $request, Project $project, Quotation $quotation)
     {
         $project = Project::findOrFail($request->project_id);
         $person_titles = PersonTitles::all();
         return view('quotation.create')->with([
             'project' => $project,
             'person_titles' => $person_titles,
+            'quotation' => $quotation,
         ]);
     }
 

@@ -19,8 +19,9 @@
 .card-header {
     font-weight: bold;
     margin-top: 0.5rem;
-    border-bottom: #465573 solid 2px !important;
-    padding: 1rem;
+    border-bottom: $active_dark solid 2px !important;
+    padding-top: 1rem;
+    padding-bottom: 0.2rem;
 }
 .card-footer {
     margin: 0;
@@ -39,7 +40,7 @@ hr {
 // ---------------------------------------------------------------------------------------------------
 
 input [type="text"],
-select,
+// select,
 textarea {
     min-height: 3rem !important;
     border: none;
