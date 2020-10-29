@@ -2,7 +2,7 @@
     "workbench.colorTheme": "Material Theme Darker High Contrast",
     "workbench.iconTheme": "material-icon-theme",
     "editor.fontSize": 16,
-    "editor.minimap.enabled": false,
+    "editor.minimap.enabled": true,
     "blade.format.enable": true,
     "editor.wordWrap": "on",
     "editor.formatOnSave": true,

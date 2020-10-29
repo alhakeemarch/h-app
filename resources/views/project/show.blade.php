@@ -161,14 +161,14 @@
         <div class="card-body p-0 py-1">
             @include('projectDoc.show')
         </div>
-        <hr>
+        {{-- <hr>
         <div class="card-header d-flex justify-content-between">
             <span>quotations list</span>
             <span>عروض الأسعار</span>
         </div>
         <div class="card-body p-0 py-1">
             @include('quotation.show_project_quotations')
-        </div>
+        </div> --}}
     </div>
     {{-- =================================================================================================================== --}}
     <div class="card col-md-8">
@@ -186,18 +186,6 @@
 
     </div>
 </div>
-
-{{-- <div class="row container-fluid">
-    <div class="card-body p-0 py-1">
-        <a href="#" class="btn btn-link">add project teem member</a>
-        <a href="#" class="btn btn-link">add strucutral information</a>
-        <a href="#" class="btn btn-link">add plot information</a>
-        <a href="#" class="btn btn-link">give a number</a>
-        <a href="#" class="btn btn-link">give change a status</a>
-    </div>
-</div> --}}
-
-
 
 
 

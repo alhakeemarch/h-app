@@ -368,6 +368,7 @@ Route::group(['prefix' => 'project'], function () {
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'projectDoc'], function () {
     Route::any('search', 'ProjectDocController@search')->name('projectDoc.search');
+    Route::any('quotation', 'ProjectDocController@quotation')->name('projectDoc.quotation');
     Route::any('tafweed', 'ProjectDocController@tafweed')->name('projectDoc.tafweed');
     Route::any('tafweed_masaha', 'ProjectDocController@tafweed_masaha')->name('projectDoc.tafweed_masaha');
     Route::any('t_makhater', 'ProjectDocController@t_makhater')->name('projectDoc.t_makhater');

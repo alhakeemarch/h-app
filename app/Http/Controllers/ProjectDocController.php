@@ -110,6 +110,43 @@ class ProjectDocController extends Controller
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    public function quotation(Request $request)
+    {
+        // data needed in document
+        $project = Project::findOrFail($request->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_team($project);
+        $project_contracts = ContractController::get_project_contracts_arr($project);
+        return $project_contracts;
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'project_tame' => $project_tame,
+            'project_contracts' => $project_contracts,
+        ];
+        // creating pdf 
+        $newPDF = new TCPDF();
+        // Content
+        $doc_name = 'quotation';
+        $pdf_view = 'projectDoc.quotation';
+        // -----------------------------------------------------------------
+        // setting a header and foooter 
+        $newPDF = $this->set_hakeem_header_footer($newPDF);
+        // setting main sittings
+        $newPDF = $this->set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle('عرض سعر');
+        $newPDF::SetSubject('عرض سعر');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'I');
+        exit;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function tafweed(Request $request)
     {
         // data needed in document
@@ -534,6 +571,7 @@ class ProjectDocController extends Controller
     public static function get_project_docs()
     {
         return [
+            'عرض سعر' => 'projectDoc.quotation',
             'تفويض' => 'projectDoc.tafweed',
             'تفويض المساحة' => 'projectDoc.tafweed_masaha',
             'تعهد المخاطر' => 'projectDoc.t_makhater',

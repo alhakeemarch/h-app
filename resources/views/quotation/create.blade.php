@@ -77,6 +77,24 @@
             </div>
         </div>
         {{-- -------------------------------------------------------------------------------------------------------------------------------------- --}}
+        <div class="row card-header d-flex justify-content-between">
+            <span>serveces</span>
+            <span>الخدمات</span>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Example select</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option>عقد تصميم</option>
+                    <option>عقد اشراف</option>
+                    <option>عقد قرار مساحي</option>
+                    <option>عقد محضر تثبيت</option>
+                    <option>عقد دفاع مدني</option>
+                </select>
+            </div>
+            <input class="form-control" type="text" name="text" placeholder="القيمة">
+        </div>
+        {{-- -------------------------------------------------------------------------------------------------------------------------------------- --}}
         <hr>
         <button type="submit" class="btn btn-info btn-block">save</button>
     </form>

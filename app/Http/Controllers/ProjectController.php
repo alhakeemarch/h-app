@@ -158,7 +158,6 @@ class ProjectController extends Controller
     public function show(Project $project, Request $request)
     {
         $project_contracts = ContractController::get_project_contracts($project);
-        // return $project_contracts;
         $project_team = $this->get_project_team($project);
         $contract = new Contract();
         $contract_types = ContractType::all();

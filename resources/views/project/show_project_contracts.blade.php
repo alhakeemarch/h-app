@@ -13,6 +13,7 @@ $total_1st_payment = 0;
                 <th>القيمة</th>
                 <th>الضريبة</th>
                 <th>الإجمالي</th>
+                <th>عرض السعر</th>
                 <th>إجراءات</th>
             </thead>
             @foreach ($project_contracts as $contract)
@@ -35,6 +36,26 @@ $total_1st_payment = 0;
                 <td>
                     <span class="align-self-center">
                         {{$contract->price_withe_vat}}
+                    </span>
+                </td>
+                <td>
+                    <form action="{{route('contract.update',[$contract->id])}}" method="post">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="add_or_remove_form_quotation" value="1">
+                        <button type="submit" class="btn btn-link">
+                            @if ($contract->is_in_quotation)
+                            <span class="text-success">
+                                <i class="fas fa-toggle-on" title="اخفاء"></i>
+                                {{-- <i class="fas fa-check"></i> --}}
+                                @else
+                                <span class=" text-muted">
+                                    <i class="fas fa-toggle-off" title="اظهار"></i>
+                                    {{-- <i class="fas fa-times"></i> --}}
+                                </span>
+                                @endif
+                        </button>
+                    </form>
                     </span>
                 </td>
                 <td>

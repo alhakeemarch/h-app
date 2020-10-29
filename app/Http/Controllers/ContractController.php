@@ -181,6 +181,11 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
+        if ($request->add_or_remove_form_quotation) {
+            $contract->is_in_quotation = !($contract->is_in_quotation);
+            $contract->save();
+            return redirect()->back();
+        }
         $request->validate([
             'cost' => 'required|numeric',
         ]);
@@ -267,6 +272,17 @@ class ContractController extends Controller
             'project_id' => $project->id,
         ])->get()->sortBy('contract_type_id');
         return  $found_contract;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function get_project_contracts_arr($project)
+    {
+        $project_contracts = self::get_project_contracts($project);
+        // return $project_contracts;
+        $project_contracts_arr = [];
+        foreach ($project_contracts as $contract) {
+            $project_contracts_arr['id'] = $contract->id;
+        }
+        return $project_contracts_arr;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_new_contract_no()
