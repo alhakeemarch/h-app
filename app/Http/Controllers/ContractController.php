@@ -313,6 +313,14 @@ class ContractController extends Controller
             'عقد تصميم سلامة',
             'عقد حصر كميات',
         ];
+        // // to remove contract that already added from the list
+        // foreach ($quick_form_contracts as $key => $value) {
+        //     foreach ($project_contracts as $contract) {
+        //         if ($contract->contract_type()->first()->name_ar == $value) {
+        //             unset($quick_form_contracts[$key]);
+        //         }
+        //     }
+        // }
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function contract_to_pdf(Request $request, $contract = null)

@@ -24,3 +24,37 @@
     @endif
     @endforeach
 </ul>
+
+{{-- ----------------------------------------------------------------------------------------------------------------------------------------- --}}
+
+<form action="{{route('contract.store')}}" method="POST" class=" form-group m-0 d-flex jumbotron p-3">
+    @csrf
+    <input type="hidden" name="form_action" value="update_project_team_member">
+    <div class="col">
+        <label class="my-1">{{__('contract')}}</label>
+        <select name="position" class="form-control">
+            <option disabled selected>position..</option>
+            @foreach ($contract_types as $contract_type)
+            @if (! in_array( $contract_type->name_ar , $quick_form_contracts))
+            <option value="{{$contract_type->id}}">{{$contract_type->name_ar}}</option>
+            @endif
+            @endforeach
+        </select>
+    </div>
+    <div class="col">
+        <x-input name='cost' title="">
+            <x-slot name='title'>{{__('price')}}</x-slot>
+            <x-slot name='onkeypress_fun'>onlyNumber(event)</x-slot>
+            <x-slot name='is_required'>true</x-slot>
+            <x-slot name='input_min'>3</x-slot>
+            <x-slot name='input_max'>7</x-slot>
+        </x-input>
+    </div>
+    <button type="submit" class="btn btn-link m-0 align-self-end">{{__('add')}} |
+        <i class="far fa-plus-square"></i>
+    </button>
+</form>
+
+
+
+{{-- ----------------------------------------------------------------------------------------------------------------------------------------- --}}
