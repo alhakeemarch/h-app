@@ -24,7 +24,8 @@
     </tr>
 </table><br><br style="line-height: 50%;">
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
-@if (($quotation->id) && ($quotation->is_address_to_before_owner) )
+@if (isset($quotation->id))
+@if ($quotation->is_address_to_before_owner)
 <table>
     <tr>
         <td colspan="2">
@@ -36,6 +37,7 @@
         </td>
     </tr>
 </table>
+@endif
 @endif
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 <table>
@@ -50,7 +52,8 @@
     </tr>
 </table>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
-@if (($quotation->id) && ($quotation->address_to_name) && (! $quotation->is_address_to_before_owner))
+@if (isset($quotation->id) )
+@if (($quotation->address_to_name) && (! $quotation->is_address_to_before_owner))
 <table>
     <tr>
         <td colspan="2">
@@ -62,6 +65,7 @@
         </td>
     </tr>
 </table>
+@endif
 @endif
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 <br><br style="line-height: 50%;">
