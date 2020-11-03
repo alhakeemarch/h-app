@@ -32,6 +32,14 @@
         text-align: center;
     }
 
+    .text-small {
+        font-size: 90%;
+    }
+
+    .aljazeera-font {
+        font-family: aljazeera;
+    }
+
     .highlight {
         background-color: yellow;
         max-width: fit-content;

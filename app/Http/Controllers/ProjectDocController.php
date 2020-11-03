@@ -7,6 +7,7 @@ use App\Person;
 use App\Plot;
 use App\Project;
 use App\ProjectDoc;
+use App\Quotation;
 use Carbon\Carbon;
 use PDF as TCPDF;
 // use Elibyy\TCPDF\Facades\TCPdf as TCPDF;
@@ -114,16 +115,25 @@ class ProjectDocController extends Controller
     {
         // data needed in document
         $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_team($project);
-        $project_contracts = ContractController::get_project_contracts_arr($project);
-        return $project_contracts;
+        $quotation = new Quotation;
+        $quotation = $quotation->where('project_id', $project->id)->first();
+        $date_and_time = ($quotation->id) ? DateAndTime::get_date_time_arr($quotation->quotation_date) : DateAndTime::get_date_time_arr();
+        $project_contracts = ContractController::get_project_contracts_for_quotation($project);
+        $total_arr = $this->get_total_array($project);
+        if ($project_contracts->count() < 1) {
+            return redirect()->back()->withErrors(['contracts must be created to appear in quotation', 'يجب انشاء العقود لتظهر قيمها في عرض السعر']);
+        }
         $data = [
             'project' => $project,
-            'office_data' => $office_data,
-            'project_tame' => $project_tame,
             'project_contracts' => $project_contracts,
+            'total_arr' => $total_arr,
+            'date_and_time' => $date_and_time,
+            'quotation' => $quotation,
         ];
+
+        if (!$quotation->id) {
+            return QuotationController::create_new($data);
+        }
         // creating pdf 
         $newPDF = new TCPDF();
         // Content
@@ -143,8 +153,30 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'I');
+        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         exit;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_total_array($project)
+    {
+        $project_contracts = ContractController::get_project_contracts_for_quotation($project);
+        $total_arr = [
+            'total_cost' => 0,
+            'total_vat' => 0,
+            'total_price_withe_vat' => 0,
+            'total_price_withe_vat_text' => '',
+            'vat_percentage' => 0,
+        ];
+        foreach ($project_contracts as $contract) {
+            $total_arr['total_cost'] += $contract->cost;
+            $total_arr['total_vat'] += $contract->vat_value;
+            $total_arr['total_price_withe_vat'] += $contract->price_withe_vat;
+            $total_arr['vat_percentage'] = (int) $contract->vat_percentage;
+        }
+        $ar_num  = new \App\I18N_Arabic_Numbers();
+        $total_arr['total_price_withe_vat_text'] = $ar_num->money2str($total_arr['total_price_withe_vat'], 'SAR');
+
+        return $total_arr;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function tafweed(Request $request)

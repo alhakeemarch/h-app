@@ -271,6 +271,16 @@ class ContractController extends Controller
         $found_contract = Contract::where([
             'project_id' => $project->id,
         ])->get()->sortBy('contract_type_id');
+
+        return  $found_contract;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function get_project_contracts_for_quotation($project)
+    {
+        $found_contract = Contract::where([
+            'project_id' => $project->id,
+            'is_in_quotation' => 1,
+        ])->get()->sortBy('contract_type_id');
         return  $found_contract;
     }
     // -----------------------------------------------------------------------------------------------------------------

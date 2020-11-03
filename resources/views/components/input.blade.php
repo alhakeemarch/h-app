@@ -77,7 +77,7 @@ $rows = 3;
 <div class="col-md @if ($is_hidden) d-none @endif">
     <label for="{{$name}}" class="my-1">{{$title}}
         @if ($is_required)
-        <span class="small text-danger">({{__('required')}})</span>
+        <small class="small text-danger">({{__('required')}})</small>
         @else
         <small class="small text-muted">({{__('optional')}})</small>
         @endif

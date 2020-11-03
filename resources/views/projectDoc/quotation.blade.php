@@ -1,120 +1,173 @@
 <x-pdf_print_style />
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
+{{-- {{dd($date_and_time)}} --}}
+<br> <br style="line-height: 30%;">
+<table class="text-small aljazeera-font">
+    <tr>
+        <td colspan="6"></td>
+        <td colspan="2">
+            <span>التاريخ:</span>
+            <span>{{$date_and_time['h_date_ar']}}</span>
+            <span>هـ</span><br>
+            <span>الموافق:</span>
+            <span>{{$date_and_time['g_date_ar']}}</span>
+            <span>مـ</span>
+        </td>
+    </tr>
+</table>
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
 <table>
     <tr>
         <td class="main-title txt-center">
             عرض سعر
         </td>
     </tr>
-</table>
-
-<table>
-    <span>التاريخ:</span>
-    <span>{{(Carbon\Carbon::now())->toDateString()}}</span>
-    <span>مـ</span>
-</table>
-<p><span>أفوض أنا</span>
-    <span>{{$project->owner_name_ar ?? '....................................................'}}</span>
-    <span>رقم السجل المدني</span>
-    <span>({{$project->owner_national_id ?? '..........................'}})</span>
-    <span>،جوال رقم</span>
-    <span>({{$project->person->mobile ?? '..........................'}})</span>
-    <span>وأنا بأتم الأوصاف المعتبرة شرعاً، وبصفتي: مالك العقار بموجب بالصك الشرعي رقم</span>
-    <span>({{$project->plot->deed_no ?? '..........................'}})</span>
-    <span>بتاريخ</span>
-    <span>{{$project->plot->deed_date ?? '..........................'}}</span>
-    <span>هـ الصادر من كتابة العدل الواقع بمنطقة</span>
-    <span>{{$project->plot()->first()->district()->first()->ar_name ?? '..........................'}}</span>
-    <span>حي:</span>
-    <span>{{$project->plot()->first()->neighbor()->first()->ar_name ?? '..........................'}}</span>
-    <span>بأنني قد فوضت مكتب المهندس عبد الرزاق حكيم للاستشارات الهندسية (تصميم وإعداد المخططات الهندسية
-        وكافةالأعمال المساحية ومتابعة إنهاء إجراءاتها الفنية والإدارية لدى الأمانة وجهات الاختصاص كالدفاع المدني
-        وشركة الكهرباء وهيئة السياحة ووزارة الإسكان ... إلخ وذلك حتى استخراج رخصة الإنشاء واستلامها، واستلام
-        المخططات المصادق عليها من
-        الأمانة إن وجد).</span>
-</p>
-
-<p>أخرى:
-    (.........................................................................................................................)
-</p>
-
+</table><br><br style="line-height: 50%;">
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
+@if (($quotation->id) && ($quotation->is_address_to_before_owner) )
 <table>
     <tr>
-        <td class="title"> وأتعهد بما يلي:</td>
-    </tr>
-</table>
-<ol>
-    <li>
-        في حال إلغاء هذا التفويض إبلاغ الأمانة والمكتب المفوض خطياً بذلك، وأقدم للأمانة ما يفيد إبراء ذمة من
-        المكتب
-        المفوض.
-    </li>
-    <li>
-        لا يحق لي أو لأحد من طرفي استلام رخصة الإنشاء أو المخططات الابتدائية أو النهائية أو الرفوعات المساحية أو
-        بيانات الموقع أو قرارات الذرعة أو أي وثائق تتعلق بمعاملتي موضوع هذا
-        التفويض من الأمانة وأن المكتب وحده المسئول عن استلام هذه الوثائق والمستندات والمخططات.
-    </li>
-</ol>
-<div class="txt-center">وعليه جرى التوقيع</div>
-
-<table>
-    <tr>
-        <td colspan="7">
-            <hr>
+        <td colspan="2">
+            {{$quotation->address_to_title()->first()->name_ar}}:
+            {{$quotation->address_to_name}}
+        </td>
+        <td>
+            {{$quotation->address_to_title()->first()->suffix_ar}}
         </td>
     </tr>
+</table>
+@endif
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
+<table>
     <tr>
-        <td colspan="5">
-            <span class="txt-bold">اسم المفوض:</span>
-            @if ($project-> representative_name_ar)
-            <span>{{$project-> representative_name_ar}}</span>
+        <td colspan="2">
+            {{$project->person()->first()->person_title()->first()->name_ar}}:
+            {{$project->person()->first()->get_full_name_ar()}}
+        </td>
+        <td>
+            {{$project->person()->first()->person_title()->first()->suffix_ar}}
+        </td>
+    </tr>
+</table>
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
+@if (($quotation->id) && ($quotation->address_to_name) && (! $quotation->is_address_to_before_owner))
+<table>
+    <tr>
+        <td colspan="2">
+            {{$quotation->address_to_title()->first()->name_ar}}:
+            {{$quotation->address_to_name}}
+        </td>
+        <td>
+            {{$quotation->address_to_title()->first()->suffix_ar}}
+        </td>
+    </tr>
+</table>
+@endif
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
+<br><br style="line-height: 50%;">
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
+<table>
+    <tr>
+        <td class="aljazeera-font txt-center">
+            السلام عليكم ورحمة الله وبركاته
+        </td>
+    </tr>
+</table><br><br style="line-height: 50%;">
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
+<table>
+    <tr>
+        <td>
+            <span>بالإشارة إلى المشروع الخاص بكم الواقع في</span>
+            @if ($project->plot->district_id)
+            <span>{{$project->plot()->first()->district()->first()->ar_name}}</span>
             @else
-            <span>{{$project->owner_name_ar ?? '..............................................................'}}</span>
+            <span>المدينة المنورة</span>
             @endif
-        </td>
-        <td colspan="2">
-            <span class="txt-bold highlight">التوقيع:</span>
-            <span> ....................... </span>
+            @if ($project->plot->neighbor_id)
+            <span>حي</span>
+            <span>{{$project->plot()->first()->neighbor()->first()->ar_name}}</span>
+            @endif
+            @if ($project->plot->plan_id)
+            <span>بالمخطط رقم</span>
+            <span>{{$project->plot()->first()->plan()->first()->plan_no}}</span>
+            @endif
+            <span>بالقطعة رقم</span>
+            <span>{{$project->plot->plot_no}}</span>
+            <span>بموجب الصك رقم</span>
+            <span>{{$project->plot->deed_no}}</span>
+            <span>وتاريخ</span>
+            <span>{{$project->plot->deed_date}}</span>.
         </td>
     </tr>
-</table>
-<br><br>
+    <tr>
+        <td>
+            <span>وبناء على رغبتكم في خدماتنا الهندسية فإنه يشرفنا أن نتقدم لكم بعرض سعر طبقاً للجدول التالي:</span>
+        </td>
+    </tr>
+</table><br><br>
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
+<table class="tbl-bordered txt-center">
+    <tr>
+        <th>#</th>
+        <th colspan="6">الخدمة</th>
+        <th colspan="2">القيمة</th>
+        <th colspan="2">VAT({{$total_arr['vat_percentage']}}%)</th>
+        <th colspan="2">الإجمالي</th>
+    </tr>
+    @php $n=1; @endphp
+    @foreach ($project_contracts as $contract)
+    <tr>
+        <td>{{$n}}</td>
+        <td colspan="6">{{$contract->contract_type->name_ar}}</td>
+        <td colspan="2">{{$contract->cost}}</td>
+        <td colspan="2">{{$contract->vat_value}}</td>
+        <td colspan="2">{{$contract->price_withe_vat}}</td>
+    </tr>
+    @php $n++; @endphp
+    @endforeach
+    <tr style="background-color:#fffbee; opacity: 0.2;">
+        <td colspan="7">الإجمالي</td>
+        <td colspan="2">{{$total_arr['total_cost']}}</td>
+        <td colspan="2">{{$total_arr['total_vat']}}</td>
+        <td colspan="2">{{$total_arr['total_price_withe_vat']}}</td>
+    </tr>
+    <tr>
+        <th colspan="13" class="" style="text-align: justify;">
+            <span>الإجمالي شامل ضريبة القيمة المضافة وقدره</span>
+            <span>({{$total_arr['total_price_withe_vat_text']}})</span>
+            <span>فقط لا غير.</span>
+        </th>
+    </tr>
+</table> <br><br>
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
 <table>
     <tr>
-        <td colspan="7">في حالة الوكيل</td>
+        <td class="aljazeera-font">ملاحظات:</td>
     </tr>
     <tr>
-        <td colspan="3">
-            <span>رقم الوكالة:</span>
-            <span>{{$project-> representative_authorization_no ??'......................................'}}</span>
+        <td>
+            <ul>
+                <li>يجب توقيع عقود للخدمات المتفق عليها ولا يعتد بعرض السعر.</li>
+                <li>مدة هذا العرض عشرة أيام من تاريخه.</li>
+                <li>لا يشمل العرض أي رسوم تدفع لأي جهة حكومية أو خاصة.</li>
+                <li>الدفعات والإشتراطات طبقاً للعقود.</li>
+            </ul>
         </td>
-        <td colspan="2">تاريخها: {{$project-> representative_authorization_issue_date ??'.........................'}}
-        </td>
-        <td colspan="2">مصدرها: {{$project-> representative_authorization_issue_place ??'.......................'}}</td>
     </tr>
-</table>
-<br><br>
+</table><br><br>
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
+<table class="aljazeera-font txt-center">
+    <tr>
+        <td>
+            آملين أن ينال عرضنا على رضائكم وإستحسنانكم وتفضلوا بقبول فائق التحية والتقدير
+        </td>
+    </tr>
+</table><br><br><br>
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
 <table>
     <tr>
-        <td colspan="7">
-            أقر أنا الموضح اسمي ادناه بأن الشخص المفوض قام بالتوقيع أمامي :
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3"> <span class="txt-bold">الاسم: م.</span>
-            <span>{{$project_tame['project_manager'] ?? '...................................' }}</span>
-        </td>
-        <td colspan="2">
-            <span class="txt-bold">الصفة:</span>
-            <span>{{$project->project_manager->job_title ?? '......................'}}</span></td>
-        <td colspan="2"><span class="txt-bold">التوقيع:</span>
-            <span> ...................... </span>
-        </td>
+        <td></td>
+        <td class="office-signature">م. عبدالرزاق حكيم</td>
     </tr>
 </table>
-<div></div>
-<table>
-    <tr>
-        <td colspan="3"></td>
-        <td>الختم المعتمد للمكتب</td>
-    </tr>
-</table>
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
