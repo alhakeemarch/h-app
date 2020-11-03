@@ -132,7 +132,7 @@ class ProjectDocController extends Controller
         ];
 
         if (!(isset($quotation->id))) {
-            return QuotationController::create_new($data);
+            QuotationController::create_new($data);
         }
         // creating pdf 
         $newPDF = new TCPDF();
