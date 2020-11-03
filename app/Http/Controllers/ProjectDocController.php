@@ -117,7 +117,7 @@ class ProjectDocController extends Controller
         $project = Project::findOrFail($request->project_id);
         $quotation = new Quotation;
         $quotation = $quotation->where('project_id', $project->id)->first();
-        $date_and_time = ($quotation->id) ? DateAndTime::get_date_time_arr($quotation->quotation_date) : DateAndTime::get_date_time_arr();
+        $date_and_time = (isset($quotation->id)) ? DateAndTime::get_date_time_arr($quotation->quotation_date) : DateAndTime::get_date_time_arr();
         $project_contracts = ContractController::get_project_contracts_for_quotation($project);
         $total_arr = $this->get_total_array($project);
         if ($project_contracts->count() < 1) {
@@ -131,7 +131,7 @@ class ProjectDocController extends Controller
             'quotation' => $quotation,
         ];
 
-        if (!$quotation->id) {
+        if (!(isset($quotation->id))) {
             return QuotationController::create_new($data);
         }
         // creating pdf 
