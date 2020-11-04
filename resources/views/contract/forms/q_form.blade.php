@@ -1,6 +1,6 @@
 <ul class="list-group my-2">
-    @foreach ($contract_types as $contract_type)
-    @if (in_array( $contract_type->name_ar , $quick_form_contracts))
+    @foreach ($quick_form_contracts as $contract_type)
+    @if (!(in_array( $contract_type->id , $project_contracts_type_id)))
     <li class="list-group-item">
         <form action="{{route('contract.store')}}" method="post"
             class="m-0 row text-center d-flex justify-content-between">
@@ -29,13 +29,14 @@
 
 <form action="{{route('contract.store')}}" method="POST" class=" form-group m-0 d-flex jumbotron p-3">
     @csrf
-    <input type="hidden" name="form_action" value="update_project_team_member">
+    <input type="hidden" name="form_action" value="add_contract">
+    <input type="hidden" name="project_id" value="{{$project->id}}">
     <div class="col">
         <label class="my-1">{{__('contract')}}</label>
-        <select name="position" class="form-control">
-            <option disabled selected>position..</option>
-            @foreach ($contract_types as $contract_type)
-            @if (! in_array( $contract_type->name_ar , $quick_form_contracts))
+        <select name="contract_type_id" class="form-control">
+            <option disabled selected>pick a contract..</option>
+            @foreach ($list_form_contracts as $contract_type)
+            @if (!(in_array( $contract_type->id , $project_contracts_type_id)))
             <option value="{{$contract_type->id}}">{{$contract_type->name_ar}}</option>
             @endif
             @endforeach

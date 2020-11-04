@@ -437,7 +437,7 @@ class FileAndFolderController extends Controller
             $pathe = $this->e_archive_projects_pathe;
             $project_dir =  $pathe . $request->project_name . '\\';
         }
-        $date_time = date_format(now(), 'yy-m-d_H-i');
+        $date_time = date_format(now(), 'Ymd_His');
         $employment_no = $request->employment_no;
         foreach ($request->file_input as $file) {
             array_push($file_extensions, $file->getClientOriginalExtension());

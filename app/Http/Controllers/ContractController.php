@@ -71,66 +71,72 @@ class ContractController extends Controller
             'project_id' => $project->id,
             'contract_type_id' => $request->contract_type_id
         ])->first();
-        // dd($found_contract);
         if ($found_contract) {
             return redirect()->back()->withErrors([
                 'this contract is allredy created',
                 'هذا العقد تم عمله مسبقاً',
             ]);
         }
-        // -----------------------------------------------------------------
-        if ($request->contract_type_id == 1) {
-            $contract_data = $this->design($project, $request->cost);
-        }
-        // -----------------------------------------------------------------
-        if ($request->contract_type_id == 2) {
-            $contract_data =  $this->qarar_masahe($project, $request->cost);
-        }
-        // -----------------------------------------------------------------
-        if ($request->contract_type_id == 3) {
-            $contract_data =  $this->mahder_tathbeet($project, $request->cost);
-        }
-        // -----------------------------------------------------------------
-        if ($request->contract_type_id == 4) {
-            $found_contract = Contract::where([
-                'project_id' => $project->id,
-                'contract_type_id' => 5,
-            ])->first();
-            if ($found_contract) {
+        switch ($request->contract_type_id) {
+            case 1:
+                $contract_data = $this->design($project, $request->cost);
+                break;
+            case 2:
+                $contract_data =  $this->qarar_masahe($project, $request->cost);
+                break;
+            case 3:
+                $contract_data =  $this->mahder_tathbeet($project, $request->cost);
+                break;
+            case 4:
+                $found_contract = Contract::where([
+                    'project_id' => $project->id,
+                    'contract_type_id' => 5,
+                ])->first();
+                if ($found_contract) {
+                    return redirect()->back()->withErrors([
+                        'there is a full supervision contract for this project',
+                        'يوجد عقد اشراف كامل لهذا المشروع',
+                    ]);
+                }
+                $contract_data = $this->supervision($project, $request->cost);
+                break;
+            case 5:
+                $found_contract = Contract::where([
+                    'project_id' => $project->id,
+                    'contract_type_id' => 4,
+                ])->first();
+                if ($found_contract) {
+                    return redirect()->back()->withErrors([
+                        'there is a supervision contract for this project',
+                        'يوجد عقد اشراف عادي لهذا المشروع',
+                    ]);
+                }
+                $contract_data =  $this->supervision_full($project, $request->cost);
+                break;
+            case 6:
+                $contract_data =  $this->elevation_3d($project, $request->cost);
+                break;
+            case 7:
+                $contract_data =  $this->safety_design($project, $request->cost);
+                break;
+            case 8:
+                $contract_data =  $this->safety_design_modon($project, $request->cost);
+                break;
+            case 9:
+                $contract_data =  $this->safety_supervision($project, $request->cost);
+                break;
+            case 32:
+                $contract_data =  $this->boq($project, $request->cost);
+                break;
+            default:
                 return redirect()->back()->withErrors([
-                    'there is a full supervision contract for this project',
-                    'يوجد عقد اشراف كامل لهذا المشروع',
+                    'cannot add contract. contact system admin',
+                    'لم يتم اضافة العقد يرجى التواصل مع مسؤول النظام'
                 ]);
-            }
-            $contract_data =  $this->supervision($project, $request->cost);
+                break;
         }
         // -----------------------------------------------------------------
-        if ($request->contract_type_id == 5) {
-            $found_contract = Contract::where([
-                'project_id' => $project->id,
-                'contract_type_id' => 4,
-            ])->first();
-            if ($found_contract) {
-                return redirect()->back()->withErrors([
-                    'there is a supervision contract for this project',
-                    'يوجد عقد اشراف عادي لهذا المشروع',
-                ]);
-            }
-            $contract_data =  $this->supervision_full($project, $request->cost);
-        }
-        // -----------------------------------------------------------------
-        if ($request->contract_type_id == 6) {
-            $contract_data =  $this->elevation_3d($project, $request->cost);
-        }
-        // -----------------------------------------------------------------
-        if ($request->contract_type_id == 7) {
-            $contract_data =  $this->safety_design($project, $request->cost);
-        }
-        // -----------------------------------------------------------------
-        if ($request->contract_type_id == 32) {
-            $contract_data =  $this->boq($project, $request->cost);
-        }
-        // -----------------------------------------------------------------
+
 
         $contract = Contract::create($contract_data);
 
@@ -299,28 +305,6 @@ class ContractController extends Controller
     {
         $contract = new Contract;
         return ($contract->withTrashed()->get()->max('contract_no')) + 1;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public static function get_quick_form_contracts()
-    {
-        return [
-            'عقد تصميم',
-            'عقد قرار مساحي',
-            'عقد محضر تثبيت',
-            'عقد اشراف عظم',
-            'عقد اشراف كامل',
-            'عقد تصميم واجهة ثلاثية الابعاد',
-            'عقد تصميم سلامة',
-            'عقد حصر كميات',
-        ];
-        // // to remove contract that already added from the list
-        // foreach ($quick_form_contracts as $key => $value) {
-        //     foreach ($project_contracts as $contract) {
-        //         if ($contract->contract_type()->first()->name_ar == $value) {
-        //             unset($quick_form_contracts[$key]);
-        //         }
-        //     }
-        // }
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function contract_to_pdf(Request $request, $contract = null)
@@ -840,6 +824,122 @@ class ContractController extends Controller
         // -----------------------------------------------------------------
         // Content
         $pdf_view = 'contract.pdf.safety_design';
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
+        // -----------------------------------------------------------------
+        if ($edit) {
+            $data = [
+
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $new_contract_no = self::get_new_contract_no();
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $new_contract_no,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------
+    public function safety_supervision($project, $price, $edit = false)
+    {
+        // -----------------------------------------------------------------
+        $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_team($project);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد اشراف سلامة';
+        $contract_type_id = 9;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'project_tame' => $project_tame,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+        // -----------------------------------------------------------------
+        // Content
+        $pdf_view = 'contract.pdf.safety_supervision';
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
+        // -----------------------------------------------------------------
+        if ($edit) {
+            $data = [
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $new_contract_no = self::get_new_contract_no();
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $new_contract_no,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function safety_design_modon($project, $price, $edit = false)
+    {
+        // -----------------------------------------------------------------
+        $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_team($project);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد تصميم سلامة(مدن)';
+        $contract_type_id = 8;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'project_tame' => $project_tame,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+        // -----------------------------------------------------------------
+        // Content
+        $pdf_view = 'contract.pdf.safety_design_modon';
         // -----------------------------------------------------------------
         // View
         $the_view = View::make($pdf_view)->with($pdf_data);

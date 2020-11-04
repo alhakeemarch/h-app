@@ -21,6 +21,8 @@ class CreateContractsTable extends Migration
             $table->bigInteger('contract_no')->nullable()->unique();
             $table->bigInteger('contract_no_acc')->nullable()->unique();
             // -----------------------------
+            $table->boolean('is_in_quotation')->nullable()->default('TRUE');
+            // -----------------------------
             $table->string('period')->nullable();
             $table->string('period_scale')->nullable(); // D, M, Y
             // -----------------------------

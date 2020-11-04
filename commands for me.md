@@ -365,6 +365,8 @@ ALTER TABLE `person_titles` ADD `prefix_ar` VARCHAR(191) NULL AFTER `id`;
 ALTER TABLE `person_titles` ADD `prefix_en` VARCHAR(191) NULL AFTER `prefix_ar`; 
 <!-- ------------------------------------------------------------------------ -->
 ALTER TABLE `contracts` ADD `is_in_quotation` BOOLEAN default TRUE NULL AFTER `contract_no_acc`;
+<!-- ------------------------------------------------------------------------ -->
+ALTER TABLE `contract_types` ADD `is_in_quick_add` BOOLEAN default FALSE NULL AFTER `view_template`;
 
 
 

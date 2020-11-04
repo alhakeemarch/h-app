@@ -158,10 +158,14 @@ class ProjectController extends Controller
     public function show(Project $project, Request $request)
     {
         $project_contracts = ContractController::get_project_contracts($project);
+        $project_contracts_type_id = $project_contracts->map(function ($contract) {
+            return $contract->contract_type_id;
+        })->toArray();
         $project_team = $this->get_project_team($project);
         $contract = new Contract();
         $contract_types = ContractType::all();
-        $quick_form_contracts = ContractController::get_quick_form_contracts();
+        $quick_form_contracts = ContractType::where('is_in_quick_add', true)->get();
+        $list_form_contracts = ContractType::where('is_in_quick_add', false)->get();
         $project_docs = ProjectDocController::get_project_docs();
         $employees = Person::where('job_division', 'design')->get()->sortBy('ar_name1');
 
@@ -181,9 +185,11 @@ class ProjectController extends Controller
             'contract' => $contract,
             'contract_types' => $contract_types,
             'quick_form_contracts' => $quick_form_contracts,
+            'list_form_contracts' => $list_form_contracts,
             'project_contracts' => $project_contracts,
             'project_docs' => $project_docs,
             'employees' => $employees,
+            'project_contracts_type_id' => $project_contracts_type_id,
         ]);
     }
 
