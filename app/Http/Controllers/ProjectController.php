@@ -24,10 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Gate;
-
-
-
-
+use Illuminate\Support\Facades\Redirect;
 
 use function PHPSTORM_META\map;
 
@@ -484,7 +481,14 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $project_contracts = ContractController::get_project_contracts($project);
+        if ($project_contracts->count() > 0) {
+            return redirect()->back()->withErrors(
+                ['canot delet because there are contracts for this porject', 'لا يمكن الحذف يوجد عقود لهذا المشروع']
+            );
+        }
         $plot = Plot::where('project_id', $project->id)->first();
+        dd($plot);
         $plot->project_id = null;
         $plot->save();
         $project->delete();
