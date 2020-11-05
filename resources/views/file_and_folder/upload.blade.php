@@ -11,143 +11,143 @@
     <div class=" card-header mb-4">
         Upload File To Server
     </div>
-
-    <form action="{{ route('file_folder.uploadFile') }}" method="POST" enctype="multipart/form-data" class="container">
-        @csrf
-        <input name="project_path" type="text" value="{{$project_path}}" hidden readonly>
-        <div class="row">
-            {{-- --------------------------------------------------------------------------------------------- --}}
-            <div class="col-md form-group">
-                <label for="project_no">{{__( 'project number')}}
-                    <span class="small text-danger">({{__('required')}})</span> :</label>
-                <input type="text" name="project_no" class="form-control @error ('project_no') is-invalid @enderror"
-                    value="{{old('project_no') ?? $project_no }}" onkeypress="onlyNumber(event)" required
-                    placeholder="{{__( 'project number')}}.." onfocus="this.placeholder=''"
-                    onblur="this.placeholder='{{__( 'project number')}}..'" readonly>
-                @error('project_no')
-                <small class="text-danger"> {{$errors->first('project_no')}} </small>
-                @enderror
+    <div class="container">
+        <form action="{{ route('file_folder.uploadFile') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input name="project_path" type="text" value="{{$project_path}}" hidden readonly>
+            <div class="row">
+                {{-- --------------------------------------------------------------------------------------------- --}}
+                <div class="col-md form-group">
+                    <label for="project_no">{{__( 'project number')}}
+                        <span class="small text-danger">({{__('required')}})</span> :</label>
+                    <input type="text" name="project_no" class="form-control @error ('project_no') is-invalid @enderror"
+                        value="{{old('project_no') ?? $project_no }}" onkeypress="onlyNumber(event)" required
+                        placeholder="{{__( 'project number')}}.." onfocus="this.placeholder=''"
+                        onblur="this.placeholder='{{__( 'project number')}}..'" readonly>
+                    @error('project_no')
+                    <small class="text-danger"> {{$errors->first('project_no')}} </small>
+                    @enderror
+                </div>
+                {{-- --------------------------------------------------------------------------------------------- --}}
+                <div class="col-md form-group">
+                    <label for="project_name">{{__( 'project name')}}
+                        <span class="small text-danger">({{__('required')}})</span> :</label>
+                    <input type="text" name="project_name"
+                        class="form-control @error ('project_name') is-invalid @enderror"
+                        value="{{old('project_name') ?? $project_name }}" onkeypress="onlyname(event)" required
+                        placeholder="{{__( 'project name')}}.." onfocus="this.placeholder=''"
+                        onblur="this.placeholder='{{__( 'project name')}}..'" readonly>
+                    @error('project_name')
+                    <small class="text-danger"> {{$errors->first('project_name')}} </small>
+                    @enderror
+                </div>
+                {{-- --------------------------------------------------------------------------------------------- --}}
+                <div class="col-md form-group">
+                    <label for="project_location">{{__( 'project location')}}
+                        <span class="small text-danger">({{__('required')}})</span> :</label>
+                    <input type="text" name="project_location"
+                        class="form-control @error ('project_location') is-invalid @enderror"
+                        value="{{old('project_location') ?? $project_location }}" onkeypress="onlyname(event)" required
+                        placeholder="{{__( 'project location')}}.." onfocus="this.placeholder=''"
+                        onblur="this.placeholder='{{__( 'project location')}}..'" readonly>
+                    @error('project_location')
+                    <small class="text-danger"> {{$errors->first('project_location')}} </small>
+                    @enderror
+                </div>
+                {{-- --------------------------------------------------------------------------------------------- --}}
+                <div class="col-md form-group">
+                    <label for="employment_no">{{__( 'employment number')}}
+                        <span class="small text-danger">({{__('required')}})</span> :</label>
+                    <input type="text" name="employment_no"
+                        class="form-control @error ('employment_no') is-invalid @enderror"
+                        value="{{old('employment_no') ?? $employment_no }}" onkeypress="onlyname(event)" required
+                        placeholder="{{__( 'employment number')}}.." onfocus="this.placeholder=''"
+                        onblur="this.placeholder='{{__( 'employment number')}}..'" readonly>
+                    @error('employment_no')
+                    <small class="text-danger"> {{$errors->first('employment_no')}} </small>
+                    @enderror
+                </div>
+                {{-- --------------------------------------------------------------------------------------------- --}}
             </div>
-            {{-- --------------------------------------------------------------------------------------------- --}}
-            <div class="col-md form-group">
-                <label for="project_name">{{__( 'project name')}}
-                    <span class="small text-danger">({{__('required')}})</span> :</label>
-                <input type="text" name="project_name" class="form-control @error ('project_name') is-invalid @enderror"
-                    value="{{old('project_name') ?? $project_name }}" onkeypress="onlyname(event)" required
-                    placeholder="{{__( 'project name')}}.." onfocus="this.placeholder=''"
-                    onblur="this.placeholder='{{__( 'project name')}}..'" readonly>
-                @error('project_name')
-                <small class="text-danger"> {{$errors->first('project_name')}} </small>
-                @enderror
+            {{-- ================================================================================================================ --}}
+            <div class="row">
+                {{-- --------------------------------------------------------------------------------------------- --}}
+                <div class="col-md">
+                    <label for="main_type">{{__( 'file specificity')}}
+                        <span class="small text-danger">({{__('required')}})</span>:</label>
+                    <select name="main_type" id="main_type"
+                        class="form-control @error ('main_type') is-invalid @enderror" onchange="getDetails()" required>
+                        <option selected value="" disabled>{{__( 'please pick')}}..</option>
+                        @foreach ($main_types as $main_type =>$description)
+                        <option value="{{$main_type}}"> {{$description}} </option>
+                        @endforeach
+                    </select>
+                    @error('main_type')
+                    <small class=" text-danger"> {{$errors->first('main_type')}} </small>
+                    @enderror
+                </div>
+                {{-- --------------------------------------------------------------------------------------------- --}}
+                <div class="col-md">
+                    <label for="detail">{{__( 'extra details')}}
+                        <span class="small text-danger">({{__('required')}})</span>:</label>
+                    <select id="detail" name="detail" class="form-control @error ('detail') is-invalid @enderror"
+                        onchange="ifOthSelected(event)" required>
+                        <option selected value="" disabled>{{__( 'please pick')}}..</option>
+                    </select>
+                    @error('detail')
+                    <small class=" text-danger"> {{$errors->first('detail')}} </small>
+                    @enderror
+                </div>
+                {{-- --------------------------------------------------------------------------------------------- --}}
+                <div class="col-md form-group">
+                    <label for="detail">{{__( 'extra details')}}
+                        <span class="small text-muted">({{__('optional')}})</span> :</label>
+                    <input type="text" name="detail" id="detail_text_input"
+                        class="form-control @error ('detail') is-invalid @enderror"
+                        value="{{old('detail') ?? $detail ?? '' }}" placeholder="{{__( 'details')}}.."
+                        onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'details')}}..'" maxlength="25"
+                        title="Max 25 letters" disabled>
+                    @error('detail')
+                    <small class="text-danger"> {{$errors->first('detail')}} </small>
+                    @enderror
+                </div>
             </div>
-            {{-- --------------------------------------------------------------------------------------------- --}}
-            <div class="col-md form-group">
-                <label for="project_location">{{__( 'project location')}}
-                    <span class="small text-danger">({{__('required')}})</span> :</label>
-                <input type="text" name="project_location"
-                    class="form-control @error ('project_location') is-invalid @enderror"
-                    value="{{old('project_location') ?? $project_location }}" onkeypress="onlyname(event)" required
-                    placeholder="{{__( 'project location')}}.." onfocus="this.placeholder=''"
-                    onblur="this.placeholder='{{__( 'project location')}}..'" readonly>
-                @error('project_location')
-                <small class="text-danger"> {{$errors->first('project_location')}} </small>
-                @enderror
+            {{-- ================================================================================================================ --}}
+            <div class="row">
+                <div class="col-md form-group">
+                    <label for="fiel_input">{{__( 'Please select file')}}
+                        <span class="small text-danger">({{__('required')}})</span> :</label>
+                    <input type="file" name="file_input[]" multiple class="form-control" id="file_input" required>
+                </div>
             </div>
-            {{-- --------------------------------------------------------------------------------------------- --}}
-            <div class="col-md form-group">
-                <label for="employment_no">{{__( 'employment number')}}
-                    <span class="small text-danger">({{__('required')}})</span> :</label>
-                <input type="text" name="employment_no"
-                    class="form-control @error ('employment_no') is-invalid @enderror"
-                    value="{{old('employment_no') ?? $employment_no }}" onkeypress="onlyname(event)" required
-                    placeholder="{{__( 'employment number')}}.." onfocus="this.placeholder=''"
-                    onblur="this.placeholder='{{__( 'employment number')}}..'" readonly>
-                @error('employment_no')
-                <small class="text-danger"> {{$errors->first('employment_no')}} </small>
-                @enderror
-            </div>
-            {{-- --------------------------------------------------------------------------------------------- --}}
-        </div>
-        {{-- ================================================================================================================ --}}
-        <div class="row">
-            {{-- --------------------------------------------------------------------------------------------- --}}
-            <div class="col-md">
-                <label for="main_type">{{__( 'file specificity')}}
-                    <span class="small text-danger">({{__('required')}})</span>:</label>
-                <select name="main_type" id="main_type" class="form-control @error ('main_type') is-invalid @enderror"
-                    onchange="getDetails()" required>
-                    <option selected value="" disabled>{{__( 'please pick')}}..</option>
-                    @foreach ($main_types as $main_type =>$description)
-                    <option value="{{$main_type}}"> {{$description}} </option>
-                    @endforeach
-                </select>
-                @error('main_type')
-                <small class=" text-danger"> {{$errors->first('main_type')}} </small>
-                @enderror
-            </div>
-            {{-- --------------------------------------------------------------------------------------------- --}}
-            <div class="col-md">
-                <label for="detail">{{__( 'extra details')}}
-                    <span class="small text-danger">({{__('required')}})</span>:</label>
-                <select id="detail" name="detail" class="form-control @error ('detail') is-invalid @enderror"
-                    onchange="ifOthSelected(event)" required>
-                    <option selected value="" disabled>{{__( 'please pick')}}..</option>
-                </select>
-                @error('detail')
-                <small class=" text-danger"> {{$errors->first('detail')}} </small>
-                @enderror
-            </div>
-            {{-- --------------------------------------------------------------------------------------------- --}}
-            <div class="col-md form-group">
-                <label for="detail">{{__( 'extra details')}}
-                    <span class="small text-muted">({{__('optional')}})</span> :</label>
-                <input type="text" name="detail" id="detail_text_input"
-                    class="form-control @error ('detail') is-invalid @enderror"
-                    value="{{old('detail') ?? $detail ?? '' }}" placeholder="{{__( 'details')}}.."
-                    onfocus="this.placeholder=''" onblur="this.placeholder='{{__( 'details')}}..'" maxlength="25"
-                    title="Max 25 letters" disabled>
-                @error('detail')
-                <small class="text-danger"> {{$errors->first('detail')}} </small>
-                @enderror
-            </div>
-        </div>
-        {{-- ================================================================================================================ --}}
-        <div class="row">
-            <div class="col-md form-group">
-                <label for="fiel_input">{{__( 'Please select file')}}
-                    <span class="small text-danger">({{__('required')}})</span> :</label>
-                <input type="file" name="file_input[]" multiple class="form-control" id="file_input" required>
-            </div>
-        </div>
+            {{-- ================================================================================================================ --}}
+            {{-- <div class="col-md"> --}}
+            <button type="submet" class="btn btn-info col-md">
+                <i class="fas fa-file-upload"></i> |
+                <span class="d-none d-md-inline-block">upload</span>
+            </button>
+        </form>
         {{-- ================================================================================================================ --}}
         <div class="row text-center mb-4">
-            <div class="col-md">
-                <button type="submet" class="btn btn-info btn-block">
-                    <i class="fas fa-file-upload"></i>
-                    <span class="d-none d-md-inline-block">&nbsp; upload</span>
+            <form action="{{redirect()->getUrlGenerator()->previous()}}" method="get" class="col-md">
+                <button class="btn btn-secondary col-md" type="submit">
+                    <i class="fas fa-undo-alt"></i> |
+                    <span class="d-none d-md-inline-block">cancel</span>
                 </button>
-            </div>
-            <div class="col-md">
-                {{-- <a href="{{ url()->previous()  }}" class="btn btn-info btn-block"> --}}
-                <a href="{{ redirect()->getUrlGenerator()->previous()  }}" class="btn btn-info btn-block">
-                    <i class="fas fa-undo-alt"></i>
-                    <span class="d-none d-md-inline-block">&nbsp; cancel</span>
-                </a>
-            </div>
+            </form>
+            @if (isset($project->id))
+            <form action="{{route('project.show',$project)}}" method="get" class="col-md">
+                <button class="btn btn-dark col-md" type="submit">
+                    <i class="far fa-eye"></i> |
+                    <span>project detils</span>
+                </button>
+            </form>
+            @endif
         </div>
         {{-- ================================================================================================================ --}}
-    </form>
-</div>
 
-@if(session()->has('success'))
-<div class="alert alert-success">
-    {{ session()->get('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
+    </div>
 </div>
-@endif
-
 
 
 

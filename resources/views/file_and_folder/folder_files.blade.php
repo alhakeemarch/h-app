@@ -1,7 +1,8 @@
 {{-- {{dd($project_content)}} --}}
 <div class="card">
-    <div class=" card-header mb-4">
-        this projects files and folders
+    <div class=" card-header d-flex justify-content-between mb-4">
+        <span>this projects files and folders</span>
+        <span>ملفات ومجلدات بالمشروع</span>
     </div>
     @php
     $doc_dir = $project_dir = '#';
@@ -53,7 +54,7 @@
     @else
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> All Project | كامل المشروع </li>
+        <li class="list-group-item bg-light-blue text-center"> All Project | كامل المشروع </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'all')
         <li class="list-group-item d-flex justify-content-between">
@@ -67,7 +68,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> Documents | مستندات </li>
+        <li class="list-group-item  text-center bg-light-blue"> Documents | مستندات </li>
         @foreach ($project_content as $file => $description)
 
         @if ($description=== 'dir_in_doc')
@@ -104,7 +105,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> Concepts | افكار </li>
+        <li class="list-group-item bg-light-blue text-center"> Concepts | افكار </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'con')
         <li class="list-group-item d-flex justify-content-between">
@@ -116,7 +117,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> preliminary | ابتدائي </li>
+        <li class="list-group-item bg-light-blue text-center"> preliminary | ابتدائي </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'pre')
         <li class="list-group-item d-flex justify-content-between">
@@ -128,7 +129,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> Architectures | معماري </li>
+        <li class="list-group-item bg-light-blue text-center"> Architectures | معماري </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'arc')
         <li class="list-group-item d-flex justify-content-between">
@@ -140,7 +141,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> Structures | انشائي </li>
+        <li class="list-group-item bg-light-blue text-center"> Structures | انشائي </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'str')
         <li class="list-group-item d-flex justify-content-between">
@@ -152,7 +153,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> DR & WS | صحي </li>
+        <li class="list-group-item bg-light-blue text-center"> DR & WS | صحي </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,2) == 'dr'||substr($description,0,2) == 'ws' )
         <li class="list-group-item d-flex justify-content-between">
@@ -164,7 +165,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> HVAC | تكيف </li>
+        <li class="list-group-item bg-light-blue text-center"> HVAC | تكيف </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'hva' )
         <li class="list-group-item d-flex justify-content-between">
@@ -176,7 +177,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> electric | كهرباء </li>
+        <li class="list-group-item bg-light-blue text-center"> electric | كهرباء </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'ele')
         <li class="list-group-item d-flex justify-content-between">
@@ -188,7 +189,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> FF & FA & evacuation| دفاع مدني </li>
+        <li class="list-group-item bg-light-blue text-center"> FF & FA & evacuation| دفاع مدني </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,2) == 'ff' || substr($description,0,2) == 'fa'|| substr($description,0,3) == 'eva')
         <li class="list-group-item d-flex justify-content-between">
@@ -200,7 +201,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> tourism | سياحة </li>
+        <li class="list-group-item bg-light-blue text-center"> tourism | سياحة </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'tou')
         <li class="list-group-item d-flex justify-content-between">
@@ -212,7 +213,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> survey | مساحة </li>
+        <li class="list-group-item bg-light-blue text-center"> survey | مساحة </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'sur')
         <li class="list-group-item d-flex justify-content-between">
@@ -224,7 +225,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> not_uplod | لم يتم رفعه بالنظام </li>
+        <li class="list-group-item bg-light-blue text-center"> not_uplod | لم يتم رفعه بالنظام </li>
         @foreach ($project_content as $file => $description)
         @if ($description == 'not_uplod')
         <li class="list-group-item d-flex justify-content-between">
@@ -236,7 +237,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> Folder | مجلد </li>
+        <li class="list-group-item bg-light-blue text-center"> Folder | مجلد </li>
         @foreach ($project_content as $file => $description)
         @if (substr($description,0,3) == 'dir')
         @php
@@ -254,7 +255,7 @@
     </ul>
     {{-- --------------------------------------------------------------------------------------------- --}}
     {{-- <ul class="list-group">
-        <li class="list-group-item bg-info text-center"> not_uplod </li>
+        <li class="list-group-item bg-light-blue text-center"> not_uplod </li>
         @foreach ($project_content as $file => $description)
         {{$file}}:|{{$description}}<br>
     @if (substr($description,0,3) == ' not') <a class="" href="{{$running_project_ftp.$project_name.'/'.$file}}"

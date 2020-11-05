@@ -42,6 +42,7 @@
             </li>
         </ul>
         <div class="card-footer d-flex justify-content-end m-0">
+            @include('file_and_folder.project_folders_form')
             <form action="{{route('project.edit',$project->id)}}" method="get">
                 <input type="hidden" name="from_project" value="1">
                 <button type="submit" class="btn btn-link m-0">

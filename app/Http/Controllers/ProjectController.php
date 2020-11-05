@@ -180,7 +180,8 @@ class ProjectController extends Controller
                 }
             }
         }
-
+        // to get project folders if exsest
+        $project_folders = FileAndFolderController::get_project_folders($project);
 
         return view('project.show')->with([
             'project' => $project,
@@ -193,6 +194,7 @@ class ProjectController extends Controller
             'project_docs' => $project_docs,
             'employees' => $employees,
             'project_contracts_type_id' => $project_contracts_type_id,
+            'project_folders' => $project_folders,
         ]);
     }
 

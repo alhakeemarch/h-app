@@ -658,6 +658,10 @@ input[type=number]::-webkit-outer-spin-button {
   text-transform: capitalize;
 }
 
+.bg-light-blue {
+  background-color: #cddae4;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #465573;

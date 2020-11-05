@@ -329,7 +329,7 @@ class FileAndFolderController extends Controller
      */
     public function showUplodeView(Project $project, Request $request)
     {
-        // return $request;
+        $project = $project->where('project_no', $request->project_no)->first();
         $project_dir = '';
         $project_no = $request->project_no;
         $project_name = $request->project_name;
@@ -388,6 +388,7 @@ class FileAndFolderController extends Controller
             'ff' => $ff,
             'fa' => $fa,
             'project_content' => $project_content,
+            'project' => $project,
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -883,6 +884,26 @@ class FileAndFolderController extends Controller
             $msg = 'failed to create a folder' . '|' . $error_msg;
         }
         return $msg;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function get_project_folders($project)
+    {
+        $project_folders = [];
+        if (!isset($project->project_no)) {
+            return $project_folders;
+        }
+        $runningProjects = (new self)->get_running_projects();
+        if (array_key_exists($project->project_no, $runningProjects)) {
+            $project_folders['running project']['project_no'] = $project->project_no;
+            $project_folders['running project']['project_name'] = $runningProjects[$project->project_no];
+        }
+
+        $finished_projects = (new self)->get_finished_projects();
+        if (array_key_exists($project->project_no, $finished_projects)) {
+            $project_folders['finished project']['project_no'] = $project->project_no;
+            $project_folders['finished project']['project_name'] = $finished_projects[$project->project_no];
+        }
+        return $project_folders;
     }
     // -----------------------------------------------------------------------------------------------------------------
 }
