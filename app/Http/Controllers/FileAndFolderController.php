@@ -203,11 +203,7 @@ class FileAndFolderController extends Controller
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
-    // public function download_file(Request $request)
-    // {
-    //     return $request;
-    // }
-    // -----------------------------------------------------------------------------------------------------------------
+
 
 
 
@@ -567,6 +563,7 @@ class FileAndFolderController extends Controller
     }
     // -----------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
+
     function get_running_projects()
     {
         $project_no = [];
@@ -594,14 +591,6 @@ class FileAndFolderController extends Controller
         ksort($project_no);
         ksort($project_name);
 
-        // TO: check if there is a project missing
-        // $a = 0;
-        // foreach ($project_no as $key => $value) {
-        //     if ($key <> $a) {
-        //         echo $a . '===' . $value . '<br/>';
-        //     }
-        //     $a = $a + 1;
-        // }
 
         return $project_name;
     }
@@ -869,4 +858,31 @@ class FileAndFolderController extends Controller
 
         return $survey;
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function create_dir_in_running_project($project)
+    {
+        $msg = '';
+        $runningProjects = (new self)->get_running_projects();
+        $project_no = $project->project_no;
+        $project_name = $project->project_name_ar;
+        $project_owner_name = $project->owner_name_ar;
+        if (array_key_exists($project_no, $runningProjects)) {
+            $msg = 'project folder already exists';
+            return $msg;
+        }
+        $running_projects_path = (new self)->running_projects_path;
+
+        try {
+            mkdir($running_projects_path . $project_no . ' - ' . $project_name, 0777, true);
+            $msg = 'folder created successfully in running project';
+        } catch (\Throwable $th) {
+            $error_msg = $th->getMessage();
+            $error_msg = substr($error_msg, strpos($error_msg, ':') + 1);
+
+            $msg = 'failed to create a folder' . '|' . $error_msg;
+        }
+        return $msg;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 }

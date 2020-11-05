@@ -165,7 +165,10 @@ class ProjectController extends Controller
         $contract = new Contract();
         $contract_types = ContractType::all();
         $quick_form_contracts = ContractType::where('is_in_quick_add', true)->get();
-        $list_form_contracts = ContractType::where('is_in_quick_add', false)->get();
+        $list_form_contracts = ContractType::where('is_in_quick_add', false)->whereNotNull('view_template')->get();
+        if (auth()->user()->is_admin) {
+            $list_form_contracts = ContractType::where('is_in_quick_add', false)->get();
+        }
         $project_docs = ProjectDocController::get_project_docs();
         $employees = Person::where('job_division', 'design')->get()->sortBy('ar_name1');
 
@@ -289,7 +292,10 @@ class ProjectController extends Controller
             ];
             DbLogController::add_record($db_record_data);
             // -----------------------------------------------------------------
-            return redirect()->back()->with('success', 'project number has be assigned - تم اضافة رقم للمشروع');
+            $msg = FileAndFolderController::create_dir_in_running_project($project);
+            // -----------------------------------------------------------------
+            // -----------------------------------------------------------------
+            return redirect()->back()->with('success', 'project number has be assigned - تم اضافة رقم للمشروع' . ' & ' . $msg);
         }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'add_customer_to_project' || $request->form_action == 'change_owner_info') {
