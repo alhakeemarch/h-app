@@ -48,9 +48,45 @@
     <link href="{{ asset('css/fontawesome/css/brands.css') }}" rel="stylesheet">
 
     @yield('head')
+    <style>
+        .loader {
+            position: fixed;
+            z-index: 99;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: lightgrey;
+            opacity: 0.5;
+        }
+
+        .loader>img {
+            width: 100px;
+        }
+
+        .loader.hidden {
+            animation: fedOut 1s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fedOut {
+            100% {
+                opacity: 0;
+                visibility: hidden;
+                display: none;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
+    <div class="loader">
+        <img src="{{asset('img/loading-1.gif')}}" alt="Loading...">
+    </div>
     <div class="wrapper">
         {{-- -------------------------------------------------------------------------------------------------- --}}
         <header class="sticky-top">
@@ -112,6 +148,13 @@
 
 
     @yield('script')
+    <script>
+        window.addEventListener('load',function(){
+    const loader = document.querySelector('.loader');
+    loader.classList.add('hidden')
+})
+    </script>
+
 
 </body>
 

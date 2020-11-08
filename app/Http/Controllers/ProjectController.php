@@ -479,19 +479,42 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy(Request $request, Project $project)
     {
+        // -----------------------------------------------------------------
         $project_contracts = ContractController::get_project_contracts($project);
         if ($project_contracts->count() > 0) {
             return redirect()->back()->withErrors(
                 ['canot delet because there are contracts for this porject', 'لا يمكن الحذف يوجد عقود لهذا المشروع']
             );
         }
+        // -----------------------------------------------------------------
+        if (!$request->form_action == 'delet_with_note') {
+            return view('project.destroy')->with(['project' => $project]);
+        }
+        $request->validate([
+            'note' => 'required|min:3|string'
+        ]);
+        // -----------------------------------------------------------------
+        $project->notes .= ' | delete reason: ' . $request->note;
+        $project->save();
         $plot = Plot::where('project_id', $project->id)->first();
-        dd($plot);
-        $plot->project_id = null;
-        $plot->save();
+        if ($plot) {
+            $plot->project_id = null;
+            $plot->save();
+        }
         $project->delete();
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'projects',
+            'model' => 'Project',
+            'model_id' => $project->id,
+            'action' => 'destroy',
+            'description' => 'project id =>' . $project->id . ', soft deleted because ' . $request->note,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
         return redirect()->action('ProjectController@index');
     }
 
