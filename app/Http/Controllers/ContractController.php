@@ -125,6 +125,18 @@ class ContractController extends Controller
             case 9:
                 $contract_data =  $this->safety_supervision($project, $request->cost);
                 break;
+            case 10:
+                $contract_data =  $this->safety_supervision_modon($project, $request->cost);
+                break;
+            case 11:
+                $contract_data =  $this->design_modification($project, $request->cost);
+                break;
+            case 12:
+                $contract_data =  $this->ownership_transformation($project, $request->cost);
+                break;
+            case 13:
+                $contract_data =  $this->renewal($project, $request->cost);
+                break;
             case 32:
                 $contract_data =  $this->boq($project, $request->cost);
                 break;
@@ -277,7 +289,6 @@ class ContractController extends Controller
         $found_contract = Contract::where([
             'project_id' => $project->id,
         ])->get()->sortBy('contract_type_id');
-
         return  $found_contract;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -321,16 +332,6 @@ class ContractController extends Controller
         // pdf title
         $newPDF::SetTitle($contract->contract_type()->first()->name_ar);
         $newPDF::SetSubject($contract->contract_type()->first()->name_ar);
-        // -----------------------------------------------------------------
-        // override some settings
-        if ($contract->contract_type_id == 1) {
-            $newPDF::SetFontSize(11);
-            $newPDF::setCellHeightRatio(1.4);
-        }
-        if ($contract->contract_type_id == 7) {
-            $newPDF::SetFontSize(12);
-            $newPDF::setCellHeightRatio(1.4);
-        }
         // -----------------------------------------------------------------
         $html = $contract->html;
         $newPDF::writeHTML($html, true, false, true, false, '');
@@ -421,6 +422,168 @@ class ContractController extends Controller
         // -----------------------------------------------------------------
         // Content
         $pdf_view = 'contract.pdf.design';
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
+        // -----------------------------------------------------------------
+        if ($edit) {
+            $data = [
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            $new_contract_no = self::get_new_contract_no();
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $new_contract_no,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function design_modification($project, $price, $edit = false)
+    {
+        // -----------------------------------------------------------------
+        $office_data = OfficeData::findOrFail(1);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد تعديل تصميم';
+        $contract_type_id = 11;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+        // -----------------------------------------------------------------
+        // Content
+        $pdf_view = 'contract.pdf.design_modification';
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
+        // -----------------------------------------------------------------
+        if ($edit) {
+            $data = [
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            $new_contract_no = self::get_new_contract_no();
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $new_contract_no,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function ownership_transformation($project, $price, $edit = false)
+    {
+        // -----------------------------------------------------------------
+        $office_data = OfficeData::findOrFail(1);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد نقل ملكية';
+        $contract_type_id = 12;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+        // -----------------------------------------------------------------
+        // Content
+        $pdf_view = 'contract.pdf.ownership_transformation';
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
+        // -----------------------------------------------------------------
+        if ($edit) {
+            $data = [
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            $new_contract_no = self::get_new_contract_no();
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $new_contract_no,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function renewal($project, $price, $edit = false)
+    {
+        // -----------------------------------------------------------------
+        $office_data = OfficeData::findOrFail(1);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد تجديد رخصة';
+        $contract_type_id = 13;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+        // -----------------------------------------------------------------
+        // Content
+        $pdf_view = 'contract.pdf.renewal';
         // -----------------------------------------------------------------
         // View
         $the_view = View::make($pdf_view)->with($pdf_data);
@@ -883,6 +1046,63 @@ class ContractController extends Controller
         // -----------------------------------------------------------------
         // Content
         $pdf_view = 'contract.pdf.safety_supervision';
+        // -----------------------------------------------------------------
+        // View
+        $the_view = View::make($pdf_view)->with($pdf_data);
+        $html = $the_view->render();
+        // -----------------------------------------------------------------
+        if ($edit) {
+            $data = [
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'last_edit_by_id' => auth()->user()->id,
+                'last_edit_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        } else {
+            // creating a contract
+            $new_contract_no = self::get_new_contract_no();
+            $data = [
+                'project_id' => $project->id,
+                'contract_type_id' => $contract_type_id,
+                'contract_no' => $new_contract_no,
+                'cost' => $pyment_arr['cost'],
+                'vat_percentage' => $pyment_arr['vat_percentage'],
+                'vat_value' => $pyment_arr['vat_value'],
+                'price_withe_vat' => $pyment_arr['price_withe_vat'],
+                'date' => $date_and_time['g_date_en'],
+                'html' => $html,
+                'created_by_id' => auth()->user()->id,
+                'created_by_name' => auth()->user()->user_name,
+            ];
+            return $data;
+        }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function safety_supervision_modon($project, $price, $edit = false)
+    {
+        // -----------------------------------------------------------------
+        $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_team($project);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $pyment_arr = self::get_payment_arr($price);
+        $contract_title = 'عقد اشراف سلامة(مدن)';
+        $contract_type_id = 10;
+        $pdf_data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'project_tame' => $project_tame,
+            'date_and_time' => $date_and_time,
+            'pyment_arr' => $pyment_arr,
+            'contract_title' => $contract_title,
+        ];
+        // -----------------------------------------------------------------
+        // Content
+        $pdf_view = 'contract.pdf.safety_supervision_modon';
         // -----------------------------------------------------------------
         // View
         $the_view = View::make($pdf_view)->with($pdf_data);

@@ -160,11 +160,11 @@ class ProjectController extends Controller
         })->toArray();
         $project_team = $this->get_project_team($project);
         $contract = new Contract();
-        $contract_types = ContractType::all();
-        $quick_form_contracts = ContractType::where('is_in_quick_add', true)->get();
-        $list_form_contracts = ContractType::where('is_in_quick_add', false)->whereNotNull('view_template')->get();
+        $contract_types = ContractType::all()->sortBy('sorting');
+        $quick_form_contracts = ContractType::where('is_in_quick_add', true)->orderBy('sorting')->get();
+        $list_form_contracts = ContractType::where('is_in_quick_add', false)->whereNotNull('view_template')->orderBy('sorting')->get();
         if (auth()->user()->is_admin) {
-            $list_form_contracts = ContractType::where('is_in_quick_add', false)->get();
+            $list_form_contracts = ContractType::where('is_in_quick_add', false)->orderBy('sorting')->get();
         }
         $project_docs = ProjectDocController::get_project_docs();
         $employees = Person::where('job_division', 'design')->get()->sortBy('ar_name1');

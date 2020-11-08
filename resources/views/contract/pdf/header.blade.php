@@ -1,11 +1,3 @@
-{{-- <!doctype html>
-<html lang="AR" dir="rtl">
-
-<head>
-    <title>عقد اشراف هندسي عظم</title>
-</head>
-
-<body> --}}
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 <x-pdf_print_style />
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
@@ -20,7 +12,7 @@
 <table>
     <tr>
         <td>
-            <span>أنه في يوم</span> <span>{{$date_and_time['day_ar']}}</span>
+            <span>إنه في يوم</span> <span>{{$date_and_time['day_ar']}}</span>
             <span>تاريخ</span> <span>{{$date_and_time['h_date_ar']}} هـ</span>
             <span>الموافق</span> <span>{{$date_and_time['g_date_ar']}} م</span>
             <span>تم بعون الله تعالى الاتفاق بين كل من:</span>
@@ -89,7 +81,12 @@
     </tr>
 </table>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
-@if ($contract_title == 'عقد تصميم')
+@php
+if (!isset($full_project_info)) {
+$full_project_info = false;
+}
+@endphp
+@if (($contract_title == 'عقد تصميم')||($full_project_info == 'TRUE'?? false))
 <table>
     <tr>
         <td>
