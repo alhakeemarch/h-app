@@ -10,7 +10,7 @@
 
     .main-title {
         font-family: "ptboldheading", "Times New Roman", Times, serif;
-        font-size: 150%;
+        font-size: 145%;
         text-align: center;
     }
 

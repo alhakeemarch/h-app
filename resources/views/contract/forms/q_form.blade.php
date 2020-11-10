@@ -37,7 +37,10 @@
             <option disabled selected>pick a contract..</option>
             @foreach ($list_form_contracts as $contract_type)
             @if (!(in_array( $contract_type->id , $project_contracts_type_id)))
+            @if ((strpos($contract_type->name_ar, 'مدن') == false)|| (auth()->user()->is_admin)
+            ||($project->plot()->first()->district()->first()->id == 40))
             <option value="{{$contract_type->id}}">{{$contract_type->name_ar}}</option>
+            @endif
             @endif
             @endforeach
         </select>

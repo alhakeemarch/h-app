@@ -276,8 +276,7 @@ class ContractController extends Controller
         $office_data = OfficeData::findOrFail(1);
         $date_and_time = DateAndTime::get_date_time_arr($contract->date);
         $pyment_arr = self::get_payment_arr($contract->cost);
-        $contract_type_id = $contract->contract_type_id;
-        $contract_title = $contract->contract_type()->first()->name_ar;
+        $contract_title = 'عقد تقديم خدمات إستشارات هندسية (' . $contract->contract_type()->first()->name_ar . ')';
         $pdf_view = $contract->contract_type()->first()->view_template;
         // -----------------------------------------------------------------
         $pdf_data = [
@@ -417,7 +416,7 @@ class ContractController extends Controller
         $date_and_time = DateAndTime::get_date_time_arr();
         $pyment_arr = self::get_payment_arr($cost);
         $contract_type = ContractType::find($contract_type_id);
-        $contract_title = $contract_type->name_ar;
+        $contract_title = 'عقد تقديم خدمات إستشارات هندسية (' . $contract_type->name_ar . ')';
         $contract_type_id = $contract_type->id;
         $pdf_data = [
             'project' => $project,

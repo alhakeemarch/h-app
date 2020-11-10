@@ -152,6 +152,7 @@ class ContractTypeController extends Controller
             'name_ar' => 'required|string|min:2',
             'name_en' => 'nullable|string',
             'description' => 'nullable|string',
+            'view_template' => 'nullable|string',
             'notes' => 'nullable|string',
             'private_notes' => 'nullable|string',
         ]);
