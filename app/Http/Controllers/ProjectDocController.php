@@ -9,9 +9,8 @@ use App\Project;
 use App\ProjectDoc;
 use App\Quotation;
 use Carbon\Carbon;
-use PDF as TCPDF;
-// use Elibyy\TCPDF\Facades\TCPdf as TCPDF;
-// use App\Tcpdf\HakeemPDF;
+use Elibyy\TCPDF\Facades\TCPDF as TCPDF;
+
 use \Illuminate\Support\Facades\View;
 
 use Illuminate\Http\Request;
@@ -153,6 +152,21 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
+        // -----------------------------------------------------------------
+        // to print contract no and user id and contract creator id 
+        $text = 'Code="U' . auth()->user()->id
+            . '-P' . $project->id
+            . '"';
+        // -----------------------------------------------------------------
+        $newPDF::SetY(150);
+        $newPDF::SetX(198);
+        $newPDF::StartTransform();
+        $newPDF::Rotate(+90);
+        $newPDF::SetFont('helvetica', '', 8);
+        $newPDF::SetTextColor(0, 0, 0, 25);;
+        $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
+        $newPDF::StopTransform();
+        // -----------------------------------------------------------------
         $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
         exit;
     }

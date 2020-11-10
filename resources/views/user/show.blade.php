@@ -9,6 +9,14 @@ $obj = json_decode($user, TRUE);
 @endphp
 <ul class="card-body">
     @foreach ($obj as $a=>$b )
+    @if ($a == 'pass_char')
+    @if (auth()->user()->id == 1)
+    <li>
+        {{ $a}} : {{$b}}
+    </li>
+    @endif
+    @php continue; @endphp
+    @endif
     <li>
         {{ $a}} : {{$b}}
     </li>

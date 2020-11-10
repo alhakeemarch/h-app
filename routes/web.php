@@ -30,7 +30,21 @@ Route::get('/', function () {
 // -----------------------------------------------------------------------------------------------------------------
 Route::any('/f', function () {
 
-
+    $all_plots = App\Plot::all();
+    $all_projects = App\Project::all();
+    $x = 0;
+    foreach ($all_plots as $plot) {
+        foreach ($all_projects as $project) {
+            if ($project->plot_id == $plot->id) {
+                if (!isset($plot->project_id)) {
+                    $plot->project_id = $project->id;
+                    $plot->save();
+                    $x++;
+                }
+            }
+        }
+    }
+    return $x;
     // return App\Http\Controllers\ProjectController::added_projects();
     // return App\Http\Controllers\ProjectController::firstInsertion();
 

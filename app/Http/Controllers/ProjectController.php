@@ -310,6 +310,9 @@ class ProjectController extends Controller
             if ($found_plot->project_id) {
                 return redirect()->back()->withErrors(['Plot regesterd to other project', 'قطعة الأرض مسجلة لمشروع آخر']);
             }
+            // -----------------------------------------------------------------
+            $found_plot->project_id = $project->id;
+            // -----------------------------------------------------------------
             $project->plot_id = $found_plot->id;
             $project->last_edit_by_id = auth()->user()->id;
             $project->last_edit_by_name = auth()->user()->user_name;
