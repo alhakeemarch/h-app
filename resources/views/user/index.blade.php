@@ -41,13 +41,14 @@
                         onkeypress=" userNameString(event)">
                 </th>
 
-
                 <th scope="column">
                     <p class="pb-2">الإيميل</p>
                     <input type="text" id='email' name="email_input" class="form-control" autocomplete="off" required
                         placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
                         onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterNames(event)">
                 </th>
+                <th>password reset</th>
+                <th>activate user</th>
                 <th scope="link">details</th>
                 @endif
             </tr>
@@ -67,7 +68,13 @@
                 @if (auth()->user()->is_admin)
                 <td scope="row" class="user_name_input text-lowercase">{{$user->user_name}}</td>
                 <td scope="row" class="email_input">{{$user->email}}</td>
-                <td scope="link">
+                <td class="text-center">
+                    @include('user.forms.reset_password')
+                </td>
+                <td class="text-center">
+                    @include('user.forms.activate_user')
+                </td>
+                <td scope="link" class="text-center">
                     <a href="{{ url('/user/'.$user->id) }}">
                         <i class="far fa-eye"></i>
                     </a>

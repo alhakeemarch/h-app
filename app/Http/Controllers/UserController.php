@@ -94,6 +94,20 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user, Person $person)
     {
+        // --------------------------------------------------------
+        if ($request->form_action == 'reset_password') {
+            $user->pass_char = '123456';
+            $user->password = \Hash::make('123456');
+            $user->save();
+            return redirect()->back()->with('success', 'password reset to (123456), تم تغير الرقم السري الى (123456)');
+        }
+        // --------------------------------------------------------
+        if ($request->form_action == 'activate_user') {
+            $user->is_active = !$user->is_active;
+            $user->save();
+            return redirect()->back()->with('success', 'user active status changed successfully');
+        }
+        // --------------------------------------------------------
         $person = $person->find($user->person_id);
         // --------------------------------------------------------
         $valed_data = $request->validate([
