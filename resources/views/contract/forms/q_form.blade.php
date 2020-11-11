@@ -36,9 +36,16 @@
         <select name="contract_type_id" class="form-control">
             <option disabled selected>pick a contract..</option>
             @foreach ($list_form_contracts as $contract_type)
-            @if (!(in_array( $contract_type->id , $project_contracts_type_id)))
-            @if ((strpos($contract_type->name_ar, 'مدن') == false)|| (auth()->user()->is_admin)
-            ||($project->plot()->first()->district()->first()->id == 40))
+            @php
+            $test1 = !(in_array( $contract_type->id , $project_contracts_type_id));
+            $test2 = strpos($contract_type->name_ar, 'مدن') == false;
+            $test3 = auth()->user()->is_admin;
+            $test4 = (isset($project->plot()->first()->district()->first()->id))
+            ? $project->plot()->first()->district()->first()->id == 40
+            : false ;
+            @endphp
+            @if ($test1)
+            @if ($test2|| $test3 ||$test4)
             <option value="{{$contract_type->id}}">{{$contract_type->name_ar}}</option>
             @endif
             @endif
