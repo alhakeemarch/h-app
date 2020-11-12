@@ -167,7 +167,7 @@ class ProjectDocController extends Controller
         $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
         $newPDF::StopTransform();
         // -----------------------------------------------------------------
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -191,6 +191,41 @@ class ProjectDocController extends Controller
         $total_arr['total_price_withe_vat_text'] = $ar_num->money2str($total_arr['total_price_withe_vat'], 'SAR');
 
         return $total_arr;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function invoice(Request $request)
+    {
+        // data needed in document
+        $project = Project::findOrFail($request->project_id);
+        $office_data = OfficeData::findOrFail(1);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'date_and_time' => $date_and_time,
+        ];
+        // creating pdf 
+        $newPDF = new TCPDF();
+        // Content
+        $doc_name = 'tafweed';
+        $pdf_view = 'projectDoc.invoice';
+        $is_tafweed = true;
+        // -----------------------------------------------------------------
+        // setting a header and foooter 
+        $newPDF = $this->set_invoice_header_footer($newPDF, $is_tafweed);
+        // setting main sittings
+        $newPDF = $this->set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle('فاتورة');
+        $newPDF::SetSubject('فاتورة');
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
+        exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function tafweed(Request $request)
@@ -224,7 +259,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -255,7 +290,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -289,7 +324,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -322,7 +357,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -355,7 +390,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -398,7 +433,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -438,7 +473,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -478,7 +513,7 @@ class ProjectDocController extends Controller
         $html = $the_view->render();
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'I');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -541,7 +576,7 @@ class ProjectDocController extends Controller
         $newPDF::AddPage('P', 'A4');
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         return;
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -617,6 +652,7 @@ class ProjectDocController extends Controller
     public static function get_project_docs()
     {
         return [
+            'فاتورة' => 'projectDoc.invoice',
             'عرض سعر' => 'projectDoc.quotation',
             'تفويض' => 'projectDoc.tafweed',
             'تفويض المساحة' => 'projectDoc.tafweed_masaha',
@@ -658,6 +694,62 @@ class ProjectDocController extends Controller
         return $newPDF;
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public static function set_invoice_header_footer($newPDF, $is_tafweed = false)
+    {
+        // Custom Header
+        $newPDF::setHeaderCallback(function ($pdf) {
+            // top header logo
+            $pdf->Image(URL::asset('/img/header-small.jpg'), 15, 10, 40, '', 'JPG', '');
+            // background logo
+            $pdf->Image(URL::asset('/img/bg-Logo-t.jpg'), 20, 70, 170, '', 'JPG');
+        });
+        // -----------------------------------------------------------------
+        $newPDF::setFooterCallback(function ($pdf) {
+
+            $pdf->SetY(-22); // Position at 22 mm from bottom
+            $pdf->SetFont('aljazeera', '', 11);
+            // text
+            $html_ar = 'الفاتورة الإلكترونية لا تحتاج توقيع أو ختم';
+            $html_en = 'Electronic Invoice Dos Not Require Signature Or Stamp';
+            // cell hight
+            $pdf->setCellHeightRatio(1.5);
+            // creating the cell
+            $pdf->Cell(0, 0, $html_en, 'TB', true, 'L', 0, '', 0, false, 'B', 'M');
+            $pdf->Cell(0, 0, $html_ar, 'TB', true, 'R', 0, '', 0, false, 'B', 'M');
+
+            // -----------------------------------------------------------------
+
+            $pdf->SetY(-18); // Position at 22 mm from bottom
+            $pdf->SetFont('courier', '', 8);
+            $data = 'printed at: ' . (Carbon::now())->toDateString();
+            $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
+            $page_numbring = 'Page ' . $pdf->getAliasNumPage() . ' Of ' . $pdf->getAliasNbPages();
+            $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'B');
+
+            // image of footer
+            // $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
+
+            $pdf->SetFont('helveticaB', 'B', 11);
+            // $pdf->SetTextColor(57, 39, 20);
+            $pdf->SetFillColor(255, 242, 204);
+            $html2 = 'Silver Center, Alhezam Road, Alihn Dist, Almadinah Almunawarah, KSA, P.O.BOX:20337';
+            $html3 = 'Tel:920020544, 0148650000, 0148645585, Email:ahc@hakeemarch.com';
+            $pdf->SetY(-12);
+            $pdf->Cell(0, 0, $html2, '', true, 'C', 1, '', 0, false, 'B', 'M');
+            $pdf->SetY(-7);
+            $pdf->Cell(0, 0, $html3, '', true, 'C', 1, '', 0, false, 'B', 'M');
+            // $pdf->setCellHeightRatio(0.5);
+        });
+
+
+
+        // -----------------------------------------------------------------
+        // seting page margin (L,T,R)
+        $newPDF::SetMargins(15, 15, 15);
+        // -----------------------------------------------------------------
+        return $newPDF;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public static function set_hakeem_header_footer($newPDF, $is_tafweed = false)
     {
         // Custom Header
@@ -675,7 +767,7 @@ class ProjectDocController extends Controller
                 // Position at 22 mm from bottom
                 $pdf->SetY(-22);
                 // Set font
-                $pdf->SetFont('freeserif', '', 12);
+                $pdf->SetFont('freeserif', '', 11);
                 // text
                 $html = 'ملاحظة: هذا التفويض يخص هذه المعاملة فقط، وينتهي مفعوله بانتهاءالمعاملة لدى الامانة او الغاءه من احدالطرفين.';
                 // cell hight
@@ -687,7 +779,8 @@ class ProjectDocController extends Controller
                 // Position at 22 mm from bottom
                 $pdf->SetY(-18);
                 // Set font
-                $pdf->SetFont('helvetica', 'I', 8);
+                // $pdf->SetFont('helvetica', 'I', 8);
+                $pdf->SetFont('courier', 'I', 8);
                 // print date 
                 $data = 'printed at: ' . (Carbon::now())->toDateString();
                 $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
@@ -695,7 +788,17 @@ class ProjectDocController extends Controller
                 $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
                 $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'B');
                 // image of footer
-                $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
+                // $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
+
+                $pdf->SetFont('helveticaB', 'B', 11);
+                // $pdf->SetTextColor(57, 39, 20);
+                $pdf->SetFillColor(255, 242, 204);
+                $html2 = 'Silver Center, Alhezam Road, Alihn Dist, Almadinah Almunawarah, KSA, P.O.BOX:20337';
+                $html3 = 'Tel:920020544, 0148650000, 0148645585, Email:ahc@hakeemarch.com';
+                $pdf->SetY(-12);
+                $pdf->Cell(0, 0, $html2, '', true, 'C', 1, '', 0, false, 'B', 'M');
+                $pdf->SetY(-7);
+                $pdf->Cell(0, 0, $html3, '', true, 'C', 1, '', 0, false, 'B', 'M');
                 // $pdf->setCellHeightRatio(0.5);
             });
         } else {
@@ -703,7 +806,7 @@ class ProjectDocController extends Controller
                 // Position at 22 mm from bottom
                 $pdf->SetY(-18);
                 // Set font
-                $pdf->SetFont('helvetica', 'I', 8);
+                $pdf->SetFont('courier', 'I', 8);
                 // print date 
                 $data = 'printed at: ' . (Carbon::now())->toDateString();
                 $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
@@ -711,27 +814,15 @@ class ProjectDocController extends Controller
                 $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
                 $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'B');
                 // image of footer
-                $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
-                // $pdf->setCellHeightRatio(0.5);
-
-
-
-                // $pdf->SetY(-150);
-                // $pdf->SetX(205);
-
-                // $pdf->StartTransform();
-                // $pdf->Rotate(+90);
-                // $pdf->SetFont('helvetica', '', 8);
-                // $pdf->Cell(0, 0, 'This is a sample data 1', 0, 0, 'C', 0, '', 0, false, 'B', 'B');
-                // // $pdf->Cell(0, 0, 'This is a sample data 2', 0, 0, 'C', 0, '');
-                // $pdf->StopTransform();
-
-                // -----------------------------------------------------------------
-
-
-
-
-
+                // $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
+                $pdf->SetFont('helveticaB', 'B', 11);
+                $pdf->SetFillColor(255, 242, 204);
+                $html2 = 'Silver Center, Alhezam Road, Alihn Dist, Almadinah Almunawarah, KSA, P.O.BOX:20337';
+                $html3 = 'Tel:920020544, 0148650000, 0148645585, Email:ahc@hakeemarch.com';
+                $pdf->SetY(-12);
+                $pdf->Cell(0, 0, $html2, '', true, 'C', 1, '', 0, false, 'B', 'M');
+                $pdf->SetY(-7);
+                $pdf->Cell(0, 0, $html3, '', true, 'C', 1, '', 0, false, 'B', 'M');
             });
         }
 
@@ -926,7 +1017,7 @@ class ProjectDocController extends Controller
         // dd($html);
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         exit;
 
         // --------------------------------------------------------------------------------------------------------------

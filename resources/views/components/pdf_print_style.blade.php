@@ -40,6 +40,16 @@
         font-family: aljazeera;
     }
 
+    .courier-font {
+        font-family: courier;
+        font-weight: bolder;
+    }
+
+    .x-lg-font {
+        font-size: 130%;
+    }
+
+
     .highlight {
         background-color: yellow;
         max-width: fit-content;
