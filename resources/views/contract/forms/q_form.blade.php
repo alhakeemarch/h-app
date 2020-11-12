@@ -40,9 +40,15 @@
             $test1 = !(in_array( $contract_type->id , $project_contracts_type_id));
             $test2 = strpos($contract_type->name_ar, 'مدن') == false;
             $test3 = auth()->user()->is_admin;
+            $test4 = false;
+            if ($project->plot()->first()) {
+            if($project->plot()->first()->district()->first()){
             $test4 = (isset($project->plot()->first()->district()->first()->id))
             ? $project->plot()->first()->district()->first()->id == 40
             : false ;
+            }
+            }
+
             @endphp
             @if ($test1)
             @if ($test2|| $test3 ||$test4)

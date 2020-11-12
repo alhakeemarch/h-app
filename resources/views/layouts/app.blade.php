@@ -152,7 +152,24 @@
         window.addEventListener('load',function(){
     const loader = document.querySelector('.loader');
     loader.classList.add('hidden')
-})
+});
+    </script>
+    <script>
+        // forms = document.querySelectorAll('form');
+        // btns = document.querySelectorAll('button');
+        // for (let form of forms){
+        //     form.addEventListener('submit'remove_hidden())
+        // }
+
+        // function remove_hidden{
+        //     const loader = document.querySelector('.loader');
+        //     loader.classList.remove('hidden');
+        //     // add_hidden();
+        // }
+        // function add_hidden{
+        //     const loader = document.querySelector('.loader');
+        //     loader.classList.add('hidden');
+        // }
     </script>
 
 
