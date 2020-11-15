@@ -91,6 +91,7 @@
         border: gray soled 0.5px;
         border-collapse: collapse;
         background-color: lightgrey;
+        /* background-color: #F0F0F0; */
     }
 
     .tbl-center td {

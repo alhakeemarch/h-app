@@ -85,13 +85,12 @@
                     <td class="project_location">{{$project->project_location}}</td>
                     <td class="project_created_at_note">{{$project->created_at_note}}</td>
                     <td class="project_notes">{{$project->notes}}</td>
-                    <td scope="link">
-
-                        {{-- @if(($project->plot_id && $project->person_id)|| auth()->user()->is_admin) --}}
-                        <a href="{{ url('/project/'.$project->id) }}">
-                            <i class="far fa-eye"></i>
-                        </a>
-                        {{-- @endif --}}
+                    <td scope="link" class="text-center">
+                        <form action="{{ url('/project/'.$project->id) }}">
+                            <button type="submit" class="btn btn-link text-primary m-0 p-0">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 @php $i ++ @endphp

@@ -216,6 +216,8 @@ class ProjectDocController extends Controller
         // setting main sittings
         $newPDF = $this->set_common_settings($newPDF);
         // -----------------------------------------------------------------
+        $newPDF::SetFont('al-mohanad', '', 11, '', false);
+        // -----------------------------------------------------------------
         // pdf title
         $newPDF::SetTitle('فاتورة');
         $newPDF::SetSubject('فاتورة');
