@@ -216,7 +216,7 @@ class ProjectDocController extends Controller
         // setting main sittings
         $newPDF = $this->set_common_settings($newPDF);
         // -----------------------------------------------------------------
-        $newPDF::SetFont('al-mohanad', '', 11, '', false);
+        $newPDF::SetFont('al-mohanad', '', 10, '', false);
         // -----------------------------------------------------------------
         // pdf title
         $newPDF::SetTitle('فاتورة');
@@ -988,6 +988,17 @@ class ProjectDocController extends Controller
         // $newPDF::SetFont('al-mateen', '', 12, '', false);
         // $newPDF::SetFont('shahab', '', 12, '', false); // no numbers in tis fonts
         // $newPDF::SetFont('ptboldheading', '', 12, '', false);
+        // $newPDF::SetFont('consolas', '', 11, '', false);    // just for english and numbers
+        // $newPDF::SetFont('consolasb', '', 11, '', false);    // just for english and numbers   boold
+        // $newPDF::SetFont('consolasi', '', 11, '', false);    // just for english and numbers   italic
+        // $newPDF::SetFont('consolasbi', '', 11, '', false);    // just for english and numbers   boold and italic
+
+
+
+
+        // $newPDF::SetFont('arabictwo', '', 11, '', false);    // just for arabic numbers
+        // $newPDF::SetFont('arabic', '', 11, '', false);    // just for arabic numbers
+
 
         // PDF::SetFont('aefurat', '', 16, '', false);
         // PDF::SetFont('aealarabiya', '', 16, '', false);

@@ -12,7 +12,7 @@
         <td></td>
     </tr>
     <tr>
-        <td class="txt-center courier-font x-lg-font">VAT Invoice</td>
+        <td class="txt-center consolas-font x-lg-font">VAT Invoice</td>
         <td></td>
     </tr>
 </table> <br><br>
@@ -144,14 +144,14 @@
     <tr>
         <th colspan="2">
             <span>الإجمالي بدون ضريبة</span><br><span class="txt-center"
-                style="font-family: courier; font-size:70%;">Subtotal Without VAT</span>
+                style="font-family: consolas; font-size:75%;">Subtotal Without VAT</span>
         </th>
         <td colspan="6">التفقيط</td>
         <td>المبلغ</td>
     </tr>
     <tr>
         <th colspan="2">
-            <span>الإجمالي الضريبة</span><br><span class="txt-center" style="font-family: courier; font-size:70%;">VAT
+            <span>الإجمالي الضريبة</span><br><span class="txt-center" style="font-family: consolas; font-size:75%;">VAT
                 Subtotal (15%)</span>
         </th>
         <td colspan="6">التفقيط</td>
@@ -159,7 +159,7 @@
     </tr>
     <tr>
         <th colspan="2">
-            <span>الإجمالي مع الضريبة</span><br><span class="txt-center" style="font-family: courier; font-size:70%;">
+            <span>الإجمالي مع الضريبة</span><br><span class="txt-center" style="font-family: consolas; font-size:75%;">
                 Total With VAT
             </span>
         </th>
@@ -172,6 +172,6 @@
     <tr>
         <th>اصدر بواسطة</th>
         <td colspan="4">المحاسب : حمدي عبدالرحمن</td>
-        <th style="font-family: courier;">Issued By</th>
+        <th style="font-family: consolas;">Issued By</th>
     </tr>
 </table>
