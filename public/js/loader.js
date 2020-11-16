@@ -10,11 +10,12 @@ const forms = document.querySelectorAll('form');
 const btns = document.querySelectorAll('button');
 for (let form of forms) {
     form.addEventListener('submit', (e) => {
-        document.querySelector('.loader').classList.remove('hidden');
+        console.log(e);
+        // document.querySelector('.loader').classList.remove('hidden');
         // form.children('button[type=submit]').prop('disabled', true);
-        for (let btn of btns) {
-            btn.disabled = true;
-        }
+        // for (let btn of btns) {
+        //     btn.disabled = true;
+        // }
     })
 }
 

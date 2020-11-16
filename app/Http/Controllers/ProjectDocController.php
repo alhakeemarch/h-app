@@ -21,6 +21,7 @@ use function PHPSTORM_META\override;
 class ProjectDocController extends Controller
 {
     public $is_tafweed = false;
+    private $footer_color = '240, 248, 255';
     /**
      * Create a new controller instance.
      *
@@ -653,7 +654,7 @@ class ProjectDocController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_project_docs()
     {
-        if (auth()->user()->is_admmin) {
+        if (auth()->user()->is_admin) {
             return [
                 'فاتورة' => 'projectDoc.invoice',
                 'عرض سعر' => 'projectDoc.quotation',
@@ -738,7 +739,8 @@ class ProjectDocController extends Controller
             // -----------------------------------------------------------------
 
             $pdf->SetY(-18); // Position at 22 mm from bottom
-            $pdf->SetFont('courier', '', 8);
+            // $pdf->SetFont('courier', '', 8);
+            $pdf->SetFont('consolas', '', 8);
             $data = 'printed at: ' . (Carbon::now())->toDateString();
             $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
             $page_numbring = 'Page ' . $pdf->getAliasNumPage() . ' Of ' . $pdf->getAliasNbPages();
@@ -749,7 +751,7 @@ class ProjectDocController extends Controller
 
             $pdf->SetFont('helveticaB', 'B', 11);
             // $pdf->SetTextColor(57, 39, 20);
-            $pdf->SetFillColor(255, 242, 204);
+            $pdf->SetFillColor(215, 183, 126);
             $html2 = 'Silver Center, Alhezam Road, Alihn Dist, Almadinah Almunawarah, KSA, P.O.BOX:20337';
             $html3 = 'Tel:920020544, 0148650000, 0148645585, Email:ahc@hakeemarch.com';
             $pdf->SetY(-12);
@@ -798,7 +800,7 @@ class ProjectDocController extends Controller
                 $pdf->SetY(-18);
                 // Set font
                 // $pdf->SetFont('helvetica', 'I', 8);
-                $pdf->SetFont('courier', 'I', 8);
+                $pdf->SetFont('consolas', '', 8);
                 // print date 
                 $data = 'printed at: ' . (Carbon::now())->toDateString();
                 $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
@@ -810,12 +812,13 @@ class ProjectDocController extends Controller
 
                 $pdf->SetFont('helveticaB', 'B', 11);
                 // $pdf->SetTextColor(57, 39, 20);
-                $pdf->SetFillColor(255, 242, 204);
+                // $pdf->SetFillColor(215, 183, 126);
+                $pdf->SetFillColor(215, 183, 126);
                 $html2 = 'Silver Center, Alhezam Road, Alihn Dist, Almadinah Almunawarah, KSA, P.O.BOX:20337';
                 $html3 = 'Tel:920020544, 0148650000, 0148645585, Email:ahc@hakeemarch.com';
                 $pdf->SetY(-12);
                 $pdf->Cell(0, 0, $html2, '', true, 'C', 1, '', 0, false, 'B', 'M');
-                $pdf->SetY(-7);
+                $pdf->SetY(-7.8);
                 $pdf->Cell(0, 0, $html3, '', true, 'C', 1, '', 0, false, 'B', 'M');
                 // $pdf->setCellHeightRatio(0.5);
             });
@@ -824,7 +827,7 @@ class ProjectDocController extends Controller
                 // Position at 22 mm from bottom
                 $pdf->SetY(-18);
                 // Set font
-                $pdf->SetFont('courier', 'I', 8);
+                $pdf->SetFont('consolas', '', 8);
                 // print date 
                 $data = 'printed at: ' . (Carbon::now())->toDateString();
                 $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
@@ -834,12 +837,12 @@ class ProjectDocController extends Controller
                 // image of footer
                 // $pdf->Image(URL::asset('/img/footer.jpg'), 10, 280, 190, '', 'JPG');
                 $pdf->SetFont('helveticaB', 'B', 11);
-                $pdf->SetFillColor(255, 242, 204);
+                $pdf->SetFillColor(215, 183, 126);
                 $html2 = 'Silver Center, Alhezam Road, Alihn Dist, Almadinah Almunawarah, KSA, P.O.BOX:20337';
                 $html3 = 'Tel:920020544, 0148650000, 0148645585, Email:ahc@hakeemarch.com';
                 $pdf->SetY(-12);
                 $pdf->Cell(0, 0, $html2, '', true, 'C', 1, '', 0, false, 'B', 'M');
-                $pdf->SetY(-7);
+                $pdf->SetY(-7.5);
                 $pdf->Cell(0, 0, $html3, '', true, 'C', 1, '', 0, false, 'B', 'M');
             });
         }
@@ -859,7 +862,7 @@ class ProjectDocController extends Controller
             // Position at 22 mm from bottom
             $pdf->SetY(-15);
             // Set font
-            $pdf->SetFont('helvetica', 'I', 8);
+            $pdf->SetFont('consolas', '', 8);
             // print date 
             $data = 'printed at: ' . (Carbon::now())->toDateString();
             $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');

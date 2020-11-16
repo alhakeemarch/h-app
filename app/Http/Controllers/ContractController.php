@@ -254,16 +254,16 @@ class ContractController extends Controller
         $newPDF::SetX(198);
         $newPDF::StartTransform();
         $newPDF::Rotate(+90);
-        $newPDF::SetFont('helvetica', '', 8);
-        $newPDF::SetTextColor(0, 0, 0, 25);;
+        $newPDF::SetFont('consolas', '', 8);
+        $newPDF::SetTextColor(0, 0, 0, 35);;
         $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
         $newPDF::StopTransform();
         // -----------------------------------------------------------------
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'yymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         // -----------------------------------------------------------------
-        return;
-        // return redirect()->back();
+        // return;
+        return redirect()->back();
         // exit;
         // -----------------------------------------------------------------
     }
