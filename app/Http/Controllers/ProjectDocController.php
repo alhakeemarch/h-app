@@ -653,19 +653,35 @@ class ProjectDocController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public static function get_project_docs()
     {
-        return [
-            'فاتورة' => 'projectDoc.invoice',
-            'عرض سعر' => 'projectDoc.quotation',
-            'تفويض' => 'projectDoc.tafweed',
-            'تفويض المساحة' => 'projectDoc.tafweed_masaha',
-            'تعهد المخاطر' => 'projectDoc.t_makhater',
-            'تعهد السور' => 'projectDoc.t_soor',
-            'تعهد العزل' => 'projectDoc.t_azel',
-            'تعهد المياه' => 'projectDoc.t_meyaah',
-            'غلاف المذكرة الإنشائية' => 'projectDoc.str_notes_cover',
-            'تقرير ارض فضاء' => 'projectDoc.report_empty_land',
-            'طلب ربط رخصة بالقرار المساحي' => 'projectDoc.request_bind_to_baladi',
-        ];
+        if (auth()->user()->is_admmin) {
+            return [
+                'فاتورة' => 'projectDoc.invoice',
+                'عرض سعر' => 'projectDoc.quotation',
+                'تفويض' => 'projectDoc.tafweed',
+                'تفويض المساحة' => 'projectDoc.tafweed_masaha',
+                'تعهد المخاطر' => 'projectDoc.t_makhater',
+                'تعهد السور' => 'projectDoc.t_soor',
+                'تعهد العزل' => 'projectDoc.t_azel',
+                'تعهد المياه' => 'projectDoc.t_meyaah',
+                'غلاف المذكرة الإنشائية' => 'projectDoc.str_notes_cover',
+                'تقرير ارض فضاء' => 'projectDoc.report_empty_land',
+                'طلب ربط رخصة بالقرار المساحي' => 'projectDoc.request_bind_to_baladi',
+            ];
+        } else {
+            return [
+                // 'فاتورة' => 'projectDoc.invoice',
+                'عرض سعر' => 'projectDoc.quotation',
+                'تفويض' => 'projectDoc.tafweed',
+                'تفويض المساحة' => 'projectDoc.tafweed_masaha',
+                'تعهد المخاطر' => 'projectDoc.t_makhater',
+                'تعهد السور' => 'projectDoc.t_soor',
+                'تعهد العزل' => 'projectDoc.t_azel',
+                'تعهد المياه' => 'projectDoc.t_meyaah',
+                'غلاف المذكرة الإنشائية' => 'projectDoc.str_notes_cover',
+                'تقرير ارض فضاء' => 'projectDoc.report_empty_land',
+                'طلب ربط رخصة بالقرار المساحي' => 'projectDoc.request_bind_to_baladi',
+            ];
+        }
     }
     // -----------------------------------------------------------------------------------------------------------------
 
