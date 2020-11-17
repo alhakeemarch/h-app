@@ -1,7 +1,13 @@
 <x-pdf_print_style />
+<style>
+    table {
+        font-size: 150%;
+        line-height: 2;
+    }
 
+</style>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
-<table class="main-title txt-center">
+<table class="main-title txt-center" style="font-size: 250%;">
     <tr>
         <td>
             المذكرة الإنشائية

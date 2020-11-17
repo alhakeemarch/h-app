@@ -1,12 +1,12 @@
 <ul class="list-group">
-    @foreach ($project_docs as $doc_name => $doc_route)
+    @foreach ($project_docs as $project_doc)
     <li class="list-group-item d-flex justify-content-between">
-        <span class=" align-self-center">{{$doc_name}}</span>
+        <span class=" align-self-center">{{$project_doc->name_ar}}</span>
         <span class="d-flex">
             @php
             $quotation = App\Quotation::where('project_id', $project->id)->first();
             @endphp
-            @if (($doc_name == 'عرض سعر') && ($quotation))
+            @if (($project_doc->name_ar == 'عرض سعر') && ($quotation))
             {{-- --------------------------------------------------------------------------------------- --}}
             <form action="{{route('quotation.update',$quotation)}}" method="POST">
                 @csrf
@@ -29,9 +29,11 @@
             <span>&nbsp;&nbsp;</span>
             {{-- --------------------------------------------------------------------------------------- --}}
             @endif
-            <form action="{{route($doc_route)}}" method="get">
+            {{-- <form action="{{route($project_doc->view_template)}}" method="get"> --}}
+            <form action="{{route('projectDoc.get_pdf')}}" method="get">
                 @csrf
                 <input type="hidden" name="project_id" value="{{$project->id}}">
+                <input type="hidden" name="project_doc_type_id" value="{{$project_doc->id}}">
                 <button type="submit" class="btn btn-link m-0 p-0">{{__('print')}} |
                     <i class="fa fa-print" aria-hidden="true"></i>
                 </button>

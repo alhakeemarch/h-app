@@ -10,6 +10,17 @@ use Illuminate\Http\Request;
 class QuotationController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->middleware('active_user');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -17,6 +28,7 @@ class QuotationController extends Controller
     public function index()
     {
         //
+        return Quotation::all();
     }
 
     /**

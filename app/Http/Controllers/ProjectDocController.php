@@ -7,6 +7,7 @@ use App\Person;
 use App\Plot;
 use App\Project;
 use App\ProjectDoc;
+use App\ProjectDocType;
 use App\Quotation;
 use Carbon\Carbon;
 use Elibyy\TCPDF\Facades\TCPDF as TCPDF;
@@ -21,7 +22,6 @@ use function PHPSTORM_META\override;
 class ProjectDocController extends Controller
 {
     public $is_tafweed = false;
-    private $footer_color = '240, 248, 255';
     /**
      * Create a new controller instance.
      *
@@ -151,6 +151,7 @@ class ProjectDocController extends Controller
         // -----------------------------------------------------------------
         $the_view = View::make($pdf_view)->with($data);
         $html = $the_view->render();
+        $newPDF::AddPage('P', 'A4');
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
         // -----------------------------------------------------------------
@@ -231,364 +232,12 @@ class ProjectDocController extends Controller
         exit;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function tafweed(Request $request)
-    {
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_team($project);
-        $data = [
-            'project' => $project,
-            'office_data' => $office_data,
-            'project_tame' => $project_tame,
-        ];
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // Content
-        $doc_name = 'tafweed';
-        $pdf_view = 'projectDoc.tafweed';
-        $is_tafweed = true;
-        // -----------------------------------------------------------------
-        // setting a header and foooter 
-        $newPDF = $this->set_hakeem_header_footer($newPDF, $is_tafweed);
-        // setting main sittings
-        $newPDF = $this->set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle('تفويض');
-        $newPDF::SetSubject('تفويض');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
-        exit;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function tafweed_masaha(Request $request)
-    {
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $data = [
-            'project' => $project,
-            'office_data' => $office_data,
-        ];
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // Content
-        $doc_name = 'tafweed_masaha';
-        $pdf_view = 'projectDoc.tafweed_masaha';
-        $newPDF = $this->set_common_settings($newPDF);
-        // setting pdf title
-        $newPDF::SetTitle('تفويض مساحة');
-        $newPDF::SetSubject('تفويض مساحة');
-        // overriding som settings
-        $newPDF::SetMargins(15, 15, 15);
-        $newPDF::SetFont('al-mohanad', '', 11, '', false);
-        $newPDF::setCellHeightRatio(1.55);
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
-        exit;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function t_makhater(Request $request)
-    {
-        // return view('projectDoc.t_makhater');
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $data = [
-            'project' => $project,
-            'office_data' => $office_data,
-        ];
-
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // Content
-        $doc_name = 't_makhater';
-        $pdf_view = 'projectDoc.t_makhater';
-        // -----------------------------------------------------------------
-        // setting a header and foooter 
-        $newPDF = $this->set_amana_header_footer($newPDF);
-        // setting main sittings
-        $newPDF = $this->set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle('تعهد مخاطر');
-        $newPDF::SetSubject('تعهد مخاطر');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
-        exit;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function t_soor(Request $request)
-    {
-        // return view('projectDoc.t_soor');
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $data = [
-            'project' => $project,
-            'office_data' => $office_data,
-        ];
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // Content
-        $doc_name = 't_soor';
-        $pdf_view = 'projectDoc.t_soor';
-        // setting a header and foooter 
-        $newPDF = $this->set_amana_header_footer($newPDF);
-        // -----------------------------------------------------------------
-        // setting main sittings
-        $newPDF = $this->set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle('تعهد السور');
-        $newPDF::SetSubject('تعهد السور');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
-        exit;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function t_meyaah(Request $request)
-    {
-        // return view('projectDoc.t_meyaah');
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $data = [
-            'project' => $project,
-            'office_data' => $office_data,
-        ];
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // Content
-        $doc_name = 't_meyaah';
-        $pdf_view = 'projectDoc.t_meyaah';
-        // setting a header and foooter 
-        $newPDF = $this->set_page_no_footer($newPDF);
-        // -----------------------------------------------------------------
-        // setting main sittings
-        $newPDF = $this->set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle('تعهد المياه');
-        $newPDF::SetSubject('تعهد المياه');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
-        exit;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function str_notes_cover(Request $request)
-    {
-        // return view('projectDoc.str_notes_cover');
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $data = [
-            'project' => $project,
-            'office_data' => $office_data,
-        ];
-        // Content
-        $doc_name = 'str_notes_cover';
-        $pdf_view = 'projectDoc.str_notes_cover';
-        // check if there is data missing for the pdf file
-        $missing_dat = $this->get_missing_data($doc_name, $project);
-        if (!empty($missing_dat)) {
-            return redirect()->back()->withErrors($missing_dat);
-        }
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // setting a header and foooter 
-        $newPDF = $this->set_hakeem_header_footer($newPDF);
-        // -----------------------------------------------------------------
-        // setting main sittings
-        $newPDF = $this->set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // overriding som settings
-        // $newPDF::SetMargins(15, 15, 15);
-        $newPDF::SetFont('al-mohanad', '', 16, '', false);
-        $newPDF::setCellHeightRatio(3);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle('غلاف المذكرة الإنشائية');
-        $newPDF::SetSubject('غلاف المذكرة الإنشائية');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
-        exit;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function report_empty_land(Request $request)
-    {
-        // return view('projectDoc.report_empty_land');
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $date_and_time = DateAndTime::get_date_time_arr();
-        $doc_name = 'report_empty_land';
-        $data = [
-            'project' => $project,
-            'office_data' => $office_data,
-            'date_and_time' => $date_and_time,
-        ];
-        // creating pdf 
-        $missing_dat = $this->get_missing_data($doc_name, $project);
-        if (!empty($missing_dat)) {
-            return redirect()->back()->withErrors($missing_dat);
-        }
-        $newPDF = new TCPDF();
-        // Content
-
-        $pdf_view = 'projectDoc.report_empty_land';
-        // setting a header and foooter 
-        $newPDF = $this->set_hakeem_header_footer($newPDF);
-        // -----------------------------------------------------------------
-        // setting main sittings
-        $newPDF = $this->set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle('تقرير أرض فضاء');
-        $newPDF::SetSubject('تقرير أرض فضاء');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
-        exit;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function request_bind_to_baladi(Request $request)
-    {
-        // return view('projectDoc.report_empty_land');
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $date_and_time = DateAndTime::get_date_time_arr();
-        $doc_name = 'request_bind_to_baladi';
-        $data = [
-            'project' => $project,
-            'office_data' => $office_data,
-            'date_and_time' => $date_and_time,
-        ];
-        // creating pdf 
-        $missing_dat = $this->get_missing_data($doc_name, $project);
-        if (!empty($missing_dat)) {
-            // return redirect()->back()->withErrors($missing_dat);
-        }
-        $newPDF = new TCPDF();
-        // Content
-
-        $pdf_view = 'projectDoc.request_bind_to_baladi';
-        // setting a header and foooter 
-        $newPDF = $this->set_hakeem_header_footer($newPDF);
-        // -----------------------------------------------------------------
-        // setting main sittings
-        $newPDF = $this->set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle('طلب ربط ببلدي');
-        $newPDF::SetSubject('طلب ربط ببلدي');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
-        exit;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function t_azel(Request $request)
-    {
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $date_and_time = DateAndTime::get_date_time_arr();
-        $doc_name = 't_azel';
-        $azel_data = [
-            'walls_material' => 'بولسترين',
-            'walls_value' => '0.53',
-            'ceiling_material' => 'بولسترين',
-            'ceiling_value' => '0.31',
-            'window_material' => 'زجاج مضاعف',
-            'window_value' => '2.67',
-        ];
-        $data_for_pdf = [
-            'project' => $project,
-            'office_data' => $office_data,
-            'date_and_time' => $date_and_time,
-            'date_and_time' => $date_and_time,
-            'azel_data' => $azel_data,
-        ];
-        // check if there is data missing for the pdf file
-        $missing_dat = $this->get_missing_data($doc_name, $project);
-        if (!empty($missing_dat)) {
-            return redirect()->back()->withErrors($missing_dat);
-        }
-        // creating pdf 
-        $newPDF = new TCPDF();
-        $pdf_view = 'projectDoc.t_azel';
-        // -----------------------------------------------------------------
-        // set some language dependent data:
-        $lg = [
-            'a_meta_charset' => 'UTF-8',
-            'a_meta_dir' => 'rtl',
-            'a_meta_language' => 'ar',
-            'w_page' => 'page',
-        ];
-        $newPDF::setLanguageArray($lg);
-        // -----------------------------------------------------------------
-        $newPDF::SetAuthor('Hakeem-App');
-        $newPDF::SetTitle('تعهد العزل');
-        $newPDF::SetSubject('تعهد العزل');
-        $newPDF::SetFooterMargin(0);
-        $newPDF::SetAutoPageBreak(TRUE, 24);
-        $newPDF::SetMargins(20, 20, 20, true);
-        $newPDF::setCellHeightRatio(1.3);
-        // $newPDF::Ln(10);
-        // -----------------------------------------------------------------
-        // set arabic font
-        $newPDF::SetFont('al-mohanad', 'B', 11, '', false);
-        // $newPDF::SetFont('traditionalarabic', 'B', 14, '', false);
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data_for_pdf);
-        $html = $the_view->render();
-        // -----------------------------------------------------------------
-        $newPDF::AddPage('P', 'A4');
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
-        return;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
     public static function get_missing_data($doc_name, $project)
     {
         $missing_data = [];
         // dd($doc_name);
         // -----------------------------------------------------------------
-        if ($doc_name == 't_azel') {
+        if ($doc_name == 'تعهد العزل') {
             if (!($project->plot()->first()->neighbor()->first())) {
                 array_push($missing_data, 'يجب تسجيل معلومات الحي');
             }
@@ -603,7 +252,7 @@ class ProjectDocController extends Controller
             }
         }
         // -----------------------------------------------------------------
-        if ($doc_name == 'str_notes_cover') {
+        if ($doc_name == 'غلاف المذكرة الإنشائية') {
             if (!($project->plot()->first()->neighbor()->first())) {
                 array_push($missing_data, 'يجب تسجيل معلومات الحي');
             }
@@ -618,7 +267,7 @@ class ProjectDocController extends Controller
             }
         }
         // -----------------------------------------------------------------
-        if ($doc_name == 'report_empty_land') {
+        if ($doc_name == 'تقرير ارض فضاء') {
             if (!($project->plot()->first()->plan()->first())) {
                 array_push($missing_data, 'يجب تسجيل معلومات المخطط');
             }
@@ -630,7 +279,7 @@ class ProjectDocController extends Controller
             }
         }
         // -----------------------------------------------------------------
-        if ($doc_name == 'request_bind_to_baladi') {
+        if ($doc_name == 'طلب ربط رخصة بالقرار المساحي') {
 
             if (!($project->plot()->first()->plan()->first())) {
                 array_push($missing_data, 'يجب تسجيل معلومات المخطط');
@@ -652,37 +301,90 @@ class ProjectDocController extends Controller
         return $missing_data;
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function get_pdf(Request $request)
+    {
+        if ($request->project_doc_type_id == '2') {
+            return $this->quotation($request);
+        }
+        $project = Project::findOrFail($request->project_id);
+        $project_doc_type = ProjectDocType::findOrFail($request->project_doc_type_id);
+        $office_data = OfficeData::findOrFail(1);
+        $project_tame = ProjectController::get_project_team($project);
+        $date_and_time = DateAndTime::get_date_time_arr();
+        $azel_data = [
+            'walls_material' => 'بولسترين',
+            'walls_value' => '0.53',
+            'ceiling_material' => 'بولسترين',
+            'ceiling_value' => '0.31',
+            'window_material' => 'زجاج مضاعف',
+            'window_value' => '2.67',
+        ];
+        $data = [
+            'project' => $project,
+            'office_data' => $office_data,
+            'project_tame' => $project_tame,
+            'date_and_time' => $date_and_time,
+            'azel_data' => $azel_data,
+        ];
+        // -----------------------------------------------------------------
+        // creating pdf 
+        $newPDF = new TCPDF();
+        // Content
+        $doc_name = $project_doc_type->name_ar;
+        $pdf_view = $project_doc_type->view_template;
+        $is_tafweed = ($project_doc_type->name_ar == 'تفويض') ? true : false;
+        // -----------------------------------------------------------------
+        if ($doc_name == 'تعهد العزل') {
+            // $this->t_azel($request);
+        }
+        // check if there is data missing for the pdf file
+        $missing_dat = $this->get_missing_data($doc_name, $project);
+        if (!empty($missing_dat)) {
+            return redirect()->back()->withErrors($missing_dat);
+        }
+        // -----------------------------------------------------------------
+        switch ($project_doc_type->header_foooter_template) {
+            case 'hakeem_header_footer':
+                $newPDF = $this->set_hakeem_header_footer($newPDF, $is_tafweed);
+                break;
+            case 'amana_header_footer':
+                $newPDF = $this->set_amana_header_footer($newPDF, $is_tafweed);
+                break;
+            case 'page_no_footer':
+                $newPDF = $this->set_page_no_footer($newPDF, $is_tafweed);
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        $newPDF = $this->set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        if ($doc_name == 'تعهد العزل') {
+            $newPDF::SetAutoPageBreak(TRUE, 24);
+            $newPDF::SetMargins(20, 20, 20, true);
+            $newPDF::setCellHeightRatio(1.3);
+            $newPDF::SetFont('al-mohanad', 'B', 11, '', false);
+        }
+        // -----------------------------------------------------------------
+        // pdf title
+        $newPDF::SetTitle($doc_name);
+        $newPDF::SetSubject($doc_name);
+        // -----------------------------------------------------------------
+        $the_view = View::make($pdf_view)->with($data);
+        $html = $the_view->render();
+        $newPDF::AddPage('P', 'A4');
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        $newPDF::lastPage();
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public static function get_project_docs()
     {
-        if (auth()->user()->is_admin) {
-            return [
-                'فاتورة' => 'projectDoc.invoice',
-                'عرض سعر' => 'projectDoc.quotation',
-                'تفويض' => 'projectDoc.tafweed',
-                'تفويض المساحة' => 'projectDoc.tafweed_masaha',
-                'تعهد المخاطر' => 'projectDoc.t_makhater',
-                'تعهد السور' => 'projectDoc.t_soor',
-                'تعهد العزل' => 'projectDoc.t_azel',
-                'تعهد المياه' => 'projectDoc.t_meyaah',
-                'غلاف المذكرة الإنشائية' => 'projectDoc.str_notes_cover',
-                'تقرير ارض فضاء' => 'projectDoc.report_empty_land',
-                'طلب ربط رخصة بالقرار المساحي' => 'projectDoc.request_bind_to_baladi',
-            ];
-        } else {
-            return [
-                // 'فاتورة' => 'projectDoc.invoice',
-                'عرض سعر' => 'projectDoc.quotation',
-                'تفويض' => 'projectDoc.tafweed',
-                'تفويض المساحة' => 'projectDoc.tafweed_masaha',
-                'تعهد المخاطر' => 'projectDoc.t_makhater',
-                'تعهد السور' => 'projectDoc.t_soor',
-                'تعهد العزل' => 'projectDoc.t_azel',
-                'تعهد المياه' => 'projectDoc.t_meyaah',
-                'غلاف المذكرة الإنشائية' => 'projectDoc.str_notes_cover',
-                'تقرير ارض فضاء' => 'projectDoc.report_empty_land',
-                'طلب ربط رخصة بالقرار المساحي' => 'projectDoc.request_bind_to_baladi',
-            ];
-        }
+        // $project_doc_types = ProjectDocType::where('is_public', true)->get()->toArray();
+        $project_doc_types = ProjectDocType::all();
+        return ($project_doc_types);
     }
     // -----------------------------------------------------------------------------------------------------------------
 
@@ -707,8 +409,6 @@ class ProjectDocController extends Controller
         // -----------------------------------------------------------------
         // to create new page auto (create_new_page,margin_bottom)
         $newPDF::SetAutoPageBreak(TRUE, 24);
-        // -----------------------------------------------------------------
-        $newPDF::AddPage('P', 'A4');
         // -----------------------------------------------------------------
         return $newPDF;
     }

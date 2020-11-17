@@ -18,12 +18,10 @@
     <tr>
         <td colspan="3">وزارة الشؤون البلدية والقروية</td>
         <td colspan="9"></td>
-
     </tr>
     <tr>
         <td colspan="3">امانة منطقة المدينة المنورة</td>
         <td colspan="9"></td>
-
     </tr>
     <tr>
         <td colspan="4"></td>
@@ -53,32 +51,32 @@
 {{-- <table class="tbl-bordered" width="100%" cellpadding="2" cellspacing="0"> --}}
 <table class="tbl-bordered">
     <tr>
-        <td colspan="2">رقم بطاقة الأحوال المدنية/ الإقامة</td>
-        <td>{{$project->person->national_id}}</td>
-        <td>تاريخها</td>
-        <td>{{$project->person->national_id_issue_date}}</td>
+        <td colspan="3">رقم بطاقة الأحوال المدنية/ الإقامة</td>
+        <td colspan="2">{{$project->person->national_id}}</td>
+        <td colspan="2">تاريخها</td>
+        <td colspan="2">{{$project->person->national_id_issue_date}}</td>
     </tr>
     <tr>
-        <td colspan="2">مصدرها</td>
-        <td>{{$project->person->national_id_issue_date ?? 'المدينة المنورة'}}</td>
-        <td>الجنسية</td>
+        <td colspan="3">مصدرها</td>
+        <td colspan="2">{{$project->person->national_id_issue_date ?? 'المدينة المنورة'}}</td>
+        <td colspan="2">الجنسية</td>
         @if ($project->person->nationality_code == 'SA')
-        <td>سعودي</td>
+        <td colspan="2">سعودي</td>
         @else
         <td>{{$project->person->nationality_ar}}</td>
         @endif
     </tr>
     <tr>
-        <td colspan="2">رقم الجوال</td>
-        <td>{{$project->person->mobile}}</td>
-        <td>رقم الهاتف</td>
-        <td>{{$project->person->phone}}</td>
+        <td colspan="3">رقم الجوال</td>
+        <td colspan="2">{{$project->person->mobile}}</td>
+        <td colspan="2">رقم الهاتف</td>
+        <td colspan="2">{{$project->person->phone}}</td>
     </tr>
     <tr>
-        <td colspan="2">رقم الفاكس</td>
-        <td></td>
-        <td>البريد الإلكتروني</td>
-        <td>{{$project->person->email}}</td>
+        <td colspan="3">رقم الفاكس</td>
+        <td colspan="2"></td>
+        <td colspan="2">البريد الإلكتروني</td>
+        <td colspan="2">{{$project->person->email}}</td>
     </tr>
 </table><br><br style="line-height: 30%;">
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
@@ -150,7 +148,7 @@
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 <table class="tbl-bordered">
     <tr>
-        <td colspan="8" style="font-size: 120%; line-height: 140%;">نوعية مادة العزل الحراري</td>
+        <td colspan="8" style="font-size: 110%; line-height: 140%;">نوعية مادة العزل الحراري</td>
         <td colspan="2">للجدران</td>
         <td colspan="2">{{$azel_data['walls_material']}}</td>
         <td colspan="2">للسقف</td>
@@ -159,7 +157,7 @@
         <td colspan="3">{{$azel_data['window_material']}}</td>
     </tr>
     <tr>
-        <td colspan="8" style="font-size: 120%; line-height: 140%;"><span>قيم الإنتقالية
+        <td colspan="8" style="font-size: 110%; line-height: 140%;"><span>قيم الإنتقالية
                 الحراري</span> <span>(U-Value <br> W/m2K)</span></td>
         <td colspan="2">للجدران</td>
         <td colspan="2">{{$azel_data['walls_value']}}</td>
@@ -194,7 +192,7 @@
         <td>التاريخ:</td>
         <td colspan="6">{{$date_and_time['h_date_ar']}}</td>
     </tr>
-</table><br><br><br><br style="line-height: 30%;">
+</table><br><br><br style="line-height: 30%;">
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 <table>
     <tr>
@@ -212,7 +210,7 @@
         </td>
 
     </tr>
-</table><br><br><br><br style="line-height: 30%;">
+</table><br><br><br style="line-height: 30%;">
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 <table>
     <tr>

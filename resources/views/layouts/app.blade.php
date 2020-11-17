@@ -68,7 +68,7 @@
         }
 
         .loader.hidden {
-            animation: fedOut 1s;
+            animation: fedOut 0.5s;
             animation-fill-mode: forwards;
         }
 
@@ -83,8 +83,10 @@
     </style>
 </head>
 
+{{-- <body onload="document.querySelector('.loader').classList.add('hidden')"> --}}
+
 <body>
-    <div class="loader">
+    <div class=" loader">
         <img src="{{asset('img/loading-1.gif')}}" alt="Loading...">
     </div>
     <div class="wrapper">
@@ -148,6 +150,16 @@
 
 
     @yield('script')
+    <script>
+        // setTimeout(myFunction2(), 3000)
+        // function myFunction2() {
+        //     console.log('heeer');
+        //     window.addEventListener('load', (event) => {
+        //     add_hidden(event);
+        //     });
+        // }
+
+    </script>
     <script src="{{ asset('js/loader.js') }}" defer></script>
 
 </body>

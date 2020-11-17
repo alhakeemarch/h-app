@@ -240,6 +240,7 @@ class ContractController extends Controller
         $newPDF::SetSubject($contract->contract_type()->first()->name_ar);
         // -----------------------------------------------------------------
         $html = $contract->html;
+        $newPDF::AddPage('P', 'A4');
         $newPDF::writeHTML($html, true, false, true, false, '');
         // -----------------------------------------------------------------
         // to print contract no and user id and contract creator id 

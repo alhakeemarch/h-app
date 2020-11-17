@@ -3,9 +3,11 @@
   table,
   th,
   td {
-    border: 1px, solid, black;
+    border: 0.5px, solid, gray;
     padding-right: 4px;
     padding-left: 4px;
+    font-size: 97%;
+    line-height: 1.65;
   }
 
 </style>
@@ -87,9 +89,12 @@
 <table class="txt-center">
   <tr>
     <td colspan="1" class="bg-blue-1 txt-center">
-      <span>تفويض</span><br>
-      <span>للمكتب</span><br>
-      <span>الهندسي</span>
+      <span class="txt-center">
+        <br><br>
+        <span>تفويض</span><br>
+        <span>للمكتب</span><br>
+        <span>الهندسي</span>
+      </span>
     </td>
     <td colspan="5" class="bg-green-1"><span>اقر أنا الموقع اسمي اعلاه , و انا باتم الاوصاف المعتبره شرعا بصفتي المالك
         للعقار المملوك بالصك الموضحه بياناته اعلاه . بأنني قد فوضت المكتب المذكور للقيام بمتابعة و انهاء اجراءات
@@ -117,9 +122,11 @@
 <table>
   <tr>
     <td colspan="1" class="bg-blue-1 txt-center">
-      <span>اقرار</span><br>
-      <span>استلام</span><br>
-      <span>الموقع</span>
+      <span class="txt-center">
+        <span>اقرار</span><br>
+        <span>استلام</span><br>
+        <span>الموقع</span>
+      </span>
     </td>
     <td colspan="5" class="bg-green-1">
       اقر أنا الموقع اسمي اعلاه بعدم البدء بالعمل في موقعي الموضح بياناته اعلاه الا بعد الرجوع للمكتب
@@ -137,8 +144,13 @@
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 <table>
   <tr>
-    <th colspan="1" class="bg-blue-1">
-      تعهد بمراجعة<br> البلدية الفرعية <br> قبل البدء <br> في العمل
+    <th colspan="1" class="bg-blue-1 txt-center">
+      <span class="txt-center">
+        <span>تعهد بمراجعة</span><br>
+        <span>البلدية الفرعية</span><br>
+        <span>قبل البدء</span><br>
+        <span>في العمل</span>
+      </span>
     </th>
     <td colspan="5" class="bg-green-1">
       اتعهد أنا الموقع اسمي اعلاه بأن اقوم بمراجعة البلدية الفرعية قبل البدء في العمل و فتح ملف متابعه للمبنى لدى
