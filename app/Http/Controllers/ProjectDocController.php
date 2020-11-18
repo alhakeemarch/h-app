@@ -294,7 +294,7 @@ class ProjectDocController extends Controller
         $newPDF::AddPage('P', 'A4');
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         return;
     }
     // -----------------------------------------------------------------------------------------------------------------
