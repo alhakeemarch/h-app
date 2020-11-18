@@ -156,6 +156,13 @@
 <div class="row container-fluid">
     <div class="card col-md-4">
         <div class="card-header d-flex justify-content-between">
+            <span>quotation</span>
+            <span>عرض السعر</span>
+        </div>
+        <div class="car d-body p-0 py-1">
+            @include('quotation.show')
+        </div>
+        <div class="card-header d-flex justify-content-between">
             <span>document list</span>
             <span>قائمة المستندات</span>
         </div>

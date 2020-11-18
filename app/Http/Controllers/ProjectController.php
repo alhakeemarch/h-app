@@ -14,6 +14,7 @@ use App\PersonTitles;
 use App\Plan;
 use App\Plot;
 use App\Project;
+use App\ProjectDocType;
 use App\ProjectStatus;
 use App\RepresentativeType;
 use App\Rules\ValidDate;
@@ -166,7 +167,8 @@ class ProjectController extends Controller
         if (auth()->user()->is_admin) {
             $list_form_contracts = ContractType::where('is_in_quick_add', false)->orderBy('sorting')->get();
         }
-        $project_docs = ProjectDocController::get_project_docs();
+        $project_docs = ProjectDocType::where('is_in_quick_add', true)->get();
+        $project_docs_list = ProjectDocType::whereNull('is_in_quick_add')->get();
         $employees = Person::where('job_division', 'design')->get()->sortBy('ar_name1');
 
         // to remove contract that already added from the list
@@ -189,6 +191,7 @@ class ProjectController extends Controller
             'list_form_contracts' => $list_form_contracts,
             'project_contracts' => $project_contracts,
             'project_docs' => $project_docs,
+            'project_docs_list' => $project_docs_list,
             'employees' => $employees,
             'project_contracts_type_id' => $project_contracts_type_id,
             'project_folders' => $project_folders,

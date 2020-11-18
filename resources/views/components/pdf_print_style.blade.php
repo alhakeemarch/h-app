@@ -40,9 +40,21 @@
         font-family: aljazeera;
     }
 
+    .arabic-font {
+        font-family: arabic;
+    }
+
+    .arabictwo-font {
+        font-family: arabictwo;
+    }
+
     .courier-font {
         font-family: courier;
         font-weight: bolder;
+    }
+
+    .lg-font {
+        font-size: 110%;
     }
 
     .x-lg-font {

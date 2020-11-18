@@ -3,33 +3,6 @@
     <li class="list-group-item d-flex justify-content-between">
         <span class=" align-self-center">{{$project_doc->name_ar}}</span>
         <span class="d-flex">
-            @php
-            $quotation = App\Quotation::where('project_id', $project->id)->first();
-            @endphp
-            @if (($project_doc->name_ar == 'عرض سعر') && ($quotation))
-            {{-- --------------------------------------------------------------------------------------- --}}
-            <form action="{{route('quotation.update',$quotation)}}" method="POST">
-                @csrf
-                @method('PATCH')
-                <input type="hidden" name="update_quotation_date" value='1'>
-                <input type="hidden" name="project_id" value="{{$project->id}}">
-                <button type="submit" class="btn btn-link align-self-center p-0 m-0 text-secondary"
-                    title="{{__('refresh')}}"><i class="fas fa-sync-alt"></i>
-                </button>
-            </form>
-            <span>&nbsp;&nbsp;&nbsp;</span>
-            {{-- --------------------------------------------------------------------------------------- --}}
-            <form action="{{route('quotation.edit',$quotation)}}" method="get">
-                @csrf
-                <input type="hidden" name="project_id" value="{{$project->id}}">
-                <button type="submit" class="btn btn-link m-0 p-0 text-success"><span>{{__('edit')}} |</span>
-                    <i class="far fa-edit"></i>
-                </button>
-            </form>
-            <span>&nbsp;&nbsp;</span>
-            {{-- --------------------------------------------------------------------------------------- --}}
-            @endif
-            {{-- <form action="{{route($project_doc->view_template)}}" method="get"> --}}
             <form action="{{route('projectDoc.get_pdf')}}" method="get">
                 @csrf
                 <input type="hidden" name="project_id" value="{{$project->id}}">
@@ -42,3 +15,20 @@
     </li>
     @endforeach
 </ul>
+{{-- ----------------------------------------------------------------------------------------------------------------------- --}}
+<form action="{{route('projectDoc.get_pdf')}}" method="get" class=" form-group m-0 d-flex jumbotron p-3 mt-2">
+    @csrf
+    <input type="hidden" name="project_id" value="{{$project->id}}">
+    <div class="col">
+        <label class="my-1">{{__('document')}}</label>
+        <select name="project_doc_type_id" class="form-control">
+            <option disabled selected>pick a document..</option>
+            @foreach ( $project_docs_list as $project_doc_type )
+            <option value="{{$project_doc_type->id}}">{{$project_doc_type->name_ar}}</option>
+            @endforeach
+        </select>
+    </div>
+    <button type="submit" class="btn btn-link m-0 align-self-end">{{__('print')}} |
+        <i class="fa fa-print" aria-hidden="true"></i>
+    </button>
+</form>

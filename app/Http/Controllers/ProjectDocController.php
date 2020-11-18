@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\OfficeData;
-use App\Person;
-use App\Plot;
 use App\Project;
 use App\ProjectDoc;
 use App\ProjectDocType;
-use App\Quotation;
+
 use Carbon\Carbon;
 use Elibyy\TCPDF\Facades\TCPDF as TCPDF;
 
@@ -21,7 +19,17 @@ use function PHPSTORM_META\override;
 
 class ProjectDocController extends Controller
 {
+    // -----------------------------------------------------------------------------------------------------------------
     public $is_tafweed = false;
+    private  $azel_data = [
+        'walls_material' => 'بولسترين',
+        'walls_value' => '0.53',
+        'ceiling_material' => 'بولسترين',
+        'ceiling_value' => '0.31',
+        'window_material' => 'زجاج مضاعف',
+        'window_value' => '2.67',
+    ];
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Create a new controller instance.
      *
@@ -110,90 +118,6 @@ class ProjectDocController extends Controller
         //
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-    public function quotation(Request $request)
-    {
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $quotation = new Quotation;
-        $quotation = $quotation->where('project_id', $project->id)->first();
-        $date_and_time = (isset($quotation->id)) ? DateAndTime::get_date_time_arr($quotation->quotation_date) : DateAndTime::get_date_time_arr();
-        $project_contracts = ContractController::get_project_contracts_for_quotation($project);
-        $total_arr = $this->get_total_array($project);
-        if ($project_contracts->count() < 1) {
-            return redirect()->back()->withErrors(['contracts must be created to appear in quotation', 'يجب انشاء العقود لتظهر قيمها في عرض السعر']);
-        }
-        $data = [
-            'project' => $project,
-            'project_contracts' => $project_contracts,
-            'total_arr' => $total_arr,
-            'date_and_time' => $date_and_time,
-            'quotation' => $quotation,
-        ];
-
-        if (!(isset($quotation->id))) {
-            QuotationController::create_new($data);
-        }
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // Content
-        $doc_name = 'quotation';
-        $pdf_view = 'projectDoc.quotation';
-        // -----------------------------------------------------------------
-        // setting a header and foooter 
-        $newPDF = $this->set_hakeem_header_footer($newPDF);
-        // setting main sittings
-        $newPDF = $this->set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle('عرض سعر');
-        $newPDF::SetSubject('عرض سعر');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::AddPage('P', 'A4');
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        // -----------------------------------------------------------------
-        // to print contract no and user id and contract creator id 
-        $text = 'Code="U' . auth()->user()->id
-            . '-P' . $project->id
-            . '"';
-        // -----------------------------------------------------------------
-        $newPDF::SetY(150);
-        $newPDF::SetX(198);
-        $newPDF::StartTransform();
-        $newPDF::Rotate(+90);
-        $newPDF::SetFont('helvetica', '', 8);
-        $newPDF::SetTextColor(0, 0, 0, 25);;
-        $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
-        $newPDF::StopTransform();
-        // -----------------------------------------------------------------
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
-        exit;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function get_total_array($project)
-    {
-        $project_contracts = ContractController::get_project_contracts_for_quotation($project);
-        $total_arr = [
-            'total_cost' => 0,
-            'total_vat' => 0,
-            'total_price_withe_vat' => 0,
-            'total_price_withe_vat_text' => '',
-            'vat_percentage' => 0,
-        ];
-        foreach ($project_contracts as $contract) {
-            $total_arr['total_cost'] += $contract->cost;
-            $total_arr['total_vat'] += $contract->vat_value;
-            $total_arr['total_price_withe_vat'] += $contract->price_withe_vat;
-            $total_arr['vat_percentage'] = (int) $contract->vat_percentage;
-        }
-        $ar_num  = new \App\I18N_Arabic_Numbers();
-        $total_arr['total_price_withe_vat_text'] = $ar_num->money2str($total_arr['total_price_withe_vat'], 'SAR');
-
-        return $total_arr;
-    }
     // -----------------------------------------------------------------------------------------------------------------
     public function invoice(Request $request)
     {
@@ -311,32 +235,19 @@ class ProjectDocController extends Controller
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_team($project);
         $date_and_time = DateAndTime::get_date_time_arr();
-        $azel_data = [
-            'walls_material' => 'بولسترين',
-            'walls_value' => '0.53',
-            'ceiling_material' => 'بولسترين',
-            'ceiling_value' => '0.31',
-            'window_material' => 'زجاج مضاعف',
-            'window_value' => '2.67',
-        ];
         $data = [
             'project' => $project,
             'office_data' => $office_data,
             'project_tame' => $project_tame,
             'date_and_time' => $date_and_time,
-            'azel_data' => $azel_data,
+            'azel_data' => $this->azel_data,
         ];
         // -----------------------------------------------------------------
-        // creating pdf 
         $newPDF = new TCPDF();
-        // Content
         $doc_name = $project_doc_type->name_ar;
         $pdf_view = $project_doc_type->view_template;
         $is_tafweed = ($project_doc_type->name_ar == 'تفويض') ? true : false;
         // -----------------------------------------------------------------
-        if ($doc_name == 'تعهد العزل') {
-            // $this->t_azel($request);
-        }
         // check if there is data missing for the pdf file
         $missing_dat = $this->get_missing_data($doc_name, $project);
         if (!empty($missing_dat)) {
@@ -358,7 +269,7 @@ class ProjectDocController extends Controller
                 # code...
                 break;
         }
-
+        // -----------------------------------------------------------------
         $newPDF = $this->set_common_settings($newPDF);
         // -----------------------------------------------------------------
         if ($doc_name == 'تعهد العزل') {
@@ -368,7 +279,13 @@ class ProjectDocController extends Controller
             $newPDF::SetFont('al-mohanad', 'B', 11, '', false);
         }
         // -----------------------------------------------------------------
-        // pdf title
+        if ($doc_name == 'اقرار الرخصة الفورية') {
+            $newPDF::SetAutoPageBreak(TRUE, 10);
+            // $newPDF::SetMargins(20, 20, 20, true);
+            // $newPDF::setCellHeightRatio(1.3);
+            // $newPDF::SetFont('al-mohanad', 'B', 11, '', false);
+        }
+        // -----------------------------------------------------------------
         $newPDF::SetTitle($doc_name);
         $newPDF::SetSubject($doc_name);
         // -----------------------------------------------------------------
@@ -377,17 +294,9 @@ class ProjectDocController extends Controller
         $newPDF::AddPage('P', 'A4');
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
+        return;
     }
-    // -----------------------------------------------------------------------------------------------------------------
-    public static function get_project_docs()
-    {
-        // $project_doc_types = ProjectDocType::where('is_public', true)->get()->toArray();
-        $project_doc_types = ProjectDocType::all();
-        return ($project_doc_types);
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-
     // -----------------------------------------------------------------------------------------------------------------
     public static function set_common_settings($newPDF)
     {
@@ -560,19 +469,19 @@ class ProjectDocController extends Controller
         $newPDF::setFooterCallback(function ($pdf) {
 
             // Position at 22 mm from bottom
-            $pdf->SetY(-15);
+            $pdf->SetY(-13);
             // Set font
             $pdf->SetFont('consolas', '', 8);
             // print date 
             $data = 'printed at: ' . (Carbon::now())->toDateString();
-            $pdf->Cell(0, 0, $data, 0, true, 'L', 0, '', 0, false, 'B', 'B');
+            $pdf->Cell(0, 0, $data, 'T', true, 'L', 0, '', 0, false, 'B', 'B');
             // Page number
             $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
-            $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'B');
+            $pdf->Cell(0, 0, $page_numbring, 'T', true, 'R', 0, '', 0, false, 'B', 'B');
         });
         // -----------------------------------------------------------------
         // seting page margin (L,T,R)
-        $newPDF::SetMargins(20, 20, 20);
+        // $newPDF::SetMargins(20, 20, 20);
         // -----------------------------------------------------------------
         return $newPDF;
     }

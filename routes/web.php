@@ -392,17 +392,15 @@ Route::group(['prefix' => 'project'], function () {
 Route::group(['prefix' => 'projectDoc'], function () {
     Route::any('search', 'ProjectDocController@search')->name('projectDoc.search');
     Route::any('get_pdf', 'ProjectDocController@get_pdf')->name('projectDoc.get_pdf');
-    // Route::any('quotation', 'ProjectDocController@quotation')->name('projectDoc.quotation');
-    // Route::any('tafweed', 'ProjectDocController@tafweed')->name('projectDoc.tafweed');
-    // Route::any('tafweed_masaha', 'ProjectDocController@tafweed_masaha')->name('projectDoc.tafweed_masaha');
-    // Route::any('t_makhater', 'ProjectDocController@t_makhater')->name('projectDoc.t_makhater');
-    // Route::any('t_soor', 'ProjectDocController@t_soor')->name('projectDoc.t_soor');
-    // Route::any('t_meyaah', 'ProjectDocController@t_meyaah')->name('projectDoc.t_meyaah');
-    // Route::any('report_empty_land', 'ProjectDocController@report_empty_land')->name('projectDoc.report_empty_land');
-    // Route::any('str_notes_cover', 'ProjectDocController@str_notes_cover')->name('projectDoc.str_notes_cover');
-    // Route::any('t_azel', 'ProjectDocController@t_azel')->name('projectDoc.t_azel');
-    // Route::any('request_bind_to_baladi', 'ProjectDocController@request_bind_to_baladi')->name('projectDoc.request_bind_to_baladi');
     // Route::any('invoice', 'ProjectDocController@invoice')->name('projectDoc.invoice');
+});
+// -----------------------------------------------------------------------------------------------------------------
+Route::group(['prefix' => 'quotation'], function () {
+    Route::any('get_pdf', 'QuotationController@get_pdf')->name('quotation.get_pdf');
+});
+// -----------------------------------------------------------------------------------------------------------------
+Route::group(['prefix' => 'invoice'], function () {
+    Route::any('get_pdf', 'InvoiceController@get_pdf')->name('invoice.get_pdf');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'contract'], function () {
