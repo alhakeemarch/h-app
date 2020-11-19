@@ -18,10 +18,13 @@ class CreateContractsTable extends Migration
             $table->foreignId('project_id')->references('id')->on('projects');
             $table->foreignId('contract_type_id')->references('id')->on('contract_types');
             $table->foreignId('contract_class_id')->nullable()->references('id')->on('contract_classes');
+            $table->foreignId('invoice_id')->nullable()->references('id')->on('invoices');
+            // -----------------------------
             $table->bigInteger('contract_no')->nullable()->unique();
             $table->bigInteger('contract_no_acc')->nullable()->unique();
             // -----------------------------
-            $table->boolean('is_in_quotation')->nullable()->default('TRUE');
+            $table->boolean('is_in_quotation')->nullable()->default(TRUE);
+            $table->boolean('is_in_invoice')->nullable()->default(false);
             // -----------------------------
             $table->string('period')->nullable();
             $table->string('period_scale')->nullable(); // D, M, Y
@@ -40,6 +43,8 @@ class CreateContractsTable extends Migration
             // -----------------------------
             $table->decimal('visit_fee', 12, 2)->nullable();
             $table->decimal('monthly_fee', 12, 2)->nullable();
+            // -----------------------------
+            $table->bigInteger('print_count')->default(0);
             // -----------------------------
             $table->string('date')->nullable();
             $table->longText('fields')->nullable();

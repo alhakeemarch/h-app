@@ -155,6 +155,17 @@
 <hr class="my-2">
 <div class="row container-fluid">
     <div class="card col-md-4">
+        {{-- ------------------------------------------ --}}
+        @can('view-any', App\Invoice::class)
+        <div class="card-header d-flex justify-content-between">
+            <span>invoices</span>
+            <span>الفواتير</span>
+        </div>
+        <div class="car d-body p-0 py-1">
+            @include('invoice.show')
+        </div>
+        @endcan
+        {{-- ------------------------------------------ --}}
         <div class="card-header d-flex justify-content-between">
             <span>quotation</span>
             <span>عرض السعر</span>

@@ -30,6 +30,11 @@ class Contract extends Model
         return $this->belongsTo(Project::class);
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function contract_type()
     {
         return $this->belongsTo(ContractType::class, 'contract_type_id');

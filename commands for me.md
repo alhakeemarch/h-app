@@ -239,6 +239,7 @@ php artisan tinker
 php artisan make:policy PersonPolicy -m Person
 php artisan make:policy CountryPolicy -m Country
 php artisan make:policy ProjectPolicy -m Project
+php artisan make:policy InvoicePolicy -m Invoice
 
 \\ in class function
 $this->authorize('viewAny', $person);
@@ -270,7 +271,8 @@ php artisan make:model Plot -a
 php artisan make:model PlotDoc -a
 
 php artisan make:model Invoice -a
-php artisan make:model InvoiceDetail -a
+php artisan make:model InvoiceItem -a
+php artisan make:model InvoiceDetail -a // not used
 php artisan make:model InvoiceReturn -a
 php artisan make:model InvoiceReturnDetail -a
 
@@ -325,9 +327,6 @@ DROP TABLE contract_project;
 **CURRENT_TIMESTAMP()**
 ALTER TABLE `projects` CHANGE `owner_type` `owner_type_id` BIGINT(20) UNSIGNED NULL DEFAULT '1';
 ALTER TABLE `projects` ADD CONSTRAINT projects_owner_type_id_foreign FOREIGN KEY (owner_type_id) REFERENCES owner_types(id);
-
-<!-- ------------------------------------------------------------------------ -->
-
 ALTER TABLE `projects` CHANGE `representative_type` `representative_type_id` BIGINT(20) UNSIGNED NULL ;
 ALTER TABLE `projects` ADD CONSTRAINT projects_representative_type_id_foreign FOREIGN KEY (representative_type_id) REFERENCES representative_types(id);
 
@@ -357,25 +356,48 @@ ALTER TABLE `people` CHANGE `SCE_classification_expire_date` `SCE_classification
 
 <!-- ------------------------------------------------------------------------ -->
 
-ALTER TABLE `contract_types`ADD COLUMN `view_template` VARCHAR(191) NULL AFTER `description`;
-
-<!-- ------------------------------------------------------------------------ -->
-
 ALTER TABLE `person_titles`ADD COLUMN `suffix_ar` VARCHAR(191) NULL AFTER `description_en`;
 ALTER TABLE `person_titles`ADD COLUMN `suffix_en` VARCHAR(191) NULL AFTER `suffix_ar`;
-
-<!-- ------------------------------------------------------------------------ -->
-
 ALTER TABLE `person_titles` ADD `prefix_ar` VARCHAR(191) NULL AFTER `id`;
 ALTER TABLE `person_titles` ADD `prefix_en` VARCHAR(191) NULL AFTER `prefix_ar`;
 
 <!-- ------------------------------------------------------------------------ -->
 
-ALTER TABLE `contracts` ADD `is_in_quotation` BOOLEAN default TRUE NULL AFTER `contract_no_acc`;
+ALTER TABLE `contract_types`ADD COLUMN `view_template` VARCHAR(191) NULL AFTER `description`;
+ALTER TABLE `contract_types` ADD `is_in_quick_add` BOOLEAN default FALSE NULL AFTER `view_template`;
 
 <!-- ------------------------------------------------------------------------ -->
 
-ALTER TABLE `contract_types` ADD `is_in_quick_add` BOOLEAN default FALSE NULL AFTER `view_template`;
+ALTER TABLE `contracts` ADD `is_in_quotation` BOOLEAN default TRUE NULL AFTER `contract_no_acc`;
+ALTER TABLE `contracts` ADD `invoice_id` BIGINT(20) UNSIGNED NULL AFTER `contract_class_id`;
+ALTER TABLE `contracts` ADD CONSTRAINT contracts_invoice_id_foreign FOREIGN KEY (invoice_id) REFERENCES invoices(id);
+ALTER TABLE `contracts` ADD `is_in_invoice` BOOLEAN default FALSE NULL AFTER `is_in_quotation`;
+ALTER TABLE `contracts` ADD `print_count` BIGINT(20) UNSIGNED default 0 NULL AFTER `monthly_fee`;
+
+<!-- ------------------------------------------------------------------------ -->
+
+ALTER TABLE `invoices` DROP `created_by_name`;
+ALTER TABLE `invoices` DROP `last_edit_by_name`;
+ALTER TABLE `invoices` ADD `invoice_no` BIGINT(20) UNSIGNED UNIQUE AFTER `id`;
+ALTER TABLE `invoices` ADD `invoice_no_prefix` VARCHAR(191) AFTER `invoice_no`;
+ALTER TABLE `invoices` ADD `project_id` BIGINT(20) UNSIGNED AFTER `invoice_no_prefix`;
+ALTER TABLE `invoices` ADD CONSTRAINT invoices_project_id_foreign FOREIGN KEY (project_id) REFERENCES projects(id);
+ALTER TABLE `invoices` ADD `person_id` BIGINT(20) UNSIGNED AFTER `project_id`;
+ALTER TABLE `invoices` ADD CONSTRAINT invoices_person_id_foreign FOREIGN KEY (person_id) REFERENCES people(id);
+ALTER TABLE `invoices` ADD `issued_by_id` BIGINT(20) UNSIGNED AFTER `person_id`;
+ALTER TABLE `invoices` ADD CONSTRAINT invoices_issued_by_id_foreign FOREIGN KEY (issued_by_id) REFERENCES people(id);
+ALTER TABLE `invoices` ADD `h_date` VARCHAR(191) AFTER `issued_by_id`;
+ALTER TABLE `invoices` ADD `g_date` VARCHAR(191) AFTER `h_date`;
+ALTER TABLE `invoices` ADD `is_cash` BOOLEAN default FALSE NULL AFTER `g_date`;
+ALTER TABLE `invoices` ADD `is_credit` BOOLEAN default FALSE NULL AFTER `is_cash`;
+ALTER TABLE `invoices` ADD `total_cost` decimal(12,2) NULL AFTER `is_credit`;
+ALTER TABLE `invoices` ADD `vat_percentage` decimal(12,2) NULL AFTER `total_cost`;
+ALTER TABLE `invoices` ADD `total_vat_value` decimal(12,2) NULL AFTER `vat_percentage`;
+ALTER TABLE `invoices` ADD `total_price_withe_vat` decimal(12,2) NULL AFTER `total_vat_value`;
+ALTER TABLE `invoices` ADD `print_count` BIGINT(20) UNSIGNED default 0 NULL AFTER `total_price_withe_vat`;
+ALTER TABLE `invoices` ADD `text` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `is_cash`;
+ALTER TABLE `invoices` ADD `html` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `is_cash`;
+ALTER TABLE `invoices` ADD `html_1` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `is_cash`;
 
 <!-- ------------------------------------------------------------------------ -->
 

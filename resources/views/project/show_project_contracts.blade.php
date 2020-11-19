@@ -14,6 +14,7 @@ $total_1st_payment = 0;
                 <th>الضريبة</th>
                 <th>الإجمالي</th>
                 <th>عرض السعر</th>
+                @can('view-any', App\Invoice::class)<th>الفاتورة</th>@endcan
                 <th>إجراءات</th>
             </thead>
             @foreach ($project_contracts as $contract)
@@ -39,6 +40,7 @@ $total_1st_payment = 0;
                     </span>
                 </td>
                 <td>
+
                     <form action="{{route('contract.update',[$contract->id])}}" method="post">
                         @csrf
                         @method('PATCH')
@@ -47,17 +49,38 @@ $total_1st_payment = 0;
                             @if ($contract->is_in_quotation)
                             <span class="text-success">
                                 <i class="fas fa-toggle-on" title="اخفاء"></i>
-                                {{-- <i class="fas fa-check"></i> --}}
                                 @else
                                 <span class=" text-muted">
                                     <i class="fas fa-toggle-off" title="اظهار"></i>
-                                    {{-- <i class="fas fa-times"></i> --}}
                                 </span>
                                 @endif
                         </button>
                     </form>
-                    </span>
                 </td>
+                @can('view-any', App\Invoice::class)
+                <td>
+                    @if ($contract->invoice_id)
+                    <small>رقم الفاتورة</small>
+                    <div>{{$contract->invoice->invoice_no_prefix}} / {{$contract->invoice->invoice_no}}</div>
+                    @else
+                    <form action="{{route('contract.update',[$contract->id])}}" method="post">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="add_or_remove_form_invoice" value="1">
+                        <button type="submit" class="btn btn-link">
+                            @if ($contract->is_in_invoice)
+                            <span class="text-success">
+                                <i class="fas fa-toggle-on" title="اخفاء"></i>
+                                @else
+                                <span class=" text-muted">
+                                    <i class="fas fa-toggle-off" title="اظهار"></i>
+                                </span>
+                                @endif
+                        </button>
+                    </form>
+                    @endif
+                </td>
+                @endcan
                 <td>
                     <div class="d-flex justify-content-between">
                         @if (!($project->project_no) || auth()->user()->is_admin)

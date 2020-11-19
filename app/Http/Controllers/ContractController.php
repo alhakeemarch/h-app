@@ -137,6 +137,13 @@ class ContractController extends Controller
             $contract->save();
             return redirect()->back();
         }
+        // -----------------------------------------------------------------
+        if ($request->add_or_remove_form_invoice) {
+            $contract->is_in_invoice = !($contract->is_in_invoice);
+            $contract->save();
+            return redirect()->back();
+        }
+        // -----------------------------------------------------------------
         $request->validate([
             'cost' => 'required|numeric',
         ]);
@@ -203,6 +210,16 @@ class ContractController extends Controller
         $found_contract = Contract::where([
             'project_id' => $project->id,
             'is_in_quotation' => 1,
+        ])->get()->sortBy('contract_type_id');
+        return  $found_contract;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function get_project_contracts_for_invoice($project)
+    {
+        $found_contract = Contract::where([
+            'project_id' => $project->id,
+            'invoice_id' => NULL,
+            'is_in_invoice' => 1,
         ])->get()->sortBy('contract_type_id');
         return  $found_contract;
     }
