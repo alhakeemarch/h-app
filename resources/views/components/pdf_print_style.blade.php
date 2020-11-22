@@ -44,6 +44,10 @@
         font-family: arabic;
     }
 
+    .font-light {
+        color: lightgrey;
+    }
+
     .arabictwo-font {
         font-family: arabictwo;
     }
@@ -51,6 +55,12 @@
     .courier-font {
         font-family: courier;
         font-weight: bolder;
+    }
+
+    .consolas-font {
+        font-family: consolas;
+        font-weight: lighter;
+        font-size: 90%;
     }
 
     .lg-font {

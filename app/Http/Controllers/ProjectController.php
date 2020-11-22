@@ -6,6 +6,7 @@ use App\Country;
 use App\District;
 use App\Contract;
 use App\ContractType;
+use App\Invoice;
 use App\MunicipalityBranch;
 use App\Neighbor;
 use App\OwnerType;
@@ -168,8 +169,17 @@ class ProjectController extends Controller
             $list_form_contracts = ContractType::where('is_in_quick_add', false)->orderBy('sorting')->get();
         }
         $project_docs = ProjectDocType::where('is_in_quick_add', true)->get();
+        $project_invoices = Invoice::where('project_id', $project->id)->get();
         $project_docs_list = ProjectDocType::whereNull('is_in_quick_add')->get();
         $employees = Person::where('job_division', 'design')->get()->sortBy('ar_name1');
+
+        $can_create_invoice = false;
+        foreach ($project_contracts as $contract) {
+            if (!isset($contract->invoice_id) && $contract->is_in_invoice) {
+                $can_create_invoice = true;
+            }
+        }
+
 
         // to remove contract that already added from the list
         foreach ($quick_form_contracts as $key => $value) {
@@ -179,7 +189,6 @@ class ProjectController extends Controller
                 }
             }
         }
-        // $project_invoices = InvoiceController::get_project_invoces($project);
         // to get project folders if exsest
         $project_folders = FileAndFolderController::get_project_folders($project);
 
@@ -196,7 +205,8 @@ class ProjectController extends Controller
             'employees' => $employees,
             'project_contracts_type_id' => $project_contracts_type_id,
             'project_folders' => $project_folders,
-            // 'project_invoices' => $project_invoices,
+            'project_invoices' => $project_invoices,
+            'can_create_invoice' => $can_create_invoice,
         ]);
     }
 

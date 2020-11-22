@@ -392,7 +392,6 @@ Route::group(['prefix' => 'project'], function () {
 Route::group(['prefix' => 'projectDoc'], function () {
     Route::any('search', 'ProjectDocController@search')->name('projectDoc.search');
     Route::any('get_pdf', 'ProjectDocController@get_pdf')->name('projectDoc.get_pdf');
-    // Route::any('invoice', 'ProjectDocController@invoice')->name('projectDoc.invoice');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'quotation'], function () {

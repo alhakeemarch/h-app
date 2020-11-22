@@ -6,10 +6,8 @@ use App\OfficeData;
 use App\Project;
 use App\ProjectDoc;
 use App\ProjectDocType;
-
 use Carbon\Carbon;
 use Elibyy\TCPDF\Facades\TCPDF as TCPDF;
-
 use \Illuminate\Support\Facades\View;
 
 use Illuminate\Http\Request;
@@ -281,9 +279,6 @@ class ProjectDocController extends Controller
         // -----------------------------------------------------------------
         if ($doc_name == 'اقرار الرخصة الفورية') {
             $newPDF::SetAutoPageBreak(TRUE, 10);
-            // $newPDF::SetMargins(20, 20, 20, true);
-            // $newPDF::setCellHeightRatio(1.3);
-            // $newPDF::SetFont('al-mohanad', 'B', 11, '', false);
         }
         // -----------------------------------------------------------------
         $newPDF::SetTitle($doc_name);

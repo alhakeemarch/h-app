@@ -21,7 +21,7 @@
     <tr>
         <th colspan="2">رقم الفاتورة:</th>
         <td colspan="3" rowspan="2" align="center"><br style="line-height: 300%;"><span
-                class="txt-center">(2020-5536)</span>
+                class="txt-center">({{$invoice->invoice_no_prefix}}-{{$invoice->invoice_no}})</span>
         </td>
         <th colspan="5">seller - البائع</th>
     </tr>
@@ -55,13 +55,17 @@
         </td>
         <td colspan="5">VAT NO: {{$office_data->VAT_account_no}}</td>
     </tr>
-</table>
+</table><br><br style="line-height: 20%; ">
 {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
 <table>
     <tr>
         <td colspan="1">
             <div style="line-height: 30%; text-align: left;">
-                <img src="{{URL::asset('/img/unchecked.png')}}" alt="checked" width="0.4cm">
+                @if ($invoice->is_cash)
+                <img src="{{URL::asset('/img/checked.png')}}" alt="checked" width="0.4cm">--
+                @else
+                <img src="{{URL::asset('/img/unchecked.png')}}" alt="checked" width="0.4cm">--
+                @endif
             </div>
         </td>
         <td colspan="2">
@@ -69,23 +73,33 @@
         </td>
         <td colspan="1">
             <div style="line-height: 30%; text-align: left;">
-                <img src="{{URL::asset('/img/checked.png')}}" alt="checked" width="0.4cm">
+                @if ($invoice->is_credit)
+                <img src="{{URL::asset('/img/checked.png')}}" alt="checked" width="0.4cm">--
+                @else
+                <img src="{{URL::asset('/img/unchecked.png')}}" alt="checked" width="0.4cm">--
+                @endif
             </div>
         </td>
         <td colspan="2">
             Credit - آجل
         </td>
     </tr>
-</table>
+</table><br><br style="line-height: 20%; ">
 {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
 <table class="tbl-bordered txt-center">
     <tr>
-        <th colspan="8"><span class="txt-center"><span>Customer Information</span> - <span>بيانات العميل</span></span>
+        <th colspan="4" class="txt-center"
+            style="border: none; border-top: gray soled 0.5px; border-right: gray soled 0.5px;">
+            بيانات العميل
+        </th>
+        <th colspan="4" class="txt-center"
+            style="border: none; border-top: gray soled 0.5px; border-left: gray soled 0.5px;">
+            Customer Information
         </th>
     </tr>
     <tr>
         <th>الى:</th>
-        <td colspan="7"></td>
+        <td colspan="7">{{$project->person->get_full_name_ar()}}</td>
     </tr>
     <tr>
         <th>العنوان:</th>
@@ -109,36 +123,52 @@
 <table class="tbl-bordered txt-center">
     <tr>
         <th>مـ</th>
-        <th colspan="7">البيان</th>
-        <th colspan="2">الكمية</th>
+        <th colspan="9">البيان</th>
+        <th colspan="1">الكمية</th>
         <th colspan="2">السعر</th>
         <th colspan="2">الضريبة</th>
         <th colspan="2">الإجمالي</th>
     </tr>
     <tr>
         <th>NO</th>
-        <th colspan="7">Discription</th>
-        <th colspan="2">QTY</th>
+        <th colspan="9">Discription</th>
+        <th colspan="1">QTY</th>
         <th colspan="2">Price</th>
-        <th colspan="2" style="font-size: 90%;">VAT(15%)</th>
+        <th colspan="2" style="font-size: 90%;">VAT({{$invoice_total_arr['vat_percentage']}}%)</th>
         <th colspan="2">Total</th>
     </tr>
     {{-- ------------    ------------    ------------    --}}
-    @php $i=1; $t=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,]; @endphp
+    @php $i=1; $empty_rows = 15-$invoice_items->count(); @endphp
     @php $i=1; $t=[1,2,]; @endphp
-    @foreach ($t as $item)
+    @foreach ($invoice_items as $item)
     <tr>
         <td>{{$i}}</td>
-        <td colspan="7">خدمات استشارات هندسية عقد تصميم</td>
-        <td colspan="2">1</td>
-        <td colspan="2">100</td>
-        <td colspan="2">15</td>
-        <td colspan="2">115</td>
+        <td colspan="9">{{$item->get_item_name_ar()}}</td>
+        <td colspan="1" class="consolas-font">{{$item->item_quantity}}</td>
+        <td colspan="2" class="consolas-font">{{$item->item_price}}</td>
+        <td colspan="2" class="consolas-font">
+            <span>{{$item->item_vat_value}}</span>
+            @if ($item->item_vat_percentage != $invoice_total_arr['vat_percentage'])
+            <br><span class="txt-center">({{(int)$item->item_vat_percentage}}%)</span>
+            @endif
+        </td>
+        <td colspan="2" class="consolas-font">{{$item->item_price_withe_vat}}</td>
     </tr>
     @php $i++; @endphp
     @endforeach
-    {{-- ------------    ------------    ------------    --}}
-</table> <br><br>
+
+    @for ($x = 0; $x < $empty_rows; $x++) <tr class="font-light">
+        <td>{{$i}}</td>
+        <td colspan="9" class="consolas-font">-----------------------------------------------</td>
+        <td colspan="1" class="consolas-font">---</td>
+        <td colspan="2" class="consolas-font">-----</td>
+        <td colspan="2" class="consolas-font">-----</td>
+        <td colspan="2" class="consolas-font">-----</td>
+        </tr>
+        @php $i++; @endphp
+        @endfor
+        {{-- ------------    ------------    ------------    --}}
+</table><br><br>
 {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
 <table class="tbl-bordered txt-center">
     <tr>
@@ -146,32 +176,52 @@
             <span>الإجمالي بدون ضريبة</span><br><span class="txt-center"
                 style="font-family: consolas; font-size:75%;">Subtotal Without VAT</span>
         </th>
-        <td colspan="6">التفقيط</td>
-        <td>المبلغ</td>
+        <td colspan="5">
+            <div style="line-height: 110%;" class="txt-center">{{$invoice_total_arr['total_cost_text']}}</div>
+        </td>
+        <td>
+            <div style="line-height: 110%;" class="txt-center consolas-font">{{$invoice_total_arr['total_cost_no']}}
+            </div>
+        </td>
     </tr>
+    {{-- ------------    ------------    ------------    --}}
     <tr>
         <th colspan="2">
             <span>الإجمالي الضريبة</span><br><span class="txt-center" style="font-family: consolas; font-size:75%;">VAT
-                Subtotal (15%)</span>
+                Subtotal ({{$invoice_total_arr['vat_percentage']}}%)</span>
         </th>
-        <td colspan="6">التفقيط</td>
-        <td>المبلغ</td>
+        <td colspan="5">
+            <div style="line-height: 110%;" class="txt-center">{{$invoice_total_arr['total_vat_value_text']}}</div>
+        </td>
+        <td>
+            <div style="line-height: 110%;" class="txt-center consolas-font">
+                {{$invoice_total_arr['total_vat_value_no']}}</div>
+        </td>
     </tr>
+    {{-- ------------    ------------    ------------    --}}
     <tr>
         <th colspan="2">
             <span>الإجمالي مع الضريبة</span><br><span class="txt-center" style="font-family: consolas; font-size:75%;">
                 Total With VAT
             </span>
         </th>
-        <td colspan="6">التفقيط</td>
-        <td>المبلغ</td>
+        <td colspan="5">
+            <span>فقط</span>
+            <span>({{$invoice_total_arr['total_price_withe_vat_text']}})</span>
+            <span>لا غير</span>
+        </td>
+        <td>
+            <div style="line-height: 110%;" class="txt-center consolas-font">
+                {{$invoice_total_arr['total_price_withe_vat_no']}}</div>
+        </td>
     </tr>
-</table> <br> <br style="line-height: 30%;">
+    {{-- ------------    ------------    ------------    --}}
+</table><br><br style="line-height: 30%;">
 {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
 <table class="tbl-border ed txt-center">
     <tr>
         <th>اصدر بواسطة</th>
-        <td colspan="4">المحاسب : حمدي عبدالرحمن</td>
+        <td colspan="4">{{$invoice->get_issued_by()}}</td>
         <th style="font-family: consolas;">Issued By</th>
     </tr>
 </table>
