@@ -266,6 +266,7 @@ php artisan make:model Task -a
 php artisan make:model Contract -a
 php artisan make:model ContractType -a
 php artisan make:model Contractfield -a
+php artisan make:model ProjectService -a
 
 php artisan make:model Plot -a
 php artisan make:model PlotDoc -a

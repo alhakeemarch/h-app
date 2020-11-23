@@ -225,9 +225,10 @@ class ProjectDocController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function get_pdf(Request $request)
     {
-        if ($request->project_doc_type_id == '2') {
-            return $this->quotation($request);
-        }
+
+        // if ($request->project_doc_type_id == '2') {
+        //     return $this->quotation($request);
+        // }
         $project = Project::findOrFail($request->project_id);
         $project_doc_type = ProjectDocType::findOrFail($request->project_doc_type_id);
         $office_data = OfficeData::findOrFail(1);

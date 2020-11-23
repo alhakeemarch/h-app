@@ -247,12 +247,9 @@ class ContractController extends Controller
         // -----------------------------------------------------------------
         $newPDF = new TCPDF();
         // -----------------------------------------------------------------
-        // setting a header and foooter 
         $newPDF = ProjectDocController::set_hakeem_header_footer($newPDF);
-        // setting main sittings
         $newPDF = ProjectDocController::set_common_settings($newPDF);
         // -----------------------------------------------------------------
-        // pdf title
         $newPDF::SetTitle($contract->contract_type()->first()->name_ar);
         $newPDF::SetSubject($contract->contract_type()->first()->name_ar);
         // -----------------------------------------------------------------
@@ -280,9 +277,10 @@ class ContractController extends Controller
         $newPDF::lastPage();
         $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         // -----------------------------------------------------------------
-        // return;
+        $contract->print_count = $contract->print_count + 1;
+        $contract->save();
+        // -----------------------------------------------------------------
         return redirect()->back();
-        // exit;
         // -----------------------------------------------------------------
     }
 

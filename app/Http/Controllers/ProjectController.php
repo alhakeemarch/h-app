@@ -16,6 +16,7 @@ use App\Plan;
 use App\Plot;
 use App\Project;
 use App\ProjectDocType;
+use App\ProjectService;
 use App\ProjectStatus;
 use App\RepresentativeType;
 use App\Rules\ValidDate;
@@ -172,7 +173,7 @@ class ProjectController extends Controller
         $project_invoices = Invoice::where('project_id', $project->id)->get();
         $project_docs_list = ProjectDocType::whereNull('is_in_quick_add')->get();
         $employees = Person::where('job_division', 'design')->get()->sortBy('ar_name1');
-
+        $project_serveices = ProjectService::where('project_id', $project->id)->get();
         $can_create_invoice = false;
         foreach ($project_contracts as $contract) {
             if (!isset($contract->invoice_id) && $contract->is_in_invoice) {
@@ -207,6 +208,7 @@ class ProjectController extends Controller
             'project_folders' => $project_folders,
             'project_invoices' => $project_invoices,
             'can_create_invoice' => $can_create_invoice,
+            'project_serveices' => $project_serveices,
         ]);
     }
 

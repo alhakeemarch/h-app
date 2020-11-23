@@ -453,6 +453,7 @@ Route::resources([
     'quotation' => 'QuotationController',
     'contract' => 'ContractController',
     'contractfield' => 'ContractfieldController',
+    'projectService' => 'ProjectServiceController',
 
     'plot' => 'PlotController',
     'plotDoc' => 'PlotDocController',

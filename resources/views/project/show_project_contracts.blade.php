@@ -40,7 +40,6 @@ $total_1st_payment = 0;
                     </span>
                 </td>
                 <td>
-
                     <form action="{{route('contract.update',[$contract->id])}}" method="post">
                         @csrf
                         @method('PATCH')
@@ -130,6 +129,10 @@ $total_1st_payment = 0;
             @endphp
             @endforeach
         </table>
+        {{-- ---------------------------------------------------------------------------------------------------- --}}
+        @include('project.shwo_project_services')
+        {{-- ---------------------------------------------------------------------------------------------------- --}}
+
     </li>
     <li class="list-group-item">
         <table class="table table-bordered table-hover text-center">
