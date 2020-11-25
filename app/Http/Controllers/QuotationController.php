@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PersonTitles;
 use App\Project;
+use App\ProjectService;
 use App\Quotation;
 use Illuminate\Http\Request;
 use Elibyy\TCPDF\Facades\TCPDF as TCPDF;
@@ -138,16 +139,21 @@ class QuotationController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function get_pdf(Request $request)
     {
-        // return $request;
-        // data needed in document
         $project = Project::findOrFail($request->project_id);
         $quotation = new Quotation;
         $quotation = $quotation->where('project_id', $project->id)->first();
         $date_and_time = (isset($quotation->id)) ? DateAndTime::get_date_time_arr($quotation->quotation_date) : DateAndTime::get_date_time_arr();
         $project_contracts = ContractController::get_project_contracts_for_quotation($project);
+        $project_services = ProjectService::where([
+            'project_id' => $project->id,
+            'is_in_quotation' => true,
+        ])->get();
         $total_arr = $this->get_total_array($project);
-        if ($project_contracts->count() < 1) {
-            return redirect()->back()->withErrors(['contracts must be created to appear in quotation', 'يجب انشاء العقود لتظهر قيمها في عرض السعر']);
+        if ($project_contracts->count() < 1 && $project_services->count() < 1) {
+            return redirect()->back()->withErrors([
+                'contracts or services must be created to appear in quotation',
+                'يجب انشاء العقود او خدمات لتظهر قيمها في عرض السعر'
+            ]);
         }
         $data = [
             'project' => $project,
@@ -155,6 +161,7 @@ class QuotationController extends Controller
             'total_arr' => $total_arr,
             'date_and_time' => $date_and_time,
             'quotation' => $quotation,
+            'project_services' => $project_services,
         ];
 
         if (!(isset($quotation->id))) {
@@ -196,13 +203,17 @@ class QuotationController extends Controller
         $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
         $newPDF::StopTransform();
         // -----------------------------------------------------------------
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
         return;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function get_total_array($project)
     {
         $project_contracts = ContractController::get_project_contracts_for_quotation($project);
+        $project_services = ProjectService::where([
+            'project_id' => $project->id,
+            'is_in_quotation' => true,
+        ])->get();
         $total_arr = [
             'total_cost' => 0,
             'total_vat' => 0,
@@ -215,6 +226,12 @@ class QuotationController extends Controller
             $total_arr['total_vat'] += $contract->vat_value;
             $total_arr['total_price_withe_vat'] += $contract->price_withe_vat;
             $total_arr['vat_percentage'] = (int) $contract->vat_percentage;
+        }
+        foreach ($project_services as $project_service) {
+            $total_arr['total_cost'] += $project_service->price;
+            $total_arr['total_vat'] += $project_service->vat_value;
+            $total_arr['total_price_withe_vat'] += $project_service->price_withe_vat;
+            $total_arr['vat_percentage'] = (int) $project_service->vat_percentage;
         }
         $ar_num  = new \App\I18N_Arabic_Numbers();
         $total_arr['total_price_withe_vat_text'] = $ar_num->money2str($total_arr['total_price_withe_vat'], 'SAR');

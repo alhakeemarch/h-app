@@ -192,13 +192,35 @@ class Project extends Model
         return $this->belongsTo(ProjectStatus::class, 'project_status_id');
     }
     // -----------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
+    public function get_invoice_addrees_ar()
+    {
+        if (isset($this->invoicing_address_ar)) {
+            return $this->invoicing_address_ar;
+        }
+        $address = '';
+        if ($this->plot) {
+            $address .= ' القطعة رقم' . $this->plot->plot_no;
+            if ($this->plot->plan) {
+                $address .= ' المخطط رقم ' . $this->plot->plan->plan_no;
+            }
+            if ($this->plot->district) {
+                $address .= ' - ' . $this->plot->district->ar_name;
+            }
+            if ($this->plot->neighbor) {
+                $address .= ' - ' . $this->plot->neighbor->ar_name;
+            }
+        }
+        return  $address;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_invoice_addrees_en()
+    {
+        return (isset($this->invoicing_address_en)) ? $this->invoicing_address_en : '';
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_invoice_vat_no()
+    {
+        return (isset($this->invoicing_vat_no)) ? $this->invoicing_vat_no : '';
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 }

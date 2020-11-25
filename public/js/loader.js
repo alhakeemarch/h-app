@@ -11,11 +11,15 @@ const btns = document.querySelectorAll('button');
 
 for (let form of forms) {
     form.addEventListener('submit', (e) => {
+
         if (form.querySelector('button').firstElementChild.nodeName == 'I'
             && form.querySelector('button').firstElementChild.className == 'fa fa-print') {
             return;
+        }
+        if (form.querySelector('button').firstElementChild.nodeName == 'I'
+            && form.querySelector('button').firstElementChild.className == 'fas fa-file-download') {
+            return;
         } else {
-
             document.querySelector('.loader').classList.remove('hidden');
             // form.children('button[type=submit]').prop('disabled', true);
             for (let btn of btns) {
@@ -30,6 +34,10 @@ for (let form of forms) {
 function add_hidden(event) {
     const loader = event.target.querySelector('.loader');
     loader.classList.add('hidden');
+}
+
+function show_loader() {
+    document.querySelector('.loader').classList.remove('hidden');
 }
 
 

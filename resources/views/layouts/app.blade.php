@@ -83,8 +83,6 @@
     </style>
 </head>
 
-{{-- <body onload="document.querySelector('.loader').classList.add('hidden')"> --}}
-
 <body>
     <div class=" loader">
         <img src="{{asset('img/loading-1.gif')}}" alt="Loading...">
@@ -115,12 +113,7 @@
                 @endif
                 <!-- ///////////////////////////////-->
                 @if(session()->has('success'))
-                <div class="alert alert-success">
-                    {{ session()->get('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                @include('layouts.success')
                 @endif
                 <!-- ///////////////////////////////-->
 

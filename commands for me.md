@@ -330,6 +330,10 @@ ALTER TABLE `projects` CHANGE `owner_type` `owner_type_id` BIGINT(20) UNSIGNED N
 ALTER TABLE `projects` ADD CONSTRAINT projects_owner_type_id_foreign FOREIGN KEY (owner_type_id) REFERENCES owner_types(id);
 ALTER TABLE `projects` CHANGE `representative_type` `representative_type_id` BIGINT(20) UNSIGNED NULL ;
 ALTER TABLE `projects` ADD CONSTRAINT projects_representative_type_id_foreign FOREIGN KEY (representative_type_id) REFERENCES representative_types(id);
+ALTER TABLE `projects`ADD COLUMN `invoicing_address` VARCHAR(191) NULL AFTER `owner_name_en`;
+ALTER TABLE `projects`CHANGE `invoicing_address` `invoicing_address_ar` VARCHAR(191) NULL;
+ALTER TABLE `projects`ADD COLUMN `invoicing_address_en` VARCHAR(191) NULL AFTER `invoicing_address_ar`;
+ALTER TABLE `projects`ADD COLUMN `invoicing_vat_no` BIGINT(20) UNSIGNED NULL AFTER `invoicing_address_en`;
 
 <!-- ------------------------------------------------------------------------ -->
 

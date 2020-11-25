@@ -201,7 +201,7 @@
             <span>إضافة الخدمات</span>
         </div>
         <div class="card-body p-0 py-1">
-            @include('projectServices.forms.q_add')
+            @include('projectService.forms.q_add')
         </div>
         @endcan
         {{-- ------------------------------------------------------------------------------------------------------------------------- --}}

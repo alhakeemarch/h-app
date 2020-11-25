@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Person;
-use App\Auth\RegisterController;
-use App\Contract;
-use App\Project;
+
 
 /*
 |--------------------------------------------------------------------------

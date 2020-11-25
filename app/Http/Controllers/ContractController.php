@@ -180,8 +180,13 @@ class ContractController extends Controller
      * @param  \App\Contract  $contract
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contract $contract)
+    public function destroy(Request $request, Contract $contract)
     {
+        if ($contract->invoice_id) {
+            return redirect()->back()->withErrors([
+                'can NOT delete the contract after issuing an invoice', 'لا يمكن حذف الفاتورة بعد صدور فاتورة ضريبية عليها'
+            ]);
+        }
         $old_record = $contract->get_record_as_str();
         $contract->delete();
         $db_record_data = [

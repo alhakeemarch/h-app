@@ -1,8 +1,5 @@
-{{-- {{dd($contract)}} --}}
-
-
 @extends('layouts.app')
-@section('title', 'project edit')
+@section('title', 'contract edit')
 @section('content')
 
 <div class="card ">

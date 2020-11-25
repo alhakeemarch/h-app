@@ -117,43 +117,6 @@ class ProjectDocController extends Controller
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public function invoice(Request $request)
-    {
-        // data needed in document
-        $project = Project::findOrFail($request->project_id);
-        $office_data = OfficeData::findOrFail(1);
-        $date_and_time = DateAndTime::get_date_time_arr();
-        $data = [
-            'project' => $project,
-            'office_data' => $office_data,
-            'date_and_time' => $date_and_time,
-        ];
-        // creating pdf 
-        $newPDF = new TCPDF();
-        // Content
-        $doc_name = 'tafweed';
-        $pdf_view = 'projectDoc.invoice';
-        $is_tafweed = true;
-        // -----------------------------------------------------------------
-        // setting a header and foooter 
-        $newPDF = $this->set_invoice_header_footer($newPDF, $is_tafweed);
-        // setting main sittings
-        $newPDF = $this->set_common_settings($newPDF);
-        // -----------------------------------------------------------------
-        $newPDF::SetFont('al-mohanad', '', 10, '', false);
-        // -----------------------------------------------------------------
-        // pdf title
-        $newPDF::SetTitle('فاتورة');
-        $newPDF::SetSubject('فاتورة');
-        // -----------------------------------------------------------------
-        $the_view = View::make($pdf_view)->with($data);
-        $html = $the_view->render();
-        $newPDF::writeHTML($html, true, false, true, false, '');
-        $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
-        exit;
-    }
-    // -----------------------------------------------------------------------------------------------------------------
     public static function get_missing_data($doc_name, $project)
     {
         $missing_data = [];
@@ -225,10 +188,6 @@ class ProjectDocController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function get_pdf(Request $request)
     {
-
-        // if ($request->project_doc_type_id == '2') {
-        //     return $this->quotation($request);
-        // }
         $project = Project::findOrFail($request->project_id);
         $project_doc_type = ProjectDocType::findOrFail($request->project_doc_type_id);
         $office_data = OfficeData::findOrFail(1);
@@ -318,7 +277,7 @@ class ProjectDocController extends Controller
         return $newPDF;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public static function set_invoice_header_footer($newPDF, $is_tafweed = false)
+    public static function set_invoice_header_footer($newPDF)
     {
         // Custom Header
         $newPDF::setHeaderCallback(function ($pdf) {

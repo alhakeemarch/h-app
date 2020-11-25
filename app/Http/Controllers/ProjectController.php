@@ -173,14 +173,18 @@ class ProjectController extends Controller
         $project_invoices = Invoice::where('project_id', $project->id)->get();
         $project_docs_list = ProjectDocType::whereNull('is_in_quick_add')->get();
         $employees = Person::where('job_division', 'design')->get()->sortBy('ar_name1');
-        $project_serveices = ProjectService::where('project_id', $project->id)->get();
+        $project_services = ProjectService::where('project_id', $project->id)->get();
         $can_create_invoice = false;
         foreach ($project_contracts as $contract) {
             if (!isset($contract->invoice_id) && $contract->is_in_invoice) {
                 $can_create_invoice = true;
             }
         }
-
+        foreach ($project_services as $service) {
+            if (!isset($service->invoice_id) && $service->is_in_invoice) {
+                $can_create_invoice = true;
+            }
+        }
 
         // to remove contract that already added from the list
         foreach ($quick_form_contracts as $key => $value) {
@@ -208,7 +212,7 @@ class ProjectController extends Controller
             'project_folders' => $project_folders,
             'project_invoices' => $project_invoices,
             'can_create_invoice' => $can_create_invoice,
-            'project_serveices' => $project_serveices,
+            'project_services' => $project_services,
         ]);
     }
 
@@ -288,30 +292,9 @@ class ProjectController extends Controller
             return redirect()->back()->with('success', 'structural hight added successfully - تم اضافة الإرتفاع الإنشائي بنجاح');
         }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
-        if ($request->form_action == 'update_project_number') {
-            $project->project_no = $this->get_new_project_no();
-            $current_date = DateAndTime::get_date_time_arr();
-            $created_at_note = $current_date['hijri_month_name_ar'] . '-' . $current_date['hijri_year_no'];
-            $project->created_at_note = $created_at_note;
-            $project->project_status_id = 3;
-            $project->last_edit_by_id = auth()->user()->id;
-            $project->last_edit_by_name = auth()->user()->user_name;
-            $project->save();
-            // -----------------------------------------------------------------
-            // add record to db_log
-            $db_record_data = [
-                'table' => 'projects',
-                'model' => 'Project',
-                'model_id' => $project->id,
-                'action' => 'update',
-                'description' => 'project id =>' . $project->id . ', given a number =>'  . $project->project_no,
-            ];
-            DbLogController::add_record($db_record_data);
-            // -----------------------------------------------------------------
-            $msg = FileAndFolderController::create_dir_in_running_project($project);
-            // -----------------------------------------------------------------
-            // -----------------------------------------------------------------
-            return redirect()->back()->with('success', 'project number has be assigned - تم اضافة رقم للمشروع' . ' & ' . $msg);
+        if ($request->form_action == 'giv_project_a_number') {
+            $msg = self::giv_project_a_number($project);
+            return redirect()->back()->with('success', $msg);
         }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'add_customer_to_project' || $request->form_action == 'change_owner_info') {
@@ -352,6 +335,32 @@ class ProjectController extends Controller
         if ($request->form_action == 'update_project_main_info') {
             return $this->update_project_main_info($request, $project);
         }
+    }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
+    public static function giv_project_a_number(Project $project)
+    {
+        $project->project_no = (new self)->get_new_project_no();
+        $current_date = DateAndTime::get_date_time_arr();
+        $created_at_note = $current_date['hijri_month_name_ar'] . '-' . $current_date['hijri_year_no'];
+        $project->created_at_note = $created_at_note;
+        $project->project_status_id = 3;
+        $project->last_edit_by_id = auth()->user()->id;
+        $project->last_edit_by_name = auth()->user()->user_name;
+        $project->save();
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'projects',
+            'model' => 'Project',
+            'model_id' => $project->id,
+            'action' => 'update',
+            'description' => 'project id =>' . $project->id . ', given a number =>'  . $project->project_no,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        $msg = FileAndFolderController::create_dir_in_running_project($project);
+        // -----------------------------------------------------------------
+        return [$msg, 'project number has be assigned', 'تم اضافة رقم للمشروع'];
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     public function update_owner_info($request, $project)
@@ -594,14 +603,13 @@ class ProjectController extends Controller
     {
         Gate::authorize('create', Project::class);
 
-
         // step 1 to check if the customer is already registered
         if (!($request->has('_token'))) {
             return view('project.forms.check_n_id');
         }
-        // if ($request->method() === "GET") {
-        //     return view('project.forms.check_n_id');
-        // }
+        if ($request->method() === "GET") {
+            return view('project.forms.check_n_id');
+        }
         $person = new Person;
         // step 2 to check if the customer is already registered
         if ($request->check_n_id_form) {
@@ -852,7 +860,7 @@ class ProjectController extends Controller
         return $project_tame;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function get_new_project_no()
+    private function get_new_project_no()
     {
         $all_project_no = Project::all(['project_no'])->toArray();
         $project_no_arr = [];

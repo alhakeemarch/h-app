@@ -74,7 +74,7 @@ class ProjectServiceController extends Controller
      */
     public function edit(ProjectService $projectService)
     {
-        //
+        return view('projectService.edit')->with(['projectService' => $projectService]);
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -96,7 +96,25 @@ class ProjectServiceController extends Controller
             $projectService->save();
             return redirect()->back();
         }
-        return $request;
+
+        $valed_data = $request->validate([
+            'name_ar' => 'string|required',
+            'name_en' => 'nullable|string',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric',
+            'vat_percentage' => 'required|numeric',
+        ]);
+
+        $valed_data['last_edit_by_id'] = auth()->user()->id;
+        $valed_data['price'] = (float)$valed_data['price'];
+        $valed_data['vat_percentage'] = (float)$valed_data['vat_percentage'];
+        $valed_data['vat_value'] = $valed_data['price'] * $valed_data['vat_percentage'] / 100;
+        $valed_data['price_withe_vat'] = $valed_data['price'] + $valed_data['vat_value'];
+
+        $projectService->update($valed_data);
+
+        return redirect()->route('project.show', $projectService->project_id)
+            ->with('success', 'Project Service Edited  - تم تعديل الخدمة للمشروع بنجاح');
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -107,6 +125,16 @@ class ProjectServiceController extends Controller
      */
     public function destroy(ProjectService $projectService)
     {
-        //
+        $projectService->delete();
+        $db_record_data = [
+            'table' => 'projectServices',
+            'model' => 'ProjectService',
+            'model_id' => $projectService->id,
+            'action' => 'soft_delete',
+            'description' => 'projectService withe id = ' . $projectService->id . ' deleted',
+        ];
+        DbLogController::add_record($db_record_data);
+        return redirect()->back()->with('success', 'projectService deleted successfully - تم حذف الخدمة بنجاح');
     }
+    // -----------------------------------------------------------------------------------------------------------------
 }

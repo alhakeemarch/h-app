@@ -13,7 +13,8 @@
                     value="{{$contract->cost}}">
             </div>
             <div class="form-group col  m-0">
-                <button type="submit" class="btn btn-primary btn-block m-0">save</button>
+                <x-btn-save />
+                <x-btn-cancel />
             </div>
         </form>
     </li>

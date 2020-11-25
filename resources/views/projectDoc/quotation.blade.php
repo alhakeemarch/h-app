@@ -129,6 +129,16 @@
     </tr>
     @php $n++; @endphp
     @endforeach
+    @foreach ($project_services as $project_service)
+    <tr>
+        <td>{{$n}}</td>
+        <td colspan="6">{{$project_service->name_ar}}</td>
+        <td colspan="2">{{$project_service->price}}</td>
+        <td colspan="2">{{$project_service->vat_value}}</td>
+        <td colspan="2">{{$project_service->price_withe_vat}}</td>
+    </tr>
+    @php $n++; @endphp
+    @endforeach
     <tr style="background-color:#fffbee; opacity: 0.2;">
         <td colspan="7">الإجمالي</td>
         <td colspan="2">{{$total_arr['total_cost']}}</td>

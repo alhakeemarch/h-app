@@ -23,12 +23,14 @@
         <td colspan="3" rowspan="2" align="center"><br style="line-height: 300%;"><span
                 class="txt-center">({{$invoice->invoice_no_prefix}}-{{$invoice->invoice_no}})</span>
         </td>
-        <th colspan="5">seller - البائع</th>
+        <th colspan="3" style="border: none; border-top: gray soled 0.5px; border-right: gray soled 0.5px;">
+            بيانات البائع</th>
+        <th colspan="3" style="border: none; border-top: gray soled 0.5px; border-left: gray soled 0.5px;">
+            Seller Information</th>
     </tr>
     <tr>
         <th colspan="2" class="font-90">Invoice NO:</th>
-        {{-- <td colspan="3">(2020-5536)</td> --}}
-        <td colspan="5">{{$office_data->name_ar}}</td>
+        <td colspan="6">{{$office_data->name_ar}}</td>
     </tr>
     <tr>
         <th colspan="2">التاريخ الهجري</th>
@@ -36,24 +38,24 @@
             {{$date_and_time['hijri_day_no']}} - {{$date_and_time['hijri_month_name_ar']}} -
             {{$date_and_time['hijri_year_no']}}
         </td>
-        <td colspan="5">{{$office_data->na_city_ar}}</td>
+        <td colspan="6">{{$office_data->na_city_ar}}</td>
     </tr>
     <tr>
         <th colspan="2" class="font-90">Hijri Date</th>
         <td colspan="3">{{$date_and_time['h_date_ar']}}</td>
-        <td colspan="5" class="font-90">{{$office_data->name_en}}</td>
+        <td colspan="6" class="font-90">{{$office_data->name_en}}</td>
     </tr>
     <tr>
         <th colspan="2">التاريخ الميلادي</th>
         <td colspan="3">{{$date_and_time['g_date_ar']}}</td>
-        <td colspan="5" class="font-90">{{$office_data->na_city_en}}</td>
+        <td colspan="6" class="font-90">{{$office_data->na_city_en}}</td>
     </tr>
     <tr>
         <th colspan="2" class="font-90">Gregorian Date</th>
         <td colspan="3">
             {{$date_and_time['g_day_no']}} - {{$date_and_time['g_month_name_ar']}} - {{$date_and_time['g_year_no']}}
         </td>
-        <td colspan="5">VAT NO: {{$office_data->VAT_account_no}}</td>
+        <td colspan="6">VAT NO: {{$office_data->VAT_account_no}}</td>
     </tr>
 </table><br><br style="line-height: 20%; ">
 {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
@@ -103,19 +105,19 @@
     </tr>
     <tr>
         <th>العنوان:</th>
-        <td colspan="7"></td>
+        <td colspan="7">{{$project->get_invoice_addrees_ar()}}</td>
     </tr>
     <tr>
-        <td colspan="7"></td>
+        <td colspan="7">{{$project->project_name_en ?? ''}}</td>
         <th>To:</th>
     </tr>
     <tr>
-        <td colspan="7"></td>
+        <td colspan="7">{{$project->get_invoice_addrees_en()}}</td>
         <th>Address:</th>
     </tr>
     <tr>
         <th style="font-size: 90%;">رقم الضريبي:</th>
-        <td colspan="6"></td>
+        <td colspan="6">{{$project->get_invoice_vat_no()}}</td>
         <th>VAT NO:</th>
     </tr>
 </table> <br><br>
