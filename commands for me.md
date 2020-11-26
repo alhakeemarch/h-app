@@ -735,4 +735,11 @@ required title -----> to add
 </x-select_searchable>
 ================================
 
+<x-btn>
+<x-slot name='text'>true</x-slot>
+<x-slot name='action'>true</x-slot>
+<x-slot name='is_disabled'>true</x-slot>
+<x-slot name='is_btn_link'>true</x-slot>
+</x-btn>
+
 # APP_DEBUG = false

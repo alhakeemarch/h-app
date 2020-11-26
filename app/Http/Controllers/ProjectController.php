@@ -602,6 +602,8 @@ class ProjectController extends Controller
     public function new_project(Request $request)
     {
         Gate::authorize('create', Project::class);
+        # 1 --> first page
+        return view('project.create');
 
         // step 1 to check if the customer is already registered
         if (!($request->has('_token'))) {
