@@ -73,16 +73,29 @@ class PlotController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
         $validatedData = $this->validatePlot($request);
 
-        $addby = [
-            'created_by_id' =>  auth()->user()->id,
-            'created_by_name' => auth()->user()->user_name,
-        ];
+        if (!(isset($validatedData['deed_issue_place']))) {
+            $validatedData['deed_issue_place'] = 'كتابة عدل';
+        }
+        $validatedData['created_by_id'] = auth()->user()->id;
+        $validatedData['created_by_name'] =  auth()->user()->user_name;
 
-        $validatedData = array_merge($validatedData, $addby);
         $plot = Plot::create($validatedData);
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'plots',
+            'model' => 'plot',
+            'model_id' => $plot->id,
+            'action' => 'create',
+            'description' => 'new plot created plot_no =>' . $plot->plot_no . ', deed_no =>'  . $plot->deed_no,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        if ($request->coming_from == 'create_new_project') {
+            return $plot;
+        }
         return redirect()->action('PlotController@show', [$plot]);
     }
     // ---------------------------------------------------------------------------------------------

@@ -3,11 +3,15 @@
 @section('content')
 
 <div class="card">
-    <h5 class="card-header">{{ __('registration') }} of {{__('plot')}}</h5>
+    <h5 class="card-header d-flex justify-content-between">
+        <span>new plot registration</span>
+        <span>تسجيل قطعة أرض جديدة</span>
+    </h5>
     <div class="card-body">
-        <form class="form-group" action="{{ action('ProjectController@new_project') }}" accept-charset="UTF-8"
-            method="POST">
+        <form class="form-group" action="" method="GET">
             @csrf
+            <input type="hidden" name="form_action" value="create_new_plot">
+            <input type="hidden" name="coming_from" value="create_new_project">
             {{-- --------------------------------------------------------------------------- --}}
             <input type="hidden" name="create_plot" value="1">
             {{-- --------------------------------------------------------------------------- --}}
@@ -22,7 +26,8 @@
             {{-- @include('plot.forms.regulations') --}}
             @include('plot.forms.coordinates')
             {{-- --------------------------------------------------------------------------- --}}
-            <button type="submit" class="btn btn-info btn-block my-3">{{__('next')}}</button>
+            <hr>
+            <x-btn btnText='next' />
         </form>
     </div>
 </div>

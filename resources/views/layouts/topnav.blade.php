@@ -149,10 +149,12 @@
             <div class="">
                 @if (App::isLocale('ar'))
                 <a href="{{ url('locale/en') }}" class="nav-item nav-link">
-                    <i class="fas fa-globe-asia fa-1x"></i>
+                    {{__('nav-language')}} |
+                    {{-- <i class="fas fa-globe-asia fa-1x"></i> --}}
                 </a> @else
                 <a href="{{ url('locale/ar') }}" class="nav-item nav-link">
-                    <i class="fas fa-globe-asia fa-1x"></i>
+                    {{-- <i class="fas fa-globe-asia fa-1x"></i> --}}
+                    {{__('nav-language')}} |
                 </a> @endif
             </div>
             <!-- /End language icon -->

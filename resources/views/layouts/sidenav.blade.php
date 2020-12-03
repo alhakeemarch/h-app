@@ -109,7 +109,7 @@
             {{__('plots')}}
         </div>
     </a>
-    <a class="" href="{{route ('project.new_project')}}">
+    <a class="" href="{{route ('project.create')}}">
         <div class="sidebar-item {{ (request()->is('new_project*')) ? 'active' : '' }}">
             {{__('new project')}}
         </div>

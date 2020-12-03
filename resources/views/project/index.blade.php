@@ -79,7 +79,13 @@
                 @foreach ($projects as $project)
                 <tr>
                     {{-- <td scope="row">{{$i}}</td> --}}
-                    <td class="project_number">{{$project->project_no}}</td>
+                    <td class="project_number">
+                        @if (! isset($project->project_no) && ($project->is_only_supervision))
+                        اشراف فقط
+                        @else
+                        {{$project->project_no}}
+                        @endif
+                    </td>
                     <td class="project_name">{{$project->project_name_ar}}</td>
                     <td class="project_type">{{$project->project_type}}</td>
                     <td class="project_location">{{$project->project_location}}</td>

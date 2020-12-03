@@ -316,6 +316,7 @@ php artisan make:model PersonTitles -a // قائمة بألقاب العملاء
 php artisan make:model ContractClass -a // تصنيف لدرجات العقد
 php artisan make:model RepresentativeType -a // تصنيف لدرجات العقد
 php artisan make:model ProjectDocType -a // اسماء مستندات المشروع
+php artisan make:model OrganizationType -a // نوع الجهة
 
 ==============
 لعمل علاقة Many to many
@@ -334,6 +335,7 @@ ALTER TABLE `projects`ADD COLUMN `invoicing_address` VARCHAR(191) NULL AFTER `ow
 ALTER TABLE `projects`CHANGE `invoicing_address` `invoicing_address_ar` VARCHAR(191) NULL;
 ALTER TABLE `projects`ADD COLUMN `invoicing_address_en` VARCHAR(191) NULL AFTER `invoicing_address_ar`;
 ALTER TABLE `projects`ADD COLUMN `invoicing_vat_no` BIGINT(20) UNSIGNED NULL AFTER `invoicing_address_en`;
+ALTER TABLE `projects` ADD `is_only_supervision` BOOLEAN NULL AFTER `project_type`;
 
 <!-- ------------------------------------------------------------------------ -->
 
@@ -403,6 +405,41 @@ ALTER TABLE `invoices` ADD `print_count` BIGINT(20) UNSIGNED default 0 NULL AFTE
 ALTER TABLE `invoices` ADD `text` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `is_cash`;
 ALTER TABLE `invoices` ADD `html` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `is_cash`;
 ALTER TABLE `invoices` ADD `html_1` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `is_cash`;
+
+<!-- ------------------------------------------------------------------------ -->
+
+ALTER TABLE `organizations` DROP `created_by_name`, DROP `last_edit_by_name`;
+ALTER TABLE `organizations`
+ADD `fax_no` varchar(191) NULL AFTER `id`,
+ADD `main_phone` varchar(191) NULL AFTER `id`,
+ADD `zip_code` bigint(20) NULL AFTER `id`,
+ADD `POBox_no` bigint(20) NULL AFTER `id`,
+ADD `VAT_account_no` bigint(20) NULL AFTER `id`,
+ADD `chamber_of_commerce_id` varchar(191) NULL AFTER `id`,
+ADD `is_sub_commercial_registration` tinyint(1) DEFAULT NULL AFTER `id`,
+ADD `is_primary_commercial_registration` tinyint(1) DEFAULT NULL AFTER `id`,
+ADD `issue_place` varchar(191) NULL AFTER `id`,
+ADD `end_date` varchar(191) NULL AFTER `id`,
+ADD `issue_date` varchar(191) NULL AFTER `id`,
+ADD `headquarter` varchar(191) NULL AFTER `id`,
+ADD `authorised_person_name` varchar(191) NULL AFTER `id`,
+ADD `nationality_code` varchar(191) NULL AFTER `id`,
+ADD `owner_national_id` bigint(20) NULL AFTER `id`,
+ADD `owner_name` varchar(191) NULL AFTER `id`,
+ADD `commercial_name` varchar(191) NULL AFTER `id`,
+ADD `commercial_registration_no` bigint(20) NULL AFTER `id`,
+ADD `license_number` varchar(191) NULL AFTER `id`,
+ADD `unified_code` varchar(191) NULL AFTER `id`;
+ALTER TABLE `organizations`
+ADD UNIQUE KEY `organizations_license_number_unique` (`license_number`),
+ADD UNIQUE KEY `organizations_unified_code_unique` (`unified_code`),
+ADD UNIQUE KEY `organizations_commercial_registration_no_unique` (`commercial_registration_no`);
+
+ALTER TABLE `organizations` ADD `special_code` BIGINT(20) NULL AFTER `commercial_registration_no`;
+ALTER TABLE `organizations` ADD UNIQUE KEY `organizations_special_code_unique` (`special_code`);
+
+ALTER TABLE `organizations` ADD `organization_typ_id` BIGINT(20) UNSIGNED NULL AFTER `id` ;
+ALTER TABLE `organizations` ADD CONSTRAINT organizations_organization_typ_id_foreign FOREIGN KEY (organization_typ_id) REFERENCES organization_types(id);
 
 <!-- ------------------------------------------------------------------------ -->
 
@@ -667,36 +704,36 @@ required title -----> to add
 <x-slot name='tooltip'>cool tooltip</x-slot>
 <x-slot name='placeholder'>cool placeholder</x-slot>
 {{-- ------------------------------------------------------- --}}
-{{-- <x-slot name='input_class'>text-danger</x-slot> --}}
-{{-- <x-slot name='input_id'>my_id</x-slot> --}}
+<x-slot name='input_class'>text-danger</x-slot>
+<x-slot name='input_id'>my_id</x-slot>
 {{-- ------------------------------------------------------- --}}
-{{-- <x-slot name='onkeypress_fun'>onlyNumber(event)</x-slot>
-        <x-slot name='onkeypress_fun'>userNameString(event)</x-slot>
-        <x-slot name='onkeypress_fun'>onlyCapitalString(event)</x-slot>
-        <x-slot name='onkeypress_fun'>onlyEnglishString(event)</x-slot>
-        <x-slot name='onkeypress_fun'>onlyArabicString(event)</x-slot>
-        <x-slot name='onkeypress_fun'>onlyString(event)</x-slot>
-        @slot('onkeypress_fun') onlyArabicString(event) @endslot --}}
+<x-slot name='onkeypress_fun'>onlyNumber(event)</x-slot>
+<x-slot name='onkeypress_fun'>userNameString(event)</x-slot>
+<x-slot name='onkeypress_fun'>onlyCapitalString(event)</x-slot>
+<x-slot name='onkeypress_fun'>onlyEnglishString(event)</x-slot>
+<x-slot name='onkeypress_fun'>onlyArabicString(event)</x-slot>
+<x-slot name='onkeypress_fun'>onlyString(event)</x-slot>
+@slot('onkeypress_fun') onlyArabicString(event) @endslot
 {{-- ------------------------------------------------------- --}}
 <x-slot name='is_required'>true</x-slot>
-{{-- <x-slot name='is_readonly'>true</x-slot> --}}
+<x-slot name='is_readonly'>true</x-slot>
 {{-- //// if it is disabled then it will not be required or readonly --}}
-{{-- <x-slot name='is_disabled'>true</x-slot> --}}
-{{-- <x-slot name='is_hidden'>true</x-slot> --}}
+<x-slot name='is_disabled'>true</x-slot>
+<x-slot name='is_hidden'>true</x-slot>
 {{-- ------------------------------------------------------- --}}
-{{-- <x-slot name='input_pattern'>.{2,}</x-slot> --}}
+<x-slot name='input_pattern'>.{2,}</x-slot>
 {{-- ////this is for date:01-01-2020 --}}
-{{-- <x-slot name='input_pattern'>(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}</x-slot> --}}
+<x-slot name='input_pattern'>(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}</x-slot>
+{{-- ------------------------------------------------------- --}}
+<x-slot name='input_min'>5</x-slot>
+<x-slot name='input_max'>10</x-slot>
+{{-- ------------------------------------------------------- --}}
+<x-slot name='input_value'>{{$person->ar_name1}}</x-slot>
+{{-- ------------------------------------------------------- --}}
+this is main slot
+</x-input>
 
-        {{-- ------------------------------------------------------- --}}
-        <x-slot name='input_min'>5</x-slot>
-        <x-slot name='input_max'>10</x-slot>
-        {{-- ------------------------------------------------------- --}}
-        <x-slot name='input_value'>{{$person->ar_name1}}</x-slot>
-        {{-- ------------------------------------------------------- --}}
-        this is main slot
-    </x-input>
-    <hr>
+<hr>
 
     <x-input name='new' title="2nd title" />
 
@@ -734,12 +771,20 @@ required title -----> to add
 <x-slot name='is_readonly'>true</x-slot>
 </x-select_searchable>
 ================================
-
-<x-btn>
-<x-slot name='text'>true</x-slot>
-<x-slot name='action'>true</x-slot>
+<x-btn btnText=''>
+<x-slot name='btn_text'>ok</x-slot>
+<x-slot name='btn_text'>
+search|view|add|new|save|ok|submit|apply|next|cancel|back|delet|edit|print|download|upload|refresh|reload|re-rendr|sync|reset|toggle-off|toggle-on
+</x-slot>
+<x-slot name='btn_type'>true</x-slot>
 <x-slot name='is_disabled'>true</x-slot>
 <x-slot name='is_btn_link'>true</x-slot>
+<x-slot name='btn_only_icon'>true</x-slot>
+<x-slot name='btn_no_loader'>true</x-slot>
 </x-btn>
+================================
+<x-form-cancel />
+
+================================
 
 # APP_DEBUG = false

@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Rules\ValidDate;
 use App\Rules\ValidHijriDate;
 use App\Rules\ValidGregorianDate;
+use Illuminate\Support\Facades\Redirect;
 
 class PersonController extends Controller
 {
@@ -69,25 +70,41 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
-        $validatedData = collect($this->validatePerson($request));
+        $validatedData = $this->validatePerson($request);
         $nationality = Country::where('code_2chracters', $validatedData['nationality_code'])->first();
-        // dd($nationality);
         if ($nationality) {
-            $validatedData->put('nationality_ar', $nationality->ar_name);
-            $validatedData->put('nationality_en', $nationality->en_name);
+            $validatedData['nationality_ar'] = $nationality->ar_name;
+            $validatedData['nationality_en'] = $nationality->en_name;
         }
-        $created_by_id = auth()->user()->id;
-        $created_by_name = auth()->user()->user_name;
-        if (!$created_by_id and !$created_by_name) {
-            return abort(403);
+        $validatedData['created_by_id'] = auth()->user()->id;
+        $validatedData['created_by_name'] = auth()->user()->user_name;
+        if ($request->form_action == 'create_new_custorm') {
+            $validatedData['is_customer'] = true;
         }
-        $validatedData->put('created_by_id', $created_by_id);
-        $validatedData->put('created_by_name', $created_by_name);
 
-        // return $validatedData;
-        $person = Person::create($validatedData->all());
+        $found_person = Person::where('national_id', $validatedData['national_id'])->first();
+        if ($found_person) {
+            if ($request->coming_from == 'create_new_project') {
+                return $found_person;
+            }
+            return redirect()->route('person.show', $found_person);
+        }
+        $person = Person::create($validatedData);
         $person->save();
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'people',
+            'model' => 'Person',
+            'model_id' => $person->id,
+            'action' => 'create',
+            'description' => 'new person as customer created national_id =>'  . $person->national_id,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        if ($request->coming_from == 'create_new_project') {
+            return $person;
+        }
         return redirect()->action('PersonController@index');
     }
     // -----------------------------------------------------------------------------------------------------------------

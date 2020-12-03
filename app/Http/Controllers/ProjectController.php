@@ -9,6 +9,7 @@ use App\ContractType;
 use App\Invoice;
 use App\MunicipalityBranch;
 use App\Neighbor;
+use App\Organization;
 use App\OwnerType;
 use App\Person;
 use App\PersonTitles;
@@ -75,10 +76,44 @@ class ProjectController extends Controller
      */
     public function create(Request $request)
     {
-        $person = Person::findOrFail($request['person']);
+        Gate::authorize('create', Project::class);
+
+        # 1 --> first page
+        if (!$request->form_action) {
+            return view('project.forms.check_n_id');
+        }
+        # 2 -->
+        if ($request->form_action == 'check_n_id') {
+            return $this->check_n_id($request);
+        }
+        # 3 -->
+        if ($request->form_action == 'check_organization_id') {
+            return $this->check_organization_id($request);
+        }
+        # 5 -->
+        if ($request->form_action == 'create_new_custorm') {
+            $customer = (new PersonController)->store($request);
+            return view('project.forms.check_plot_no')->with([
+                'person' => $customer,
+            ]);
+        }
+        # 6 -->
+        if ($request->form_action == 'check_deed_number') {
+            return $this->check_deed_number($request);
+        }
+        # 7 -->
+        if ($request->form_action == 'create_new_plot') {
+            $person = Person::where('national_id', $request->owner_national_id)->first();
+            $plot = (new PlotController)->store($request);
+            return $this->show_create_project_form($person, $plot);
+        }
+
+        return 'create function in project Controllere';
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function show_create_project_form($person, $plot)
+    {
         $employees = $person->all()->where('job_level', '>=', 5)->reverse();
-        $plot = Plot::findOrFail($request['plot']);
-        // return $plot;
         $project = new Project;
         $found_project = $project->where('plot_id', $plot->id)->first();
         $project = ($found_project) ? $found_project : $project;
@@ -103,21 +138,12 @@ class ProjectController extends Controller
     {
         $plot = Plot::where('deed_no', $request->deed_no)->first();
         $validated_project = collect($this->validate_project($request));
-        $validated_plot = PlotController::validatePlot($request);
-        // $validated_person = PersonController::validatePerson($request);
-        // dd($validated_project, $validated_plot, $request->all());
-        $created_by_id = auth()->user()->id;
-        $created_by_name = auth()->user()->user_name;
-
-        if (!$created_by_id and !$created_by_name) {
-            return abort(403);
-        }
         $current_date = DateAndTime::get_date_time_arr();
         $created_at_note = $current_date['hijri_month_name_ar'] . '-' . $current_date['hijri_year_no'];
         $validated_project->put('owner_id', $request->person_id);
         $validated_project->put('created_at_note', $created_at_note);
-        $validated_project->put('created_by_id', $created_by_id);
-        $validated_project->put('created_by_name', $created_by_name);
+        $validated_project->put('created_by_id', auth()->user()->id);
+        $validated_project->put('created_by_name', auth()->user()->user_name);
         $validated_project->put('plot_id', $plot->id);
 
         $project = Project::create($validated_project->all());
@@ -225,7 +251,8 @@ class ProjectController extends Controller
     public function edit(Project $project, Request $request)
     {
 
-        if ($request->from_project) {
+        if ($request->form_action == 'project_quick_edit') {
+            // if ($request->from_project) {
             return view('project.forms.q_edit')->with([
                 'project' => $project,
                 'project_statuses' => ProjectStatus::all(),
@@ -293,6 +320,11 @@ class ProjectController extends Controller
         }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'giv_project_a_number') {
+            if ($project->is_only_supervision) {
+                return redirect()->back()->withErrors([
+                    'cannot give number to this project because it is only supervision', 'لايمكن اعطاء المشروع رقم لأنه إشراف فقط'
+                ]);
+            }
             $msg = self::giv_project_a_number($project);
             return redirect()->back()->with('success', $msg);
         }
@@ -337,8 +369,78 @@ class ProjectController extends Controller
         }
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
+    private function check_n_id($request)
+    {
+        $request->validate([
+            'national_id' => 'required|numeric|starts_with:1,2|digits:10',
+        ]);
+        $found_person = Person::where('national_id', $request->national_id)->first();
+        if (!$found_person) {
+            return view('project.forms.create_person')->with([
+                'person_titles' => PersonTitles::all(),
+                'national_id' => $request->national_id,
+                'person' => new Person,
+            ]);
+        } else {
+            return view('project.forms.check_plot_no')->with([
+                'person' => $found_person,
+            ]);
+        }
+    }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
+    private function check_organization_id($request)
+    {
+        $request->validate([
+            'organization_id' => 'required',
+        ]);
+
+        $found_organization = Organization::where('commercial_registration_no', $request->organization_id)->first();
+        if (!$found_organization) {
+            $found_organization = Organization::where('unified_code', $request->organization_id)->first();
+        }
+        if (!$found_organization) {
+            $found_organization = Organization::where('license_number', $request->organization_id)->first();
+        }
+
+
+        if (!$found_organization) {
+            return redirect()->action(
+                [OrganizationController::class, 'create'],
+                ['comming_from' => 'create_new_project']
+            );
+        } else {
+            return view('project.forms.check_plot_no')->with([
+                'person' => $found_organization,
+            ]);
+        }
+    }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
+    private function check_deed_number($request)
+    {
+        $request->validate([
+            'deed_no' => 'required',
+        ]);
+        $found_plot = Plot::where('deed_no', $request->deed_no)->first();
+        $found_person = Person::where('national_id', $request->national_id)->first();
+
+        if (!$found_plot) {
+            $formsData = array_merge(PlotController::formsData(), [
+                'new_deed_no' => $request->deed_no,
+                'plot' => new Plot,
+                'project' => new Project,
+                'person' => $found_person,
+            ]);
+            return view('project.forms.create_plot')->with($formsData);
+        } else {
+            return $this->show_create_project_form($found_person, $found_plot);
+        }
+    }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
     public static function giv_project_a_number(Project $project)
     {
+        if ($project->is_only_supervision) {
+            return ['cannot give number to this project because it is only supervision', 'لايمكن اعطاء المشروع رقم لأنه إشراف فقط'];
+        }
         $project->project_no = (new self)->get_new_project_no();
         $current_date = DateAndTime::get_date_time_arr();
         $created_at_note = $current_date['hijri_month_name_ar'] . '-' . $current_date['hijri_year_no'];
@@ -407,30 +509,23 @@ class ProjectController extends Controller
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     public function update_project_main_info($request, $project)
     {
-        $request->validate([
+        $old_record = $project->get_record_as_str();
+        $valid_data = $request->validate([
             'project_name_ar' => 'nullable|string',
             'project_arch_hight' => 'required|string',
             'project_type' => 'required|string',
+            'is_only_supervision' => 'nullable|boolean',
             'project_str_hight' => 'nullable|string',
             'last_rokhsa_no' => 'nullable|string',
             'last_rokhsa_issue_date' => ['nullable', 'string', new ValidHijriDate],
             'project_status_id' => 'nullable|numeric',
             'notes' => 'nullable|string',
         ]);
-        if ($request->project_name_ar) {
-            $project->project_name_ar = $request->project_name_ar;
-        }
-        $project->project_arch_hight = $request->project_arch_hight;
-        $project->project_type = $request->project_type;
-        $project->project_str_hight = $request->project_str_hight;
-        $project->last_rokhsa_no = $request->last_rokhsa_no;
-        $project->last_rokhsa_issue_date = $request->last_rokhsa_issue_date;
-        $project->project_status_id = $request->project_status_id;
-        if ($request->notes) {
-            $project->notes = $project->notes . ' | ' . $request->notes;
-        }
-        $project->last_edit_by_id = auth()->user()->id;
-        $project->last_edit_by_name = auth()->user()->user_name;
+
+        $valid_data['notes'] = ($request->notes) ? $project->notes . ' | ' . $request->notes : $project->notes;
+        $valid_data['last_edit_by_id'] = auth()->user()->id;
+        $valid_data['last_edit_by_name'] = auth()->user()->user_name;
+        $project->update($valid_data);
         $project->save();
         // -----------------------------------------------------------------
         // add record to db_log
@@ -439,6 +534,7 @@ class ProjectController extends Controller
             'model' => 'Project',
             'model_id' => $project->id,
             'action' => 'update',
+            'old_record' => $old_record,
             'description' => 'project id =>' . $project->id . ', updated some of main info',
         ];
         DbLogController::add_record($db_record_data);
@@ -595,135 +691,6 @@ class ProjectController extends Controller
             'ProjectController@create',
             ['person' => $found_person, 'plot' => $found_plot]
         );
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-
-    public function new_project(Request $request)
-    {
-        Gate::authorize('create', Project::class);
-        # 1 --> first page
-        return view('project.create');
-
-        // step 1 to check if the customer is already registered
-        if (!($request->has('_token'))) {
-            return view('project.forms.check_n_id');
-        }
-        if ($request->method() === "GET") {
-            return view('project.forms.check_n_id');
-        }
-        $person = new Person;
-        // step 2 to check if the customer is already registered
-        if ($request->check_n_id_form) {
-            $request->validate([
-                'national_id' => 'required|numeric|starts_with:1,2|digits:10',
-            ]);
-            $found_person = $person->where('national_id', $request->national_id)->first();
-            if (!$found_person) {
-                return view('project.forms.create_person')->with([
-                    'person_titles' => PersonTitles::all(),
-                    'national_id' => $request->national_id,
-                    'person' => $person,
-                ]);
-            } else {
-                return view('project.forms.check_plot_no')->with([
-                    'person' => $found_person,
-                ]);
-            }
-        }
-        // step 3 to regester new customer 
-        if ($request->create_person) {
-            $validatedData = collect(PersonController::validatePerson($request));
-            $nationality = Country::where('code_2chracters', $validatedData['nationality_code'])->first();
-            if ($nationality) {
-                $validatedData->put('nationality_ar', $nationality->ar_name);
-                $validatedData->put('nationality_en', $nationality->en_name);
-            }
-            $created_by_id = auth()->user()->id;
-            $created_by_name = auth()->user()->user_name;
-            if (!$created_by_id and !$created_by_name) {
-                return abort(403);
-            }
-            $validatedData->put('created_by_id', $created_by_id);
-            $validatedData->put('created_by_name', $created_by_name);
-            $validatedData->put('is_customer', true);
-
-            $person = $person->create($validatedData->all());
-            $person->save();
-            // -----------------------------------------------------------------
-            // add record to db_log
-            $db_record_data = [
-                'table' => 'people',
-                'model' => 'Person',
-                'model_id' => $person->id,
-                'action' => 'create',
-                'description' => 'new person as customer created national_id =>'  . $person->national_id,
-            ];
-            DbLogController::add_record($db_record_data);
-            // -----------------------------------------------------------------
-            return view('project.forms.check_plot_no')->with([
-                'person' => $person,
-            ]);
-        }
-        // step 4 to check if the plot is already registered
-        if ($request->check_deed_form) {
-            $request->validate([
-                'deed_no' => 'required',
-            ]);
-            $found_plot = Plot::where('deed_no', $request->deed_no)->first();
-            $found_person = $person->where('national_id', $request->national_id)->first();
-
-            if (!$found_plot) {
-                $formsData = array_merge(PlotController::formsData(), [
-                    'new_deed_no' => $request->deed_no,
-                    'plot' => new Plot,
-                    'project' => new Project,
-                    'person' => $found_person,
-                ]);
-                return view('project.forms.create_plot')->with($formsData);
-            } else {
-                return redirect()->route('project.create', [
-                    'person' => $found_person,
-                    'plot' => $found_plot,
-                ]);
-            }
-        }
-        // step 5 to create a new plot
-        if ($request->create_plot) {
-            $found_person = $person->where('national_id', $request->national_id)->first();
-            $validatedData = (PlotController::validatePlot($request));
-            $created_by_id = auth()->user()->id;
-            $created_by_name = auth()->user()->user_name;
-            if (!$created_by_id and !$created_by_name) {
-                return abort(403);
-            }
-            if (!(isset($validatedData['deed_issue_place']))) {
-                $validatedData['deed_issue_place'] = 'كتابة عدل';
-            }
-            $validatedData['created_by_id'] = $created_by_id;
-            $validatedData['created_by_name'] =  $created_by_name;
-            $plot = Plot::create($validatedData);
-            // -----------------------------------------------------------------
-            // add record to db_log
-            $db_record_data = [
-                'table' => 'plots',
-                'model' => 'plot',
-                'model_id' => $plot->id,
-                'action' => 'create',
-                'description' => 'new plot created plot_no =>' . $plot->plot_no . ', deed_no =>'  . $plot->deed_no,
-            ];
-            DbLogController::add_record($db_record_data);
-            // -----------------------------------------------------------------
-            return redirect()->route('project.create', [
-                'person' => $found_person,
-                'plot' => $plot,
-            ]);
-        }
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    public function contracts(Request $request)
-    {
-        #
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function search(Request $request)
@@ -926,6 +893,7 @@ class ProjectController extends Controller
             // ----------------------------------------------------
             'project_status' => 'string|nullable',
             'project_type' => 'string|nullable',
+            'is_only_supervision' => 'nullable|boolean',
             'project_assign_to_user' => 'string|nullable',
             'project_arch_hight' => 'string|nullable',
             'project_str_hight' => 'string|nullable',

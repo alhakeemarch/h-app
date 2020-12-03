@@ -1,13 +1,16 @@
 @extends('layouts.app')
-@section('title', 'new project 3/x')
+@section('title', 'checking deed number')
 @section('content')
 
 <div class="card">
-    <h5 class="card-header">{{ __('registration') }} of {{__('plot')}}</h5>
+    <h5 class="card-header d-flex justify-content-between">
+        <span>Checking Deed Number</span>
+        <span>التأكد من الصك</span>
+    </h5>
     <div class="card-body">
-        <form class="form-group" action="{{ action('ProjectController@new_project') }}" accept-charset="UTF-8"
-            method="POST">
+        <form class="form-group" action="" method="GET">
             @csrf
+            <input type="hidden" name="form_action" value="check_deed_number">
             {{-- --------------------------------------------------------------------------- --}}
             <input type="hidden" name="check_deed_form" value="1">
             {{-- --------------------------------------------------------------------------- --}}
@@ -22,7 +25,9 @@
             {{-- --------------------------------------------------------------------------- --}}
             @include('plot.forms.deed_no')
             {{-- --------------------------------------------------------------------------- --}}
-            <button type="submit" class="btn btn-info btn-block my-3">{{__('next')}}</button>
+            <div class="my-3">
+                <x-btn btnText='next' />
+            </div>
         </form>
     </div>
 

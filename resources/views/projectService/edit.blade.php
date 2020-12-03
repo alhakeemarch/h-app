@@ -35,8 +35,8 @@
                 </x-input>
             </div>
             <div class="row form-group">
-                <x-btn-save />
-                <x-btn-cancel />
+                <x-btn btnText='save' />
+                <x-form-cancel />
             </div>
         </form>
         {{-- ============================================================================================= --}}

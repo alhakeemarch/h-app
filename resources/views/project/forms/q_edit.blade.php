@@ -44,6 +44,25 @@
                     <x-slot name='title'>{{__('str height')}}</x-slot>
                     <x-slot name='input_value'>{{old('project_str_hight') ?? $project->project_str_hight}}</x-slot>
                 </x-input>
+                <div class="col-md form-group mt-1">
+                    @if (isset($project->project_no))
+                    <label>{{__('project number')}}</label>
+                    <div class="form-control my-1">{{$project->project_no}}</div>
+                    @else
+                    <label for="is_only_supervision">{{__( 'supervision only')}}
+                        <span class="small text-muted">({{__('optional')}})</span>:</label>
+                    <select name="is_only_supervision"
+                        class="form-control my-1 @error ('is_only_supervision') is-invalid @enderror">
+                        <option value=0 selected> {{__('no')}}</option>
+                        <option value=1 @if(old('is_only_supervision') or $project->is_only_supervision
+                            )selected @endif
+                            > {{__('yes')}}</option>
+                    </select>
+                    @error('is_only_supervision')
+                    <small class=" text-danger"> {{$errors->first('is_only_supervision')}} </small>
+                    @enderror
+                    @endif
+                </div>
             </div>
             <hr>
             <div class="row">

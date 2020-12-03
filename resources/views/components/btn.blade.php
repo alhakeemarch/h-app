@@ -4,69 +4,125 @@
 $btn_text = (isset($btn_text) && strlen(trim($btn_text))>0) ? trim($btn_text) : 'submit' ;
 $btn_text = (isset($btnText) && strlen(trim($btnText))>0 ) ? trim($btnText) : 'submit' ;
 // ------------------------------------------
-// $pipe_sign = ' | ';
 $pipe_sign = (isset($btn_only_icon)) ? '' : ' | ' ;
 // ------------------------------------------
-
+$on_click_action ='';
+// ------------------------------------------
+$btnType ='button';
+// ------------------------------------------
 $btn_icon = '<i class="fas fa-exclamation"></i>';
-$class_list = 'col btn';
+$class_list = 'col btn m-0';
 if (isset($is_btn_link)) {
-$class_list = 'btn btn-link';
+$class_list = 'btn btn-link m-0';
 }
+// ------------------------------------------
 
+// ------------------------------------------
 if (in_array($btn_text, ['submit','save','ok','apply']) ) {
 $btn_icon = '<i class="far fa-check-square"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-primary' : ' btn-primary';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['next']) ) {
 $btn_icon = '<i class="fas fa-angle-right"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['add','new']) ) {
 $btn_icon = '<i class="far fa-plus-square"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['search']) ) {
 $btn_icon = '<i class="fas fa-search"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['view']) ) {
 $btn_icon = '<i class="far fa-eye"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
+}
+if (in_array($btn_text, ['show']) ) {
+$btn_icon = '<i class="far fa-eye"></i>';
+$class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['cancel','back']) ) {
 $btn_icon = '<i class="fas fa-undo"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-secondary' : ' btn-secondary';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['delet']) ) {
 $btn_icon = '<i class="far fa-trash-alt"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-danger' : ' btn-danger';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['edit']) ) {
 $btn_icon = '<i class="far fa-edit"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-warning' : ' btn-warning';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['print']) ) {
 $btn_icon = '<i class="fas fa-print"></i>';
-$class_list .= (isset($is_btn_link)) ? ' text-dark' : ' btn-dark';
+$class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
+}
+if (in_array($btn_text, ['download']) ) { // ----------------------------------------->
+$btn_icon = '<i class="fas fa-file-download"></i>';
+$class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
+}
+if (in_array($btn_text, ['upload']) ) { // ----------------------------------------->
+$btn_icon = '<i class="fas fa-file-upload"></i>';
+$class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['refresh','reload','re-rendr','sync']) ) {
 $btn_icon = '<i class="fas fa-sync-alt"></i>';
-$class_list .= (isset($is_btn_link)) ? ' text-link' : ' btn-info';
+$class_list .= (isset($is_btn_link)) ? ' text-dark' : ' btn-dark';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['reset']) ) {
 $btn_icon = '<i class="fas fa-retweet"></i>';
-$class_list .= (isset($is_btn_link)) ? ' text-link' : ' btn-info';
+$class_list .= (isset($is_btn_link)) ? ' text-danger' : ' btn-danger';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['toggle-off']) ) {
+$class_list .= (isset($is_btn_link)) ? ' text-success' : ' btn-success';
 $btn_icon = '<i class="fas fa-toggle-off"></i>';
-$class_list .= (isset($is_btn_link)) ? ' text-muted' : ' btn-secondary';
-// text-success text-secondary text-muted
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
 if (in_array($btn_text, ['toggle-on']) ) {
 $btn_icon = '<i class="fas fa-toggle-on"></i>';
-$class_list .= (isset($is_btn_link)) ? ' text-success' : ' btn-success';
+$class_list .= (isset($is_btn_link)) ? ' text-muted' : ' btn-secondary';
+// $on_click_action = 'show_loader()';
+$btnType = 'submit';
 }
+// ------------------------------------------
+if (isset($btn_type)) {
+$btnType = $btn_type;
+}
+// ------------------------------------------
+if (isset($btn_no_loader)) {
+$on_click_action = '';
+}
+// ------------------------------------------
+
 
 
 // ------------------------------------------
@@ -88,11 +144,14 @@ $type = '';
 @endphp
 
 
-
-<hr>
-<button type="button" class="{{$class_list}}">
-    {{$btn_text}}{{$pipe_sign}}{!! $btn_icon !!}
+{{-- --------------------------------------------------------------------------------------------------------------- --}}
+<button type="{{$btnType}}" class="{{$class_list}}" title="{{$btn_text}}" onclick="{{$on_click_action}}">
+    @if (!(isset($btn_only_icon)))
+    {{$btn_text}}{{$pipe_sign}}
+    @endif
+    {!! $btn_icon !!}
 </button>
+{{-- --------------------------------------------------------------------------------------------------------------- --}}
 
 
 @if (auth()->user()->user_level > 49 && false)

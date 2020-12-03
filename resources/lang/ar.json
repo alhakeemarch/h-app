@@ -1,5 +1,6 @@
 {
 	"dir": "rtl",
+	"nav-language": "English",
 	"app name": "برنامج الحكيم",
 	"the name": "الإسم ",
 	"name1": "الإسم الأول",
@@ -91,5 +92,8 @@
 	"delete reason": "سبب الحذف",
 	"service name": "اسم الخدمة",
 	"price": "السعر",
+	"supervision only": "اشراف فقط",
+	"yes": "نعم",
+	"no": "لا",
 	"": ""
 }
