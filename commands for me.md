@@ -337,6 +337,9 @@ ALTER TABLE `projects`ADD COLUMN `invoicing_address_en` VARCHAR(191) NULL AFTER 
 ALTER TABLE `projects`ADD COLUMN `invoicing_vat_no` BIGINT(20) UNSIGNED NULL AFTER `invoicing_address_en`;
 ALTER TABLE `projects` ADD `is_only_supervision` BOOLEAN NULL AFTER `project_type`;
 
+ALTER TABLE `projects` ADD `organization_id` BIGINT(20) UNSIGNED NULL AFTER `person_id`;
+ALTER TABLE `projects` ADD CONSTRAINT projects_organization_id_foreign FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
 <!-- ------------------------------------------------------------------------ -->
 
 ALTER TABLE `representative_types`ADD COLUMN `authorization_type_ar` VARCHAR(191) NULL AFTER `name_en`;
@@ -438,8 +441,8 @@ ADD UNIQUE KEY `organizations_commercial_registration_no_unique` (`commercial_re
 ALTER TABLE `organizations` ADD `special_code` BIGINT(20) NULL AFTER `commercial_registration_no`;
 ALTER TABLE `organizations` ADD UNIQUE KEY `organizations_special_code_unique` (`special_code`);
 
-ALTER TABLE `organizations` ADD `organization_typ_id` BIGINT(20) UNSIGNED NULL AFTER `id` ;
-ALTER TABLE `organizations` ADD CONSTRAINT organizations_organization_typ_id_foreign FOREIGN KEY (organization_typ_id) REFERENCES organization_types(id);
+ALTER TABLE `organizations` ADD `organization_type_id` BIGINT(20) UNSIGNED NULL AFTER `id` ;
+ALTER TABLE `organizations` ADD CONSTRAINT organizations_organization_type_id_foreign FOREIGN KEY (organization_type_id) REFERENCES organization_types(id);
 
 <!-- ------------------------------------------------------------------------ -->
 
@@ -784,6 +787,8 @@ search|view|add|new|save|ok|submit|apply|next|cancel|back|delet|edit|print|downl
 </x-btn>
 ================================
 <x-form-cancel />
+<x-form-edit route='organization.edit' :resource=$organization />
+<x-form-delete route='organization.destroy' :resource=$organization />
 
 ================================
 

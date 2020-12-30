@@ -6,9 +6,16 @@
     <div class="row">
         {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
         <div class="card col-lg-6 my-3">
+            <h3 class="card-header d-flex justify-content-between">
+                <span>owoner info</span>
+                <span>بيانات المالك</span>
+            </h3>
             @include('project.forms.owner_info')
         </div>
         {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
+        @if (auth()->user()->is_admin)
+
+
         <div class="card col-lg-6 my-3">
             <h3 class="card-header d-flex justify-content-between">
                 <span>extra owners Info</span>
@@ -53,16 +60,21 @@
                 </x-select_searchable>
             </div>
         </div>
+
+        @endif
         {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
         <div class="card col-lg-6 my-3">
+            <h3 class="card-header d-flex justify-content-between">
+                <span>representative info</span>
+                <span>بيانات ممثل المالك</span>
+            </h3>
             @include('project.forms.representative_info')
         </div>
         {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
     </div>
     <div class="row">
-        <form action="{{route('project.show', $project)}}" class="form-group col">
-            <button type="submit" class="btn btn-secondary btn-block">
-                <i class="fas fa-undo"> | </i>{{__('back')}}</button>
+        <form action="{{route('project.show', $project)}}" class="col">
+            <x-btn btnText='back' />
         </form>
     </div>
 </div>

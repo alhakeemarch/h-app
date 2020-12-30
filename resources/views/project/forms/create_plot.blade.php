@@ -8,16 +8,19 @@
         <span>تسجيل قطعة أرض جديدة</span>
     </h5>
     <div class="card-body">
-        <form class="form-group" action="" method="GET">
+        <form class="form-group" action="{{route('project.create')}}" method="GET">
             @csrf
             <input type="hidden" name="form_action" value="create_new_plot">
             <input type="hidden" name="coming_from" value="create_new_project">
             {{-- --------------------------------------------------------------------------- --}}
-            <input type="hidden" name="create_plot" value="1">
-            {{-- --------------------------------------------------------------------------- --}}
-            @include('project.forms.customer_info')
-            {{-- --------------------------------------------------------------------------- --}}
+            @if ($person ?? false)
             <input type="hidden" name="national_id" value="{{$person->national_id}}">
+            @include('project.forms.customer_info')
+            @endif
+            {{-- --------------------------------------------------------------------------- --}}
+            @if ($organization ?? false)
+            @include('project.forms.organization_info')
+            @endif
             {{-- --------------------------------------------------------------------------- --}}
             <hr>
             {{-- --------------------------------------------------------------------------- --}}

@@ -1,6 +1,6 @@
 <div class="row form-group">
-    <x-select_searchable name='organization_typ_id' title="organization typ" :resource=$organization
-        :list=$organization_typs>
+    <x-select_searchable name='organization_type_id' title="organization typ" :resource=$organization
+        :list=$organization_types>
         <x-slot name='db_data_field'>id</x-slot>
         <x-slot name='show_field'>name_ar</x-slot>
         <x-slot name='is_required'>true</x-slot>

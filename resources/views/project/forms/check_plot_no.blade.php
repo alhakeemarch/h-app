@@ -8,15 +8,18 @@
         <span>التأكد من الصك</span>
     </h5>
     <div class="card-body">
-        <form class="form-group" action="" method="GET">
+        <form class="form-group" action="{{route('project.create')}}" method="GET">
             @csrf
             <input type="hidden" name="form_action" value="check_deed_number">
             {{-- --------------------------------------------------------------------------- --}}
-            <input type="hidden" name="check_deed_form" value="1">
-            {{-- --------------------------------------------------------------------------- --}}
-            @include('project.forms.customer_info')
-            {{-- --------------------------------------------------------------------------- --}}
+            @if ($person ?? false)
             <input type="hidden" name="national_id" value="{{$person->national_id}}">
+            @include('project.forms.customer_info')
+            @endif
+            {{-- --------------------------------------------------------------------------- --}}
+            @if ($organization ?? false)
+            @include('project.forms.organization_info')
+            @endif
             {{-- --------------------------------------------------------------------------- --}}
             <hr>
             <div class="card-header text-white bg-dark mb-2 mt-3">

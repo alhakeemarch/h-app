@@ -47,7 +47,7 @@ class OrganizationController extends Controller
             ]);
         }
         $valid_data = $request->validate([
-            'organization_typ_id' => 'nullable|numeric',
+            'organization_type_id' => 'nullable|numeric',
             'name_ar' => 'nullable|string',
             'name_en' => 'nullable|string',
             'unified_code' => 'nullable|string',
@@ -56,14 +56,22 @@ class OrganizationController extends Controller
             'special_code' => 'nullable|string',
         ]);
         $valid_data['created_by_id'] = auth()->user()->id;
-        return (new Organization)->find_organization($valid_data);
+        if ((new Organization)->find_organization($valid_data)) {
+            return redirect()->back()->withErrors(['this orgnization allredy exsist', 'هذه المنشأة مسجلة مسبقاً']);
+        }
         $organization =  Organization::create($valid_data);
-        // $organization->find_organization($valid_data);
-
-        // dd($organization);
-        // dd($valid_data);
-
-        dd('i am stor ', $request->all());
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'organizations',
+            'model' => 'organization',
+            'model_id' => $organization->id,
+            'action' => 'create',
+            'description' => 'new organization created with id =>' . $organization->id,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        return redirect()->route('organization.show', $organization)->withSuccess(['organization created successfully', 'تم اضافة المنشأة بنجاح']);
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
@@ -74,7 +82,8 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
-        //
+        // return 'hi';
+        return view('organization.show')->with(['organization' => $organization]);
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
@@ -85,7 +94,7 @@ class OrganizationController extends Controller
      */
     public function edit(Organization $organization)
     {
-        //
+        return 'this is Organization edit';
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
@@ -97,7 +106,7 @@ class OrganizationController extends Controller
      */
     public function update(Request $request, Organization $organization)
     {
-        //
+        return 'this is Organization update';
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
@@ -108,7 +117,7 @@ class OrganizationController extends Controller
      */
     public function destroy(Organization $organization)
     {
-        //
+        return 'this is Organization destroy';
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     private function is_has_organization_no(Request $request)

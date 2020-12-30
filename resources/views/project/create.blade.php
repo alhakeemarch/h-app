@@ -20,10 +20,15 @@
         <form class="form-group" action="{{ action('ProjectController@store') }}" accept-charset="UTF-8" method="POST">
             @csrf
             {{-- --------------------------------------------------------------------------- --}}
+            @if ($person ?? false)
             @include('project.forms.customer_info')
-            {{-- --------------------------------------------------------------------------- --}}
             <input type="hidden" name="person_id" value="{{$person->id}}">
             <input type="hidden" name="national_id" value="{{$person->national_id}}">
+            @endif
+            {{-- --------------------------------------------------------------------------- --}}
+            @if ($organization ?? false)
+            @include('project.forms.organization_info')
+            @endif
             {{-- --------------------------------------------------------------------------- --}}
             <hr>
             {{-- --------------------------------------------------------------------------- --}}

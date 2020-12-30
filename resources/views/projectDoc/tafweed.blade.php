@@ -6,31 +6,40 @@
         </td>
     </tr>
 </table>
-
 <table>
     <span>التاريخ:</span>
-    <span>{{(Carbon\Carbon::now())->toDateString()}}</span>
+    <span>{{$date_and_time['h_date_ar']}}</span>
+    <span>هـ</span>
+    <span>الموافق:</span>
+    <span>{{$date_and_time['g_date_ar']}}</span>
     <span>مـ</span>
 </table>
 <p><span>أفوض أنا</span>
-    <span>{{$project->owner_name_ar ?? '....................................................'}}</span>
-    <span>رقم السجل المدني</span>
-    <span>({{$project->owner_national_id ?? '..........................'}})</span>
+    <span>{{$_['owner_name'] ?? '....................................................'}}</span>
+    <span>{{$_['id_name']}}</span>
+    <span>({{$_['id_number']?? '..........................'}})</span>
+    @if (isset($_['owner_mobile']))
     <span>،جوال رقم</span>
-    <span>({{$project->person->mobile ?? '..........................'}})</span>
+    <span>({{$_['mobile'] ?? '..........................'}})</span>
+    @endif
+    @if (isset($_['representative_mobile']))
+    <span>،جوال ممثل المالك</span>
+    <span>({{$_['representative_mobile'] ?? '..........................'}})</span>
+    @endif
     <span>وأنا بأتم الأوصاف المعتبرة شرعاً، وبصفتي: مالك العقار بموجب بالصك الشرعي رقم</span>
-    <span>({{$project->plot->deed_no ?? '..........................'}})</span>
+    <span>({{$_['deed_no'] ?? '..........................'}})</span>
     <span>بتاريخ</span>
-    <span>{{$project->plot->deed_date ?? '..........................'}}</span>
+    <span>{{$_['deed_date'] ?? '..........................'}}</span>
     <span>هـ الصادر من كتابة العدل الواقع بمنطقة</span>
-    <span>{{$project->plot()->first()->district()->first()->ar_name ?? '..........................'}}</span>
+    <span>{{$_['district_name'] ?? '..........................'}}</span>
     <span>حي:</span>
-    <span>{{$project->plot()->first()->neighbor()->first()->ar_name ?? '..........................'}}</span>
-    <span>بأنني قد فوضت مكتب المهندس عبد الرزاق حكيم للاستشارات الهندسية (تصميم وإعداد المخططات الهندسية
-        وكافةالأعمال المساحية ومتابعة إنهاء إجراءاتها الفنية والإدارية لدى الأمانة وجهات الاختصاص كالدفاع المدني
-        وشركة الكهرباء وهيئة السياحة ووزارة الإسكان ... إلخ وذلك حتى استخراج رخصة الإنشاء واستلامها، واستلام
-        المخططات المصادق عليها من
-        الأمانة إن وجد).</span>
+    <span>{{$_['neighbor_name'] ?? '..........................'}}</span>
+    <span>بأنني قد فوضت مكتب</span>
+    <span>المهندس</span>
+    <span>{{$office_data->name_ar}}</span>
+    <span>(تصميم وإعداد المخططات الهندسية وكافة الأعمال المساحية ومتابعة إنهاء إجراءاتها الفنية والإدارية لدى الأمانة
+        وجهات الاختصاص كالدفاع المدني وشركة الكهرباء وهيئة السياحة ووزارة الإسكان ... إلخ وذلك حتى استخراج رخصة الإنشاء
+        واستلامها، واستلام المخططات المصادق عليها من الأمانة إن وجد).</span>
 </p>
 
 <p>أخرى:
@@ -65,10 +74,10 @@
     <tr>
         <td colspan="5">
             <span class="txt-bold">اسم المفوض:</span>
-            @if ($project-> representative_name_ar)
-            <span>{{$project-> representative_name_ar}}</span>
+            @if ($project-> representative_id)
+            <span>{{$_['representative_name_ar']}}</span>
             @else
-            <span>{{$project->owner_name_ar ?? '..............................................................'}}</span>
+            <span>{{$_['owner_name'] ?? '..............................................................'}}</span>
             @endif
         </td>
         <td colspan="2">
@@ -85,11 +94,11 @@
     <tr>
         <td colspan="3">
             <span>رقم الوكالة:</span>
-            <span>{{$project-> representative_authorization_no ??'......................................'}}</span>
+            <span>{{$_['authorization_no'] ??'......................................'}}</span>
         </td>
-        <td colspan="2">تاريخها: {{$project-> representative_authorization_issue_date ??'.........................'}}
+        <td colspan="2">تاريخها: {{$_['authorization_issue_date'] ??'.........................'}}
         </td>
-        <td colspan="2">مصدرها: {{$project-> representative_authorization_issue_place ??'.......................'}}</td>
+        <td colspan="2">مصدرها: {{$_['authorization_issue_place'] ??'.......................'}}</td>
     </tr>
 </table>
 <br><br>
@@ -101,11 +110,11 @@
     </tr>
     <tr>
         <td colspan="3"> <span class="txt-bold">الاسم: م.</span>
-            <span>{{$project_tame['project_manager'] ?? '...................................' }}</span>
+            <span>{{$_['project_manager'] ?? '...................................' }}</span>
         </td>
         <td colspan="2">
             <span class="txt-bold">الصفة:</span>
-            <span>{{$project->project_manager->job_title ?? '......................'}}</span></td>
+            <span>{{$_['project_manager_job_title'] ?? '......................'}}</span></td>
         <td colspan="2"><span class="txt-bold">التوقيع:</span>
             <span> ...................... </span>
         </td>

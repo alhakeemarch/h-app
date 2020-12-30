@@ -21,6 +21,7 @@ class CreateProjectsTable extends Migration
             $table->string('project_name_en')->nullable();
             // -----------------------------
             $table->foreignID('person_id')->nullable()->references('id')->on('people'); // المالك أو ممثل المالك
+            $table->foreignID('organization_id')->nullable()->references('id')->on('organizations'); // المالك أو ممثل المالك
             $table->foreignId('owner_id')->nullable();
             $table->foreignId('owner_national_id')->nullable();
             // $table->string('owner_type')->nullable(); // فرد - شركة - ورثة - وقف - جهة 

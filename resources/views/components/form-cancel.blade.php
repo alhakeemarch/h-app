@@ -2,6 +2,6 @@
 <i class="fas fa-undo"></i> | {{__('cancel')}}
 </a> --}}
 
-<form action="{{URL::previous()}}">
+<form action="{{URL::previous()}}" class="col">
     <x-btn btnText='cancel' />
 </form>

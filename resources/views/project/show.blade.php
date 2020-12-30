@@ -56,51 +56,41 @@
     <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header d-flex justify-content-between">
             <span>owoner info</span>
+            @if ($project->organization_id)
+            <span>(Organization - منشأة)</span>
+            @endif
             <span>بيانات المالك</span>
         </h3>
-        <ul class="list-group card-body p-0 py-1 m-0">
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('nId')}}: </span>
-                {{$project->owner_national_id ?? '?'}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('the name')}}: </span>
-                {{$project->owner_name_ar ?? '?'}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('mobile')}}: </span>
-                {{$project->person()->first()->mobile ?? '?'}}</li>
-        </ul>
+        @include('project.show_owner_info')
+        {{-- ----------------------------------------------------------------- --}}
         @if ($project->representative_id)
         <h3 class="card-header d-flex justify-content-between">
             <span>representative info</span>
             <span>بيانات ممثل المالك</span>
         </h3>
-        <ul class="list-group card-body p-0 py-1 m-0">
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('nId')}}: </span>
-                {{$project->representative_national_id ?? '?'}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('the name')}}: </span>
-                {{$project->representative_name_ar ?? '?'}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('authorization type')}}: </span>
-                {{$project->representative_authorization_type ?? '?'}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('authorization number')}}: </span>
-                {{$project->representative_authorization_no ?? '?'}}</li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__('mobile')}}: </span>
-                {{$project->representative_main_mobile_no ?? '?'}}</li>
-        </ul>
+        @include('project.representative_info')
         @endif
+        {{-- ----------------------------------------------------------------- --}}
+        @if ($project->organization_id && !($project->representative_id))
+        <form action="{{route('project.edit',$project->id)}}" method="GET"
+            class="card-footer d-flex justify-content-between">
+            <input type="hidden" name="form_action" value="add_representative">
+            <span class="align-self-center">المفوض أو الوكيل</span>
+            <x-btn>
+                <x-slot name='btnText'>add</x-slot>
+                <x-slot name='is_btn_link'>true</x-slot>
+            </x-btn>
+        </form>
+        @endif
+        {{-- ----------------------------------------------------------------- --}}
         <div class="card-footer d-flex justify-content-end">
             <form action="{{route('project.edit',$project->id)}}" method="get">
-                <input type="hidden" name="form_action" value="shwo_edit_owner_info_form">
-                <button type="submit" class="btn btn-link m-0">
-                    <span>edit |</span>
-                    <i class="far fa-edit"></i>
-                </button>
+                <input type="hidden" name="form_action" value="show_edit_owner_info_form">
+                <x-btn>
+                    <x-slot name='btnText'>edit</x-slot>
+                    <x-slot name='is_btn_link'>true</x-slot>
+                </x-btn>
             </form>
-
         </div>
     </div>
     {{-- ------------------------------------------------------------------------------------------------------------------------- --}}

@@ -1,11 +1,11 @@
-<div class="card-header text-white bg-dark mb-3">
-    nationality information:
+<div class="card-subtitle d-flex justify-content-between">
+    <span>nationality information:</span>
+    <span>بيانات الهوية</span>
 </div>
 
 @php $national_id = $national_id ?? $person->national_id; @endphp
 
-
-<div class="row">
+<div class="row form-group">
     @if (substr($national_id,0,1)=='1')
     {{-- START: of Sudi ID info --}}
     {{-- --------------------------------------------------------------------------------------------- --}}

@@ -120,7 +120,12 @@ class ProjectDocController extends Controller
     public static function get_missing_data($doc_name, $project)
     {
         $missing_data = [];
-        // dd($doc_name);
+        // -----------------------------------------------------------------
+        if ($project->organization_id) {
+            if (!($project->representative_id)) {
+                array_push($missing_data, 'يجب تسجيل معلومات المفوض أو الوكيل');
+            }
+        }
         // -----------------------------------------------------------------
         if ($doc_name == 'تعهد العزل') {
             if (!($project->plot()->first()->neighbor()->first())) {
@@ -193,12 +198,14 @@ class ProjectDocController extends Controller
         $office_data = OfficeData::findOrFail(1);
         $project_tame = ProjectController::get_project_team($project);
         $date_and_time = DateAndTime::get_date_time_arr();
+        $_ = $this->get_doc_data($project);
         $data = [
             'project' => $project,
             'office_data' => $office_data,
             'project_tame' => $project_tame,
             'date_and_time' => $date_and_time,
             'azel_data' => $this->azel_data,
+            '_' => $_,
         ];
         // -----------------------------------------------------------------
         $newPDF = new TCPDF();
@@ -249,8 +256,70 @@ class ProjectDocController extends Controller
         $newPDF::AddPage('P', 'A4');
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
         return;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    private function get_doc_data($project)
+    {
+        // -----------------------------------------------------
+        $_ = [];
+        // -----------------------------------------------------
+        if ($project->organization_id) {
+            $org = $project->organization;
+            $_['owner_name'] = $org->name_ar;
+
+            if ($org->commercial_registration_no) {
+                $_['id_name'] = 'رقم السجل التجاري';
+                $_['id_number'] = $org->commercial_registration_no;
+            } elseif ($org->license_number) {
+                $_['id_name'] = 'رقم الترخيص';
+                $_['id_number'] = $org->license_number;
+            } elseif ($org->unified_code) {
+                $_['id_name'] = 'الرقم الموحد';
+                $_['id_number'] = $org->unified_code;
+            } elseif ($org->special_code) {
+                $_['id_name'] = 'الرقم الخاص / المميز';
+                $_['id_number'] = $org->special_code;
+            }
+        }
+        // -----------------------------------------------------
+        if ($project->person_id) {
+            $person = $project->person;
+            $_['owner_name'] = $person->get_full_name_ar();
+            $_['id_name'] = 'رقم السجل المدني';
+            $_['id_number'] = $person->national_id;
+            $_['owner_mobile'] = $person->mobile;
+        }
+        // -----------------------------------------------------
+        if ($project->representative_id) {
+            $representative = $project->representative;
+            $_['representative_mobile'] = $representative->mobile;
+            $_['representative_name_ar'] = $representative->get_full_name_ar();
+            $_['authorization_no'] = $project->representative_authorization_no;
+            $_['authorization_issue_date'] = $project->representative_authorization_issue_date;
+            $_['authorization_issue_place'] = $project->representative_authorization_issue_place;
+        }
+        // -----------------------------------------------------
+        if ($project->plot_id) {
+            $plot = $project->plot;
+            $_['deed_no'] = $plot->deed_no;
+            $_['deed_date'] = $plot->deed_date;
+            if ($plot->district_id) {
+                $_['district_name'] = $plot->district->ar_name;
+            }
+            if ($plot->neighbor_id) {
+                $_['neighbor_name'] = $plot->neighbor->ar_name;
+            }
+        }
+        // -----------------------------------------------------
+        if ($project->project_manager_id) {
+            $_['project_manager'] = $project->project_manager->get_full_name_ar();
+            $_['project_manager_job_title'] = $project->project_manager->job_title;
+        }
+        // -----------------------------------------------------
+        return $_;
+        // -----------------------------------------------------
     }
     // -----------------------------------------------------------------------------------------------------------------
     public static function set_common_settings($newPDF)

@@ -8,8 +8,9 @@
 @section('content')
 
 <div class="card">
-    <div class=" card-header mb-4">
-        Upload File To Server
+    <div class=" card-header mb-4 d-flex justify-content-between">
+        <span>Upload File To Server</span>
+        <span>رفع ملف إلى مجلد المشروع</span>
     </div>
     <div class="container">
         <form action="{{ route('file_folder.uploadFile') }}" method="POST" enctype="multipart/form-data">

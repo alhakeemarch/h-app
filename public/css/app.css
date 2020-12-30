@@ -807,6 +807,14 @@ input[type=number]::-webkit-outer-spin-button {
   padding-bottom: 0.2rem;
 }
 
+.card-subtitle {
+  padding: 0.5rem 0.5rem 0.2rem 0.5rem;
+  margin: 0.7rem 0rem 0.2rem 0rem;
+  border-bottom: 2px steelblue solid;
+  background-color: #ebecf0;
+  font-size: 90%;
+}
+
 .card-footer {
   margin: 0;
   padding: 0;

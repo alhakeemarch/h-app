@@ -10,6 +10,7 @@ use App\Invoice;
 use App\MunicipalityBranch;
 use App\Neighbor;
 use App\Organization;
+use App\OrganizationType;
 use App\OwnerType;
 use App\Person;
 use App\PersonTitles;
@@ -103,17 +104,18 @@ class ProjectController extends Controller
         }
         # 7 -->
         if ($request->form_action == 'create_new_plot') {
-            $person = Person::where('national_id', $request->owner_national_id)->first();
+            $person = ($request->owner_national_id) ? Person::where('national_id', $request->owner_national_id)->first() : false;
+            $organization = ($request->organization_id) ? Organization::where('id', $request->organization_id)->first() : false;
             $plot = (new PlotController)->store($request);
-            return $this->show_create_project_form($person, $plot);
+            return $this->show_create_project_form($person, $organization, $plot);
         }
 
         return 'create function in project Controllere';
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public function show_create_project_form($person, $plot)
+    public function show_create_project_form($person, $organization, $plot)
     {
-        $employees = $person->all()->where('job_level', '>=', 5)->reverse();
+        $employees = Person::all()->where('job_level', '>=', 5)->reverse();
         $project = new Project;
         $found_project = $project->where('plot_id', $plot->id)->first();
         $project = ($found_project) ? $found_project : $project;
@@ -121,10 +123,12 @@ class ProjectController extends Controller
             'new_deed_no' => $plot->deed_no,
             'plot' => $plot,
             'project' => $project,
-            'person' => $person,
+            'organization_types' => OrganizationType::all(),
             'employees' => $employees,
             'is_read_only' => true,
         ]);
+        if ($person) $formsData = array_merge($formsData, ['person' => $person,]);
+        if ($organization) $formsData = array_merge($formsData, ['organization' => $organization,]);
         return view('project.create')->with($formsData);
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -136,17 +140,23 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $plot = Plot::where('deed_no', $request->deed_no)->first();
-        $validated_project = collect($this->validate_project($request));
+        $validated_project = $this->validate_project($request);
         $current_date = DateAndTime::get_date_time_arr();
         $created_at_note = $current_date['hijri_month_name_ar'] . '-' . $current_date['hijri_year_no'];
-        $validated_project->put('owner_id', $request->person_id);
-        $validated_project->put('created_at_note', $created_at_note);
-        $validated_project->put('created_by_id', auth()->user()->id);
-        $validated_project->put('created_by_name', auth()->user()->user_name);
-        $validated_project->put('plot_id', $plot->id);
+        if ($request->person_id) $validated_project['owner_id'] = $request->person_id;
+        $validated_project['created_at_note'] = $created_at_note;
+        $validated_project['created_by_id'] = auth()->user()->id;
+        $validated_project['created_by_name'] = auth()->user()->user_name;
+        $validated_project['plot_id'] = $plot->id;
+        if ($request->organization_id) {
+            $validated_project['project_name_ar'] =
+                $validated_project['owner_name_ar'] =
+                Organization::find($request->organization_id)->name_ar;
+        }
 
-        $project = Project::create($validated_project->all());
+        $project = Project::create($validated_project);
         // -----------------------------------------------------------------
         // add record to db_log
         $db_record_data = [
@@ -250,16 +260,23 @@ class ProjectController extends Controller
      */
     public function edit(Project $project, Request $request)
     {
-
         if ($request->form_action == 'project_quick_edit') {
-            // if ($request->from_project) {
             return view('project.forms.q_edit')->with([
                 'project' => $project,
                 'project_statuses' => ProjectStatus::all(),
             ]);
         }
-        if ($request->form_action == 'shwo_edit_owner_info_form') {
+        // ----------------------------------------------------
+        if ($request->form_action == 'show_edit_owner_info_form') {
             return view('project.forms.owners_form')->with([
+                'project' => $project,
+                'owner_types' => OwnerType::all(),
+                'representative_types' => RepresentativeType::all(),
+            ]);
+        }
+        // ----------------------------------------------------
+        if ($request->form_action == 'add_representative') {
+            return view('project.forms.add_representative')->with([
                 'project' => $project,
                 'owner_types' => OwnerType::all(),
                 'representative_types' => RepresentativeType::all(),
@@ -292,6 +309,10 @@ class ProjectController extends Controller
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'update_representative_info') {
             return $this->update_representative_info($request, $project);
+        }
+        // ------------------------------------------------------------------------------------------------------------------------------------- 
+        if ($request->form_action == 'add_representative_to_project') {
+            return $this->add_representative_to_project($request, $project);
         }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'update_project_team_member') {
@@ -401,6 +422,9 @@ class ProjectController extends Controller
         if (!$found_organization) {
             $found_organization = Organization::where('license_number', $request->organization_id)->first();
         }
+        if (!$found_organization) {
+            $found_organization = Organization::where('special_code', $request->organization_id)->first();
+        }
 
 
         if (!$found_organization) {
@@ -410,7 +434,8 @@ class ProjectController extends Controller
             );
         } else {
             return view('project.forms.check_plot_no')->with([
-                'person' => $found_organization,
+                'organization' => $found_organization,
+                'organization_types' => OrganizationType::all(),
             ]);
         }
     }
@@ -421,7 +446,8 @@ class ProjectController extends Controller
             'deed_no' => 'required',
         ]);
         $found_plot = Plot::where('deed_no', $request->deed_no)->first();
-        $found_person = Person::where('national_id', $request->national_id)->first();
+        $found_person = (isset($request->national_id)) ? Person::where('national_id', $request->national_id)->first() : false;
+        $found_organization = (isset($request->organization_id)) ? Organization::where('id', $request->organization_id)->first() : false;
 
         if (!$found_plot) {
             $formsData = array_merge(PlotController::formsData(), [
@@ -429,10 +455,12 @@ class ProjectController extends Controller
                 'plot' => new Plot,
                 'project' => new Project,
                 'person' => $found_person,
+                'organization' => $found_organization,
+                'organization_types' => OrganizationType::all(),
             ]);
             return view('project.forms.create_plot')->with($formsData);
         } else {
-            return $this->show_create_project_form($found_person, $found_plot);
+            return $this->show_create_project_form($found_person, $found_organization, $found_plot);
         }
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
@@ -468,30 +496,62 @@ class ProjectController extends Controller
     public function update_owner_info($request, $project)
     {
         $old_record = $project->get_record_as_str();
-        $found_owener = false;
-        if ($request->owner_type_id == 1) {
+        // ----------------------------------------------------------------- 
+        $found_person = false;
+        $found_organization = false;
+        // ----------------------------------------------------------------- 
+        if (in_array($request->owner_type_id, [1, 2, 3])) {
             $request->validate([
                 'owner_national_id' => 'required|numeric|starts_with:1,2|digits:10',
                 'owner_type_id' => 'required',
             ]);
-            $found_owener = Person::where('national_id', $request->owner_national_id)->first();
-            if (!$found_owener) {
+            $found_person = Person::where('national_id', $request->owner_national_id)->first();
+            if (!$found_person) {
                 return redirect()->back()->withErrors(['Employee not regesterd', 'يجب تسجيل العميل أولا']);
             }
         }
-        $owner_name = $found_owener->get_full_name_ar();
-        if (!$project->project_name_ar) {
-            $project->project_name_ar = $owner_name;
+        // ----------------------------------------------------------------- 
+        if (!(in_array($request->owner_type_id, [1, 2, 3]))) {
+            $request->validate([
+                'owner_national_id' => 'required|string',
+                'owner_type_id' => 'required',
+            ]);
+            $found_organization = (new Organization)->find_organization($request->owner_national_id);
+            if (!$found_organization) {
+                return redirect()->back()->withErrors(['Organization not regesterd', 'يجب تسجيل المنشأة أولا']);
+            }
         }
-        $project->owner_type_id = $request->owner_type_id;
-        $project->person_id = $found_owener->id;
-        $project->owner_national_id = $found_owener->national_id;
-        $project->owner_name_ar = $owner_name;
-        $project->owner_main_mobile_no = $found_owener->mobile;
-        $project->last_edit_by_id = auth()->user()->id;
-        $project->last_edit_by_name = auth()->user()->user_name;
-        $project->save();
-        $new_record = $project->get_record_as_str();
+        // ----------------------------------------------------------------- 
+        if ($found_person) {
+            $project->organization_id = null;
+            $owner_name = $found_person->get_full_name_ar();
+            if (!$project->project_name_ar) $project->project_name_ar = $owner_name;
+            $project->owner_type_id = $request->owner_type_id;
+            $project->person_id = $found_person->id;
+            $project->owner_national_id = $found_person->national_id;
+            $project->owner_name_ar = $owner_name;
+            $project->owner_main_mobile_no = $found_person->mobile;
+            $project->last_edit_by_id = auth()->user()->id;
+            $project->last_edit_by_name = auth()->user()->user_name;
+            $project->save();
+            $new_record = $project->get_record_as_str();
+            $new_customer_id = $found_person->id;
+        }
+        // ----------------------------------------------------------------- 
+        if ($found_organization) {
+            $project->person_id = null;
+            $project->owner_national_id = null;
+            $project->owner_main_mobile_no = null;
+            if (!$project->project_name_ar) $project->project_name_ar = $found_organization->name_ar;
+            $project->owner_type_id = $request->owner_type_id;
+            $project->organization_id = $found_organization->id;
+            $project->owner_name_ar = $found_organization->name_ar;
+            $project->last_edit_by_id = auth()->user()->id;
+            $project->last_edit_by_name = auth()->user()->user_name;
+            $project->save();
+            $new_record = $project->get_record_as_str();
+            $new_customer_id = '(organization)' . $found_organization->id;
+        }
         // -----------------------------------------------------------------
         // add record to db_log
         $db_record_data = [
@@ -500,7 +560,7 @@ class ProjectController extends Controller
             'model_id' => $project->id,
             'action' => 'update',
             'notes' => $old_record . 'changed to' . $new_record,
-            'description' => 'project id =>' . $project->id . ', updated to a customer id =>'  . $found_owener->id,
+            'description' => 'project id =>' . $project->id . ', updated to a customer id =>'  . $new_customer_id,
         ];
         DbLogController::add_record($db_record_data);
         // -----------------------------------------------------------------
@@ -563,19 +623,14 @@ class ProjectController extends Controller
             if (!$found_representative) {
                 return redirect()->back()->withErrors(['Employee not regesterd', 'يجب تسجيل العميل أولا']);
             }
-            $representative_type = RepresentativeType::findOrFail($request->representative_type_id);
+
             $project->representative_id = $found_representative->id;
-            $project->representative_national_id = $found_representative->national_id;
-            $project->representative_national_id = $found_representative->national_id;
-            $project->representative_name_ar = $found_representative->get_full_name_ar();
-            $project->representative_name_en = $found_representative->get_full_name_en();
-            $project->representative_main_mobile_no = $found_representative->mobile;
-            $project->representative_type_id = $representative_type->id;
-            $project->representative_authorization_type = $representative_type->authorization_type_ar;
+            $project->representative_type_id = $request->representative_type_id;
             $project->last_edit_by_id = auth()->user()->id;
             $project->last_edit_by_name = auth()->user()->user_name;
             $project->save();
         } else {
+            $project->representative_type_id = $request->representative_type_id;
             $project->representative_authorization_no = $request->representative_authorization_no;
             $project->representative_authorization_issue_place = $request->representative_authorization_issue_place;
             $project->representative_authorization_issue_date = $request->representative_authorization_issue_date;
@@ -596,6 +651,42 @@ class ProjectController extends Controller
         DbLogController::add_record($db_record_data);
         // -----------------------------------------------------------------
         return redirect()->back()->with('success', 'project info updated successfully - تم التعديل  بنجاح');
+    }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
+    private function add_representative_to_project($request, $project)
+    {
+        $valid_data = $request->validate([
+            'national_id' => 'required|numeric',
+            'representative_type_id' => 'required|numeric',
+            'representative_authorization_no' => 'required|string',
+            'representative_authorization_issue_date' => ['required', 'string', new ValidDate],
+            'representative_authorization_issue_place' => 'required|string',
+            'representative_authorization_expire_date' => ['nullable', 'string', new ValidDate],
+        ]);
+        if ($project->representative_id) {
+            return redirect()->route('project.show', $project)->withErrors(['allredy have representative', 'يوجد ممثل لهذا المشروع مسبقاً']);
+        }
+        $found_person = Person::where('national_id', $request->national_id)->first();
+        if (!$found_person) {
+            return view('');
+        }
+        $valid_data['representative_id'] = $found_person->id;
+        $valid_data['last_edit_by_id'] = auth()->user()->id;
+        $valid_data['last_edit_by_name'] = auth()->user()->user_name;
+
+        $project->update($valid_data);
+        // -----------------------------------------------------------------
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'projects',
+            'model' => 'Project',
+            'model_id' => $project->id,
+            'action' => 'update',
+            'description' => 'project id =>' . $project->id . ', added representative ->person id => ' . $found_person->id,
+        ];
+        DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        return redirect()->route('project.show', $project)->withSuccess(['representative added', 'تم اضافة ممثل لهذا للمشروع']);
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
 
@@ -861,17 +952,19 @@ class ProjectController extends Controller
     {
         return $request->validate([
             'project_no' => 'unique:projects|nullable',
-            'project_name_ar' => 'string|required', // required
+            'project_name_ar' => 'string|required_without:organization_id', // required
             'project_name_en' => 'string|nullable',
-            'person_id' => 'numeric|required',
+            'person_id' => 'numeric|required_without:organization_id',
+            'organization_id' => 'string|required_without:person_id',
+            // 'organization_id' => 'string|required_if:person_id',
             // ----------------------------------------------------
             'owner_id' => 'numeric|nullable',
             'owner_national_id' => 'numeric|starts_with:1,2|digits:10|nullable',
             'owner_type' => ['nullable', 'string', //new ValidGregorianDate
             ],
-            'owner_name_ar' => 'string|required', // required
+            'owner_name_ar' => 'string|required_without:organization_id', // required
             'owner_name_en' => 'string|nullable',
-            'owner_main_mobile_no' => 'numeric|starts_with:0,9|digits:10,12,14|required', // required
+            'owner_main_mobile_no' => 'numeric|starts_with:0,9|digits:10,12,14|required_without:organization_id', // required
             'extra_owners_list' => 'string|nullable',
             'extra_owners_info' => 'string|nullable',
             // ----------------------------------------------------

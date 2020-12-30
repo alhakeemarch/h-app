@@ -59,10 +59,10 @@ $class_list .= (isset($is_btn_link)) ? ' text-secondary' : ' btn-secondary';
 // $on_click_action = 'show_loader()';
 $btnType = 'submit';
 }
-if (in_array($btn_text, ['delet']) ) {
+if (in_array($btn_text, ['delete']) ) {
 $btn_icon = '<i class="far fa-trash-alt"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-danger' : ' btn-danger';
-// $on_click_action = 'show_loader()';
+$on_click_action = "return confirm('Are you sure?')";
 $btnType = 'submit';
 }
 if (in_array($btn_text, ['edit']) ) {
@@ -98,7 +98,7 @@ $btnType = 'submit';
 if (in_array($btn_text, ['reset']) ) {
 $btn_icon = '<i class="fas fa-retweet"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-danger' : ' btn-danger';
-// $on_click_action = 'show_loader()';
+$on_click_action = "return confirm('Are you sure?')";
 $btnType = 'submit';
 }
 if (in_array($btn_text, ['toggle-off']) ) {
@@ -142,7 +142,9 @@ $type = '';
 }
 // ------------------------------------------
 @endphp
-
+@if (isset($class))
+@php $class_list .= ' '.$class; @endphp
+@endif
 
 {{-- --------------------------------------------------------------------------------------------------------------- --}}
 <button type="{{$btnType}}" class="{{$class_list}}" title="{{$btn_text}}" onclick="{{$on_click_action}}">

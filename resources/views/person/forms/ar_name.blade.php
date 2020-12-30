@@ -1,6 +1,7 @@
 {{-- ============================================================================================== --}}
-<div class="card-header text-white bg-dark mb-3">
-    {{__('name')}}:
+<div class="card-subtitle d-flex justify-content-between">
+    <span>arabic name</span>
+    <span>الإسم العربي</span>
 </div>
 {{--START: arabic Name --}}
 <div class="form-group">
@@ -13,7 +14,7 @@
 
     <label for="fname" class="d-block">{{__('arabic name')}} <span class="small text-danger">({{__('required')}})</span>
         :</label>
-    <div class="form-row mb-3">
+    <div class="form-row">
         {{-- --------------------------------------------------------------------------------------------- --}}
         <div class="col-md">
             <input type="text" name="ar_name1" class="form-control @error ('ar_name1') is-invalid @enderror"

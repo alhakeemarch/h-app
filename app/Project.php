@@ -53,9 +53,23 @@ class Project extends Model
         return $this->belongsTo(Person::class);
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function representative()
+    {
+        return $this->belongsTo(Person::class, 'representative_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function representative_type()
+    {
+        return $this->belongsTo(RepresentativeType::class, 'representative_type_id');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function plot()
     {
-
         return $this->belongsTo(Plot::class);
     }
     // -----------------------------------------------------------------------------------------------------------------

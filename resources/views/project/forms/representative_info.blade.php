@@ -1,12 +1,10 @@
-<h3 class="card-header d-flex justify-content-between">
-    <span>representative info</span>
-    <span>بيانات ممثل المالك</span>
-</h3>
+@if (isset($project->representative_id))
 <div class="card-body">
     <form action="{{route('project.update',$project)}}" method="POST" class=" form-group">
         @csrf
         @method('PATCH')
         <input type="hidden" name="form_action" value="update_representative_info">
+        {{-- ---------------------------------------------------------------------------------  --}}
         <div class="row">
             <x-input name='representative_id' title="">
                 <x-slot name='title'>id</x-slot>
@@ -19,7 +17,7 @@
             <x-input name='representative_national_id' title="">
                 <x-slot name='title'>{{__('nId')}}</x-slot>
                 <x-slot name='is_readonly'>true</x-slot>
-                <x-slot name='input_value'>{{$project->representative_national_id}}</x-slot>
+                <x-slot name='input_value'>{{$project->representative()->first()->national_id}}</x-slot>
             </x-input>
             <x-select_searchable name='representative_type_id' title="{{__('type')}}" :resource=$project
                 :list=$representative_types>
@@ -29,28 +27,31 @@
                 <x-slot name='is_readonly'>true</x-slot>
             </x-select_searchable>
         </div>
+        {{-- ---------------------------------------------------------------------------------  --}}
         <div class="row">
             <x-input name='representative_name_ar' title="">
                 <x-slot name='title'>arabic name</x-slot>
                 <x-slot name='is_readonly'>true</x-slot>
-                <x-slot name='input_value'>{{$project->representative_name_ar}}</x-slot>
+                <x-slot name='input_value'>{{$project->representative()->first()->get_full_name_ar()}}</x-slot>
             </x-input>
             <x-input name='representative_name_en' title="">
                 <x-slot name='title'>english name</x-slot>
                 <x-slot name='is_readonly'>true</x-slot>
-                <x-slot name='input_value'>{{$project->representative_name_en}}</x-slot>
+                <x-slot name='input_value'>{{$project->representative()->first()->get_full_name_en()}}</x-slot>
             </x-input>
             <x-input name='representative_main_mobile_no' title="">
                 <x-slot name='title'>{{__('mobile')}}</x-slot>
                 <x-slot name='is_readonly'>true</x-slot>
-                <x-slot name='input_value'>{{$project->representative_main_mobile_no}}</x-slot>
+                <x-slot name='input_value'>{{$project->representative()->first()->mobile}}</x-slot>
             </x-input>
         </div>
+        {{-- ---------------------------------------------------------------------------------  --}}
         <div class="row">
-            <x-input name='representative_authorization_type' title="">
+            <x-input name='authorization_type' title="">
                 <x-slot name='title'>authorization type</x-slot>
                 <x-slot name='is_readonly'>true</x-slot>
-                <x-slot name='input_value'>{{$project->representative_authorization_type}}</x-slot>
+                <x-slot name='is_disabled'>true</x-slot>
+                <x-slot name='input_value'>{{$project->representative_type()->first()->authorization_type_ar}}</x-slot>
             </x-input>
             <x-input name='representative_authorization_no' title="">
                 <x-slot name='title'>authorization no</x-slot>
@@ -61,6 +62,7 @@
                 <x-slot name='input_value'>{{$project->representative_authorization_issue_place}}</x-slot>
             </x-input>
         </div>
+        {{-- ---------------------------------------------------------------------------------  --}}
         <div class="row">
             <x-input name='representative_authorization_issue_date' title="">
                 <x-slot name='title'>authorization issue date</x-slot>
@@ -75,6 +77,7 @@
                 <x-slot name='input_value'>{{$project->representative_authorization_expire_date}}</x-slot>
             </x-input>
         </div>
+        {{-- ---------------------------------------------------------------------------------  --}}
         <div class="row">
             <x-input name='extra_representatives_list' title="">
                 <x-slot name='title'>extra representatives list</x-slot>
@@ -82,11 +85,11 @@
                 <x-slot name='input_value'>{{$project->extra_representatives_list}}</x-slot>
             </x-input>
         </div>
-        <button type="submit" class="btn btn-block btn-info col">
-            <i class="fas fa-check"></i> | {{__('save')}}</button>
+        <x-btn btnText='save' class="mt-3" />
     </form>
 </div>
-<hr>
+@endif
+{{-- ---------------------------------------------------------------------------------  --}}
 <div class="card-footer">
     <form action="{{route('project.update',$project)}}" method="POST"
         class=" form-group m-0 row d-flex justify-content-between jumbotron my-2 py-3">

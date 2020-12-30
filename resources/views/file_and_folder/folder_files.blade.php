@@ -53,6 +53,7 @@
     <h1>safty</h1>
     @else
     {{-- --------------------------------------------------------------------------------------------- --}}
+    @if (in_array ('all',$project_content))
     <ul class="list-group">
         <li class="list-group-item bg-light-blue text-center"> All Project | كامل المشروع </li>
         @foreach ($project_content as $file => $description)
@@ -66,12 +67,14 @@
         @endif
         @endforeach
     </ul>
+    @endif
     {{-- --------------------------------------------------------------------------------------------- --}}
+    {{-- @if (in_array ('all',$project_content)) --}}
     <ul class="list-group">
         <li class="list-group-item  text-center bg-light-blue"> Documents | مستندات </li>
         @foreach ($project_content as $file => $description)
 
-        @if ($description=== 'dir_in_doc')
+        @if ($description === 'dir_in_doc')
         <li class="list-group-item"><i class="fas fa-arrow-right"></i> | {{$file}} | <i class="fa fa-folder-open"></i>
         </li>
 
@@ -103,6 +106,7 @@
         @endif
         @endforeach
     </ul>
+    {{-- @endif --}}
     {{-- --------------------------------------------------------------------------------------------- --}}
     <ul class="list-group">
         <li class="list-group-item bg-light-blue text-center"> Concepts | افكار </li>

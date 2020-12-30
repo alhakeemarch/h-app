@@ -1,5 +1,6 @@
-<div class="card-header text-white bg-dark mb-3">
-    Contact Information:
+<div class="card-subtitle d-flex justify-content-between">
+    <span>Contact Information:</span>
+    <span>بيانات التواصل</span>
 </div>
 {{-- ============================================================================================= --}}
 <div class="form-group row">
