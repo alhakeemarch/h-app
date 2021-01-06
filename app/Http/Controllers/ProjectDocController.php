@@ -290,7 +290,7 @@ class ProjectDocController extends Controller
             $_['owner_name'] = $person->get_full_name_ar();
             $_['id_name'] = 'رقم السجل المدني';
             $_['id_number'] = $person->national_id;
-            $_['mobile'] = $person->mobile;
+            $_['owner_mobile'] = $person->mobile;
         }
         // -----------------------------------------------------
         if ($project->representative_id) {

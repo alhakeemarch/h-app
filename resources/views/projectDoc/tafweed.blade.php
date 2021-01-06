@@ -20,7 +20,7 @@
     <span>({{$_['id_number']?? '..........................'}})</span>
     @if (isset($_['owner_mobile']))
     <span>،جوال رقم</span>
-    <span>({{$_['mobile'] ?? '..........................'}})</span>
+    <span>({{$_['owner_mobile'] ?? '..........................'}})</span>
     @endif
     @if (isset($_['representative_mobile']))
     <span>،جوال ممثل المالك</span>
