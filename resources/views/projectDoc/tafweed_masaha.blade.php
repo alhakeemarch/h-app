@@ -6,7 +6,7 @@
     border: 0.5px, solid, gray;
     padding-right: 4px;
     padding-left: 4px;
-    font-size: 97%;
+    font-size: 94%;
     line-height: 1.65;
   }
 
@@ -41,13 +41,13 @@
     <td colspan="1">الرقم</td>
     <td colspan="2"></td>
     <td colspan="1">التاريخ</td>
-    <td colspan="2">{{(Carbon\Carbon::now())->toDateString()}} م</td>
+    <td colspan="2">{{$date_and_time['g_date_ar']}} م</td>
   </tr>
   <tr>
     <td colspan="1">اسم المالك</td>
-    <td colspan="2" class="bg-green-1">{{$project->owner_name_ar ??''}}</td>
+    <td colspan="2" class="bg-green-1" style="text-align:start;">{{$_['owner_name'] ??''}}</td>
     <td colspan="1">رقم الهوية</td>
-    <td colspan="2" class="bg-green-1">{{$project->owner_national_id ??''}}</td>
+    <td colspan="2" class="bg-green-1">{{$_['id_number'] ??''}}</td>
   </tr>
   <tr>
     <th>رقم الحفيظة</th>
@@ -60,7 +60,7 @@
   <tr>
     <td colspan="1">المخطط</td>
     <td colspan="2" class="bg-green-1">
-      {{$project->plot->plan->plan_ar_name ??''}}
+      {{$_['plan_name'] ??''}}
     </td>
     <td colspan="1">رقمه</td>
     <td colspan="2" class="bg-green-1">{{$project->plot->plan->plan_no ??''}}</td>

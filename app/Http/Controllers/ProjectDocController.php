@@ -256,8 +256,9 @@ class ProjectDocController extends Controller
         $newPDF::AddPage('P', 'A4');
         $newPDF::writeHTML($html, true, false, true, false, '');
         $newPDF::lastPage();
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
-        return;
+        if (env('DEVELOPMENT'))  return  $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
+        return $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
+        // return;
     }
     // -----------------------------------------------------------------------------------------------------------------
     private function get_doc_data($project)
@@ -289,7 +290,7 @@ class ProjectDocController extends Controller
             $_['owner_name'] = $person->get_full_name_ar();
             $_['id_name'] = 'رقم السجل المدني';
             $_['id_number'] = $person->national_id;
-            $_['owner_mobile'] = $person->mobile;
+            $_['mobile'] = $person->mobile;
         }
         // -----------------------------------------------------
         if ($project->representative_id) {
@@ -310,6 +311,9 @@ class ProjectDocController extends Controller
             }
             if ($plot->neighbor_id) {
                 $_['neighbor_name'] = $plot->neighbor->ar_name;
+            }
+            if ($plot->plan) {
+                $_['plan_name'] = $plot->plan->plan_ar_name;
             }
         }
         // -----------------------------------------------------
