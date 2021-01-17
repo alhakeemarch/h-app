@@ -717,6 +717,7 @@ class FileAndFolderController extends Controller
             '1440' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1440',
             '1440->بلدي' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1440/بلدي',
             '1441' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1441',
+            '1442' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1442',
         ];
         foreach ($directories as $directory_key => $directory) {
             $scanned_directory = array_diff(scandir($directory), array('..', '.'));
