@@ -32,8 +32,8 @@ class Organization extends Model
             $temp['name_ar'] = $temp['name_en']
                 = $temp['unified_code'] = $temp['license_number']
                 = $temp['commercial_registration_no'] = $temp['special_code'] = $data;
+            $data = $temp;
         }
-        $data = $temp;
         $fund_arr = [];
         if ($data['name_ar']) {
             $found = $this->where('name_ar', $data['name_ar'])->first();
@@ -60,7 +60,6 @@ class Organization extends Model
             if ($found) $fund_arr['special_code'] = $found;
         }
 
-        // dd(count($fund_arr), $fund_arr);
 
         if (count($fund_arr) < 1) {
             return false;

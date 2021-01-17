@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'quotation create')
 @section('content')
-
+{{-- {{dd($_)}} --}}
 <div class="container-fluid">
     <form action="{{route('quotation.update',$quotation)}}" method="POST" class="card p-4">
         @csrf
@@ -19,15 +19,15 @@
             </div>
             <div class="col-md">
                 <label class="text-muted my-1">{{__('owner name')}}</label>
-                <span class=" form-control">{{$project->person()->first()->get_full_name_ar()}}</span>
+                <span class=" form-control">{{$_['owner_name'] }}</span>
             </div>
             <div class="col-md">
                 <label class="text-muted my-1">{{__('deed no')}}</label>
-                <span class=" form-control">{{$project->plot()->first()->deed_no}}</span>
+                <span class=" form-control">{{$_['deed_no']}}</span>
             </div>
             <div class="col-md">
                 <label class="text-muted my-1">{{__('plot no')}}</label>
-                <span class=" form-control">{{$project->plot()->first()->plot_no}}</span>
+                <span class=" form-control">{{$_['plot_no']}}</span>
             </div>
         </div>
         {{-- -------------------------------------------------------------------------------------------------------------------------------------- --}}

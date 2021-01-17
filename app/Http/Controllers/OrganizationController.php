@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Organization;
 use App\OrganizationType;
+use Dotenv\Result\Success;
 use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
@@ -16,7 +17,8 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        //
+        // return Organization::all();
+        return view('organization.index')->with(['organizations' => Organization::all()]);
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
@@ -27,7 +29,7 @@ class OrganizationController extends Controller
     public function create(Request $request)
     {
         return view('organization.create')->with([
-            'organization_typs' => OrganizationType::all(),
+            'organization_types' => OrganizationType::all(),
             'comming_from' => ($request->comming_from) ? $request->comming_from : false,
             'organization' => new Organization,
         ]);
@@ -70,6 +72,14 @@ class OrganizationController extends Controller
             'description' => 'new organization created with id =>' . $organization->id,
         ];
         DbLogController::add_record($db_record_data);
+        // -----------------------------------------------------------------
+        if ($request->coming_from == 'create_new_project') {
+            return view('project.forms.check_plot_no')->with([
+                'organization' => $organization,
+                'organization_types' => OrganizationType::all(),
+                'success' => ['organization created successfully', 'تم اضافة المنشأة بنجاح'],
+            ]);
+        }
         // -----------------------------------------------------------------
         return redirect()->route('organization.show', $organization)->withSuccess(['organization created successfully', 'تم اضافة المنشأة بنجاح']);
     }

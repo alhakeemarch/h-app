@@ -578,6 +578,8 @@ class ProjectController extends Controller
             'project_str_hight' => 'nullable|string',
             'last_rokhsa_no' => 'nullable|string',
             'last_rokhsa_issue_date' => ['nullable', 'string', new ValidHijriDate],
+            'qarar_masahe_no' => 'nullable|string',
+            'qarar_masahe_issue_date' => ['nullable', 'string', new ValidHijriDate],
             'project_status_id' => 'nullable|numeric',
             'notes' => 'nullable|string',
         ]);
@@ -668,7 +670,7 @@ class ProjectController extends Controller
         }
         $found_person = Person::where('national_id', $request->national_id)->first();
         if (!$found_person) {
-            return view('');
+            return redirect()->back()->withErrors(['the representative must be registered as customer first', 'يجب تسجيل ممثل المؤسسة كعميل أولاً']);
         }
         $valid_data['representative_id'] = $found_person->id;
         $valid_data['last_edit_by_id'] = auth()->user()->id;
@@ -960,7 +962,8 @@ class ProjectController extends Controller
             // ----------------------------------------------------
             'owner_id' => 'numeric|nullable',
             'owner_national_id' => 'numeric|starts_with:1,2|digits:10|nullable',
-            'owner_type' => ['nullable', 'string', //new ValidGregorianDate
+            'owner_type' => [
+                'nullable', 'string', //new ValidGregorianDate
             ],
             'owner_name_ar' => 'string|required_without:organization_id', // required
             'owner_name_en' => 'string|nullable',
@@ -970,13 +973,15 @@ class ProjectController extends Controller
             // ----------------------------------------------------
             'representative_id' => 'numeric|nullable',
             'representative_id' => 'numeric|nullable',
-            'representative_type' => ['nullable', 'string', //new ValidGregorianDate
+            'representative_type' => [
+                'nullable', 'string', //new ValidGregorianDate
             ], // وكيل شرعي - مفوض - ناظر الوقف - ولي على قصر - 
             'representative_name_ar' => 'string|nullable',
             'representative_name_en' => 'string|nullable',
             'representative_main_mobile_no' => 'numeric|starts_with:0,9|digits:10,12,14|nullable',
             'representative_main_mobile_no' => 'numeric|starts_with:0,9|digits:10,12,14|nullable',
-            'representative_authorization_type' => ['nullable', 'string', //new ValidGregorianDate
+            'representative_authorization_type' => [
+                'nullable', 'string', //new ValidGregorianDate
             ], // وكالة - تفويض - صط نظارة - صك ولاية
             'representative_authorization_no' => 'string|nullable',
             'representative_authorization_issue_date' => ['nullable', 'string', new ValidDate],
@@ -1064,7 +1069,8 @@ class ProjectController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public static function firstInsertion()
     {
-        $all_projects = \App\Data\Projects_arr::git_projects();
+        // $all_projects = App\Data\Projects_arr::git_projects();
+        $all_projects = [];
 
         if (Project::all()->count() >= count($all_projects)) {
             return false;

@@ -1,4 +1,5 @@
 <x-pdf_print_style />
+
 <style>
     * {
         text-align: start;
@@ -32,7 +33,7 @@
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 <table>
     <tr>
-        <td><span>اقر وأتعهد أنا</span><span>{{$project->owner_name_ar}}</span>
+        <td><span>اقر وأتعهد أنا</span><span>{{$_['owner_name']}}</span>
             <span>مالك العقار الموضحة بياناته أدناه، والمسؤول عن تنفيذ عملية البناء ،بتنفيذ العزل الحراري وتطبيق
                 التعليمات الخاصة بذلك فيما يتعلق بالعقار المشار إليه أدناه, وذلك إنفاذاً للأمر السامي الكريم رقم (م ب
                 /6927)وتاريخ 1431/9/22هـ القاضي بتطبيق العزل الحراري بشكل إلزامي على جميع المباني .الجديدة سواءً السكنية
@@ -52,31 +53,27 @@
 <table class="tbl-bordered">
     <tr>
         <td colspan="3">رقم بطاقة الأحوال المدنية/ الإقامة</td>
-        <td colspan="2">{{$project->person->national_id}}</td>
+        <td colspan="2">{{$_['id_number']}}</td>
         <td colspan="2">تاريخها</td>
-        <td colspan="2">{{$project->person->national_id_issue_date}}</td>
+        <td colspan="2">{{$_['id_issue_date'] ?? ''}}</td>
     </tr>
     <tr>
         <td colspan="3">مصدرها</td>
-        <td colspan="2">{{$project->person->national_id_issue_date ?? 'المدينة المنورة'}}</td>
+        <td colspan="2">{{$_['id_issue_place'] ?? ''}}</td>
         <td colspan="2">الجنسية</td>
-        @if ($project->person->nationality_code == 'SA')
-        <td colspan="2">سعودي</td>
-        @else
-        <td>{{$project->person->nationality_ar}}</td>
-        @endif
+        <td colspan="2">{{$_['nationality'] ?? ''}}</td>
     </tr>
     <tr>
         <td colspan="3">رقم الجوال</td>
-        <td colspan="2">{{$project->person->mobile}}</td>
+        <td colspan="2">{{$_['owner_mobile'] ?? $_['representative_mobile'] ?? ''}}</td>
         <td colspan="2">رقم الهاتف</td>
-        <td colspan="2">{{$project->person->phone}}</td>
+        <td colspan="2">{{$_['phone'] ?? $_['representative_phone'] ?? ''}}</td>
     </tr>
     <tr>
         <td colspan="3">رقم الفاكس</td>
         <td colspan="2"></td>
         <td colspan="2">البريد الإلكتروني</td>
-        <td colspan="2">{{$project->person->email}}</td>
+        <td colspan="2">{{$_['email'] ?? $_['representative_email'] ?? ''}}</td>
     </tr>
 </table><br><br style="line-height: 30%;">
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
@@ -89,27 +86,27 @@
 <table class="tbl-bordered">
     <tr>
         <td colspan="2">رقم الصك</td>
-        <td colspan="3">{{$project->plot->deed_no ??''}}</td>
+        <td colspan="3">{{$_['deed_no'] ??''}}</td>
         <td colspan="3">تاريخه</td>
-        <td colspan="3">{{$project->plot->deed_date ??''}}</td>
+        <td colspan="3">{{$_['deed_date'] ??''}}</td>
         <td colspan="1">مصدره</td>
-        <td colspan="3">{{$project->plot->deed_issue_place ??''}}</td>
+        <td colspan="3">{{$_['deed_issue_place'] ??''}}</td>
     </tr>
     <tr>
         <td colspan="2">المدينة</td>
         <td colspan="3">المدينة المنورة</td>
         <td colspan="3">الحي</td>
         <td colspan="7">
-            <span>{{$project->plot()->first()->district()->first()->ar_name ?? ''}}</span> -
-            <span>{{$project->plot()->first()->neighbor()->first()->ar_name ?? ''}}</span>
+            <span>{{$_['district_name'] ?? ''}}</span> -
+            <span>{{$_['neighbor_name'] ?? ''}}</span>
         </td>
     </tr>
     <tr>
         <td colspan="2">الشارع</td>
-        <td colspan="3"><span>{{$project->plot()->first()->street()->first()->ar_name ?? '--'}}</span></td>
+        <td colspan="3"><span>{{$_['street_name'] ?? '--'}}</span></td>
         <td colspan="3">إحداثيات الموقع</td>
-        <td colspan="4">{{$project->plot()->first()->x_coordinate ?? ''}}</td>
-        <td colspan="3">{{$project->plot()->first()->y_coordinate ?? ''}}</td>
+        <td colspan="4">{{$_['x_coordinate'] ?? ''}}</td>
+        <td colspan="3">{{$_['y_coordinate'] ?? ''}}</td>
     </tr>
 </table><br><br style="line-height: 30%;">
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
@@ -180,7 +177,7 @@
     <tr>
         <td colspan="4"></td>
         <td>الإسم:</td>
-        <td colspan="6">{{$project->owner_name_ar}}</td>
+        <td colspan="6">{{$_['owner_name']}}</td>
     </tr>
     <tr>
         <td colspan="4"></td>

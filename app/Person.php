@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -36,6 +37,15 @@ class Person extends Model
             . ' ' . $this->en_name4 . ' ' . $this->en_name5;
         $name = trim($name);
         return preg_replace('/\s+/', ' ', $name);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_nationality_name_ar()
+    {
+        if ($this->nationality_code) {
+            $country = Country::where('code_2chracters', $this->nationality_code)->first();
+            return $country->ar_name;
+        }
+        return 'undefined';
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function user()

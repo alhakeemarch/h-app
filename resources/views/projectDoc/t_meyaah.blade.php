@@ -7,39 +7,33 @@
 <table class="tbl-bordered">
   <tr>
     <td>اسم المالكـ</td>
-    <td colspan="2">{{$project->owner_name_ar ??''}}</td>
+    <td colspan="2">{{$_['owner_name'] ??''}}</td>
     <td>رقم الهوية</td>
-    <td colspan="2">{{$project->person->national_id ??''}}</td>
+    <td colspan="2">{{$_['id_number'] ??''}}</td>
   </tr>
   <tr>
     <td>رقم الصكـ</td>
-    <td colspan="2">{{$project->plot->deed_no ??''}}</td>
+    <td colspan="2">{{$_['deed_no'] ??''}}</td>
     <td>تاريخه</td>
-    <td colspan="2">{{$project->plot->deed_date ??''}}</td>
+    <td colspan="2">{{$_['deed_date'] ??''}}</td>
   </tr>
   <tr>
     <td>رقم المخطط</td>
-    <td colspan="2">{{$project->plot->plan->plan_ar_name ??''}}</td>
+    <td colspan="2">{{$_['plan_name'] ??''}}</td>
     <td>رقم القطعة</td>
-    <td colspan="2">{{$project->plot->plot_no ??''}}</td>
+    <td colspan="2">{{$_['plot_no'] ??''}}</td>
   </tr>
   <tr>
     <td>اسم الوكيـل</td>
-    <td colspan="2"><span>{{$project-> representative_name_ar ??''}}</span></td>
+    <td colspan="2"><span>{{$_['representative_name_ar'] ??''}}</span></td>
     <td>رقم الهوية</td>
-    <td colspan="2"><span>{{$project-> representative_national_id ??''}}</span></td>
+    <td colspan="2"><span>{{$_['representative_n_id'] ??''}}</span></td>
   </tr>
   <tr>
     <td>رقم الوكالة</td>
-    <td colspan="2"><span>{{$project-> representative_authorization_no ?? ''}}</span></td>
+    <td colspan="2"><span>{{$_['authorization_no'] ?? ''}}</span></td>
     <td>رقم الجوال</td>
-    <td colspan="2">
-      @if ($project-> representative_name_ar)
-      <span>{{$project-> representative_main_mobile_no}}</span>
-      @else
-      <span>{{$project->person->mobile ??''}}</span>
-      @endif
-    </td>
+    <td colspan="2">{{$_['representative_mobile'] ?? $_['owner_mobile'] ?? ''}}</td>
   </tr>
 </table>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
@@ -58,7 +52,7 @@
   <tr style="border: none;">
     <td style="border: none;"></td>
     <td style="border: none;">الإسم:
-      {{$project->owner_name_ar ??''}}
+      {{$_['owner_name'] ??''}}
     </td>
   </tr>
   <tr style="border: none;">
@@ -71,7 +65,7 @@
   <tr>
     <td style="border: none;"></td>
     <td style="border: none;">رقم الهوية:
-      {{$project->person->national_id ??''}}
+      {{$_['id_number'] ??''}}
     </td>
   </tr>
 </table>

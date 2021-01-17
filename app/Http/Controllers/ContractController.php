@@ -445,6 +445,7 @@ class ContractController extends Controller
             'date_and_time' => $date_and_time,
             'pyment_arr' => $pyment_arr,
             'contract_title' => $contract_title,
+            '_' => (new ProjectDocController)->get_doc_data($project),
         ];
         // -----------------------------------------------------------------
         if (!isset($contract_type->view_template)) {

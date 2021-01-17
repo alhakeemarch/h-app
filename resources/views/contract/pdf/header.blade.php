@@ -33,16 +33,16 @@
     <tr>
         <td colspan="3">
             <span>الطرف الثاني:</span>
-            <span>السيد:</span> <span>{{$project->owner_name_ar}}</span>
+            <span>السيد:</span> <span>{{$_['owner_name']}}</span>
         </td>
         <td>
-            <span>هاتف:</span> <span>{{$project->person->mobile}}</span>
+            <span>هاتف:</span> <span>{{$_['owner_mobile'] ?? $_['representative_mobile'] ?? ''}}</span>
         </td>
     </tr>
     <tr>
         <td colspan="4">
             <span>يمثله بالعقد:</span>
-            <span>{{$project->representative_name_ar  ?? '...................................................................'}}</span>
+            <span>{{$_['representative_name_ar']  ?? '...................................................................'}}</span>
         </td>
     </tr>
 </table><br><br style="line-height: 30%;">
@@ -54,29 +54,29 @@
     <tr>
         <td>
             <span>رقم الصك:</span>
-            <span>{{$project->plot->deed_no ?? '...........................'}}</span>
+            <span>{{$_['deed_no'] ?? '...........................'}}</span>
         </td>
         <td>
             <span>تاريخه</span>
-            <span>{{$project->plot->deed_date ?? '...........................'}}</span>
+            <span>{{$_['deed_date'] ?? '...........................'}}</span>
         </td>
         <td>
             <span>مصدره</span>
-            <span>{{$project->plot->deed_issue_place ?? '...........................'}}</span>
+            <span>{{$_['deed_issue_place'] ?? '...........................'}}</span>
         </td>
     </tr>
     <tr>
         <td>
             <span>رقم القطعة</span>
-            <span>{{$project->plot->plot_no ?? '...........................'}}</span>
+            <span>{{$_['plot_no'] ?? '...........................'}}</span>
         </td>
         <td>
             <span>رقم المخطط:</span>
-            <span>{{$project->plot->plan->plan_no ?? '...........................'}}</span>
+            <span>{{$_['plan_number'] ?? '...........................'}}</span>
         </td>
         <td>
             <span>الحي:</span>
-            <span>{{$project->plot->neighbor->ar_name ?? '...........................'}}</span>
+            <span>{{$_['neighbor_name'] ?? '...........................'}}</span>
         </td>
     </tr>
 </table>

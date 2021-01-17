@@ -20,11 +20,7 @@
             <span>مكتب م.</span> <span>{{$office_data->name_ar}}</span>
         </td>
         <td>
-            @if ($project-> representative_name_ar)
-            <span>{{$project-> representative_name_ar}}</span>
-            @else
-            <span>{{$project->owner_name_ar ?? ''}}</span>
-            @endif
+            <span>{{$_['representative_name_ar'] ?? $_['owner_name'] ?? ''}}</span>
         </td>
     </tr>
     <tr>
@@ -41,7 +37,3 @@
     </tr>
 </table>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
-{{-- </body>
-
-
-</html> --}}

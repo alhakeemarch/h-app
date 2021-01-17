@@ -87,6 +87,7 @@ class QuotationController extends Controller
             'project' => $project,
             'quotation' => $quotation,
             'person_titles' => $person_titles,
+            '_' => (new ProjectDocController)->get_doc_data($project),
         ]);
         return $request;
     }
@@ -162,6 +163,7 @@ class QuotationController extends Controller
             'date_and_time' => $date_and_time,
             'quotation' => $quotation,
             'project_services' => $project_services,
+            '_' => (new ProjectDocController)->get_doc_data($project),
         ];
 
         if (!(isset($quotation->id))) {

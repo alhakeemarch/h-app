@@ -261,7 +261,7 @@ class ProjectDocController extends Controller
         // return;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    private function get_doc_data($project)
+    public function get_doc_data($project)
     {
         // -----------------------------------------------------
         $_ = [];
@@ -269,7 +269,10 @@ class ProjectDocController extends Controller
         if ($project->organization_id) {
             $org = $project->organization;
             $_['owner_name'] = $org->name_ar;
-
+            $_['id_issue_date'] = $org->issue_date;
+            $_['id_issue_place'] = $org->issue_place;
+            $_['organization_title'] = 'السادة';
+            $_['organization_suffix'] = 'الموقرين';
             if ($org->commercial_registration_no) {
                 $_['id_name'] = 'رقم السجل التجاري';
                 $_['id_number'] = $org->commercial_registration_no;
@@ -288,24 +291,40 @@ class ProjectDocController extends Controller
         if ($project->person_id) {
             $person = $project->person;
             $_['owner_name'] = $person->get_full_name_ar();
+            $_['owner_title'] = $person->person_title()->first()->name_ar;
+            $_['owner_suffix'] = $person->person_title()->first()->suffix_ar;
             $_['id_name'] = 'رقم السجل المدني';
             $_['id_number'] = $person->national_id;
             $_['owner_mobile'] = $person->mobile;
+            $_['id_issue_date'] = $person->national_id_issue_date;
+            $_['id_issue_place'] = $person->national_id_issue_place;
+            $_['phone'] = $person->phone;
+            $_['email'] = $person->email;
+            $_['nationality'] = $person->get_nationality_name_ar();
         }
         // -----------------------------------------------------
         if ($project->representative_id) {
             $representative = $project->representative;
             $_['representative_mobile'] = $representative->mobile;
             $_['representative_name_ar'] = $representative->get_full_name_ar();
+            $_['representative_title'] = $representative->person_title()->first()->name_ar;
+            $_['representative_suffix'] = $representative->person_title()->first()->suffix_ar;
+            $_['representative_n_id'] = $representative->national_id;
             $_['authorization_no'] = $project->representative_authorization_no;
             $_['authorization_issue_date'] = $project->representative_authorization_issue_date;
             $_['authorization_issue_place'] = $project->representative_authorization_issue_place;
+            $_['representative_phone'] = $representative->phone;
+            $_['representative_email'] = $representative->email;
         }
         // -----------------------------------------------------
         if ($project->plot_id) {
             $plot = $project->plot;
+            $_['plot_no'] = $plot->plot_no;
             $_['deed_no'] = $plot->deed_no;
             $_['deed_date'] = $plot->deed_date;
+            $_['deed_issue_place'] = $plot->deed_issue_place;
+            $_['x_coordinate'] = $plot->x_coordinate;
+            $_['y_coordinate'] = $plot->y_coordinate;
             if ($plot->district_id) {
                 $_['district_name'] = $plot->district->ar_name;
             }
@@ -313,7 +332,11 @@ class ProjectDocController extends Controller
                 $_['neighbor_name'] = $plot->neighbor->ar_name;
             }
             if ($plot->plan) {
+                $_['plan_number'] = $plot->plan->plan_no;
                 $_['plan_name'] = $plot->plan->plan_ar_name;
+            }
+            if ($plot->street) {
+                $_['street_name'] = $plot->street->ar_name;
             }
         }
         // -----------------------------------------------------

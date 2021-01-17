@@ -77,9 +77,15 @@
                     <x-slot name='input_value'>{{old('last_rokhsa_issue_date') ?? $project->last_rokhsa_issue_date}}
                     </x-slot>
                 </x-input>
-                <x-input name='old_rokhsa_no' title="">
-                    <x-slot name='title'>{{__('rokhsa number')}}</x-slot>
-                    <x-slot name='input_value'>{{old('old_rokhsa_no') ?? $project->old_rokhsa_no}}</x-slot>
+                <x-input name='qarar_masahe_no' title="">
+                    <x-slot name='title'>{{__('qarar_masahe_no ')}}</x-slot>
+                    <x-slot name='input_value'>{{old('qarar masahe number') ?? $project->qarar_masahe_no}}</x-slot>
+                </x-input>
+                <x-input name='qarar_masahe_issue_date' title="">
+                    <x-slot name='title'>{{__('qarar masahe issue date ')}}</x-slot>
+                    <x-slot name='input_pattern'>(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}</x-slot>
+                    <x-slot name='input_value'>{{old('qarar_masahe_issue_date') ?? $project->qarar_masahe_issue_date}}
+                    </x-slot>
                 </x-input>
                 <x-select_searchable name='project_status_id' title="" :resource=$project :list=$project_statuses>
                     <x-slot name='db_data_field'>id</x-slot>

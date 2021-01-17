@@ -211,7 +211,7 @@
   <tr>
     <td colspan="2"></td>
     <td class="bg-green-1">الجوال</td>
-    <td colspan="2" class="bg-green-1">{{$project->person->mobile ??''}}</td>
+    <td colspan="2" class="bg-green-1">{{$_['owner_mobile'] ?? $_['representative_mobile'] ?? ''}}</td>
   </tr>
 </table>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}

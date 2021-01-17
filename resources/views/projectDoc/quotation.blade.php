@@ -1,6 +1,5 @@
 <x-pdf_print_style />
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
-{{-- {{dd($date_and_time)}} --}}
 <br> <br style="line-height: 30%;">
 <table class="text-small aljazeera-font">
     <tr>
@@ -43,11 +42,11 @@
 <table>
     <tr>
         <td colspan="2">
-            {{$project->person()->first()->person_title()->first()->name_ar}}:
-            {{$project->person()->first()->get_full_name_ar()}}
+            {{$_['organization_title'] ?? $_['owner_title']}}:
+            {{$_['owner_name'] ?? $_['representative_name_ar'] ??''}}
         </td>
         <td>
-            {{$project->person()->first()->person_title()->first()->suffix_ar}}
+            {{$_['organization_suffix'] ?? $_['owner_suffix'] ?? ''}}
         </td>
     </tr>
 </table>
@@ -82,25 +81,25 @@
     <tr>
         <td>
             <span>بالإشارة إلى المشروع الخاص بكم الواقع في</span>
-            @if ($project->plot->district_id)
-            <span>{{$project->plot()->first()->district()->first()->ar_name}}</span>
+            @if ($_['district_name'])
+            <span>{{$_['district_name']}}</span>
             @else
             <span>المدينة المنورة</span>
             @endif
-            @if ($project->plot->neighbor_id)
-            <span>حي</span>
-            <span>{{$project->plot()->first()->neighbor()->first()->ar_name}}</span>
+            @if ($_['neighbor_name'])
+            <span>-</span>
+            <span>{{$_['neighbor_name']}}</span>
             @endif
-            @if ($project->plot->plan_id)
+            @if ($_['plan_number'])
             <span>بالمخطط رقم</span>
-            <span>{{$project->plot()->first()->plan()->first()->plan_no}}</span>
+            <span>{{$_['plan_number']}}</span>
             @endif
             <span>بالقطعة رقم</span>
-            <span>{{$project->plot->plot_no}}</span>
+            <span>{{$_['plot_no']}}</span>
             <span>بموجب الصك رقم</span>
-            <span>{{$project->plot->deed_no}}</span>
+            <span>{{$_['deed_no']}}</span>
             <span>وتاريخ</span>
-            <span>{{$project->plot->deed_date}}</span>.
+            <span>{{$_['deed_date']}}</span>.
         </td>
     </tr>
     <tr>

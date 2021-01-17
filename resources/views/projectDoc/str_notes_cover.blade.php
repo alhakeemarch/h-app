@@ -18,15 +18,15 @@
 <table class="tbl-bordered">
     <tr>
         <td>اسم المالكـ</td>
-        <td colspan="2" class="color-blue">{{$project->owner_name_ar ??''}}</td>
+        <td colspan="2" class="color-blue">{{$_['owner_name'] ??''}}</td>
     </tr>
     <tr>
         <td>الموقع</td>
         <td colspan="2" class="color-blue">
-            {{$project->plot->neighbor->ar_name ??''}}
-            {{$project->plot->district->ar_name ??''}}
+            {{$_['neighbor_name'] ??''}}
+            {{$_['district_name'] ??''}}
             <span>القطعة رقم</span>
-            ({{$project->plot->plot_no ??''}})
+            ({{$_['plot_no'] ??''}})
         </td>
     </tr>
     <tr>

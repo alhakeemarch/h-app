@@ -30,7 +30,7 @@
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 <h1 class="txt-center"> تعهد </h1>
 <p>
-  <span> عليه اقر أنا</span> <span>{{$project->owner_name_ar ??''}}</span>
+  <span> عليه اقر أنا</span> <span>{{$_['owner_name'] ??''}}</span>
   <span>مالك الرخصة رقم</span> <span>{{$project->last_rokhsa_no ??''}}</span>
 </p>
 <p>بأنني أطلعت على المخاطر المذكورة أعلاه وما يقع علي من مسؤولية عند عدم تغطية فتحات خزانات الماء
@@ -47,7 +47,7 @@
   </tr>
   <tr>
     <td></td>
-    <td>الإسم: <span>{{$project->owner_name_ar ??''}}</span></td>
+    <td>الإسم: <span>{{$_['owner_name'] ??''}}</span></td>
   </tr>
   <tr>
     <td></td>
@@ -58,11 +58,11 @@
   </tr>
   <tr>
     <td></td>
-    <td>رقم الهوية: <span>{{$project->person->national_id ??''}}</span> </td>
+    <td>رقم الهوية: <span>{{$_['id_number'] ??''}}</span> </td>
   </tr>
   <tr>
     <td></td>
-    <td>رقم الجوال: <span>{{$project->person->mobile ??''}}</span> </td>
+    <td>رقم الجوال: <span>{{$_['owner_mobile'] ?? $_['representative_mobile'] ??''}}</span> </td>
   </tr>
 </table>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}

@@ -41,20 +41,20 @@
 <table class="tbl-bordered">
     <tr>
         <td colspan="2">اقر أنا مالك العقار:</td>
-        <td colspan="3">{{$project->person->get_full_name_ar() ?? ''}}</td>
+        <td colspan="3">{{$_['owner_name'] ?? ''}}</td>
         <td colspan="3">المزمع إقامته على القطعة رقم:</td>
-        <td colspan="2">{{$project->plot->plot_no ?? ''}}</td>
+        <td colspan="2">{{$_['plot_no'] ?? ''}}</td>
     </tr>
     <tr>
         <td colspan="3">المملوك بموجب الصك رقم:</td>
-        <td colspan="4">{{$project->plot->deed_no ?? ''}}</td>
+        <td colspan="4">{{$_['deed_no'] ?? ''}}</td>
         <td>بتاريخ:</td>
-        <td colspan="2">{{$project->plot->deed_date ?? ''}}</td>
+        <td colspan="2">{{$_['deed_date'] ?? ''}}</td>
     </tr>
     <tr>
         <td>بحي:</td>
         <td>
-            <span>{{$project->plot()->first()->neighbor()->first()->ar_name ?? ''}}</span>
+            <span>{{$_['neighbor_name'] ?? ''}}</span>
         </td>
         <td colspan="3">الصادر له قرار مساحي رقم:</td>
         <td colspan="2">{{$project->qarar_masahe_no ?? '' }}</td>
@@ -84,9 +84,9 @@
     </tr>
     <tr>
         <td>السجل المدني:</td>
-        <td>{{$project->person->national_id ??''}}</td>
+        <td>{{$_['id_number'] ??''}}</td>
         <td>التاريخ:</td>
-        <td>{{$project->person->national_id_issue_date ??''}}</td>
+        <td>{{$_['id_issue_date'] ??''}}</td>
     </tr>
 </table><br><br>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
@@ -101,21 +101,21 @@
         <td colspan="3">اقر أنا المكتب الهندسي:</td>
         <td colspan="5">{{$office_data->name_ar ?? ''}}</td>
         <td colspan="3">المصمم لمالك المشروع</td>
-        <td colspan="4">{{$project->person->get_full_name_ar() ?? ''}}</td>
+        <td colspan="4">{{$_['owner_name'] ?? ''}}</td>
     </tr>
     <tr>
         <td colspan="4">المزمع بموجب الصك رقم:</td>
-        <td colspan="4">{{$project->plot->deed_no ?? ''}}</td>
+        <td colspan="4">{{$_['deed_no'] ?? ''}}</td>
         <td colspan="2">والمعتمد برقم:</td>
         <td colspan="2"></td>
         <td>بحي:</td>
-        <td colspan="2"><span>{{$project->plot()->first()->neighbor()->first()->ar_name ?? ''}}</span></td>
+        <td colspan="2"><span>{{$_['neighbor_name'] ?? ''}}</span></td>
     </tr>
     <tr>
         <td colspan="4">والمملوك بموجب الصك رقم:</td>
-        <td colspan="5">{{$project->plot->deed_no ?? ''}}</td>
+        <td colspan="5">{{$_['deed_no'] ?? ''}}</td>
         <td colspan="2">بتاريخ:</td>
-        <td colspan="4">{{$project->plot->deed_date ?? ''}}</td>
+        <td colspan="4">{{$_['deed_date'] ?? ''}}</td>
     </tr>
     <tr>
         <td colspan="4">والمصدر له قرار مساحي رقم:</td>
