@@ -150,7 +150,7 @@ class ProjectController extends Controller
         $validated_project['created_by_id'] = auth()->user()->id;
         $validated_project['created_by_name'] = auth()->user()->user_name;
         $validated_project['plot_id'] = $plot->id;
-        $validated_project['project_location '] = $this->get_project_location($plot);
+        $validated_project['project_location'] = $this->get_project_location($plot);
         if ($request->organization_id) {
             $validated_project['project_name_ar'] =
                 $validated_project['owner_name_ar'] =
@@ -307,6 +307,18 @@ class ProjectController extends Controller
     {
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         Gate::authorize('create', Project::class);
+        // ------------------------------------------------------------------------------------------------------------------------------------- 
+        if ($request->form_action == 'update_project_location') {
+            if (!$project->plot_id) {
+                return redirect()->back()->withErrors([
+                    'project must be linked to a plot first', 'يجب ربط المشروع بقطعة ارض أولاً'
+                ]);
+            }
+            $plot = $project->plot()->first();
+            $project->project_location = $this->get_project_location($plot);
+            $project->save();
+            return redirect()->back()->withSuccess(['project location updated', 'تم تحديث موقع المشروع']);
+        }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'update_representative_info') {
             return $this->update_representative_info($request, $project);
@@ -1303,7 +1315,7 @@ class ProjectController extends Controller
             $project_location = $plot->district->ar_name;
         }
         if ($plot->neighbor_id) {
-            $project_location += ' - ' . $plot->neighbor->ar_name;
+            $project_location .= ' - ' . $plot->neighbor->ar_name;
         }
         return $project_location;
     }

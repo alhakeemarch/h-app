@@ -114,6 +114,23 @@
             </div>
         </form>
     </div>
+    <br>
+    <hr>
+    <div class="card-body">
+        <form action="{{route('project.update',$project)}}" method="POST">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="form_action" value="update_project_location">
+            <x-input name='project_location' title="{{__('project location')}}">
+                <x-slot name='is_readonly'>true</x-slot>
+                <x-slot name='input_value'>{{old('project_location') ?? $project->project_location}}</x-slot>
+            </x-input>
+            <button type="submit" class="btn btn-success btn-block">
+                <span>{{__('update project location')}} |</span>
+                <i class="far fa-check-square"></i>
+            </button>
+        </form>
+    </div>
 </div>
 
 @endsection
