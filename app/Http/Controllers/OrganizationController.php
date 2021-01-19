@@ -17,8 +17,7 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        // return Organization::all();
-        return view('organization.index')->with(['organizations' => Organization::all()]);
+        return view('organization.index')->with(['organizations' => Organization::all()->reverse()]);
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
@@ -104,7 +103,10 @@ class OrganizationController extends Controller
      */
     public function edit(Organization $organization)
     {
-        return 'this is Organization edit';
+        return view('organization.edit')->with([
+            'organization' => $organization,
+            'organization_types' => OrganizationType::all(),
+        ]);
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**

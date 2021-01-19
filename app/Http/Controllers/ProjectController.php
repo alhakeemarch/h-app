@@ -150,6 +150,7 @@ class ProjectController extends Controller
         $validated_project['created_by_id'] = auth()->user()->id;
         $validated_project['created_by_name'] = auth()->user()->user_name;
         $validated_project['plot_id'] = $plot->id;
+        $validated_project['project_location '] = $this->get_project_location($plot);
         if ($request->organization_id) {
             $validated_project['project_name_ar'] =
                 $validated_project['owner_name_ar'] =
@@ -368,6 +369,7 @@ class ProjectController extends Controller
             $found_plot->save();
             // -----------------------------------------------------------------
             $project->plot_id = $found_plot->id;
+            $project->$this->get_project_location($found_plot);
             $project->last_edit_by_id = auth()->user()->id;
             $project->last_edit_by_name = auth()->user()->user_name;
             $project->save();
@@ -1292,6 +1294,18 @@ class ProjectController extends Controller
             echo '],';
             echo '<br>';
         }
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    private function get_project_location($plot)
+    {
+        $project_location = '';
+        if ($plot->district_id) {
+            $project_location = $plot->district->ar_name;
+        }
+        if ($plot->neighbor_id) {
+            $project_location += ' - ' . $plot->neighbor->ar_name;
+        }
+        return $project_location;
     }
     // -----------------------------------------------------------------------------------------------------------------
 

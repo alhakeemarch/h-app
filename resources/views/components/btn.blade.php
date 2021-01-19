@@ -18,7 +18,7 @@ $class_list = 'btn btn-link m-0';
 // ------------------------------------------
 
 // ------------------------------------------
-if (in_array($btn_text, ['submit','save','ok','apply']) ) {
+if (in_array($btn_text, ['submit','save','ok','apply','update']) ) {
 $btn_icon = '<i class="far fa-check-square"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-primary' : ' btn-primary';
 // $on_click_action = 'show_loader()';
