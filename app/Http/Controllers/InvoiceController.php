@@ -95,11 +95,12 @@ class InvoiceController extends Controller
         // ----   ----   ----   ----
         $this->create_invoice_items($total_arr['contracts_id'], $total_arr['project_services_id'], $invoice->id);
         // ----   ----   ----   ----
-        $project_msg = (!isset($project->project_no))
-            ? ProjectController::giv_project_a_number($project)
-            : ['this project allredy have a number', 'هذا المشروع له رقم سابق'];
+        // $project_msg = (!isset($project->project_no))
+        //     ? ProjectController::giv_project_a_number($project)
+        //     : ['this project allredy have a number', 'هذا المشروع له رقم سابق'];
         // ----   ----   ----   ----
-        $success_msg = array_merge(['invoive created successfully', 'تم اضافة انشاء الفاتورة بنجاح'], $project_msg);
+        // $success_msg = array_merge(['invoive created successfully', 'تم اضافة انشاء الفاتورة بنجاح'], $project_msg);
+        $success_msg = ['invoive created successfully', 'تم اضافة انشاء الفاتورة بنجاح'];
         return redirect()->back()->with('success', $success_msg);
     }
 
