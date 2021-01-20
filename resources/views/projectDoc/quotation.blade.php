@@ -81,16 +81,16 @@
     <tr>
         <td>
             <span>بالإشارة إلى المشروع الخاص بكم الواقع في</span>
-            @if ($_['district_name'])
+            @if ($_['district_name'] ?? false)
             <span>{{$_['district_name']}}</span>
             @else
             <span>المدينة المنورة</span>
             @endif
-            @if ($_['neighbor_name'])
+            @if ($_['neighbor_name'] ?? false)
             <span>-</span>
             <span>{{$_['neighbor_name']}}</span>
             @endif
-            @if ($_['plan_number'])
+            @if ($_['plan_number'] ?? false)
             <span>بالمخطط رقم</span>
             <span>{{$_['plan_number']}}</span>
             @endif
