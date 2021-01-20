@@ -33,8 +33,7 @@ class InvoiceController extends Controller
     public function index()
     {
         $this->authorize('view-any', Invoice::class);
-        // dd($this->authorize('view-any', Invoice::class));
-        return view('invoice.index');
+        return view('invoice.index')->with(['invoices' => Invoice::all()->reverse()]);
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**

@@ -3,7 +3,6 @@
     autocomplete="off" required placeholder="{{__( 'search..')}}" onfocus="this.placeholder=''"
     onblur="this.placeholder=' {{__( 'search..')}}'" onkeyup="filterSidebar(event)" onkeypress=" onlyString(event)">
 {{-- --------------------------------------------------------------------------------------------- --}}
-
 <div class=" sidebar-group">
     <a href="#">
         <div class="sidebar-title d-flex justify-content-between">
@@ -40,6 +39,23 @@
     </a>
     @endif
 </div>
+{{-- --------------------------------------------------------------------------------------------- --}}
+@can('view-any', App\Invoice::class)
+<div class=" sidebar-group">
+    <a href="#">
+        <div class="sidebar-title d-flex justify-content-between">
+            <span class="">{{__('accounting')}}</span>
+            <i class="fas fa-caret-up"></i>
+            <i class="fas fa-caret-down d-none"></i>
+        </div>
+    </a>
+    <a class="" href="{{route ('invoice.index')}}">
+        <div class="sidebar-item {{ (request()->is('invoice*')) ? 'active' : '' }}">
+            {{__('invoices')}}
+        </div>
+    </a>
+</div>
+@endcan
 {{-- --------------------------------------------------------------------------------------------- --}}
 
 <div class=" sidebar-group">

@@ -22,7 +22,8 @@ class Invoice extends Model
     // -----------------------------------------------------------------------------------------------------------------
     public function get_issued_by()
     {
-        $person = Person::where('id', $this->created_by_id)->first();
+        $user = User::where('id', $this->created_by_id)->first();
+        $person = $user->person()->first();
         if ($this->created_by_id == 2) {
             $issued_by = $person->job_title . ': ' . $person->ar_name1 . ' ' . $person->ar_name5;
         } elseif (!$person->ar_name2) {
