@@ -675,9 +675,9 @@ class ProjectController extends Controller
             'national_id' => 'required|numeric',
             'representative_type_id' => 'required|numeric',
             'representative_authorization_no' => 'required|string',
-            'representative_authorization_issue_date' => ['required', 'string', new ValidDate],
+            'representative_authorization_issue_date' => ['required', 'string'],
             'representative_authorization_issue_place' => 'required|string',
-            'representative_authorization_expire_date' => ['nullable', 'string', new ValidDate],
+            'representative_authorization_expire_date' => ['nullable', 'string'],
         ]);
         if ($project->representative_id) {
             return redirect()->route('project.show', $project)->withErrors(['allredy have representative', 'يوجد ممثل لهذا المشروع مسبقاً']);

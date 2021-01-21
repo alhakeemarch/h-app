@@ -101,7 +101,7 @@
     </tr>
     <tr>
         <th>الى:</th>
-        <td colspan="7">{{$project->person->get_full_name_ar()}}</td>
+        <td colspan="7">{{$_['owner_name']}}</td>
     </tr>
     <tr>
         <th>العنوان:</th>

@@ -66,7 +66,7 @@ class InvoiceController extends Controller
         $invoice->invoice_no = $this->get_new_invoice_no();
         $invoice->invoice_no_prefix = $date_and_time['g_year_no'];
         $invoice->project_id = $project->id;
-        $invoice->person_id = $project->person->id;
+        if ($project->person_id) $invoice->person_id = $project->person->id;
         $invoice->issued_by_id = auth()->user()->id;
         if ($request->credit_or_cash == 'cash') {
             $invoice->is_credit = false;
@@ -266,6 +266,7 @@ class InvoiceController extends Controller
             'office_data' => $office_data,
             'date_and_time' => $date_and_time,
             'invoice_total_arr' => $invoice_total_arr,
+            '_' => (new ProjectDocController)->get_doc_data($project),
         ];
         // creating pdf 
         $newPDF = new TCPDF();
