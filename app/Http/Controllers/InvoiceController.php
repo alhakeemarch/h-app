@@ -305,6 +305,7 @@ class InvoiceController extends Controller
         $newPDF::StopTransform();
         // ----------------------------------------------------------------- ========>
         $newPDF::lastPage();
+        if (env('DEVELOPMENT'))  return  $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
         $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         return;
     }

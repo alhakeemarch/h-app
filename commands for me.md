@@ -317,6 +317,7 @@ php artisan make:model ContractClass -a // تصنيف لدرجات العقد
 php artisan make:model RepresentativeType -a // تصنيف لدرجات العقد
 php artisan make:model ProjectDocType -a // اسماء مستندات المشروع
 php artisan make:model OrganizationType -a // نوع الجهة
+php artisan make:model ProjectBeneficiary -a // مفوضي المشروع
 
 ==============
 لعمل علاقة Many to many
