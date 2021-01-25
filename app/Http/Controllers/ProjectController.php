@@ -17,6 +17,7 @@ use App\PersonTitles;
 use App\Plan;
 use App\Plot;
 use App\Project;
+use App\ProjectBeneficiary;
 use App\ProjectDocType;
 use App\ProjectService;
 use App\ProjectStatus;
@@ -250,6 +251,7 @@ class ProjectController extends Controller
             'project_invoices' => $project_invoices,
             'can_create_invoice' => $can_create_invoice,
             'project_services' => $project_services,
+            'beneficiaries_list' => $this->get_project_beneficiaries($project),
         ]);
     }
 
@@ -273,6 +275,7 @@ class ProjectController extends Controller
                 'project' => $project,
                 'owner_types' => OwnerType::all(),
                 'representative_types' => RepresentativeType::all(),
+                'project_beneficiaries' => ProjectBeneficiaryController::get_project_beneficiaries($project),
             ]);
         }
         // ----------------------------------------------------
@@ -1318,6 +1321,53 @@ class ProjectController extends Controller
             $project_location .= ' - ' . $plot->neighbor->ar_name;
         }
         return $project_location;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_project_beneficiaries($project)
+    {
+        $beneficiary_list = [];
+        // project name
+        array_push($beneficiary_list, ['value' => 'project_name_ar', 'name' => $project->project_name_ar]);
+        // project owner
+        if ($project->person_id) {
+            array_push($beneficiary_list, [
+                'value' => 'owner|person|' . $project->person_id,
+                'name' => $project->person()->first()->get_full_name_ar()
+            ]);
+        }
+        if ($project->organization_id) {
+            array_push($beneficiary_list, [
+                'value' => 'owner|organization|' . $project->organization_id,
+                'name' => $project->organization()->first()->name_ar
+            ]);
+        }
+        // project reprsintetive
+        if ($project->representative_id) {
+            array_push($beneficiary_list, [
+                'value' => 'representative|person|' . $project->representative_id,
+                'name' => $project->representative()->first()->get_full_name_ar()
+            ]);
+        }
+        // project beneficiaries
+        $beneficiaries = ProjectBeneficiaryController::get_project_beneficiaries($project);
+        if (count($beneficiaries) > 0) {
+            foreach ($beneficiaries as $beneficiary) {
+                if ($beneficiary->person_id) {
+                    array_push($beneficiary_list, [
+                        'value' => 'beneficiary|person|' . $beneficiary->person_id,
+                        'name' => Person::find($beneficiary->person_id)->get_full_name_ar()
+                    ]);
+                }
+                if ($beneficiary->organization_id) {
+                    array_push($beneficiary_list, [
+                        'value' => 'beneficiary|organization|' . $beneficiary->organization_id,
+                        'name' => Organization::find($beneficiary->organization_id)->name_ar
+                    ]);
+                }
+            }
+        }
+
+        return $beneficiary_list;
     }
     // -----------------------------------------------------------------------------------------------------------------
 

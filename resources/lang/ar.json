@@ -96,5 +96,9 @@
 	"yes": "نعم",
 	"no": "لا",
 	"invoices": "الفواتير",
+	"create": "إنشاء",
+	"person": "شخص",
+	"organization": "منشأة",
+	"beneficiary": "مستفيد",
 	"": ""
 }

@@ -20,17 +20,39 @@
 <form action="{{route('invoice.store')}}" method="POST" class="jumbotron p-3">
     @csrf
     <input type="hidden" name="project_id" value="{{$project->id}}">
-    <div class=" d-flex justify-content-between align-content-center ml-4">
-        <label class="mt-3">
-            <input type="radio" name="credit_or_cash" value="cridet" checked> آجل
-        </label>
-        <label class="mt-3">
-            <input type="radio" name="credit_or_cash" value="cash"> نقدي
-        </label>
-        <button class="btn btn-link" type="submit">
-            {{__('create')}} |
-            <i class="far fa-plus-square"></i>
-        </button>
+    <input type="hidden" name="coming_from" value="create_invoice_for_project">
+    <input type="hidden" name="form_action" value="create_new_invoice">
+    <div class="d-flex">
+        {{-- --------------------------------------------------------------------------------------------- --}}
+        <div class="col-md">
+            <label class="my-1">نقدي / أجل
+                <span class="small text-danger">({{__('required')}})</span>:</label>
+            <select name="credit_or_cash" class="form-control @error ('credit_or_cash') is-invalid @enderror" required>
+                <option selected disabled> {{__('pick')}}..</option>
+                <option value='cridet'>آجل</option>
+                <option value='cash'>نقدي</option>
+
+            </select>
+        </div>
+        {{-- --------------------------------------------------------------------------------------------- --}}
+        @if ($beneficiaries_list)
+        <div class="col-md">
+            <label class="my-1">{{__( 'beneficiary')}}
+                <span class="small text-danger">({{__('required')}})</span>:</label>
+            <select name="invoice_beneficiary" class="form-control @error ('invoice_beneficiary') is-invalid @enderror"
+                required>
+                <option selected disabled> {{__('pick')}}..</option>
+                @foreach ($beneficiaries_list as $beneficiary)
+                <option value='{{$beneficiary['value']}}'> {{$beneficiary['name']}}</option>
+                @endforeach
+            </select>
+        </div>
+        @endif
+        {{-- --------------------------------------------------------------------------------------------- --}}
+    </div>
+    <x-input name='notes' title="{{__('notes')}}" />
+    <div class="mt-2">
+        <x-btn btnText='create' />
     </div>
 </form>
 @endif

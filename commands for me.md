@@ -395,6 +395,17 @@ ALTER TABLE `invoices` ADD `project_id` BIGINT(20) UNSIGNED AFTER `invoice_no_pr
 ALTER TABLE `invoices` ADD CONSTRAINT invoices_project_id_foreign FOREIGN KEY (project_id) REFERENCES projects(id);
 ALTER TABLE `invoices` ADD `person_id` BIGINT(20) UNSIGNED AFTER `project_id`;
 ALTER TABLE `invoices` ADD CONSTRAINT invoices_person_id_foreign FOREIGN KEY (person_id) REFERENCES people(id);
+
+ALTER TABLE `invoices` ADD `beneficiary_row_value` VARCHAR(191) AFTER `project_id`;
+ALTER TABLE `invoices` ADD `beneficiary_id` VARCHAR(191) AFTER `beneficiary_row_value`;
+ALTER TABLE `invoices` ADD `beneficiary_type` VARCHAR(191) AFTER `beneficiary_id`;
+ALTER TABLE `invoices` ADD `beneficiary_relation_to_project` VARCHAR(191) AFTER `beneficiary_type`;
+ALTER TABLE `invoices` ADD `beneficiary_name_ar` VARCHAR(191) AFTER `beneficiary_relation_to_project`;
+ALTER TABLE `invoices` ADD `beneficiary_name_en` VARCHAR(191) AFTER `beneficiary_name_ar`;
+ALTER TABLE `invoices` ADD `beneficiary_address_ar` VARCHAR(191) AFTER `beneficiary_name_en`;
+ALTER TABLE `invoices` ADD `beneficiary_address_en` VARCHAR(191) AFTER `beneficiary_address_ar`;
+ALTER TABLE `invoices` ADD `beneficiary_vat_no` VARCHAR(191) AFTER `beneficiary_address_en`;
+
 ALTER TABLE `invoices` ADD `issued_by_id` BIGINT(20) UNSIGNED AFTER `person_id`;
 ALTER TABLE `invoices` ADD CONSTRAINT invoices_issued_by_id_foreign FOREIGN KEY (issued_by_id) REFERENCES people(id);
 ALTER TABLE `invoices` ADD `h_date` VARCHAR(191) AFTER `issued_by_id`;
@@ -444,6 +455,8 @@ ALTER TABLE `organizations` ADD UNIQUE KEY `organizations_special_code_unique` (
 
 ALTER TABLE `organizations` ADD `organization_type_id` BIGINT(20) UNSIGNED NULL AFTER `id` ;
 ALTER TABLE `organizations` ADD CONSTRAINT organizations_organization_type_id_foreign FOREIGN KEY (organization_type_id) REFERENCES organization_types(id);
+ALTER TABLE `organizations` ADD `invoice_address_ar` varchar(191) NULL AFTER `VAT_account_no`;
+ALTER TABLE `organizations` ADD `invoice_address_en` varchar(191) NULL AFTER `invoice_address_ar`;
 
 <!-- ------------------------------------------------------------------------ -->
 

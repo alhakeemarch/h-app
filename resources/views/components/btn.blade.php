@@ -30,7 +30,7 @@ $class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
 // $on_click_action = 'show_loader()';
 $btnType = 'submit';
 }
-if (in_array($btn_text, ['add','new']) ) {
+if (in_array($btn_text, ['add','new','create']) ) {
 $btn_icon = '<i class="far fa-plus-square"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
 // $on_click_action = 'show_loader()';
@@ -149,7 +149,7 @@ $type = '';
 {{-- --------------------------------------------------------------------------------------------------------------- --}}
 <button type="{{$btnType}}" class="{{$class_list}}" title="{{$btn_text}}" onclick="{{$on_click_action}}">
     @if (!(isset($btn_only_icon)))
-    {{$btn_text}}{{$pipe_sign}}
+    {{__($btn_text)}}{{$pipe_sign}}
     @endif
     {!! $btn_icon !!}
 </button>

@@ -7,6 +7,9 @@ use App\Invoice;
 use App\InvoiceItem;
 use App\Project;
 use App\OfficeData;
+use App\Organization;
+use App\Person;
+use App\ProjectBeneficiary;
 use App\ProjectService;
 use Illuminate\Http\Request;
 use Elibyy\TCPDF\Facades\TCPDF as TCPDF;
@@ -55,14 +58,128 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        // ----   ----   ----   ----
+        // return $request;
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $this->authorize('view-any', Invoice::class);
-        // ----   ----   ----   ----
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $project = Project::findOrFail($request->project_id);
         $date_and_time = DateAndTime::get_date_time_arr();
-        // ----   ----   ----   ----
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        $beneficiaries_list = (new ProjectController)->get_project_beneficiaries($project);
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $invoice = new Invoice;
-        // ----   ----   ----   ----
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+
+        $invoice->beneficiary_row_value = $request->invoice_beneficiary;
+        if ($request->invoice_beneficiary == 'project_name_ar') {
+            $invoice->beneficiary_id = NULL;
+            $invoice->beneficiary_type = NULL;
+            $invoice->beneficiary_relation_to_project = NULL;
+            $invoice->beneficiary_name_ar = $project->project_name_ar;
+            $invoice->beneficiary_name_en = $project->project_name_en;
+            $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
+            $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
+            $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
+        }
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        $beneficiary_arr = ['|'];
+        $beneficiary_arr = explode('|', $request->invoice_beneficiary);
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        if ($beneficiary_arr[0] == 'owner') {
+            if ($beneficiary_arr[1] == 'person') {
+                $invoice->beneficiary_id = $beneficiary_arr[2];
+                $invoice->beneficiary_type = 'person';
+                $invoice->beneficiary_relation_to_project = 'owner';
+                $invoice->beneficiary_name_ar = $project->person()->first()->get_full_name_ar();
+                $invoice->beneficiary_name_en = $project->person()->first()->get_full_name_en();
+                $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
+                $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
+                $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
+            }
+            if ($beneficiary_arr[1] == 'organization') {
+                $invoice->beneficiary_id = $beneficiary_arr[2];
+                $invoice->beneficiary_type = 'organization';
+                $invoice->beneficiary_relation_to_project = 'owner';
+                $organization = Organization::find($beneficiary_arr[2]);
+                $invoice->beneficiary_name_ar = $organization->name_ar;
+                $invoice->beneficiary_name_en = $organization->name_en;
+                if ($organization->invoice_address_ar) {
+                    $invoice->beneficiary_address_ar = $organization->invoice_address_ar;
+                } elseif ($project->invoicing_address_ar) {
+                    $invoice->beneficiary_address_ar = $project->invoicing_address_ar;
+                } else {
+                    $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
+                }
+                if ($organization->invoice_address_en) {
+                    $invoice->beneficiary_address_en = $organization->invoice_address_en;
+                } elseif ($project->invoicing_address_en) {
+                    $invoice->beneficiary_address_en = $project->invoicing_address_en;
+                } else {
+                    $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
+                }
+                $invoice->beneficiary_vat_no = ($organization->VAT_account_no)
+                    ? $organization->VAT_account_no
+                    : $project->invoicing_vat_no;
+            }
+        }
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        if ($beneficiary_arr[0] == 'representative') {
+
+            $invoice->beneficiary_id = $beneficiary_arr[2];
+            $invoice->beneficiary_type = 'person';
+            $person = Person::find($beneficiary_arr[2]);
+            $invoice->beneficiary_relation_to_project = 'representative';
+            $invoice->beneficiary_name_ar = $person->get_full_name_ar();
+            $invoice->beneficiary_name_en = $person->get_full_name_en();
+            $invoice->beneficiary_address_ar = $project->invoicing_address_ar;
+            $invoice->beneficiary_address_en = $project->invoicing_address_en;
+            $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
+        }
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        if ($beneficiary_arr[0] == 'beneficiary') {
+            if ($beneficiary_arr[1] == 'person') {
+                $invoice->beneficiary_id = $beneficiary_arr[2];
+                $invoice->beneficiary_type = 'person';
+                $person = Person::find($beneficiary_arr[2]);
+                $project_beneficiary = ProjectBeneficiary::where('project_id', $project->id)->where('person_id', $beneficiary_arr[2])->first();
+                $invoice->beneficiary_relation_to_project = ($project_beneficiary->relation_to_project)
+                    ? $project_beneficiary->relation_to_project : 'beneficiary';
+                $invoice->beneficiary_name_ar = $person->get_full_name_ar();
+                $invoice->beneficiary_name_en = $person->get_full_name_en();
+                $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
+                $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
+                $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
+            }
+            if ($beneficiary_arr[1] == 'organization') {
+                $invoice->beneficiary_id = $beneficiary_arr[2];
+                $invoice->beneficiary_type = 'organization';
+                $organization = Organization::find($beneficiary_arr[2]);
+                $project_beneficiary = ProjectBeneficiary::where('project_id', $project->id)->where('organization_id', $beneficiary_arr[2])->first();
+                $invoice->beneficiary_relation_to_project = ($project_beneficiary->relation_to_project)
+                    ? $project_beneficiary->relation_to_project : 'beneficiary';
+                $invoice->beneficiary_name_ar = $organization->name_ar;
+                $invoice->beneficiary_name_en = $organization->name_en;
+                dd($project->get_invoice_addrees_ar());
+                if ($organization->invoice_address_ar) {
+                    $invoice->beneficiary_address_ar = $organization->invoice_address_ar;
+                } elseif ($project->invoicing_address_ar) {
+                    $invoice->beneficiary_address_ar = $project->invoicing_address_ar;
+                } else {
+                    $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
+                }
+                if ($organization->invoice_address_en) {
+                    $invoice->beneficiary_address_en = $organization->invoice_address_en;
+                } elseif ($project->invoicing_address_en) {
+                    $invoice->beneficiary_address_en = $project->invoicing_address_en;
+                } else {
+                    $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
+                }
+                $invoice->beneficiary_vat_no = ($organization->VAT_account_no)
+                    ? $organization->VAT_account_no
+                    : $project->invoicing_vat_no;
+            }
+        }
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $invoice->invoice_no = $this->get_new_invoice_no();
         $invoice->invoice_no_prefix = $date_and_time['g_year_no'];
         $invoice->project_id = $project->id;
@@ -77,29 +194,25 @@ class InvoiceController extends Controller
         }
         $invoice->h_date = $date_and_time['h_date_ar'];
         $invoice->g_date = $date_and_time['g_date_ar'];
-        // ----   ----   ----   ----
+        $invoice->notes = $request->notes;
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $total_arr = $this->get_total_array($project);
         if (count($total_arr['contracts_id']) < 1 && count($total_arr['project_services_id']) < 1) {
             return redirect()->back()->withErrors([
                 'No Contracts Or Services available to add in invoice', 'لايوجد عقود أو خدمات متاحة للفوترة'
             ]);
         }
-        // ----   ----   ----   ----
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $invoice->total_cost = $total_arr['total_cost'];
         $invoice->vat_percentage = $total_arr['vat_percentage'];
         $invoice->total_vat_value = $total_arr['total_vat'];
         $invoice->total_price_withe_vat = $total_arr['total_price_withe_vat'];
-        // ----   ----   ----   ----
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $invoice->created_by_id = auth()->user()->id;
         $invoice->save();
-        // ----   ----   ----   ----
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $this->create_invoice_items($total_arr['contracts_id'], $total_arr['project_services_id'], $invoice->id);
-        // ----   ----   ----   ----
-        // $project_msg = (!isset($project->project_no))
-        //     ? ProjectController::giv_project_a_number($project)
-        //     : ['this project allredy have a number', 'هذا المشروع له رقم سابق'];
-        // ----   ----   ----   ----
-        // $success_msg = array_merge(['invoive created successfully', 'تم اضافة انشاء الفاتورة بنجاح'], $project_msg);
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $success_msg = ['invoive created successfully', 'تم اضافة انشاء الفاتورة بنجاح'];
         return redirect()->back()->with('success', $success_msg);
     }

@@ -101,23 +101,23 @@
     </tr>
     <tr>
         <th>الى:</th>
-        <td colspan="7">{{$_['owner_name']}}</td>
+        <td colspan="7">{{$invoice->beneficiary_name_ar}}</td>
     </tr>
     <tr>
         <th>العنوان:</th>
-        <td colspan="7">{{$project->get_invoice_addrees_ar()}}</td>
+        <td colspan="7">{{$invoice->beneficiary_address_ar}}</td>
     </tr>
     <tr>
         <td colspan="7">{{$project->project_name_en ?? ''}}</td>
         <th>To:</th>
     </tr>
     <tr>
-        <td colspan="7">{{$project->get_invoice_addrees_en()}}</td>
+        <td colspan="7">{{$invoice->beneficiary_address_en}}</td>
         <th>Address:</th>
     </tr>
     <tr>
         <th style="font-size: 90%;">رقم الضريبي:</th>
-        <td colspan="6">{{$project->get_invoice_vat_no()}}</td>
+        <td colspan="6">{{$invoice->VAT_account_no}}</td>
         <th>VAT NO:</th>
     </tr>
 </table> <br><br>
@@ -227,3 +227,11 @@
         <th style="font-family: consolas;">Issued By</th>
     </tr>
 </table>
+{{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
+<table class="tbl-bordered txt-center">
+    <tr>
+        <th>ملاحظات</th>
+        <td colspan="8">{{$invoice->notes}}</td>
+    </tr>
+</table>
+{{-- ------------------------------------------------------------------------------------------------------------------------------ --}}

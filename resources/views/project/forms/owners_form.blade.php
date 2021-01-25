@@ -71,7 +71,18 @@
             @include('project.forms.representative_info')
         </div>
         {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
+        <div class="card col-md my3">
+            <h3 class="card-header d-flex justify-content-between">
+                <span>beneficiaries info</span>
+                <span>بيانات المستفيدين لهذا المشروع</span>
+            </h3>
+            <div class="card-body">
+                @include('project.forms.beneficiaries_info')
+            </div>
+        </div>
+        {{-- ------------------------------------------------------------------------------------------------------------------------------ --}}
     </div>
+    <br>
     <div class="row">
         <form action="{{route('project.show', $project)}}" class="col">
             <x-btn btnText='back' />
