@@ -7,9 +7,17 @@
                 @csrf
                 <input type="hidden" name="project_id" value="{{$project->id}}">
                 <input type="hidden" name="invoice_id" value="{{$invoice->id}}">
-                <button type="submit" class="btn btn-link m-0 p-0">{{__('print')}} |
-                    <i class="fa fa-print" aria-hidden="true"></i>
-                </button>
+                <x-btn btnText='print'>
+                    <x-slot name='is_btn_link'>true</x-slot>
+                </x-btn>
+                {{-- <button type="submit" class="btn btn-link m-0 p-0">{{__('print')}} |
+                <i class="fa fa-print" aria-hidden="true"></i>
+                </button> --}}
+            </form>
+            <form action="{{route('invoice.edit',$invoice)}}" method="get">
+                <x-btn btnText='edit'>
+                    <x-slot name='is_btn_link'>true</x-slot>
+                </x-btn>
             </form>
         </span>
     </li>

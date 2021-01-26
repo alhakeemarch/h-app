@@ -384,7 +384,7 @@ class ProjectController extends Controller
             $found_plot->save();
             // -----------------------------------------------------------------
             $project->plot_id = $found_plot->id;
-            $project->$this->get_project_location($found_plot);
+            // $project->$this->get_project_location($found_plot);
             $project->last_edit_by_id = auth()->user()->id;
             $project->last_edit_by_name = auth()->user()->user_name;
             $project->save();

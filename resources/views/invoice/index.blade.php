@@ -64,7 +64,7 @@
                         @if ($invoice->is_cash)نقدي @elseif($invoice->is_credit)آجل @endif
                     </td>
                     <td class="total_price_withe_vat_input">{{$invoice->total_price_withe_vat}}</td>
-                    <td scope="link">
+                    <td scope="link" class=" text-nowrap">
                         <form action="{{route('invoice.get_pdf')}}" method="get">
                             @csrf
                             <input type="hidden" name="project_id" value="{{$invoice->project_id}}">
@@ -73,6 +73,13 @@
                                 <i class="fa fa-print" aria-hidden="true"></i>
                             </button>
                         </form>
+                        @if (auth()->user()->is_admin)
+                        <form action="{{route('invoice.edit',$invoice)}}" method="get">
+                            <x-btn btnText='edit'>
+                                <x-slot name='is_btn_link'>true</x-slot>
+                            </x-btn>
+                        </form>
+                        @endif
                     </td>
                     @php $i ++ @endphp
                 </tr>

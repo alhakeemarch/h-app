@@ -69,121 +69,13 @@ class InvoiceController extends Controller
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $invoice = new Invoice;
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
-
-        $invoice->beneficiary_row_value = $request->invoice_beneficiary;
-        if ($request->invoice_beneficiary == 'project_name_ar') {
-            $invoice->beneficiary_id = NULL;
-            $invoice->beneficiary_type = NULL;
-            $invoice->beneficiary_relation_to_project = NULL;
-            $invoice->beneficiary_name_ar = $project->project_name_ar;
-            $invoice->beneficiary_name_en = $project->project_name_en;
-            $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
-            $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
-            $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
-        }
-        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
-        $beneficiary_arr = ['|'];
-        $beneficiary_arr = explode('|', $request->invoice_beneficiary);
-        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
-        if ($beneficiary_arr[0] == 'owner') {
-            if ($beneficiary_arr[1] == 'person') {
-                $invoice->beneficiary_id = $beneficiary_arr[2];
-                $invoice->beneficiary_type = 'person';
-                $invoice->beneficiary_relation_to_project = 'owner';
-                $invoice->beneficiary_name_ar = $project->person()->first()->get_full_name_ar();
-                $invoice->beneficiary_name_en = $project->person()->first()->get_full_name_en();
-                $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
-                $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
-                $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
-            }
-            if ($beneficiary_arr[1] == 'organization') {
-                $invoice->beneficiary_id = $beneficiary_arr[2];
-                $invoice->beneficiary_type = 'organization';
-                $invoice->beneficiary_relation_to_project = 'owner';
-                $organization = Organization::find($beneficiary_arr[2]);
-                $invoice->beneficiary_name_ar = $organization->name_ar;
-                $invoice->beneficiary_name_en = $organization->name_en;
-                if ($organization->invoice_address_ar) {
-                    $invoice->beneficiary_address_ar = $organization->invoice_address_ar;
-                } elseif ($project->invoicing_address_ar) {
-                    $invoice->beneficiary_address_ar = $project->invoicing_address_ar;
-                } else {
-                    $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
-                }
-                if ($organization->invoice_address_en) {
-                    $invoice->beneficiary_address_en = $organization->invoice_address_en;
-                } elseif ($project->invoicing_address_en) {
-                    $invoice->beneficiary_address_en = $project->invoicing_address_en;
-                } else {
-                    $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
-                }
-                $invoice->beneficiary_vat_no = ($organization->VAT_account_no)
-                    ? $organization->VAT_account_no
-                    : $project->invoicing_vat_no;
-            }
-        }
-        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
-        if ($beneficiary_arr[0] == 'representative') {
-
-            $invoice->beneficiary_id = $beneficiary_arr[2];
-            $invoice->beneficiary_type = 'person';
-            $person = Person::find($beneficiary_arr[2]);
-            $invoice->beneficiary_relation_to_project = 'representative';
-            $invoice->beneficiary_name_ar = $person->get_full_name_ar();
-            $invoice->beneficiary_name_en = $person->get_full_name_en();
-            $invoice->beneficiary_address_ar = $project->invoicing_address_ar;
-            $invoice->beneficiary_address_en = $project->invoicing_address_en;
-            $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
-        }
-        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
-        if ($beneficiary_arr[0] == 'beneficiary') {
-            if ($beneficiary_arr[1] == 'person') {
-                $invoice->beneficiary_id = $beneficiary_arr[2];
-                $invoice->beneficiary_type = 'person';
-                $person = Person::find($beneficiary_arr[2]);
-                $project_beneficiary = ProjectBeneficiary::where('project_id', $project->id)->where('person_id', $beneficiary_arr[2])->first();
-                $invoice->beneficiary_relation_to_project = ($project_beneficiary->relation_to_project)
-                    ? $project_beneficiary->relation_to_project : 'beneficiary';
-                $invoice->beneficiary_name_ar = $person->get_full_name_ar();
-                $invoice->beneficiary_name_en = $person->get_full_name_en();
-                $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
-                $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
-                $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
-            }
-            if ($beneficiary_arr[1] == 'organization') {
-                $invoice->beneficiary_id = $beneficiary_arr[2];
-                $invoice->beneficiary_type = 'organization';
-                $organization = Organization::find($beneficiary_arr[2]);
-                $project_beneficiary = ProjectBeneficiary::where('project_id', $project->id)->where('organization_id', $beneficiary_arr[2])->first();
-                $invoice->beneficiary_relation_to_project = ($project_beneficiary->relation_to_project)
-                    ? $project_beneficiary->relation_to_project : 'beneficiary';
-                $invoice->beneficiary_name_ar = $organization->name_ar;
-                $invoice->beneficiary_name_en = $organization->name_en;
-                dd($project->get_invoice_addrees_ar());
-                if ($organization->invoice_address_ar) {
-                    $invoice->beneficiary_address_ar = $organization->invoice_address_ar;
-                } elseif ($project->invoicing_address_ar) {
-                    $invoice->beneficiary_address_ar = $project->invoicing_address_ar;
-                } else {
-                    $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
-                }
-                if ($organization->invoice_address_en) {
-                    $invoice->beneficiary_address_en = $organization->invoice_address_en;
-                } elseif ($project->invoicing_address_en) {
-                    $invoice->beneficiary_address_en = $project->invoicing_address_en;
-                } else {
-                    $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
-                }
-                $invoice->beneficiary_vat_no = ($organization->VAT_account_no)
-                    ? $organization->VAT_account_no
-                    : $project->invoicing_vat_no;
-            }
-        }
+        $invoice->set_beneficiary_info($invoice, $project, $request->invoice_beneficiary);
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $invoice->invoice_no = $this->get_new_invoice_no();
         $invoice->invoice_no_prefix = $date_and_time['g_year_no'];
         $invoice->project_id = $project->id;
         if ($project->person_id) $invoice->person_id = $project->person->id;
+        if ($project->organization_id) $invoice->organization_id = $project->organization_id;
         $invoice->issued_by_id = auth()->user()->id;
         if ($request->credit_or_cash == 'cash') {
             $invoice->is_credit = false;
@@ -239,6 +131,7 @@ class InvoiceController extends Controller
     public function edit(Invoice $invoice)
     {
         $this->authorize('view-any', Invoice::class);
+        return view('invoice.edit')->with(['invoice' => $invoice]);
         //
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -252,7 +145,10 @@ class InvoiceController extends Controller
     public function update(Request $request, Invoice $invoice)
     {
         $this->authorize('view-any', Invoice::class);
-        //
+        if ($request->coming_from == 'refresh_beneficiary_info') {
+            return $this->set_beneficiary_info($invoice);
+        }
+        // return $request;
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -438,6 +334,121 @@ class InvoiceController extends Controller
             'total_price_withe_vat_text' => $ar_num->money2str($invoice->total_price_withe_vat, 'SAR'),
 
         ];
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function set_beneficiary_info($invoice, $project = null, $invoice_beneficiary = null)
+    {
+        if (!$invoice_beneficiary) $invoice_beneficiary = $invoice->beneficiary_row_value;
+        if (!$project) $project = Project::find($invoice->project_id);
+        $invoice->beneficiary_row_value = $invoice_beneficiary;
+        if ($invoice_beneficiary == 'project_name_ar') {
+            $invoice->beneficiary_id = NULL;
+            $invoice->beneficiary_type = NULL;
+            $invoice->beneficiary_relation_to_project = NULL;
+            $invoice->beneficiary_name_ar = $project->project_name_ar;
+            $invoice->beneficiary_name_en = $project->project_name_en;
+            $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
+            $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
+            $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
+        }
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        $beneficiary_arr = ['|'];
+        $beneficiary_arr = explode('|', $invoice_beneficiary);
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        if ($beneficiary_arr[0] == 'owner') {
+            if ($beneficiary_arr[1] == 'person') {
+                $invoice->beneficiary_id = $beneficiary_arr[2];
+                $invoice->beneficiary_type = 'person';
+                $invoice->beneficiary_relation_to_project = 'owner';
+                $invoice->beneficiary_name_ar = $project->person()->first()->get_full_name_ar();
+                $invoice->beneficiary_name_en = $project->person()->first()->get_full_name_en();
+                $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
+                $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
+                $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
+            }
+            if ($beneficiary_arr[1] == 'organization') {
+                $invoice->beneficiary_id = $beneficiary_arr[2];
+                $invoice->beneficiary_type = 'organization';
+                $invoice->beneficiary_relation_to_project = 'owner';
+                $organization = Organization::find($beneficiary_arr[2]);
+                $invoice->beneficiary_name_ar = $organization->name_ar;
+                $invoice->beneficiary_name_en = $organization->name_en;
+                if ($organization->invoice_address_ar) {
+                    $invoice->beneficiary_address_ar = $organization->invoice_address_ar;
+                } elseif ($project->invoicing_address_ar) {
+                    $invoice->beneficiary_address_ar = $project->invoicing_address_ar;
+                } else {
+                    $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
+                }
+                if ($organization->invoice_address_en) {
+                    $invoice->beneficiary_address_en = $organization->invoice_address_en;
+                } elseif ($project->invoicing_address_en) {
+                    $invoice->beneficiary_address_en = $project->invoicing_address_en;
+                } else {
+                    $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
+                }
+                $invoice->beneficiary_vat_no = ($organization->VAT_account_no)
+                    ? $organization->VAT_account_no
+                    : $project->invoicing_vat_no;
+            }
+        }
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        if ($beneficiary_arr[0] == 'representative') {
+
+            $invoice->beneficiary_id = $beneficiary_arr[2];
+            $invoice->beneficiary_type = 'person';
+            $person = Person::find($beneficiary_arr[2]);
+            $invoice->beneficiary_relation_to_project = 'representative';
+            $invoice->beneficiary_name_ar = $person->get_full_name_ar();
+            $invoice->beneficiary_name_en = $person->get_full_name_en();
+            $invoice->beneficiary_address_ar = $project->invoicing_address_ar;
+            $invoice->beneficiary_address_en = $project->invoicing_address_en;
+            $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
+        }
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        if ($beneficiary_arr[0] == 'beneficiary') {
+            if ($beneficiary_arr[1] == 'person') {
+                $invoice->beneficiary_id = $beneficiary_arr[2];
+                $invoice->beneficiary_type = 'person';
+                $person = Person::find($beneficiary_arr[2]);
+                $project_beneficiary = ProjectBeneficiary::where('project_id', $project->id)->where('person_id', $beneficiary_arr[2])->first();
+                $invoice->beneficiary_relation_to_project = ($project_beneficiary->relation_to_project)
+                    ? $project_beneficiary->relation_to_project : 'beneficiary';
+                $invoice->beneficiary_name_ar = $person->get_full_name_ar();
+                $invoice->beneficiary_name_en = $person->get_full_name_en();
+                $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
+                $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
+                $invoice->beneficiary_vat_no = $project->invoicing_vat_no;
+            }
+            if ($beneficiary_arr[1] == 'organization') {
+                $invoice->beneficiary_id = $beneficiary_arr[2];
+                $invoice->beneficiary_type = 'organization';
+                $organization = Organization::find($beneficiary_arr[2]);
+                $project_beneficiary = ProjectBeneficiary::where('project_id', $project->id)->where('organization_id', $beneficiary_arr[2])->first();
+                $invoice->beneficiary_relation_to_project = ($project_beneficiary->relation_to_project)
+                    ? $project_beneficiary->relation_to_project : 'beneficiary';
+                $invoice->beneficiary_name_ar = $organization->name_ar;
+                $invoice->beneficiary_name_en = $organization->name_en;
+                dd($project->get_invoice_addrees_ar());
+                if ($organization->invoice_address_ar) {
+                    $invoice->beneficiary_address_ar = $organization->invoice_address_ar;
+                } elseif ($project->invoicing_address_ar) {
+                    $invoice->beneficiary_address_ar = $project->invoicing_address_ar;
+                } else {
+                    $invoice->beneficiary_address_ar = $project->get_invoice_addrees_ar();
+                }
+                if ($organization->invoice_address_en) {
+                    $invoice->beneficiary_address_en = $organization->invoice_address_en;
+                } elseif ($project->invoicing_address_en) {
+                    $invoice->beneficiary_address_en = $project->invoicing_address_en;
+                } else {
+                    $invoice->beneficiary_address_en = $project->get_invoice_addrees_en();
+                }
+                $invoice->beneficiary_vat_no = ($organization->VAT_account_no)
+                    ? $organization->VAT_account_no
+                    : $project->invoicing_vat_no;
+            }
+        }
     }
     // -----------------------------------------------------------------------------------------------------------------
 }

@@ -395,6 +395,10 @@ ALTER TABLE `invoices` ADD `project_id` BIGINT(20) UNSIGNED AFTER `invoice_no_pr
 ALTER TABLE `invoices` ADD CONSTRAINT invoices_project_id_foreign FOREIGN KEY (project_id) REFERENCES projects(id);
 ALTER TABLE `invoices` ADD `person_id` BIGINT(20) UNSIGNED AFTER `project_id`;
 ALTER TABLE `invoices` ADD CONSTRAINT invoices_person_id_foreign FOREIGN KEY (person_id) REFERENCES people(id);
+ALTER TABLE `invoices` ADD `organization_id` BIGINT(20) UNSIGNED AFTER `person_id`;
+ALTER TABLE `invoices` ADD CONSTRAINT invoices_organization_id_foreign FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
+<!-- ALTER TABLE `invoices` MODIFY COLUMN `organization_id` BIGINT(20) UNSIGNED AFTER `person_id`; -->
 
 ALTER TABLE `invoices` ADD `beneficiary_row_value` VARCHAR(191) AFTER `project_id`;
 ALTER TABLE `invoices` ADD `beneficiary_id` VARCHAR(191) AFTER `beneficiary_row_value`;
