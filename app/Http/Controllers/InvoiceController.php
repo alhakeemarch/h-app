@@ -146,7 +146,9 @@ class InvoiceController extends Controller
     {
         $this->authorize('view-any', Invoice::class);
         if ($request->coming_from == 'refresh_beneficiary_info') {
-            return $this->set_beneficiary_info($invoice);
+            $invoice = $this->set_beneficiary_info($invoice);
+            $invoice->save();
+            return redirect()->back()->withSuccess(['Beneficiary Information updated', 'تم تحديث بيانات المستفيد بنجاح']);
         }
         // return $request;
     }

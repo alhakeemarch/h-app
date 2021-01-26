@@ -11,12 +11,26 @@
         <span>edit an invoice</span>
         <span>تعديل الفواتير</span>
     </h5>
-    <div class="card-body">
+    <div class="card-body row">
+
+        <form action="{{route('invoice.update',$invoice)}}" method="post" class=" jumbotron p-3 col-md-10">
+            @csrf
+            @method('PATCH')
+            <h5 class=" form-control m-2 text-center">change invoice Beneficiary</h5>
+            <h5 class=" form-control m-2 text-center">تغير المستفيد للفاتورة</h5>
+            <input type="hidden" name="coming_from" value="inoice_edit">
+            <input type="hidden" name="coming_from" value="refresh_beneficiary_info">
+            <x-btn btnText='refresh' class="mx-2"></x-btn>
+
+        </form>
+
+
+
         <form action="{{route('invoice.update',$invoice)}}" method="post" class=" jumbotron p-3 col-md-2">
             @csrf
             @method('PATCH')
             <h5 class=" form-control m-2 text-center">Refresh invoice Beneficiary Information</h5>
-            <h5 class=" form-control m-2 text-center">تحديث بيانات المستفيد من الفاتورة</h5>
+            <h5 class=" form-control m-2 text-center">تحديث بيانات المستفيد للفاتورة</h5>
             <input type="hidden" name="coming_from" value="inoice_edit">
             <input type="hidden" name="coming_from" value="refresh_beneficiary_info">
             <x-btn btnText='refresh' class="mx-2"></x-btn>
