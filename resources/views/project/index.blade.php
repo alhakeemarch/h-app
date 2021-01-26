@@ -31,43 +31,42 @@
                         <p>project number</p>
                         <input type="text" name="project_number" id="project_no" class="form-control" autocomplete="off"
                             required placeholder="{{__( 'project Number')}}.." onfocus="this.placeholder=''"
-                            onblur="this.placeholder=' {{__( 'project Number')}}..'" onkeyup="filterNames(event)"
-                            onkeypress=" onlyNumber(event)">
+                            onblur="this.placeholder=' {{__( 'project Number')}}..'" onkeyup="filterNames(event)">
                     </th>
                     <th scope="col">
                         <p>project name</p>
                         <input type="text" id=' projectNameInput' name="project_name" class="form-control"
                             autocomplete="off" required placeholder="{{__( 'project Name')}}.."
                             onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project Name')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            onkeyup="filterNames(event)">
                     </th>
                     <th scope="col">
                         <p>project type</p>
                         <input type="text" id=' projectTypeInput' name="project_type" class="form-control"
                             autocomplete="off" required placeholder="{{__( 'project type')}}.."
                             onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project type')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            onkeyup="filterNames(event)">
                     </th>
                     <th scope="col">
                         <p>project location</p>
                         <input type="text" id=' projectLocationInput' name="project_location" class="form-control"
                             autocomplete="off" required placeholder="{{__( 'project location')}}.."
                             onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project location')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            onkeyup="filterNames(event)">
                     </th>
                     <th scope="col">
                         <p>project date</p>
                         <input type="text" id=' projectLocationInput' name="project_created_at_note"
                             class="form-control" autocomplete="off" required placeholder="{{__( 'project date')}}.."
                             onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project date')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            onkeyup="filterNames(event)">
                     </th>
                     <th scope="col">
                         <p>project notes</p>
                         <input type="text" id=' projectNotesInput' name="project_notes" class="form-control"
                             autocomplete="off" required placeholder="{{__( 'project notes')}}.."
                             onfocus="this.placeholder=''" onblur="this.placeholder=' {{__( 'project notes')}}..'"
-                            onkeyup="filterNames(event)" onkeypress=" onlyArabicString(event)">
+                            onkeyup="filterNames(event)">
                     </th>
                     <th scope="link">details</th>
                 </tr>

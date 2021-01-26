@@ -69,7 +69,7 @@ class InvoiceController extends Controller
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $invoice = new Invoice;
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
-        $invoice->set_beneficiary_info($invoice, $project, $request->invoice_beneficiary);
+        $invoice = $this->set_beneficiary_info($invoice, $project, $request->invoice_beneficiary);
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $invoice->invoice_no = $this->get_new_invoice_no();
         $invoice->invoice_no_prefix = $date_and_time['g_year_no'];
@@ -449,6 +449,7 @@ class InvoiceController extends Controller
                     : $project->invoicing_vat_no;
             }
         }
+        return $invoice;
     }
     // -----------------------------------------------------------------------------------------------------------------
 }
