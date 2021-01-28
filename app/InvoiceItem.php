@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InvoiceItem extends Model
 {
+    use SoftDeletes;
     //
     public function get_item_name_ar()
     {

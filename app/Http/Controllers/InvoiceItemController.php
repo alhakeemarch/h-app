@@ -84,9 +84,4 @@ class InvoiceItemController extends Controller
     {
         //
     }
-
-    public static function create_invoice_items(Invoice $invoice, Project $project)
-    {
-        dd($invoice, $project);
-    }
 }

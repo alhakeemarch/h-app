@@ -36,7 +36,9 @@ class InvoiceController extends Controller
     public function index()
     {
         $this->authorize('view-any', Invoice::class);
-        return view('invoice.index')->with(['invoices' => Invoice::all()->reverse()]);
+        return view('invoice.index')->with([
+            'invoices' => Invoice::all()->reverse(),
+        ]);
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -65,8 +67,6 @@ class InvoiceController extends Controller
         $project = Project::findOrFail($request->project_id);
         $date_and_time = DateAndTime::get_date_time_arr();
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
-        $beneficiaries_list = (new ProjectController)->get_project_beneficiaries($project);
-        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $invoice = new Invoice;
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $invoice = $this->set_beneficiary_info($invoice, $project, $request->invoice_beneficiary);
@@ -84,8 +84,8 @@ class InvoiceController extends Controller
             $invoice->is_credit = true;
             $invoice->is_cash = false;
         }
-        $invoice->h_date = $date_and_time['h_date_ar'];
-        $invoice->g_date = $date_and_time['g_date_ar'];
+        $invoice->h_date = $date_and_time['h_date_en'];
+        $invoice->g_date = $date_and_time['g_date_en'];
         $invoice->notes = $request->notes;
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $total_arr = $this->get_total_array($project);
@@ -131,7 +131,13 @@ class InvoiceController extends Controller
     public function edit(Invoice $invoice)
     {
         $this->authorize('view-any', Invoice::class);
-        return view('invoice.edit')->with(['invoice' => $invoice]);
+        $project = Project::find($invoice->project_id);
+        return view('invoice.edit')->with([
+            'invoice' => $invoice,
+            'beneficiaries_list' => (new ProjectController)->get_project_beneficiaries($project),
+            'project' => Project::find($invoice->project_id),
+            'project_services' => ProjectService::where('project_id', $invoice->project_id)->where('invoice_id', $invoice->id)->get(),
+        ]);
         //
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -145,10 +151,33 @@ class InvoiceController extends Controller
     public function update(Request $request, Invoice $invoice)
     {
         $this->authorize('view-any', Invoice::class);
-        if ($request->coming_from == 'refresh_beneficiary_info') {
+        if ($request->form_action == 'refresh_beneficiary_info') {
             $invoice = $this->set_beneficiary_info($invoice);
             $invoice->save();
             return redirect()->back()->withSuccess(['Beneficiary Information updated', 'تم تحديث بيانات المستفيد بنجاح']);
+        }
+        if ($request->form_action == 'edit_invoice_info') {
+            if ($invoice->beneficiary_row_value != $request->invoice_beneficiary) {
+                $invoice = $this->set_beneficiary_info($invoice, null, $request->invoice_beneficiary);
+            }
+            if ($request->credit_or_cash == 'credit') {
+                $invoice->is_credit = true;
+                $invoice->is_cash = false;
+            } else {
+                $invoice->is_credit = false;
+                $invoice->is_cash = true;
+            }
+            if ($invoice->notes != $request->notes) {
+                $invoice->notes = $request->notes;
+            }
+            $invoice_date_and_time = DateAndTime::get_date_time_arr($invoice->g_date);
+            $request_date_and_time = DateAndTime::get_date_time_arr($request->g_date);
+            if ($invoice_date_and_time['g_date_en'] != $request_date_and_time['g_date_en']) {
+                $invoice->g_date = $request_date_and_time['g_date_en'];
+                $invoice->h_date = $request_date_and_time['h_date_en'];
+            }
+            $invoice->save();
+            return redirect()->back()->withSuccess(['invoice updated Successfully', 'تم تعديل الفاتورة بنجاح']);
         }
         // return $request;
     }
@@ -171,14 +200,23 @@ class InvoiceController extends Controller
         return ($invoice->withTrashed()->get()->max('invoice_no')) + 1;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    private function get_total_array($project)
+    private function get_total_array($project, $invoice = null)
     {
-        $project_contracts = ContractController::get_project_contracts_for_invoice($project);
-        $project_services = ProjectService::where([
-            'project_id' => $project->id,
-            'is_in_invoice' => true,
-            'invoice_id' => NULL,
-        ])->get();
+        if (isset($invoice)) {
+            $project_contracts = Contract::where([
+                'invoice_id' => $invoice->id,
+            ])->get();
+            $project_services = ProjectService::where([
+                'invoice_id' => $invoice->id,
+            ])->get();
+        } else {
+            $project_contracts = ContractController::get_project_contracts_for_invoice($project);
+            $project_services = ProjectService::where([
+                'project_id' => $project->id,
+                'is_in_invoice' => true,
+                'invoice_id' => NULL,
+            ])->get();
+        }
         $total_arr = [
             'total_cost' => 0,
             'total_vat' => 0,
@@ -192,14 +230,14 @@ class InvoiceController extends Controller
             $total_arr['total_cost'] += $contract->cost;
             $total_arr['total_vat'] += $contract->vat_value;
             $total_arr['total_price_withe_vat'] += $contract->price_withe_vat;
-            $total_arr['vat_percentage'] = (int) $contract->vat_percentage;
+            $total_arr['vat_percentage'] = (float) $contract->vat_percentage;
             array_push($total_arr['contracts_id'], $contract->id);
         }
         foreach ($project_services as $service) {
             $total_arr['total_cost'] += $service->price;
             $total_arr['total_vat'] += $service->vat_value;
             $total_arr['total_price_withe_vat'] += $service->price_withe_vat;
-            $total_arr['vat_percentage'] = (int) $service->vat_percentage;
+            $total_arr['vat_percentage'] = (float) $service->vat_percentage;
             array_push($total_arr['project_services_id'], $service->id);
         }
         $ar_num  = new \App\I18N_Arabic_Numbers();
@@ -259,6 +297,26 @@ class InvoiceController extends Controller
             $project_service->save();
         }
         // --------------------- ****** --------------------- ****** ---------------------
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function re_calc_invoice($invoice)
+    {
+        $project = Project::find($invoice->project_id);
+        // ------------------------------------------------------------
+        $total_arr = (new InvoiceController)->get_total_array($project, $invoice);
+        if (count($total_arr['contracts_id']) < 1 && count($total_arr['project_services_id']) < 1) {
+            return redirect()->back()->withErrors([
+                'No Contracts Or Services available to add in invoice', 'لايوجد عقود أو خدمات متاحة للفوترة'
+            ]);
+        }
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        $invoice->total_cost = $total_arr['total_cost'];
+        $invoice->vat_percentage = $total_arr['vat_percentage'];
+        $invoice->total_vat_value = $total_arr['total_vat'];
+        $invoice->total_price_withe_vat = $total_arr['total_price_withe_vat'];
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        $invoice->last_edit_by_id = auth()->user()->id;
+        return $invoice;
     }
     // -----------------------------------------------------------------------------------------------------------------
     public function get_pdf(Request $request)
@@ -327,12 +385,12 @@ class InvoiceController extends Controller
         $ar_num  = new \App\I18N_Arabic_Numbers();
 
         return [
-            'total_cost_no' => (int)$invoice->total_cost,
+            'total_cost_no' => (float)$invoice->total_cost,
             'total_cost_text' => $ar_num->money2str($invoice->total_cost, 'SAR'),
-            'vat_percentage' => (int)$invoice->vat_percentage,
-            'total_vat_value_no' => (int)$invoice->total_vat_value,
+            'vat_percentage' => (float)$invoice->vat_percentage,
+            'total_vat_value_no' => (float)$invoice->total_vat_value,
             'total_vat_value_text' => $ar_num->money2str($invoice->total_vat_value, 'SAR'),
-            'total_price_withe_vat_no' => (int)$invoice->total_price_withe_vat,
+            'total_price_withe_vat_no' => (float)$invoice->total_price_withe_vat,
             'total_price_withe_vat_text' => $ar_num->money2str($invoice->total_price_withe_vat, 'SAR'),
 
         ];
@@ -396,7 +454,6 @@ class InvoiceController extends Controller
         }
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         if ($beneficiary_arr[0] == 'representative') {
-
             $invoice->beneficiary_id = $beneficiary_arr[2];
             $invoice->beneficiary_type = 'person';
             $person = Person::find($beneficiary_arr[2]);
@@ -431,7 +488,6 @@ class InvoiceController extends Controller
                     ? $project_beneficiary->relation_to_project : 'beneficiary';
                 $invoice->beneficiary_name_ar = $organization->name_ar;
                 $invoice->beneficiary_name_en = $organization->name_en;
-                dd($project->get_invoice_addrees_ar());
                 if ($organization->invoice_address_ar) {
                     $invoice->beneficiary_address_ar = $organization->invoice_address_ar;
                 } elseif ($project->invoicing_address_ar) {

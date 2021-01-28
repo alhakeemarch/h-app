@@ -19,6 +19,11 @@ class ProjectService extends Model
     ];
     // -----------------------------------------------------------------------------------------------------------------
 
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function invoice()
     {
         return $this->belongsTo(Invoice::class);

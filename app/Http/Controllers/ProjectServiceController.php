@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Invoice;
+use App\InvoiceItem;
 use App\ProjectService;
 use Illuminate\Http\Request;
 
@@ -72,8 +74,9 @@ class ProjectServiceController extends Controller
      * @param  \App\ProjectService  $projectService
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProjectService $projectService)
+    public function edit(Request $request, ProjectService $projectService)
     {
+        // return $request;
         return view('projectService.edit')->with(['projectService' => $projectService]);
     }
     // -----------------------------------------------------------------------------------------------------------------
@@ -86,6 +89,29 @@ class ProjectServiceController extends Controller
      */
     public function update(Request $request, ProjectService $projectService)
     {
+
+        if ($request->form_action == 'remove_item_form_invoice') {
+            $invoice = Invoice::find($projectService->invoice_id);
+            $invoice_items = InvoiceItem::where('invoice_id', $projectService->invoice_id)->get();
+            if (count($invoice_items) <= 1) {
+                return redirect()->back()->withErrors([
+                    'connot remove item , invoice cannot be witheout items!',
+                    'لا يمكن إزالة الخدمة ، الفاتورة يجب أن يكون بها على الأقل خدمة واحدة!'
+                ]);
+            }
+            $invoice_item = InvoiceItem::where('invoice_id', $projectService->invoice_id)
+                ->where('item_model', 'App\ProjectService')->where('item_model_id', $projectService->id)->first();
+            $invoice_item->notes .= '|deleted by user by ID=>' . auth()->user()->id;
+            $invoice_item->save();
+            $invoice_item->delete();
+            $projectService->invoice_id = null;
+            $projectService->is_in_invoice = null;
+            $projectService->last_edit_by_id = auth()->user()->id;
+            $projectService->save();
+            $invoice = InvoiceController::re_calc_invoice($invoice);
+            $invoice->save();
+            return redirect()->back()->withSuccess(['serveice removed from Invoice', 'تم إزالة الخدمة من الفاتورة']);
+        }
         if ($request->add_or_remove_form_quotation) {
             $projectService->is_in_quotation = !$projectService->is_in_quotation;
             $projectService->save();
@@ -96,25 +122,43 @@ class ProjectServiceController extends Controller
             $projectService->save();
             return redirect()->back();
         }
+        if ($request->form_action == 'change_project_service_values') {
+            $valed_data = $request->validate([
+                'name_ar' => 'string|required',
+                'name_en' => 'nullable|string',
+                'description' => 'nullable|string',
+                'price' => 'required|numeric',
+                'vat_percentage' => 'required|numeric',
+            ]);
 
-        $valed_data = $request->validate([
-            'name_ar' => 'string|required',
-            'name_en' => 'nullable|string',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'vat_percentage' => 'required|numeric',
-        ]);
+            $valed_data['last_edit_by_id'] = auth()->user()->id;
+            $valed_data['price'] = (float)$valed_data['price'];
+            $valed_data['vat_percentage'] = (float)$valed_data['vat_percentage'];
+            $valed_data['vat_value'] = $valed_data['price'] * $valed_data['vat_percentage'] / 100;
+            $valed_data['price_withe_vat'] = $valed_data['price'] + $valed_data['vat_value'];
+            $projectService->update($valed_data);
 
-        $valed_data['last_edit_by_id'] = auth()->user()->id;
-        $valed_data['price'] = (float)$valed_data['price'];
-        $valed_data['vat_percentage'] = (float)$valed_data['vat_percentage'];
-        $valed_data['vat_value'] = $valed_data['price'] * $valed_data['vat_percentage'] / 100;
-        $valed_data['price_withe_vat'] = $valed_data['price'] + $valed_data['vat_value'];
+            if ($projectService->invoice_id) {
+                $invoice = Invoice::find($projectService->invoice_id);
+                $invoice_item = InvoiceItem::where('invoice_id', $projectService->invoice_id)
+                    ->where('item_model', 'App\ProjectService')->where('item_model_id', $projectService->id)->first();
+                $invoice_item->item_name_ar = $valed_data['name_ar'];
+                $invoice_item->item_name_en = $valed_data['name_en'];
+                $invoice_item->description = $valed_data['description'];
+                $invoice_item->item_price = $valed_data['price'];
+                $invoice_item->item_vat_percentage = $valed_data['vat_percentage'];
+                $invoice_item->item_vat_value = $valed_data['vat_value'];
+                $invoice_item->item_price_withe_vat = $valed_data['price_withe_vat'];
+                $invoice_item->notes .= '|Edited by user by ID=>' . auth()->user()->id;
+                $invoice_item->save();
+                $invoice = InvoiceController::re_calc_invoice($invoice);
+                $invoice->save();
+                return redirect()->route('invoice.edit', $invoice)->withSuccess(['Service Edited Successfully', 'تم تعديل الخدمة بنجاح']);
+            }
+            return redirect()->back()->withSuccess(['Service Edited Successfully', 'تم تعديل الخدمة بنجاح']);
+        }
 
-        $projectService->update($valed_data);
-
-        return redirect()->route('project.show', $projectService->project_id)
-            ->with('success', 'Project Service Edited  - تم تعديل الخدمة للمشروع بنجاح');
+        return redirect()->back()->withErrors('unknown action');
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**

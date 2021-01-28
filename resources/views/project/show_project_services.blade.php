@@ -67,7 +67,7 @@
             <th>
                 {{-- .....................................................................  --}}
                 <div class="d-flex justify-content-between">
-                    @if (!($project->project_no) || auth()->user()->is_admin)
+                    @if (!($project_service->invoice_id) || auth()->user()->is_admin)
                     <form action="{{route('projectService.destroy',[$project_service->id])}}" method="post">
                         @method('DELETE')
                         @csrf
