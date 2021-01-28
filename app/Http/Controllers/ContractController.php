@@ -132,6 +132,7 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
+
         if ($request->add_or_remove_form_quotation) {
             $contract->is_in_quotation = !($contract->is_in_quotation);
             $contract->save();
@@ -144,34 +145,41 @@ class ContractController extends Controller
             return redirect()->back();
         }
         // -----------------------------------------------------------------
-        $request->validate([
-            'cost' => 'required|numeric',
-        ]);
-        // -----------------------------------------------------------------
-        $old_price = $contract->cost;
-        $new_price = $request->cost;
-        $project = Project::findOrFail($contract->project_id);
-        $edit = true;
+        if ($request->form_action == 'edit_contract_values') {
+            $request->validate([
+                'cost' => 'required|numeric',
+                'visit_fee' => 'nullable|numeric',
+                'monthly_fee' => 'nullable|numeric',
+            ]);
+            // -----------------------------------------------------------------
+            $old_price = $contract->cost;
+            $new_price = $request->cost;
+            $project = Project::findOrFail($contract->project_id);
+            $edit = true;
 
-        // -----------------------------------------------------------------
-        $contract_data = $this->get_contract_data($contract->contract_type_id, $project, $request->cost, $edit);
-        if (isset($contract_data['erorr'])) {
-            return redirect()->back()->withErrors($contract_data['erorr']);
+            // -----------------------------------------------------------------
+            $contract_data = $this->get_contract_data($contract->contract_type_id, $project, $request->cost, $edit);
+            if (isset($contract_data['erorr'])) {
+                return redirect()->back()->withErrors($contract_data['erorr']);
+            }
+            if ($request->visit_fee) $contract_data['visit_fee'] = $request->visit_fee;
+            if ($request->monthly_fee) $contract_data['monthly_fee'] = $request->monthly_fee;
+            // -----------------------------------------------------------------
+            $contract->update($contract_data);
+            // -----------------------------------------------------------------
+            // add record to db_log
+            $db_record_data = [
+                'table' => 'contracts',
+                'model' => 'Contract',
+                'model_id' => $contract->id,
+                'action' => 'update',
+                'description' => 'price of contract withe id = ' . $contract->id . 'from =' . $old_price . '=> to= ' . $new_price,
+            ];
+            DbLogController::add_record($db_record_data);
+            // -----------------------------------------------------------------
+            return redirect()->route('project.show', $project)->with('success', 'contract edited successfully - تم تعديل العقد بنجاح');
         }
-        // -----------------------------------------------------------------
-        $contract->update($contract_data);
-        // -----------------------------------------------------------------
-        // add record to db_log
-        $db_record_data = [
-            'table' => 'contracts',
-            'model' => 'Contract',
-            'model_id' => $contract->id,
-            'action' => 'update',
-            'description' => 'price of contract withe id = ' . $contract->id . 'from =' . $old_price . '=> to= ' . $new_price,
-        ];
-        DbLogController::add_record($db_record_data);
-        // -----------------------------------------------------------------
-        return redirect()->route('project.show', $project)->with('success', 'contract edited successfully - تم تعديل العقد بنجاح');
+        return redirect()->back()->withErrors(['undefined action']);
     }
     // -----------------------------------------------------------------------------------------------------------------
     /**
@@ -280,6 +288,7 @@ class ContractController extends Controller
         $newPDF::StopTransform();
         // -----------------------------------------------------------------
         $newPDF::lastPage();
+        if (env('DEVELOPMENT'))  return  $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
         $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         // -----------------------------------------------------------------
         $contract->print_count = $contract->print_count + 1;
@@ -296,7 +305,7 @@ class ContractController extends Controller
         $project = Project::findOrFail($contract->project_id);
         $office_data = OfficeData::findOrFail(1);
         $date_and_time = DateAndTime::get_date_time_arr($contract->date);
-        $pyment_arr = self::get_payment_arr($contract->cost);
+        $pyment_arr = self::get_payment_arr($contract->cost, $contract->visit_fee, $contract->monthly_fee);
         $contract_title = 'عقد تقديم خدمات إستشارات هندسية (' . $contract->contract_type()->first()->name_ar . ')';
         $pdf_view = $contract->contract_type()->first()->view_template;
         // -----------------------------------------------------------------
@@ -306,6 +315,8 @@ class ContractController extends Controller
             'date_and_time' => $date_and_time,
             'pyment_arr' => $pyment_arr,
             'contract_title' => $contract_title,
+            'contract_title' => $contract_title,
+            '_' => (new ProjectDocController)->get_doc_data($project),
         ];
         // -----------------------------------------------------------------
         // View
@@ -331,7 +342,7 @@ class ContractController extends Controller
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static function get_payment_arr($price, $visit_fee = null)
+    public static function get_payment_arr($price, $visit_fee = null, $monthly_fee = null)
     {
         $cost = round($price, 1);
         $vat_percentage = '15';
@@ -354,9 +365,13 @@ class ContractController extends Controller
         $pyment_3_vat = ceil($vat_value - ($pyment_1_vat + $pyment_2_vat));
         $pyment_3_with_vat = ceil($price_withe_vat - ($pyment_1_with_vat + $pyment_2_with_vat));
 
-        $visit_fee =  round(($visit_fee) ? $visit_fee : 1000, 1); // if no viset fee it well set as 1000 SAR
+        $visit_fee =  round(($visit_fee) ? $visit_fee : 1000, 1); // if no visit fee it well set as 1000 SAR
         $visit_fee_vat = round($visit_fee * $vat_percentage / 100, 1);
         $visit_fee_with_vat = round($visit_fee + $visit_fee_vat, 1);
+
+        $monthly_fee =  round(($monthly_fee) ? $monthly_fee : 0, 1); // if no monthly fee it well set as 0 SAR
+        $monthly_fee_vat = round($monthly_fee * $vat_percentage / 100, 1);
+        $monthly_fee_with_vat = round($monthly_fee + $monthly_fee_vat, 1);
 
         // --------------------------------------------------------------------------------------------
         // I18N_Arabic_Numbers
@@ -364,15 +379,11 @@ class ContractController extends Controller
         $cost_text = $ar_num->money2str($cost, 'SAR');
         $price_withe_vat_text = $ar_num->money2str($price_withe_vat, 'SAR');
         $visit_fee_with_vat_text = $ar_num->money2str($visit_fee_with_vat, 'SAR');
+        $monthly_fee_with_vat_text = $ar_num->money2str($monthly_fee_with_vat, 'SAR');
 
 
 
         // --------------------------------------------------------------------------------------------
-
-
-
-
-
 
 
         $pyment_arr = [];
@@ -397,6 +408,11 @@ class ContractController extends Controller
         $pyment_arr['visit_fee_vat'] = ($visit_fee_vat) ? $visit_fee_vat : null;
         $pyment_arr['visit_fee_with_vat'] = ($visit_fee_with_vat) ? $visit_fee_with_vat : null;
         $pyment_arr['visit_fee_with_vat_text'] = ($visit_fee_with_vat_text) ? $visit_fee_with_vat_text : null;
+
+        $pyment_arr['monthly_fee'] = ($monthly_fee) ? $monthly_fee : null;
+        $pyment_arr['monthly_fee_vat'] = ($monthly_fee_vat) ? $monthly_fee_vat : null;
+        $pyment_arr['monthly_fee_with_vat'] = ($monthly_fee_with_vat) ? $monthly_fee_with_vat : null;
+        $pyment_arr['monthly_fee_with_vat_text'] = ($monthly_fee_with_vat_text) ? $monthly_fee_with_vat_text : null;
 
 
         return $pyment_arr;

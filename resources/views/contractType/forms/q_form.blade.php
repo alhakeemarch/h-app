@@ -22,6 +22,29 @@
     </x-input>
 </div>
 <div class="row">
+    {{-- --------------------------------------------------------------------------------------------- --}}
+    <div class="col-md my-1">
+        <label for="has_visit_fee">{{__( 'has visit fee')}}
+            <span class="small text-muted">({{__('optional')}})</span>:</label>
+        <select name="has_visit_fee" class="form-control @error ('has_visit_fee') is-invalid @enderror" required>
+            <option value=0 selected> {{__('no')}}</option>
+            <option value=1 @if(old('has_visit_fee') or $contractType->has_visit_fee )selected @endif
+                > {{__('yes')}}</option>
+        </select>
+    </div>
+    {{-- --------------------------------------------------------------------------------------------- --}}
+    <div class="col-md my-1">
+        <label for="has_monthly_fee">{{__( 'has monthly fee')}}
+            <span class="small text-muted">({{__('optional')}})</span>:</label>
+        <select name="has_monthly_fee" class="form-control @error ('has_monthly_fee') is-invalid @enderror" required>
+            <option value=0 selected> {{__('no')}}</option>
+            <option value=1 @if(old('has_monthly_fee') or $contractType->has_monthly_fee )selected @endif
+                > {{__('yes')}}</option>
+        </select>
+    </div>
+    {{-- --------------------------------------------------------------------------------------------- --}}
+</div>
+<div class="row">
     <x-input name='notes' title="">
         <x-slot name='type'>textarea</x-slot>
         <x-slot name='title'>{{__('notes')}}</x-slot>

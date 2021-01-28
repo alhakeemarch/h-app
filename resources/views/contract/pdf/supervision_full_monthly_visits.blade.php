@@ -164,14 +164,16 @@
     </tr>
     <tr>
         <td>
-            اتفق الطرفان على أنت تكون أتعاب مرحلة التشطيب لكل زيارة طبقاً للجدول التالي تدفع قبل كل زيارة.
+            اتفق الطرفان على أنت تكون أتعاب مرحلة التشطيب زيارات للتخصصات (معماري - ميكانيكا - كهرباء) بمبلغ شهري تدفع
+            نهاية
+            كل شهر ميلادي طبقاً للتالي:
         </td>
     </tr>
 </table>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 <table class="tbl-bordered txt-center">
     <tr>
-        <th rowspan="2">قيمة كل زيارة اشراف</th>
+        <th rowspan="2">الدفعات الشهرية</th>
         <th style="padding: 35px;">المبلغ</th>
         <th style="font-size: 90%;">
             <span>ضريبة القيمة المضافة</span>
@@ -181,14 +183,14 @@
         <th>الإجمالي</th>
     </tr>
     <tr>
-        <td>{{$pyment_arr['visit_fee']}}</td>
-        <td>{{$pyment_arr['visit_fee_vat']}}</td>
-        <td>{{$pyment_arr['visit_fee_with_vat']}} لكل زيارة</td>
+        <td>{{$pyment_arr['monthly_fee']}}</td>
+        <td>{{$pyment_arr['monthly_fee_vat']}}</td>
+        <td>{{$pyment_arr['monthly_fee_with_vat']}} شهرياً</td>
     </tr>
     <tr>
         <td colspan="5" class="" style="text-align: justify;">
             <span>الاجمالي شامل ضريبة القيمة المضافة وقدره</span>
-            <span>{{$pyment_arr['visit_fee_with_vat_text'] ?? '........'}}</span>
+            <span>{{$pyment_arr['monthly_fee_with_vat_text'] ?? '........'}}</span>
             <span>فقط لا غير.</span>
         </td>
     </tr>

@@ -1,25 +1,46 @@
-<ul class="card-body list-group">
-    <li class="list-group-item">
-        <form action="{{route('contract.update',$contract)}}" method="post" class="m-0 row text-center">
-            <div class="form-group col m-0">
-                @csrf
-                @method('PATCH')
-                <div class="form-control m-0">{{$contract->contract_type()->first()->name_ar}}</div>
-            </div>
-            <div class="form-group col m-0">
-                <input type="text" name="cost" class="form-control m-0" placeholder="enter the price"
-                    onfocus="this.placeholder=''" onblur="this.placeholder='enter the price'" title="price"
-                    minlength="3" maxlength="7" onkeypress="onlyNumber(event)" autocomplete="off"
-                    value="{{$contract->cost}}">
-            </div>
-            <div class="form-group col  m-0">
-                <x-btn btnText='save' />
-            </div>
-        </form>
+<form action="{{route('contract.update',$contract)}}" method="POST">
+    @csrf
+    @method('PATCH')
+    <input type="hidden" name="coming_from" value="contract_edit">
+    <input type="hidden" name="form_action" value="edit_contract_values">
+    <div class="row">
+        {{-- -------------------------------------------------------------------------------- --}}
+        <x-input name='' title="contract name">
+            <x-slot name='input_value'>{{$contract->contract_type()->first()->name_ar}}</x-slot>
+            <x-slot name='is_disabled'>true</x-slot>
+        </x-input>
+        {{-- -------------------------------------------------------------------------------- --}}
+        <x-input name='cost' title="قيمة العقد">
+            <x-slot name='is_required'>true</x-slot>
+            <x-slot name='tooltip'>only numbers</x-slot>
+            <x-slot name='input_pattern'>([0-9.]*)</x-slot>
+            <x-slot name='input_value'>{{$contract->cost}}</x-slot>
+        </x-input>
 
-    </li>
-    <li class="list-group-item">
-        <x-form-cancel />
-    </li>
+        @if ($contract->contract_type()->first()->has_visit_fee)
+        <x-input name='visit_fee' title="قيمة الزيارة">
+            <x-slot name='tooltip'>only numbers</x-slot>
+            <x-slot name='input_pattern'>([0-9.]*)</x-slot>
+            <x-slot name='input_value'>{{$contract->visit_fee}}</x-slot>
+        </x-input>
+        @endif
+        @if ($contract->contract_type()->first()->has_monthly_fee)
+        <x-input name='monthly_fee' title="الدفعة الشهرية">
+            <x-slot name='tooltip'>only numbers</x-slot>
+            <x-slot name='input_pattern'>([0-9.]*)</x-slot>
+            <x-slot name='input_value'>{{$contract->monthly_fee}}</x-slot>
+        </x-input>
+        @endif
+        {{-- -------------------------------------------------------------------------------- --}}
+    </div>
+    <hr>
+    <div class="row">
 
-</ul>
+    </div>
+    <div class="row">
+        <x-btn btnText='ok' class="mx-2"></x-btn>
+        <div class="col-md mx-2">
+            <x-form-cancel />
+        </div>
+    </div>
+</form>

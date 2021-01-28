@@ -155,6 +155,8 @@ class ContractTypeController extends Controller
             'view_template' => 'nullable|string',
             'notes' => 'nullable|string',
             'private_notes' => 'nullable|string',
+            'has_visit_fee' => 'nullable|boolean',
+            'has_monthly_fee' => 'nullable|boolean',
         ]);
     }
     // -----------------------------------------------------------------------------------------------------------------

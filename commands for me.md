@@ -376,6 +376,8 @@ ALTER TABLE `person_titles` ADD `prefix_en` VARCHAR(191) NULL AFTER `prefix_ar`;
 
 ALTER TABLE `contract_types`ADD COLUMN `view_template` VARCHAR(191) NULL AFTER `description`;
 ALTER TABLE `contract_types` ADD `is_in_quick_add` BOOLEAN default FALSE NULL AFTER `view_template`;
+ALTER TABLE `contract_types` ADD `has_visit_fee` BOOLEAN default FALSE NULL AFTER `is_in_quick_add`;
+ALTER TABLE `contract_types` ADD `has_monthly_fee` BOOLEAN default FALSE NULL AFTER `has_visit_fee`;
 
 <!-- ------------------------------------------------------------------------ -->
 
