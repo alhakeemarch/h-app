@@ -32,7 +32,7 @@ class FileAndFolderController extends Controller
     private $emps_dir_path = '//100.0.0.6/Follow_Up/05-Employees_الموظفين';
     private $e_archive_projects_pathe = '//100.0.0.6\E-Archive/';
     private $zaid_projects_pathe = '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1441\\';
-    private $safty_project_pathe = '\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
+    private $safty_project_pathe = '\\\100.0.0.5\f$\data-server\03 - Safety Dept الدفاع المدني';
     private $central_aria_pathe = '\\100.0.0.5\f$\data-server\1-CENTRAL AREA\\';
     // -----------------------------------------------------------------------------------------------------------------
     // private $server_path = '\\100.0.0.5\f$\data-server\02-Runing-Projects\\';
@@ -312,7 +312,7 @@ class FileAndFolderController extends Controller
     public function central_area()
     {
         return redirect()->action(
-            'ProjectController@showUplodeView',
+            'FileAndFolderController@showUplodeView',
             [
                 'project_no' => 'central_area',
                 'project_name' => 'مشاريع المنطقة المركزية',
@@ -347,6 +347,7 @@ class FileAndFolderController extends Controller
         $fa = $this->get_fa_types();
         $survey = $this->get_survey_types();
 
+
         if (is_numeric($project_no) && $project_location == 'running project') {
             $project_dir = $this->running_projects_path . $project_no . ' - ' . $project_name . '\\';
         }
@@ -361,8 +362,9 @@ class FileAndFolderController extends Controller
             $project_dir = '\\' . $pathe . '\\';
         }
         if ($project_location == 'central_area') {
-            $project_dir = $this->central_aria_pathe . '_Upload';
+            $project_dir = '\\' . $this->central_aria_pathe . '_Upload' . '\\';
         }
+
         if ($project_location == 'e_archive') {
             $pathe = $this->e_archive_projects_pathe;
             $project_dir = $pathe . $project_name . '\\';
@@ -371,6 +373,8 @@ class FileAndFolderController extends Controller
         if (!isset($project_content)) {
             $project_content = ['notset' => 'doc'];
         }
+
+
 
         return view('file_and_folder.upload')->with([
             'ftp' => $this->server_ftp_path,
@@ -598,7 +602,6 @@ class FileAndFolderController extends Controller
     // -------------------------------------------------------------------------------------------------------------------
     function get_project_content($directory)
     {
-        // return $directory;
         $project_content = [];
         $doc_dir = '';
 

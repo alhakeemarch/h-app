@@ -82,7 +82,7 @@ $total_1st_payment = 0;
                 @endcan
                 <td>
                     <div class="d-flex justify-content-between">
-                        @if (!($project->project_no) && !($contract->invoice_id) || auth()->user()->is_admin)
+                        @if (!($contract->invoice_id) || auth()->user()->is_admin)
                         <form action="{{route('contract.destroy',[$contract->id])}}" method="post">
                             @method('DELETE')
                             @csrf

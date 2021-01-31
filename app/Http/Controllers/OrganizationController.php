@@ -57,8 +57,11 @@ class OrganizationController extends Controller
             'special_code' => 'nullable|string',
         ]);
         $valid_data['created_by_id'] = auth()->user()->id;
-        if ((new Organization)->find_organization($valid_data)) {
-            return redirect()->back()->withErrors(['this orgnization allredy exsist', 'هذه المنشأة مسجلة مسبقاً']);
+        $found_organization = (new Organization)->find_organization($valid_data);
+        if ($found_organization) {
+            return redirect()->back()->withErrors(['this orgnization allredy exsist', 'هذه المنشأة مسجلة مسبقاً'])->with([
+                '$found_organization' => $found_organization,
+            ]);
         }
         $organization =  Organization::create($valid_data);
         // -----------------------------------------------------------------

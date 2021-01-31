@@ -118,8 +118,11 @@
             {{__('customers')}}
         </div>
     </a>
-
-
+    <a href="{{route ('organization.index')}}">
+        <div class="sidebar-item {{ (request()->is('organization*')) ? 'active' : '' }}">
+            organization
+        </div>
+    </a>
     <a href="{{route ('plot.index')}}">
         <div class="sidebar-item {{ (request()->is('plot*')) ? 'active' : '' }}">
             {{__('plots')}}
@@ -190,6 +193,7 @@
             Branchs
         </div>
     </a>
+    @endif
     <a href="{{route ('district.index')}}">
         <div class="sidebar-item {{ (request()->is('district*')) ? 'active' : '' }}">
             districts
@@ -200,6 +204,7 @@
             neighbors
         </div>
     </a>
+    @if (auth()->user()->is_admin)
     <a href="{{route ('plan.index')}}">
         <div class="sidebar-item {{ (request()->is('plan*')) ? 'active' : '' }}">
             plans
@@ -235,11 +240,6 @@
     <a href="{{route ('company.index')}}">
         <div class="sidebar-item text-danger {{ (request()->is('company*')) ? 'active' : '' }}">
             companies
-        </div>
-    </a>
-    <a href="{{route ('organization.index')}}">
-        <div class="sidebar-item text-danger {{ (request()->is('organization*')) ? 'active' : '' }}">
-            organization
         </div>
     </a>
     <a href="{{route ('endowments.index')}}">
