@@ -120,7 +120,7 @@
     </a>
     <a href="{{route ('organization.index')}}">
         <div class="sidebar-item {{ (request()->is('organization*')) ? 'active' : '' }}">
-            organization
+            {{__('organization')}}
         </div>
     </a>
     <a href="{{route ('plot.index')}}">
