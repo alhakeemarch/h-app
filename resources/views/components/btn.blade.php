@@ -72,7 +72,7 @@ $class_list .= (isset($is_btn_link)) ? ' text-warning' : ' btn-warning';
 $btnType = 'submit';
 }
 if (in_array($btn_text, ['print']) ) {
-$btn_icon = '<i class="fas fa-print"></i>';
+$btn_icon = '<i class="fa fa-print"></i>';
 $class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
 // $on_click_action = 'show_loader()';
 $btnType = 'submit';

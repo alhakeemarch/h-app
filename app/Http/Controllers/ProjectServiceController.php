@@ -44,12 +44,13 @@ class ProjectServiceController extends Controller
             'project_id' => 'required|numeric',
             'name_ar' => 'string|required',
             'price' => 'required|numeric',
+            'vat_percentage' => 'required|numeric',
         ]);
 
         $valed_data['created_by_id'] = auth()->user()->id;
         $valed_data['date'] = date_format(now(), 'Y-m-d');
         $valed_data['price'] = (float)$valed_data['price'];
-        $valed_data['vat_percentage'] = 15;
+        // $valed_data['vat_percentage'] = 15;
         $valed_data['vat_value'] = $valed_data['price'] * $valed_data['vat_percentage'] / 100;
         $valed_data['price_withe_vat'] = $valed_data['price'] + $valed_data['vat_value'];
         $project_serveice = new ProjectService;

@@ -117,7 +117,7 @@
     </tr>
     <tr>
         <th style="font-size: 90%;">رقم الضريبي:</th>
-        <td colspan="6">{{$invoice->VAT_account_no}}</td>
+        <td colspan="6">{{$invoice->beneficiary_vat_no ?? $invoice->VAT_account_no ??''}}</td>
         <th>VAT NO:</th>
     </tr>
 </table> <br><br>

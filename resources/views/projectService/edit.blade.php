@@ -43,7 +43,6 @@
                 </x-input>
                 <x-input name='vat_percentage' title="vat_percentage">
                     <x-slot name='is_required'>true</x-slot>
-                    <x-slot name='is_readonly'>true</x-slot>
                     <x-slot name='input_value'>{{$projectService->vat_percentage}}</x-slot>
                 </x-input>
             </div>

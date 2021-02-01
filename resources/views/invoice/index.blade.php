@@ -13,34 +13,22 @@
         <span>عرض كل الفواتير</span>
     </h5>
     <div class="card-body">
-        <table class="table table-hover text-capitalize">
+        <table class="table table-hover text-capitalize text-center">
             <thead class="bg-thead">
                 <tr>
                     <th scope="sequence">#</th>
-                    <th>
-                        <p class="pb-2">التاريخ الهجري</p>
-                        {{-- <x-search_input name='h_date_input' /> --}}
-                    </th>
-                    <th>
-                        <p class="pb-2">التاريخ الميلادي</p>
-                        {{-- <x-search_input name='g_date_input' /> --}}
-                    </th>
-                    <th scope="en_ownerType">
-                        <p class="pb-2">invoice number</p>
-                        {{-- <x-search_input name='invoice_no_input' /> --}}
-                    </th>
+                    <th>التاريخ الهجري</th>
+                    <th>التاريخ الميلادي</th>
+                    <th scope="en_ownerType">invoice number</th>
                     <th scope="en_ownerType">
                         <p class="pb-2">name</p>
                         <x-search_input name='invoice_no_input' />
                     </th>
-                    <th>
-                        <p class="pb-2">cash/credit</p>
-                        {{-- <x-search_input name='invoice_cash_credit_input' /> --}}
-                    </th>
-                    <th>
-                        <p class="pb-2 text-nowrap">القيمة مع الضريبة</p>
-                        <x-search_input name='total_price_withe_vat_input' />
-                    </th>
+                    <th>cash/credit</th>
+                    <th>القيمة</th>
+                    <th>نسبة الضريبة</th>
+                    <th>قيمة الضريبة</th>
+                    <th>القيمة مع الضريبة</th>
                     <th scope="link">details</th>
                 </tr>
             </thead>
@@ -63,23 +51,26 @@
                     <td scope="invoice" class="invoice_cash_credit_input">
                         @if ($invoice->is_cash)نقدي @elseif($invoice->is_credit)آجل @endif
                     </td>
+                    <td class="total_price_withe_vat_input">{{$invoice->total_cost}}</td>
+                    <td class="total_price_withe_vat_input">{{$invoice->vat_percentage}}</td>
+                    <td class="total_price_withe_vat_input">{{$invoice->total_vat_value }}</td>
                     <td class="total_price_withe_vat_input">{{$invoice->total_price_withe_vat}}</td>
                     <td scope="link" class=" text-nowrap">
                         <form action="{{route('invoice.get_pdf')}}" method="get">
                             @csrf
                             <input type="hidden" name="project_id" value="{{$invoice->project_id}}">
                             <input type="hidden" name="invoice_id" value="{{$invoice->id}}">
-                            <button type="submit" class="btn btn-link m-0 p-0 text-nowrap">{{__('print')}} |
-                                <i class="fa fa-print" aria-hidden="true"></i>
-                            </button>
+                            <x-btn btnText='print'>
+                                <x-slot name='is_btn_link'>true</x-slot>
+                            </x-btn>
                         </form>
-                        @if (auth()->user()->is_admin)
+
                         <form action="{{route('invoice.edit',$invoice)}}" method="get">
                             <x-btn btnText='edit'>
                                 <x-slot name='is_btn_link'>true</x-slot>
                             </x-btn>
                         </form>
-                        @endif
+
                     </td>
                     @php $i ++ @endphp
                 </tr>
@@ -101,9 +92,8 @@ $obj = json_decode($invoice, TRUE);
         {{$a}} : {{$b}}
     </li>
     @endforeach
-
     <a class="btn btn-info btn-lg btn-block " href="{{ url('/invoice/'.$invoice->id) }}">
-        <i class="far fa-print"></i>
+        <i class="far fa-eye"></i>
         Show
     </a>
 </ul>
