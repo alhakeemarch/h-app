@@ -67,13 +67,13 @@ $btnType = 'submit';
 }
 if (in_array($btn_text, ['edit']) ) {
 $btn_icon = '<i class="far fa-edit"></i>';
-$class_list .= (isset($is_btn_link)) ? ' text-warning' : ' btn-warning';
+$class_list .= (isset($is_btn_link)) ? ' text-success' : ' btn-success';
 // $on_click_action = 'show_loader()';
 $btnType = 'submit';
 }
 if (in_array($btn_text, ['print']) ) {
 $btn_icon = '<i class="fa fa-print"></i>';
-$class_list .= (isset($is_btn_link)) ? ' text-info' : ' btn-info';
+$class_list .= (isset($is_btn_link)) ? ' text-primary' : ' btn-primary';
 // $on_click_action = 'show_loader()';
 $btnType = 'submit';
 }

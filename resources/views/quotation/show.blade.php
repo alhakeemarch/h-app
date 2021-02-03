@@ -12,18 +12,19 @@
                 @method('PATCH')
                 <input type="hidden" name="update_quotation_date" value='1'>
                 <input type="hidden" name="project_id" value="{{$project->id}}">
-                <button type="submit" class="btn btn-link align-self-center p-0 m-0 text-secondary"
-                    title="{{__('refresh')}}"><i class="fas fa-sync-alt"></i>
-                </button>
+                <x-btn btnText='refresh' class="m-0 p-0">
+                    <x-slot name='is_btn_link'>true</x-slot>
+                    <x-slot name='btn_only_icon'>true</x-slot>
+                </x-btn>
             </form>
             <span>&nbsp;&nbsp;&nbsp;</span>
             {{-- --------------------------------------------------------------------------------------- --}}
             <form action="{{route('quotation.edit',$quotation)}}" method="get">
                 @csrf
                 <input type="hidden" name="project_id" value="{{$project->id}}">
-                <button type="submit" class="btn btn-link m-0 p-0 text-success"><span>{{__('edit')}} |</span>
-                    <i class="far fa-edit"></i>
-                </button>
+                <x-btn btnText='edit' class="m-0 p-0">
+                    <x-slot name='is_btn_link'>true</x-slot>
+                </x-btn>
             </form>
             <span>&nbsp;&nbsp;</span>
             {{-- --------------------------------------------------------------------------------------- --}}
@@ -33,9 +34,9 @@
                 @csrf
                 <input type="hidden" name="project_id" value="{{$project->id}}">
                 {{-- <input type="hidden" name="project_doc_type_id" value="{{$project_doc->id}}"> --}}
-                <button type="submit" class="btn btn-link m-0 p-0">{{__('print')}} |
-                    <i class="fa fa-print" aria-hidden="true"></i>
-                </button>
+                <x-btn btnText='print' class="m-0 p-0">
+                    <x-slot name='is_btn_link'>true</x-slot>
+                </x-btn>
             </form>
         </span>
     </li>

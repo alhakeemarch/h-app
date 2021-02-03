@@ -36,7 +36,7 @@ $project_tame = [
         <option value="{{$employee->id}}">{{$employee->ar_name1.' '.$employee->ar_name5}}</option>
         @endforeach
     </select>
-    <button type="submit" class="btn btn-link m-0 align-self-end">{{__('add')}} |
-        <i class="far fa-plus-square"></i>
-    </button>
+    <x-btn btnText='add' class="m-0 align-self-end">
+        <x-slot name='is_btn_link'>true</x-slot>
+    </x-btn>
 </form>

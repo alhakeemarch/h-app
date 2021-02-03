@@ -92,6 +92,7 @@
 	"delete reason": "سبب الحذف",
 	"service name": "اسم الخدمة",
 	"price": "السعر",
+	
 	"supervision only": "اشراف فقط",
 	"yes": "نعم",
 	"no": "لا",
@@ -100,5 +101,22 @@
 	"person": "شخص",
 	"organization": "منشأة",
 	"beneficiary": "مستفيد",
+
+	"unified code": "الرقم الموحد",
+	"license number": "رقم الترخيص",
+	"commercial registration number": "رقم السجل التجاري",
+	"special code": "رقم مميز",
+	"headquarter": "المركز الرئيسي",
+	"issue date": "تاريخ الإصدار",
+	"end date": "تاريخ الإنتهاء",
+	"issue place": "مكان الإصدار",
+	
+	"name (Arabic)": "الإسم (عربي)",
+	"name (English)": "الإسم (انجليزي)",
+	"owner name": "اسم المالك",
+	"national id": "رقم الهوية",
+
+	"type": "نوع",
+	"organization type": "نوع المنشأة",
 	"": ""
 }

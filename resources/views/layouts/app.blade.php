@@ -46,6 +46,7 @@
     <link href="{{ asset('css/fontawesome/css/solid.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome/css/regular.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome/css/brands.css') }}" rel="stylesheet">
+    @livewireStyles
 
     @yield('head')
     <style>
@@ -81,6 +82,7 @@
         }
 
     </style>
+    <script src="{{asset('/vendor/livewire/livewire.js')}}"></script>
 </head>
 
 <body>
@@ -144,17 +146,11 @@
 
     @yield('script')
     <script>
-        // setTimeout(myFunction2(), 3000)
-        // function myFunction2() {
-        //     console.log('heeer');
-        //     window.addEventListener('load', (event) => {
-        //     add_hidden(event);
-        //     });
-        // }
 
     </script>
     <script src="{{ asset('js/loader.js') }}" defer></script>
-
+    {{-- @livewireScripts --}}
+    {{-- <script src="{{asset('/vendor/livewire/livewire.js')}}"></script> --}}
 </body>
 
 </html>

@@ -24,7 +24,7 @@
                     @csrf
                     @method('PATCH')
                     <input type="hidden" name="add_or_remove_form_quotation" value="1">
-                    <button type="submit" class="btn btn-link">
+                    <button type="submit" class="btn btn-link  p-0 m-0">
                         @if ($project_service->is_in_quotation)
                         <span class="text-success">
                             <i class="fas fa-toggle-on" title="اخفاء"></i>
@@ -39,7 +39,7 @@
             </th>
             @can('view-any', App\Invoice::class)
             {{-- .....................................................................  --}}
-            <th>
+            <th class="text-nowrap">
                 @if ($project_service->invoice_id)
                 <small>رقم الفاتورة</small>
                 <div>{{$project_service->invoice->invoice_no_prefix}} / {{$project_service->invoice->invoice_no}}
@@ -49,7 +49,7 @@
                     @csrf
                     @method('PATCH')
                     <input type="hidden" name="add_or_remove_form_invoice" value="1">
-                    <button type="submit" class="btn btn-link">
+                    <button type="submit" class="btn btn-link  p-0 m-0">
                         @if ($project_service->is_in_invoice)
                         <span class="text-success">
                             <i class="fas fa-toggle-on" title="اخفاء"></i>
@@ -66,22 +66,21 @@
             @endcan
             <th>
                 {{-- .....................................................................  --}}
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between text-nowrap">
                     @if (!($project_service->invoice_id) || auth()->user()->is_admin)
                     <form action="{{route('projectService.destroy',[$project_service->id])}}" method="post">
                         @method('DELETE')
                         @csrf
                         <input type="hidden" name="edit_needed" value="edit_price">
-                        <button type="submit" class="btn btn-link align-self-center text-danger p-0 m-0"
-                            onclick="return confirm('Are you sure?')">{{__('delet')}} |
-                            <i class="far fa-edit"></i>
-                        </button>
+                        <x-btn btnText='delete' class="m-0 p-0 mr-2" onclick="return confirm('Are you sure?')">
+                            <x-slot name='is_btn_link'>true</x-slot>
+                        </x-btn>
                     </form>
                     <form action="{{route('projectService.edit',[$project_service->id])}}" method="get">
                         <input type="hidden" name="edit_needed" value="edit_price">
-                        <button type="submit" class="btn btn-link align-self-center p-0 m-0">{{__('edit')}} |
-                            <i class="far fa-edit"></i>
-                        </button>
+                        <x-btn btnText='edit' class="m-0 p-0">
+                            <x-slot name='is_btn_link'>true</x-slot>
+                        </x-btn>
                     </form>
                     @endif
                 </div>

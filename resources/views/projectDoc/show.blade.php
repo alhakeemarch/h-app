@@ -7,9 +7,9 @@
                 @csrf
                 <input type="hidden" name="project_id" value="{{$project->id}}">
                 <input type="hidden" name="project_doc_type_id" value="{{$project_doc->id}}">
-                <button type="submit" class="btn btn-link m-0 p-0">{{__('print')}} |
-                    <i class="fa fa-print" aria-hidden="true"></i>
-                </button>
+                <x-btn btnText='print' class="m-0 p-0">
+                    <x-slot name='is_btn_link'>true</x-slot>
+                </x-btn>
             </form>
         </span>
     </li>
@@ -28,7 +28,7 @@
             @endforeach
         </select>
     </div>
-    <button type="submit" class="btn btn-link m-0 align-self-end">{{__('print')}} |
-        <i class="fa fa-print" aria-hidden="true"></i>
-    </button>
+    <x-btn btnText='print' class="m-0 p-0 align-self-end">
+        <x-slot name='is_btn_link'>true</x-slot>
+    </x-btn>
 </form>

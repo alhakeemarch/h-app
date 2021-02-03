@@ -7,12 +7,12 @@
                 @csrf
                 <input type="hidden" name="project_id" value="{{$project->id}}">
                 <input type="hidden" name="invoice_id" value="{{$invoice->id}}">
-                <x-btn btnText='print'>
+                <x-btn btnText='print' class="m-0 p-0 mr-2">
                     <x-slot name='is_btn_link'>true</x-slot>
                 </x-btn>
             </form>
             <form action="{{route('invoice.edit',$invoice)}}" method="get">
-                <x-btn btnText='edit'>
+                <x-btn btnText='edit' class="m-0 p-0">
                     <x-slot name='is_btn_link'>true</x-slot>
                 </x-btn>
             </form>

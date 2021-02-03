@@ -17,7 +17,7 @@
                     minlength="3" maxlength="7" onkeypress="onlyNumber(event)" autocomplete="off">
             </div>
             <div class="form-group col align-self-center  m-0">
-                <button type="submit" class="btn btn-primary btn-block m-0">save</button>
+                <x-btn btnText='save' />
             </div>
         </form>
     </li>
@@ -67,9 +67,9 @@
             <x-slot name='input_max'>7</x-slot>
         </x-input>
     </div>
-    <button type="submit" class="btn btn-link m-0 align-self-end">{{__('add')}} |
-        <i class="far fa-plus-square"></i>
-    </button>
+    <x-btn btnText='add' class="m-0 p-0 align-self-end">
+        <x-slot name='is_btn_link'>true</x-slot>
+    </x-btn>
 </form>
 
 

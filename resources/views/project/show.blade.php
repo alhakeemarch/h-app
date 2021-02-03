@@ -45,10 +45,9 @@
             @include('file_and_folder.project_folders_form')
             <form action="{{route('project.edit',$project->id)}}" method="get">
                 <input type="hidden" name="form_action" value="project_quick_edit">
-                <button type="submit" class="btn btn-link m-0">
-                    <span>{{__('edit')}} |</span>
-                    <i class="far fa-edit"></i>
-                </button>
+                <x-btn btnText='edit' class="m-0 p-0">
+                    <x-slot name='is_btn_link'>true</x-slot>
+                </x-btn>
             </form>
         </div>
     </div>
@@ -76,7 +75,7 @@
             class="card-footer d-flex justify-content-between">
             <input type="hidden" name="form_action" value="add_representative">
             <span class="align-self-center">المفوض أو الوكيل</span>
-            <x-btn>
+            <x-btn class="m-0 p-0">
                 <x-slot name='btnText'>add</x-slot>
                 <x-slot name='is_btn_link'>true</x-slot>
             </x-btn>
@@ -86,7 +85,7 @@
         <div class="card-footer d-flex justify-content-end">
             <form action="{{route('project.edit',$project->id)}}" method="get">
                 <input type="hidden" name="form_action" value="show_edit_owner_info_form">
-                <x-btn>
+                <x-btn class="m-0 p-0">
                     <x-slot name='btnText'>edit</x-slot>
                     <x-slot name='is_btn_link'>true</x-slot>
                 </x-btn>
@@ -106,10 +105,9 @@
         <div class=" card-footer d-flex justify-content-end m-0">
             <form action="{{route('plot.edit',$project->plot()->first())}}" method="get">
                 <input type="hidden" name="from_project" value="1">
-                <button type="submit" class="btn btn-link m-0">
-                    <span>edit |</span>
-                    <i class="far fa-edit"></i>
-                </button>
+                <x-btn btnText='edit' class="m-0 p-0">
+                    <x-slot name='is_btn_link'>true</x-slot>
+                </x-btn>
             </form>
         </div>
         @else
@@ -179,7 +177,9 @@
         </div>
         <div class="card-body p-0 py-1">
             {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
-            @include('project.show_project_contracts')
+            {{-- @include('project.show_project_contracts') --}}
+            @livewire('project.show-project-contracts',['project' => $project])
+            @include('project.show_project_services')
             {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
             @include('contract.forms.q_form')
             {{-- ------------------------------------------------------------------------------------------------------------------------- --}}

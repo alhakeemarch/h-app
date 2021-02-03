@@ -55,18 +55,18 @@
                     <td class="total_price_withe_vat_input">{{$invoice->vat_percentage}}</td>
                     <td class="total_price_withe_vat_input">{{$invoice->total_vat_value }}</td>
                     <td class="total_price_withe_vat_input">{{$invoice->total_price_withe_vat}}</td>
-                    <td scope="link" class=" text-nowrap">
+                    <td scope="link" class=" text-nowrap d-flex">
                         <form action="{{route('invoice.get_pdf')}}" method="get">
                             @csrf
                             <input type="hidden" name="project_id" value="{{$invoice->project_id}}">
                             <input type="hidden" name="invoice_id" value="{{$invoice->id}}">
-                            <x-btn btnText='print'>
+                            <x-btn btnText='print' class="p-0 mr-2">
                                 <x-slot name='is_btn_link'>true</x-slot>
                             </x-btn>
                         </form>
 
                         <form action="{{route('invoice.edit',$invoice)}}" method="get">
-                            <x-btn btnText='edit'>
+                            <x-btn btnText='edit' class="p-0">
                                 <x-slot name='is_btn_link'>true</x-slot>
                             </x-btn>
                         </form>
