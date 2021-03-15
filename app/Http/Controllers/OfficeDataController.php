@@ -47,7 +47,8 @@ class OfficeDataController extends Controller
      */
     public function show(OfficeData $officeData)
     {
-        //
+        $officeData = OfficeData::first();
+        return view('officeData.show')->with(['office_data' => $officeData]);
     }
 
     /**
