@@ -120,7 +120,38 @@ class OrganizationController extends Controller
      */
     public function update(Request $request, Organization $organization)
     {
-        return 'this is Organization update';
+        $valid_data = $request->validate([
+            'organization_type_id' => 'nullable|numeric',
+            'unified_code' => 'nullable|string',
+            'license_number' => 'nullable|string',
+            'commercial_registration_no' => 'nullable|string',
+            'special_code' => 'nullable|string',
+            'name_ar' => 'nullable|string',
+            'name_en' => 'nullable|string',
+            'owner_name' => 'nullable|string',
+            'owner_national_id' => 'nullable|numeric',
+            'authorised_person_name' => 'nullable|string',
+            'headquarter' => 'nullable|string',
+            'issue_date' => 'nullable|string',
+            'end_date' => 'nullable|string',
+            'issue_place' => 'nullable|string',
+            'is_primary_commercial_registration' => 'nullable|boolean',
+            'chamber_of_commerce_id' => 'nullable|string',
+            'VAT_account_no' => 'nullable|numeric',
+            'invoice_address_ar' => 'nullable|string',
+            'invoice_address_en' => 'nullable|string',
+            'POBox_no' => 'nullable|numeric',
+            'zip_code' => 'nullable|numeric',
+            'main_phone' => 'nullable|numeric',
+            'fax_no' => 'nullable|numeric',
+            'notes' => 'nullable|string',
+            'private_notes' => 'nullable|string',
+        ]);
+        $valid_data['last_edit_by_id'] = auth()->user()->id;
+        $organization->update($valid_data);
+        return redirect()->route('organization.show', $organization->id)
+            ->withSuccess(['organization Edited successfully', 'تم تعديل بيانات المنشأة بنجاح']);
+        // return 'this is Organization update';
     }
     // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**

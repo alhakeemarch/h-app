@@ -7,7 +7,9 @@
         <span>edit an organization</span>
         <span>تعديل بيانات المنشأة</span>
     </h5>
-    <form class="card-body">
+    <form class="card-body" action="{{route('organization.update',$organization)}}" method="POST">
+        @csrf
+        @method('PUT')
         <div class="row">
             <x-input name='id' title="id">
                 <x-slot name='is_disabled'>true</x-slot>
@@ -20,7 +22,6 @@
                 <x-slot name='is_required'>true</x-slot>
             </x-select_searchable>
         </div>
-        <hr>
         <div class="row">
             <x-input name='unified_code' title="{{__('unified code')}}">
                 <x-slot name='input_value'>{{$organization->unified_code}}</x-slot>
@@ -35,7 +36,7 @@
                 <x-slot name='input_value'>{{$organization->special_code}}</x-slot>
             </x-input>
         </div>
-        <hr>
+
         <div class="row">
             <x-input name='name_ar' title="{{__('name (Arabic)')}}">
                 <x-slot name='input_value'>{{$organization->name_ar}}</x-slot>
@@ -44,7 +45,24 @@
                 <x-slot name='input_value'>{{$organization->name_en}}</x-slot>
             </x-input>
         </div>
-        <hr>
+        <div class="row">
+            <x-input name='headquarter' title="{{__('headquarter')}}">
+                <x-slot name='input_value'>{{$organization->headquarter}}</x-slot>
+            </x-input>
+            <x-input name='issue_date' title="{{__('issue date')}}">
+                <x-slot name='input_value'>{{$organization->issue_date}}</x-slot>
+            </x-input>
+            <x-input name='end_date' title="{{__('end date')}}">
+                <x-slot name='input_value'>{{$organization->end_date}}</x-slot>
+            </x-input>
+            <x-input name='issue_place' title="{{__('issue place')}}">
+                <x-slot name='input_value'>{{$organization->issue_place}}</x-slot>
+            </x-input>
+        </div>
+        <div class="border-bottom border-primary d-flex justify-content-between">
+            <span>Owner info</span>
+            <span>بيانات المالك</span>
+        </div>
         <div class="row">
             <x-input name='owner_name' title="{{__('owner name')}}">
                 <x-slot name='input_value'>{{$organization->owner_name}}</x-slot>
@@ -60,23 +78,19 @@
             </x-input>
         </div>
         <hr>
+        <div class="border-bottom border-primary d-flex justify-content-between">
+            <span>address info</span>
+            <span>العنوان</span>
+        </div>
         <div class="row">
-            <x-input name='headquarter' title="{{__('headquarter')}}">
-                <x-slot name='input_value'>{{$organization->headquarter}}</x-slot>
+            <x-input name='invoice_address_ar' title="invoice_address_ar">
+                <x-slot name='input_value'>{{$organization->invoice_address_ar}}</x-slot>
             </x-input>
-            <x-input name='issue_date' title="{{__('issue date')}}">
-                <x-slot name='input_value'>{{$organization->issue_date}}</x-slot>
-            </x-input>
-            <x-input name='end_date' title="{{__('end date')}}">
-                <x-slot name='input_value'>{{$organization->end_date}}</x-slot>
-            </x-input>
-            <x-input name='issue_place' title="{{__('issue place')}}">
-                <x-slot name='input_value'>{{$organization->issue_place}}</x-slot>
+            <x-input name='invoice_address_en' title="invoice_address_en">
+                <x-slot name='input_value'>{{$organization->invoice_address_en}}</x-slot>
             </x-input>
         </div>
-        <hr>
         <div class="row">
-
             <x-input name='is_primary_commercial_registration' title="is_primary_commercial_registration">
                 <x-slot name='input_value'>{{$organization->is_primary_commercial_registration}}</x-slot>
             </x-input>
@@ -90,7 +104,6 @@
                 <x-slot name='input_value'>{{$organization->VAT_account_no}}</x-slot>
             </x-input>
         </div>
-        <hr>
         <div class="row">
             <x-input name='POBox_no' title="POBox_no">
                 <x-slot name='input_value'>{{$organization->POBox_no}}</x-slot>
@@ -106,6 +119,10 @@
             </x-input>
         </div>
         <hr>
+        <div class="border-bottom border-primary d-flex justify-content-between">
+            <span>notes</span>
+            <span>الملاحظات</span>
+        </div>
         <div class="row">
             <x-input name='notes' title="notes">
                 <x-slot name='type'>textarea</x-slot>
