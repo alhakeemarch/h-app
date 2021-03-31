@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Welcom view')
+@section('title','Hakeem-App')
 @section('content')
 
 <div class="card">

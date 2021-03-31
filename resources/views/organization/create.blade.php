@@ -10,11 +10,10 @@
     <div class="card-body">
         <form class="form-group" action="{{route('organization.store')}}" method="POST">
             @csrf
-            @if ($comming_from)
-            <input type="hidden" name="coming_from" value="{{$comming_from}}">
-            @endif
-            <input type="hidden" name="form_action" value="create_new_organization">
-            @include('organization.forms.q_form')
+            <x-input name='asd' title="">
+                <x-slot name='is_required'>true</x-slot>
+                {{-- <x-slot name='input_value'>{{$person->ar_name1}}</x-slot> --}}
+            </x-input>
             <x-btn btnText='next' />
         </form>
     </div>

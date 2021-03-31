@@ -78,6 +78,8 @@
 	"project manager": "مدير المشروع",
 	"status": "الحالة",
 	"edit": "تعديل",
+	"upload": "رفع",
+	"download": "تنزيل",
 	"print": "طباعة",
 	"delet": "حذف",
 	"customers": "العملاء",
@@ -118,5 +120,6 @@
 
 	"type": "نوع",
 	"organization type": "نوع المنشأة",
+	"Please select file": "الرجاء إختيار ملف",
 	"": ""
 }

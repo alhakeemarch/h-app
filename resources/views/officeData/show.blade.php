@@ -43,13 +43,16 @@
         </table>
     </div>
     <hr>
+    @can('view-any', App\OfficeDoc::class)
     <h3 class="card-header d-flex justify-content-between">
-        <span>office documents</span>
+        <span>Office documents</span>
+        <span>Total = {{count($office_docs)}}</span>
         <span>مستندات المكتب</span>
     </h3>
     <div class="card-body">
-
+        @include('officeDoc.index')
     </div>
+    @endcan
 
 </div><!-- /End of card  -->
 

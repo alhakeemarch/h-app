@@ -240,6 +240,7 @@ php artisan make:policy PersonPolicy -m Person
 php artisan make:policy CountryPolicy -m Country
 php artisan make:policy ProjectPolicy -m Project
 php artisan make:policy InvoicePolicy -m Invoice
+php artisan make:policy OfficeDocPolicy -m OfficeDoc
 
 \\ in class function
 $this->authorize('viewAny', $person);
@@ -464,6 +465,8 @@ ALTER TABLE `organizations` ADD `organization_type_id` BIGINT(20) UNSIGNED NULL 
 ALTER TABLE `organizations` ADD CONSTRAINT organizations_organization_type_id_foreign FOREIGN KEY (organization_type_id) REFERENCES organization_types(id);
 ALTER TABLE `organizations` ADD `invoice_address_ar` varchar(191) NULL AFTER `VAT_account_no`;
 ALTER TABLE `organizations` ADD `invoice_address_en` varchar(191) NULL AFTER `invoice_address_ar`;
+
+ALTER TABLE `office_docs` ADD UNIQUE (id);
 
 <!-- ------------------------------------------------------------------------ -->
 

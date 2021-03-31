@@ -474,6 +474,7 @@ Route::resources([
 
     //  جداول لحفظ الداتا
     'officeData' => 'OfficeDataController',
+    'officeDoc' => 'OfficeDocController',
     'country' => 'CountryController',
     'country' => 'CountryController',
     'saudiCity' => 'SaudiCityController',

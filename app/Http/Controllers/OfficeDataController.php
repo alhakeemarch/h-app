@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\OfficeData;
+use App\OfficeDoc;
 use Illuminate\Http\Request;
 
 class OfficeDataController extends Controller
@@ -48,7 +49,11 @@ class OfficeDataController extends Controller
     public function show(OfficeData $officeData)
     {
         $officeData = OfficeData::first();
-        return view('officeData.show')->with(['office_data' => $officeData]);
+        $office_docs = OfficeDoc::where('office_data_id', $officeData->id)->get();
+        return view('officeData.show')->with([
+            'office_data' => $officeData,
+            'office_docs' => $office_docs,
+        ]);
     }
 
     /**

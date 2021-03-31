@@ -165,12 +165,12 @@
             <i class="fas fa-caret-down d-none"></i>
         </div>
     </a>
-    @if(auth()->user()->is_admin)
-    <a class="" href="{{route ('officeData.index')}}">
+    <a class="" href="{{route ('officeData.show',1)}}">
         <div class="sidebar-item {{ (request()->is('officeData*')) ? 'active' : '' }}">
             office data
         </div>
     </a>
+    @if(auth()->user()->is_admin)
     <a class="" href="{{route ('contractType.index')}}">
         <div class="sidebar-item {{ (request()->is('contractType*')) ? 'active' : '' }}">
             {{__('contract types')}}
