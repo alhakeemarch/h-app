@@ -11,6 +11,17 @@ use Illuminate\Http\Request;
 class OfficeDocController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->middleware('active_user');
+    }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -19,7 +30,7 @@ class OfficeDocController extends Controller
     {
         //
     }
-
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
      * Show the form for creating a new resource.
      *
@@ -29,7 +40,7 @@ class OfficeDocController extends Controller
     {
         //
     }
-
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
      * Store a newly created resource in storage.
      *
@@ -56,7 +67,7 @@ class OfficeDocController extends Controller
         $office_document = OfficeDoc::create($valed_data);
         return redirect()->back()->with('success', ['document added', 'تم اضافة المستند بنجاح']);
     }
-
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
      * Display the specified resource.
      *
@@ -67,7 +78,7 @@ class OfficeDocController extends Controller
     {
         //
     }
-
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
      * Show the form for editing the specified resource.
      *
@@ -87,7 +98,7 @@ class OfficeDocController extends Controller
             return view('officeDoc.edit')->with(['officeDoc' => $officeDoc]);
         }
     }
-
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
      * Update the specified resource in storage.
      *
@@ -97,8 +108,7 @@ class OfficeDocController extends Controller
      */
     public function update(Request $request, OfficeDoc $officeDoc)
     {
-        // dd($request->form_action);
-
+        // ---------------------------------------------------------------------------------------
         if ($request->form_action == 'update_office_doc_info') {
             $valed_data = $request->validate([
                 'number' => 'required|string',
@@ -117,7 +127,7 @@ class OfficeDocController extends Controller
             return redirect()->action('OfficeDataController@show', $officeDoc->office_data_id)
                 ->withSuccess(['document info updated successfully', 'تم تحديث بيانات المسنتد بنجاح']);
         }
-        // ---------------------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------
         if ($request->form_action == 'upload_office_doc') {
             $request->validate([
                 'file_input' => ['required', new ValidFileSize, new ValidDocType],
@@ -166,9 +176,9 @@ class OfficeDocController extends Controller
             return $officeDoc;
             return $request;
         }
-        // ---------------------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------
     }
-
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
     /**
      * Remove the specified resource from storage.
      *
@@ -177,9 +187,18 @@ class OfficeDocController extends Controller
      */
     public function destroy(OfficeDoc $officeDoc)
     {
-        //
+        if ($officeDoc->full_url) {
+            try {
+                copy($officeDoc->full_url, $officeDoc->base_url . '__old\\' . '_deleted_' . $officeDoc->doc_name);
+                unlink($officeDoc->full_url);
+            } catch (\Throwable $th1) {
+                return redirect()->back()->withErrors(['error', $th1->getMessage()]);
+            }
+        }
+        $officeDoc->delete();
+        return redirect()->back()->withSuccess(['Document deleted', 'تم حذف المستند']);
     }
-
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
     private function download_office_doc($officeDoc)
     {
         $headers = ['Content-Type: application/zip'];
@@ -198,4 +217,5 @@ class OfficeDocController extends Controller
             ]);
         }
     }
+    // ------------------------------------------------------------------------------------------------------------------------------------- 
 }
