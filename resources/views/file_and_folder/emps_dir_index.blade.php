@@ -269,11 +269,13 @@
                 <tbody>
                     @php $i=1 @endphp
                     @foreach ($other as $id => $name)
+
                     <tr>
                         <td scope="row">{{$i}}</td>
                         <td class="other_national_id">{{$id}}</td>
                         <td class="other_name">{{$name}}</td>
                         <td scope="link">
+                            @if (! strpos($name, '.'))
                             <form action="{{ route('file_folder.show_emp_dir') }}" method="get">
                                 @csrf
                                 <input type="hidden" name="id" value="{{$id}}">
@@ -283,6 +285,7 @@
                                     <i class="far fa-eye"></i>
                                 </button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                     @php $i ++ @endphp

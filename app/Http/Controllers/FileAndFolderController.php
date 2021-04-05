@@ -194,7 +194,6 @@ class FileAndFolderController extends Controller
             $dir_path = $main_emps_dir . '/' . $request->id . '-' . $request->name;
         }
         $dir_content = array_diff(scandir($dir_path), array('..', '.'));
-        // return $dir_content;
 
         return view('file_and_folder.emp_dir_show')->with([
             'dir_content' => $dir_content,
@@ -529,6 +528,7 @@ class FileAndFolderController extends Controller
     {
         $file_name = $request->file_name;
         $dir_name = $request->dir_name;
+        $project_location = '';
         $project_no = (is_numeric($request->project_no)) ? $request->project_no : false;
         if ($request->project_location == 'running project') {
             $project_location = $this->running_projects_path;
@@ -542,8 +542,6 @@ class FileAndFolderController extends Controller
         if ($request->project_location == 'e_archive') {
             $project_location = $this->e_archive_projects_pathe;
         }
-        $headers = ['Content-Type: application/zip'];
-
         if ($project_no) {
             $path_to_file = $project_location  . $project_no . ' - ' . $dir_name . '/' . $file_name;
         } elseif ($request->project_location == 'safty') {
@@ -551,7 +549,10 @@ class FileAndFolderController extends Controller
         } else {
             $path_to_file = $project_location  . $dir_name . '/' . $file_name;
         }
-
+        if ($request->project_location == 'emp_dir') {
+            $path_to_file = $request->dir_path . '/' . $request->file_name;
+        }
+        $headers = ['Content-Type: application/zip'];
         try {
             return response()->download($path_to_file, $file_name, $headers);
         } catch (\Throwable $th) {

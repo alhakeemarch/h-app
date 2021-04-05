@@ -18,7 +18,7 @@ class InvoicePolicy
      */
     public function viewAny(User $user)
     {
-        $users_allowed = [1, 2, 28, 27];
+        $users_allowed = [1, 2, 28, 27, 30];
         if (in_array(auth()->user()->id, $users_allowed)) {
             return true;
         } else {

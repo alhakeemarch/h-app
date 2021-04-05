@@ -105,6 +105,16 @@ class InvoiceController extends Controller
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $this->create_invoice_items($total_arr['contracts_id'], $total_arr['project_services_id'], $invoice->id);
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        // add record to db_log
+        $db_record_data = [
+            'table' => 'invoices',
+            'model' => 'Invoice',
+            'model_id' => $invoice->id,
+            'action' => 'create',
+            'description' => 'new invoice created',
+        ];
+        DbLogController::add_record($db_record_data);
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $success_msg = ['invoive created successfully', 'تم اضافة انشاء الفاتورة بنجاح'];
         return redirect()->back()->with('success', $success_msg);
     }
@@ -177,6 +187,17 @@ class InvoiceController extends Controller
                 $invoice->h_date = $request_date_and_time['h_date_en'];
             }
             $invoice->save();
+            // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+            // add record to db_log
+            $db_record_data = [
+                'table' => 'invoices',
+                'model' => 'Invoice',
+                'model_id' => $invoice->id,
+                'action' => 'update',
+                'description' => 'invoice edited',
+            ];
+            DbLogController::add_record($db_record_data);
+            // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
             return redirect()->back()->withSuccess(['invoice updated Successfully', 'تم تعديل الفاتورة بنجاح']);
         }
         // return $request;
