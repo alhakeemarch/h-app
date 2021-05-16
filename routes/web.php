@@ -411,6 +411,7 @@ Route::group(['prefix' => 'contract'], function () {
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'file_folder'], function () {
+    Route::any('', 'FileAndFolderController@index')->name('file_folder.index');
     Route::any('uploadFile', 'FileAndFolderController@uploadFile')->name('file_folder.uploadFile');
     Route::any('runningProjects', 'FileAndFolderController@runningProjects')->name('file_folder.runningProjects');
     Route::any('finshedProjects', 'FileAndFolderController@finshedProjects')->name('file_folder.finshedProjects');

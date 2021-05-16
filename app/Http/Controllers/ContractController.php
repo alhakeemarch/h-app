@@ -166,6 +166,8 @@ class ContractController extends Controller
             if ($request->monthly_fee) $contract_data['monthly_fee'] = $request->monthly_fee;
             // -----------------------------------------------------------------
             $contract->update($contract_data);
+
+            $this->re_render_contract($request);
             // -----------------------------------------------------------------
             // add record to db_log
             $db_record_data = [

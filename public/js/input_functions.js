@@ -333,6 +333,7 @@ function filterSidebar(event) {
 // ================================
 function show_side_bar(event) {
     let sidebar = document.getElementById('sidebar');
+    document.querySelector('.show_side_bar_btn').classList.remove('pulse');
 
     if (sidebar.classList.contains('active-side-bar')) {
         sidebar.classList.remove('active-side-bar');

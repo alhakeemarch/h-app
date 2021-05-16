@@ -99,7 +99,12 @@
             <span>بموجب الصك رقم</span>
             <span>{{$_['deed_no']}}</span>
             <span>وتاريخ</span>
-            <span>{{$_['deed_date']}}</span>.
+            <span>{{$_['deed_date']}}</span>
+            @if ($_['required_use'] ?? false)
+            <span>والذي ترغبون بإنشاء مشروع</span>
+            <span>({{$_['required_use']}})</span>
+            @endif
+            <span>.</span>
         </td>
     </tr>
     <tr>
@@ -121,7 +126,17 @@
     @foreach ($project_contracts as $contract)
     <tr>
         <td>{{$n}}</td>
-        <td colspan="6">{{$contract->contract_type->name_ar}}</td>
+        <td colspan="6">{{$contract->contract_type->name_ar}}
+            @if ($contract->monthly_fee ?? false)
+            <div class="txt-center">
+                <small>
+                    <span>الدفعات الشهرية</span>
+                    ({{intval($contract->monthly_fee)}}) <span>ريال</span>
+                    <span>تضاف لها الضريبة عند التعاقد</span>
+                </small>
+            </div>
+            @endif
+        </td>
         <td colspan="2">{{$contract->cost}}</td>
         <td colspan="2">{{$contract->vat_value}}</td>
         <td colspan="2">{{$contract->price_withe_vat}}</td>
@@ -160,6 +175,7 @@
     <tr>
         <td>
             <ul>
+                {{-- <li>قيمة الزيارات الشهرية للتشطيب لعقد الإشراف 10000 ريال شهرياً.</li> --}}
                 <li>يجب توقيع عقود للخدمات المتفق عليها ولا يعتد بعرض السعر.</li>
                 <li>مدة هذا العرض عشرة أيام من تاريخه.</li>
                 <li>لا يشمل العرض أي رسوم تدفع لأي جهة حكومية أو خاصة.</li>

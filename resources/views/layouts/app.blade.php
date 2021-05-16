@@ -99,6 +99,33 @@
 
         }
 
+        .pulse {
+            animation: pulse-animation 2s infinite ease-in-out;
+
+        }
+
+        @keyframes pulse-animation {
+            0% {
+                box-shadow: 0 0 0 0px rgba(61, 81, 255, 0.2);
+            }
+
+            25% {
+                box-shadow: 0 0 0 20px rgba(61, 81, 255, 0);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(61, 81, 255, 0);
+            }
+
+            75% {
+                box-shadow: 0 0 0 15px rgba(61, 81, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 20px rgba(61, 81, 255, 0);
+            }
+        }
+
     </style>
     <script src="{{asset('/vendor/livewire/livewire.js')}}"></script>
 </head>
@@ -115,6 +142,7 @@
         </header>
         {{-- -------------------------------------------------------------------------------------------------- --}}
         <main>
+
             {{-- ----------------------------------------------------------- --}}
             <section class="sidebar" id="sidebar">
                 @auth
@@ -126,7 +154,7 @@
             {{-- ----------------------------------------------------------- --}}
             <section id="app" class="app container-fluid">
                 @auth
-                <a class="show_side_bar_btn" onclick="show_side_bar(event)"><i class="fas fa-sliders-h"></i></a>
+                <a class="show_side_bar_btn pulse" onclick="show_side_bar(event)"><i class="fas fa-sliders-h"></i></a>
                 @endauth
                 <!-- ///////////////////////////////-->
                 @if ($errors->any())
@@ -137,7 +165,9 @@
                 @include('layouts.success')
                 @endif
                 <!-- ///////////////////////////////-->
-
+                @auth
+                @include('layouts.breadcrumb_nav')
+                @endauth
                 @yield('content')
             </section>
             {{-- ----------------------------------------------------------- --}}
@@ -170,6 +200,7 @@
     <script src="{{ asset('js/loader.js') }}" defer></script>
     {{-- @livewireScripts --}}
     {{-- <script src="{{asset('/vendor/livewire/livewire.js')}}"></script> --}}
+
 </body>
 
 </html>

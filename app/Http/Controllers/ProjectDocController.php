@@ -345,6 +345,9 @@ class ProjectDocController extends Controller
             $_['project_manager_job_title'] = $project->project_manager->job_title;
         }
         // -----------------------------------------------------
+        $_['required_use'] = $project->project_type;
+
+        // -----------------------------------------------------
         return $_;
         // -----------------------------------------------------
     }

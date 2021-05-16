@@ -3,6 +3,7 @@
     @method('PATCH')
     <input type="hidden" name="coming_from" value="contract_edit">
     <input type="hidden" name="form_action" value="edit_contract_values">
+    <input type="hidden" name="contract_id" value="{{$contract->id}}">
     <div class="row">
         {{-- -------------------------------------------------------------------------------- --}}
         <x-input name='' title="contract name">

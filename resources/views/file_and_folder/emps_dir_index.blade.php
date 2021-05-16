@@ -1,4 +1,4 @@
-{{-- {{dd('1')}} --}}
+{{-- {{dd($saudi_emps)}} --}}
 @extends('layouts.app')
 @section('title', 'emps dir index')
 

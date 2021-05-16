@@ -58,6 +58,11 @@ class FileAndFolderController extends Controller
         // $this->middleware('active_user');
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function index()
+    {
+        return view('file_and_folder.index');
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public function delete_file(Request $request)
     {
         // dd($request);
@@ -193,7 +198,10 @@ class FileAndFolderController extends Controller
             $dir_name = $request->id . '-' . $request->name;
             $dir_path = $main_emps_dir . '/' . $request->id . '-' . $request->name;
         }
+
         $dir_content = array_diff(scandir($dir_path), array('..', '.'));
+
+
 
         return view('file_and_folder.emp_dir_show')->with([
             'dir_content' => $dir_content,
