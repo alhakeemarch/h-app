@@ -159,7 +159,7 @@
         <td colspan="2">للجدران</td>
         <td colspan="2">{{$azel_data['walls_value']}}</td>
         <td colspan="2">للسقف</td>
-        <td colspan="2">{{$azel_data['walls_value']}}</td>
+        <td colspan="2">{{$azel_data['ceiling_value']}}</td>
         <td colspan="2">للزجاج</td>
         <td colspan="3">{{$azel_data['window_value']}}</td>
     </tr>

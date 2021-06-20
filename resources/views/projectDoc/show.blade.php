@@ -1,4 +1,17 @@
 <ul class="list-group">
+    @if (auth()->user()->is_admin)
+
+    <form action="{{route('projectDoc.get_pdf')}}" method="get"
+        class="list-group-item d-flex justify-content-between align-items-center">
+        @csrf
+        <input type="hidden" name="form_action" value="get_all_docs">
+        <input type="hidden" name="project_id" value="{{$project->id}}">
+        <span>{{__('all documnts')}}</span>
+        <x-btn btnText='download' class="m-0 p-0">
+            <x-slot name='is_btn_link'>true</x-slot>
+        </x-btn>
+    </form>
+    @endif
     @foreach ($project_docs as $project_doc)
     <li class="list-group-item d-flex justify-content-between">
         <span class=" align-self-center">{{$project_doc->name_ar}}</span>

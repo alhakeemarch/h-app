@@ -9,9 +9,14 @@ use App\ProjectDocType;
 use Carbon\Carbon;
 use Elibyy\TCPDF\Facades\TCPDF as TCPDF;
 use \Illuminate\Support\Facades\View;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+
+
+use ZipArchive;
+use File;
+
+
 
 use function PHPSTORM_META\override;
 
@@ -193,10 +198,123 @@ class ProjectDocController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function get_pdf(Request $request)
     {
+        // -----------------------------------------------------------------
+        if ($request->form_action == 'get_all_docs') {
+
+
+            $dir    = 'D:\temp\\';
+
+
+            $files1 = array_diff(scandir($dir), array('..', '.'));
+            if (!extension_loaded('zip')) {
+                return redirect()->back()->withErrors(['zip not loaded.. ', 'contact system administrator']);
+            }
+            $newZip = new ZipArchive();
+            // $zip_name = time() . '.zip';
+            $zip_name = 'me' . '.zip';
+            try {
+
+                $newZip->open($dir . $zip_name, ZIPARCHIVE::CREATE);
+                foreach ($files1 as $file) {
+
+                    $newZip->addFile($dir . $file);
+                }
+                $newZip->close();
+                $headers = ['Content-Type: application/zip'];
+
+                return response()->download($dir . $zip_name);
+            } catch (\Throwable $th) {
+                return redirect()->back()->withErrors(['zip error.. ', $th]);
+            }
+
+
+
+            return;
+
+            $project = Project::findOrFail($request->project_id);
+            $office_data = OfficeData::findOrFail(1);
+            $project_team = ProjectController::get_project_team($project);
+            $date_and_time = DateAndTime::get_date_time_arr();
+            $_ = $this->get_doc_data($project);
+            $data = [
+                'project' => $project,
+                'office_data' => $office_data,
+                'project_team' => $project_team,
+                'date_and_time' => $date_and_time,
+                'azel_data' => $this->azel_data,
+                '_' => $_,
+            ];
+
+            $all_project_doc_types = ProjectDocType::all();
+            // $all_project_doc_types = ProjectDocType::where('is_in_quick_add', true)->get();
+
+            foreach ($all_project_doc_types as  $project_doc_type) {
+                TCPDF::Reset();
+                $newPDF = new TCPDF();
+                $doc_name = $project_doc_type->name_ar;
+                $pdf_view = $project_doc_type->view_template;
+                $is_tafweed = ($project_doc_type->name_ar == 'تفويض') ? true : false;
+                // -----------------------------------------------------------------
+                // check if there is data missing for the pdf file
+                $missing_dat = $this->get_missing_data($doc_name, $project);
+                if (!empty($missing_dat)) {
+                    array_unshift($missing_dat, ['بعض المستندات لم يتم طباعتها يجب تعبئة هذه البيانات']);
+
+                    return redirect()->back()->withErrors($missing_dat);
+                }
+                // -----------------------------------------------------------------
+                switch ($project_doc_type->header_foooter_template) {
+                    case 'hakeem_header_footer':
+                        $newPDF = $this->set_hakeem_header_footer($newPDF, $is_tafweed);
+                        break;
+                    case 'amana_header_footer':
+                        $newPDF = $this->set_amana_header_footer($newPDF, $is_tafweed);
+                        break;
+                    case 'page_no_footer':
+                        $newPDF = $this->set_page_no_footer($newPDF, $is_tafweed);
+                        break;
+
+                    default:
+                        # code...
+                        break;
+                }
+                // -----------------------------------------------------------------
+                $newPDF = $this->set_common_settings($newPDF);
+                // -----------------------------------------------------------------
+                if ($doc_name == 'تعهد العزل') {
+                    $newPDF::SetAutoPageBreak(TRUE, 24);
+                    $newPDF::SetMargins(20, 20, 20, true);
+                    $newPDF::setCellHeightRatio(1.3);
+                    $newPDF::SetFont('al-mohanad', 'B', 11, '', false);
+                }
+                // -----------------------------------------------------------------
+                if ($doc_name == 'اقرار الرخصة الفورية') {
+                    $newPDF::SetAutoPageBreak(TRUE, 10);
+                }
+                // -----------------------------------------------------------------
+                $newPDF::SetTitle($doc_name);
+                $newPDF::SetSubject($doc_name);
+                // -----------------------------------------------------------------
+                $the_view = View::make($pdf_view)->with($data);
+                $html = $the_view->render();
+                $newPDF::AddPage('P', 'A4');
+                $newPDF::writeHTML($html, true, false, true, false, '');
+                $newPDF::lastPage();
+                // dd(__DIR__);
+
+                $dest = 'D:/temp/';
+                // $dest = '%USERPROFILE%' . '/Desktop' . '/temp/';
+
+                $newPDF::Output($dest . date_format(now(), 'Ymd_His') . '_' . $doc_name . '.pdf', 'F');
+            }
+            return 'done';
+            // -----------------------------------------------------------------
+        }
+        // -----------------------------------------------------------------
         $project = Project::findOrFail($request->project_id);
         $project_doc_type = ProjectDocType::findOrFail($request->project_doc_type_id);
         $office_data = OfficeData::findOrFail(1);
-        $project_tame = ProjectController::get_project_team($project);
+        $project_tame = ProjectController::get_project_team($project);  // team
         $date_and_time = DateAndTime::get_date_time_arr();
         $_ = $this->get_doc_data($project);
         $data = [
