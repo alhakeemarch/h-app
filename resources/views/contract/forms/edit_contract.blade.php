@@ -17,7 +17,8 @@
             <x-slot name='input_pattern'>([0-9.]*)</x-slot>
             <x-slot name='input_value'>{{$contract->cost}}</x-slot>
         </x-input>
-
+    </div>
+    <div class="row">
         @if ($contract->contract_type()->first()->has_visit_fee)
         <x-input name='visit_fee' title="قيمة الزيارة">
             <x-slot name='tooltip'>only numbers</x-slot>
@@ -30,6 +31,18 @@
             <x-slot name='tooltip'>only numbers</x-slot>
             <x-slot name='input_pattern'>([0-9.]*)</x-slot>
             <x-slot name='input_value'>{{$contract->monthly_fee}}</x-slot>
+        </x-input>
+        @endif
+        @if ($contract->contract_type()->first()->id == 39)
+        <x-input name='cost_of_defined_visits' title="اجمالي الإشراف الزيارات تشطيب">
+            <x-slot name='tooltip'>only numbers</x-slot>
+            <x-slot name='input_pattern'>([0-9.]*)</x-slot>
+            <x-slot name='input_value'>{{$contract->cost_of_defined_visits}}</x-slot>
+        </x-input>
+        <x-input name='count_of_defined_visits' title=" عدد زيارات التشطيب">
+            <x-slot name='tooltip'>only numbers</x-slot>
+            <x-slot name='input_pattern'>([0-9.]*)</x-slot>
+            <x-slot name='input_value'>{{$contract->count_of_defined_visits}}</x-slot>
         </x-input>
         @endif
         {{-- -------------------------------------------------------------------------------- --}}

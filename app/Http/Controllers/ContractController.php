@@ -150,20 +150,24 @@ class ContractController extends Controller
                 'cost' => 'required|numeric',
                 'visit_fee' => 'nullable|numeric',
                 'monthly_fee' => 'nullable|numeric',
+                'cost_of_defined_visits' => 'nullable|numeric',
+                'count_of_defined_visits' => 'nullable|numeric',
             ]);
             // -----------------------------------------------------------------
             $old_price = $contract->cost;
             $new_price = $request->cost;
             $project = Project::findOrFail($contract->project_id);
             $edit = true;
-
             // -----------------------------------------------------------------
+            // =========================هنا المشكلة
             $contract_data = $this->get_contract_data($contract->contract_type_id, $project, $request->cost, $edit);
             if (isset($contract_data['erorr'])) {
                 return redirect()->back()->withErrors($contract_data['erorr']);
             }
             if ($request->visit_fee) $contract_data['visit_fee'] = $request->visit_fee;
             if ($request->monthly_fee) $contract_data['monthly_fee'] = $request->monthly_fee;
+            if ($request->cost_of_defined_visits) $contract_data['cost_of_defined_visits'] = $request->cost_of_defined_visits;
+            if ($request->count_of_defined_visits) $contract_data['count_of_defined_visits'] = $request->count_of_defined_visits;
             // -----------------------------------------------------------------
             $contract->update($contract_data);
 
@@ -307,12 +311,13 @@ class ContractController extends Controller
         $project = Project::findOrFail($contract->project_id);
         $office_data = OfficeData::findOrFail(1);
         $date_and_time = DateAndTime::get_date_time_arr($contract->date);
-        $pyment_arr = self::get_payment_arr($contract->cost, $contract->visit_fee, $contract->monthly_fee);
+        $pyment_arr = self::get_payment_arr($contract->cost, $contract->visit_fee, $contract->monthly_fee, $contract->cost_of_defined_visits);
         $contract_title = 'عقد تقديم خدمات إستشارات هندسية (' . $contract->contract_type()->first()->name_ar . ')';
         $pdf_view = $contract->contract_type()->first()->view_template;
         // -----------------------------------------------------------------
         $pdf_data = [
             'project' => $project,
+            'contract' => $contract,
             'office_data' => $office_data,
             'date_and_time' => $date_and_time,
             'pyment_arr' => $pyment_arr,
@@ -344,7 +349,7 @@ class ContractController extends Controller
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static function get_payment_arr($price, $visit_fee = null, $monthly_fee = null)
+    public static function get_payment_arr($price, $visit_fee = null, $monthly_fee = null, $cost_of_defined_visits = null)
     {
         $cost = round($price, 1);
         $vat_percentage = '15';
@@ -375,6 +380,11 @@ class ContractController extends Controller
         $monthly_fee_vat = round($monthly_fee * $vat_percentage / 100, 1);
         $monthly_fee_with_vat = round($monthly_fee + $monthly_fee_vat, 1);
 
+        $cost_of_defined_visits =  round(($cost_of_defined_visits) ? $cost_of_defined_visits : 0, 1); // if no monthly fee it well set as 0 SAR
+        $defined_visits_vat = round($cost_of_defined_visits * $vat_percentage / 100, 1);
+        $defined_visits_with_vat = round($cost_of_defined_visits + $defined_visits_vat, 1);
+
+
         // --------------------------------------------------------------------------------------------
         // I18N_Arabic_Numbers
         $ar_num  = new \App\I18N_Arabic_Numbers();
@@ -382,6 +392,7 @@ class ContractController extends Controller
         $price_withe_vat_text = $ar_num->money2str($price_withe_vat, 'SAR');
         $visit_fee_with_vat_text = $ar_num->money2str($visit_fee_with_vat, 'SAR');
         $monthly_fee_with_vat_text = $ar_num->money2str($monthly_fee_with_vat, 'SAR');
+        $defined_visits_with_vat_text = $ar_num->money2str($defined_visits_with_vat, 'SAR');
 
 
 
@@ -415,6 +426,11 @@ class ContractController extends Controller
         $pyment_arr['monthly_fee_vat'] = ($monthly_fee_vat) ? $monthly_fee_vat : null;
         $pyment_arr['monthly_fee_with_vat'] = ($monthly_fee_with_vat) ? $monthly_fee_with_vat : null;
         $pyment_arr['monthly_fee_with_vat_text'] = ($monthly_fee_with_vat_text) ? $monthly_fee_with_vat_text : null;
+
+        $pyment_arr['cost_of_defined_visits'] = ($cost_of_defined_visits) ? $cost_of_defined_visits : null;
+        $pyment_arr['defined_visits_vat'] = ($defined_visits_vat) ? $defined_visits_vat : null;
+        $pyment_arr['defined_visits_with_vat'] = ($defined_visits_with_vat) ? $defined_visits_with_vat : null;
+        $pyment_arr['defined_visits_with_vat_text'] = ($defined_visits_with_vat_text) ? $defined_visits_with_vat_text : null;
 
 
         return $pyment_arr;

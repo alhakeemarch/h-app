@@ -21,7 +21,11 @@
                     <th>التاريخ الميلادي</th>
                     <th scope="en_ownerType">invoice number</th>
                     <th scope="en_ownerType">
-                        <p class="pb-2">name</p>
+                        <p class="pb-2">المستفيد</p>
+                        <x-search_input name='invoice_beneficiary_name_ar' />
+                    </th>
+                    <th scope="en_ownerType">
+                        <p class="pb-2">اسم المشروع</p>
                         <x-search_input name='invoice_no_input' />
                     </th>
                     <th>cash/credit</th>
@@ -45,7 +49,10 @@
                     <td scope="invoice" class="invoice_no_input">
                         {{$invoice->invoice_no}}
                     </td>
-                    <td scope="invoice" class="invoice_no_input" style="width: 100%;">
+                    <td scope="invoice" class="invoice_beneficiary_name_ar">
+                        {{$invoice->beneficiary_name_ar}}
+                    </td>
+                    <td scope="invoice" class="invoice_no_input">
                         {{$invoice->project()->first()->project_name_ar}}
                     </td>
                     <td scope="invoice" class="invoice_cash_credit_input">
