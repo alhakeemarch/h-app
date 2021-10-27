@@ -127,6 +127,9 @@
     <tr>
         <td>{{$n}}</td>
         <td colspan="6">{{$contract->contract_type->name_ar}}
+            @if ($contract->contract_type_id == 39)
+            <span>(مرحلة العظم)</span>
+            @endif
             @if ($contract->monthly_fee ?? false)
             <div class="txt-center">
                 <small>
@@ -141,6 +144,20 @@
         <td colspan="2">{{$contract->vat_value}}</td>
         <td colspan="2">{{$contract->price_withe_vat}}</td>
     </tr>
+    {{-- ------------------------------------------------------------------------ --}}
+    {{-- to add cost_of_defined_visits --}}
+    @if ($contract->contract_type_id == 39)
+    <tr>
+        <td></td>
+        <td colspan="6">{{$contract->contract_type->name_ar}}
+            <span>(مرحلة التشطيب)</span>
+        </td>
+        <td colspan="2">{{$contract->cost_of_defined_visits}}</td>
+        <td colspan="2">{{$contract->cost_of_defined_visits * 0.15}}</td>
+        <td colspan="2">{{$contract->cost_of_defined_visits *1.15}}</td>
+    </tr>
+    @endif
+    {{-- ------------------------------------------------------------------------ --}}
     @php $n++; @endphp
     @endforeach
     @foreach ($project_services as $project_service)

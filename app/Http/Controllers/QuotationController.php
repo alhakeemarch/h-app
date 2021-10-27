@@ -228,6 +228,12 @@ class QuotationController extends Controller
             $total_arr['total_vat'] += $contract->vat_value;
             $total_arr['total_price_withe_vat'] += $contract->price_withe_vat;
             $total_arr['vat_percentage'] = (int) $contract->vat_percentage;
+            if ($contract->contract_type_id == 39) {
+                $total_arr['total_cost'] += $contract->cost_of_defined_visits;
+                $total_arr['total_vat'] += ($contract->cost_of_defined_visits * 0.15);
+                $total_arr['total_price_withe_vat'] += ($contract->cost_of_defined_visits * 1.15);
+                $total_arr['vat_percentage'] = (int) $contract->vat_percentage;
+            }
         }
         foreach ($project_services as $project_service) {
             $total_arr['total_cost'] += $project_service->price;
