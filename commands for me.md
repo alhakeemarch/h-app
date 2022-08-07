@@ -1,6 +1,3 @@
-مكتبة الـ PDF
-composer require elibyy/tcpdf-laravel
-
 //=========== Visual Studio Code ===============//
 
 <!-- settings.json -->
@@ -183,6 +180,8 @@ composer global require laravel/installer
 
 <!-- مكتبة الـ PDF  اللي راح أستخدمها -->
 
+composer require elibyy/tcpdf-laravel
+مكتبة الـ PDF
 composer require elibyy/tcpdf-laravel
 
 <!-- رابط المكتبة -->

@@ -62,6 +62,10 @@ class InvoiceController extends Controller
     {
         // return $request;
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
+        if (strtotime('now') >= strtotime('04-12-2021')) {
+            return redirect()->back()->withErrors(['Cannot Issue An Invoice after 4 December 2021', 'عفواً لا يمكن اصدار فاتورة بعد 4 ديسمبر 2021']);
+        }
+        // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $this->authorize('view-any', Invoice::class);
         // ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   ----
         $project = Project::findOrFail($request->project_id);
@@ -393,6 +397,21 @@ class InvoiceController extends Controller
         $newPDF::SetTextColor(0, 0, 0, 35);;
         $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
         $newPDF::StopTransform();
+        // ----------------------------------------------------------------- ========>
+        if (auth()->user()->is_admin) {
+
+            $qr_text = 'Invoice Number is' . $invoice->invoice_no_prefix . '-' . $invoice->invoice_no
+                . '|Date is' . $invoice->g_date
+                . '|From' . 'مكتب عبدالرزاق حكيم للإستشارات الهندسية'
+                . '|VAT Number is' . '300537782200003'
+                . '|TO' . $invoice->beneficiary_name_ar
+                . '|Total cost=' . $invoice->total_cost
+                . '|Total VAT Value=' . $invoice->total_vat_value
+                . '|Total Price Withe VAT=' . $invoice->total_price_withe_vat;
+
+            $svgString = \QrCode::format('svg')->encoding('UTF-8')->generate($qr_text);
+            $newPDF::ImageSVG('@' . $svgString, $x = 35, $y = 248, $w = '20', $h = '', $link = 'http://www.tcpdf.org', $align = '', $palign = '', $border = 0, $fitonpage = false);
+        }
         // ----------------------------------------------------------------- ========>
         $newPDF::lastPage();
         if (env('DEVELOPMENT'))  return  $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');

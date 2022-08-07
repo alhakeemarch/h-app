@@ -205,7 +205,7 @@ class QuotationController extends Controller
         $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
         $newPDF::StopTransform();
         // -----------------------------------------------------------------
-        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         return;
     }
     // -----------------------------------------------------------------------------------------------------------------
