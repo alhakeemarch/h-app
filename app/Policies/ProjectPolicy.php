@@ -41,8 +41,9 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
+
         $users_allowed = [
-            4, 5, 28, 27
+            4, 5, 28, 27, 26
         ];
         if (in_array(auth()->user()->id, $users_allowed)) {
             return true;

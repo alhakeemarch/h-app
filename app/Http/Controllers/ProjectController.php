@@ -116,6 +116,7 @@ class ProjectController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function show_create_project_form($person, $organization, $plot)
     {
+        // dd(1);
         $employees = Person::all()->where('job_level', '>=', 5)->reverse();
         $project = new Project;
         $found_project = $project->where('plot_id', $plot->id)->first();
