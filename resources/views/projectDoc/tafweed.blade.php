@@ -18,10 +18,14 @@
     <span>{{$_['owner_name'] ?? '....................................................'}}</span>
     <span>{{$_['id_name']}}</span>
     <span>({{$_['id_number']?? '..........................'}})</span>
-    @if (isset($_['owner_mobile']))
+
     <span>،جوال رقم</span>
     <span>({{$_['owner_mobile'] ?? '..........................'}})</span>
-    @endif
+
+
+    <span>البريد الإلكتروني</span>
+    <span>({{$_['owner_email'] ?? '..........................'}})</span>
+
     @if (isset($_['representative_mobile']))
     <span>،جوال ممثل المالك</span>
     <span>({{$_['representative_mobile'] ?? '..........................'}})</span>
@@ -114,7 +118,8 @@
         </td>
         <td colspan="2">
             <span class="txt-bold">الصفة:</span>
-            <span>{{$_['project_manager_job_title'] ?? '......................'}}</span></td>
+            <span>{{$_['project_manager_job_title'] ?? '......................'}}</span>
+        </td>
         <td colspan="2"><span class="txt-bold">التوقيع:</span>
             <span> ...................... </span>
         </td>

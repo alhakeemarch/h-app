@@ -43,7 +43,7 @@ class ProjectPolicy
     {
 
         $users_allowed = [
-            4, 5, 28, 27, 26
+            4, 5, 28, 27, 26, 31
         ];
         if (in_array(auth()->user()->id, $users_allowed)) {
             return true;

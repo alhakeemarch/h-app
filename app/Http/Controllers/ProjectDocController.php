@@ -414,6 +414,7 @@ class ProjectDocController extends Controller
             $_['id_name'] = 'رقم السجل المدني';
             $_['id_number'] = $person->national_id;
             $_['owner_mobile'] = $person->mobile;
+            $_['owner_email'] = $person->email;
             $_['id_issue_date'] = $person->national_id_issue_date;
             $_['id_issue_place'] = $person->national_id_issue_place;
             $_['phone'] = $person->phone;

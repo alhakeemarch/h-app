@@ -333,12 +333,23 @@ class ProjectController extends Controller
         }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'update_project_team_member') {
+            // ----------------------
+            if ($request->member_id == "NULL") {
+                $position = $request->position;
+                $project->$position = NULL;
+                $project->last_edit_by_id = auth()->user()->id;
+                $project->last_edit_by_name = auth()->user()->user_name;
+                $project->save();
+                return redirect()->back()->with('success', 'team member removed successfully - تم ازالة الموظف بنجاح');
+            }
+            // ----------------------
             $request->validate(
                 [
                     'position' => 'string|required',
                     'member_id' => 'numeric|required',
                 ]
             );
+
             $position = $request->position;
             $emp_id = $request->member_id;
             $project->$position = $emp_id;

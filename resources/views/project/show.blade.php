@@ -3,7 +3,9 @@
 @section('content')
 
 <div class="row container-fluid">
-    {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+    {{--
+    -------------------------------------------------------------------------------------------------------------------------
+    --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header d-flex justify-content-between">
             <span>project info</span>
@@ -12,7 +14,8 @@
         <ul class="list-group card-body p-0 py-1">
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">project name: </span>
-                {{$project->project_name_ar ?? '?'}}</li>
+                {{$project->project_name_ar ?? '?'}}
+            </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold align-self-center">project number: </span> <span>
                     @if ($project->project_no)
@@ -24,10 +27,12 @@
             </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('required use')}}: </span>
-                {{$project->project_type ?? '?'}}</li>
+                {{$project->project_type ?? '?'}}
+            </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('required height')}}: </span>
-                {{$project->project_arch_hight ?? '?'}}</li>
+                {{$project->project_arch_hight ?? '?'}}
+            </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span class="font-weight-bold">{{__('status')}}: </span>
                 @if ($project->project_status_id)
@@ -51,7 +56,9 @@
             </form>
         </div>
     </div>
-    {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+    {{--
+    -------------------------------------------------------------------------------------------------------------------------
+    --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header d-flex justify-content-between">
             <span>owoner info</span>
@@ -92,7 +99,9 @@
             </form>
         </div>
     </div>
-    {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+    {{--
+    -------------------------------------------------------------------------------------------------------------------------
+    --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header d-flex justify-content-between">
             <span>plot info</span>
@@ -117,7 +126,9 @@
         </div>
         @endif
     </div>
-    {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+    {{--
+    -------------------------------------------------------------------------------------------------------------------------
+    --}}
     <div class="card col-md-12 col-lg-6 col-xl-3">
         <h3 class="card-header d-flex justify-content-between">
             <span>team info</span>
@@ -127,8 +138,26 @@
             @foreach ($project_team as $job => $employee)
             @if($employee)
             <li class="list-group-item d-flex justify-content-between">
-                <span class="font-weight-bold">{{__(str_replace('_', ' ' , $job))}}:</span>
-                <span>{{str_replace('  ', ' ' , $employee)}}</span>
+                <span class="font-weight-bold">
+                    {{__(str_replace('_', ' ' , $job))}}:
+                </span>
+                <span class="d-flex">
+                    <span class="px-2">{{str_replace(' ', ' ' , $employee)}}</span>
+                    @if (auth()->user()->is_admin || auth()->user()->id == 5)
+                    <form action="{{route('project.update',$project)}}" method="POST"
+                        class=" form-group m-0 d-flex flex-column d-inline m-0 p-0">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="form_action" value="update_project_team_member">
+                        <input type="hidden" name="position" value="{{$job.'_id'}}">
+                        <input type="hidden" name="member_id" value='NULL'>
+
+                        <button class="btn m-0 p-0 btn-link text-danger d-flex">
+                            <i class="fas fa-user-times"></i>
+                        </button>
+                    </form>
+                    @endif
+                </span>
             </li>
             @endif
             @endforeach
@@ -138,7 +167,9 @@
         </div>
 
     </div>
-    {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+    {{--
+    -------------------------------------------------------------------------------------------------------------------------
+    --}}
 </div>
 <hr class="my-2">
 <div class="row container-fluid">
@@ -169,22 +200,32 @@
             @include('projectDoc.show')
         </div>
     </div>
-    {{-- =================================================================================================================== --}}
+    {{--
+    ===================================================================================================================
+    --}}
     <div class="card col-md-8">
         <div class="card-header d-flex justify-content-between">
             <span>Contracts / Services list</span>
             <span>قائمة العقود والخدمات</span>
         </div>
         <div class="card-body p-0 py-1">
-            {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+            {{--
+            -------------------------------------------------------------------------------------------------------------------------
+            --}}
             {{-- @include('project.show_project_contracts') --}}
             @livewire('project.show-project-contracts',['project' => $project])
             @include('project.show_project_services')
-            {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+            {{--
+            -------------------------------------------------------------------------------------------------------------------------
+            --}}
             @include('contract.forms.q_form')
-            {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+            {{--
+            -------------------------------------------------------------------------------------------------------------------------
+            --}}
         </div>
-        {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+        {{--
+        -------------------------------------------------------------------------------------------------------------------------
+        --}}
         @can('view-any', App\Invoice::class)
         <div class="card-header d-flex justify-content-between">
             <span>Adding Services</span>
@@ -194,7 +235,9 @@
             @include('projectService.forms.q_add')
         </div>
         @endcan
-        {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+        {{--
+        -------------------------------------------------------------------------------------------------------------------------
+        --}}
     </div>
 </div>
 

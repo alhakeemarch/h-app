@@ -4,7 +4,12 @@
     <input type="hidden" name="coming_from" value="contract_edit">
     <input type="hidden" name="form_action" value="edit_contract_values">
     <input type="hidden" name="contract_id" value="{{$contract->id}}">
+    <h5 class="h4">
+        <span>مشروع :</span>
+        <span>{{$contract->project->project_name_ar ?? '?'}}</span>
+    </h5>
     <div class="row">
+        {{-- -------------------------------------------------------------------------------- --}}
         {{-- -------------------------------------------------------------------------------- --}}
         <x-input name='' title="contract name">
             <x-slot name='input_value'>{{$contract->contract_type()->first()->name_ar}}</x-slot>
