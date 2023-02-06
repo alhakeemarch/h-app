@@ -816,3 +816,14 @@ search|view|add|new|save|ok|submit|apply|next|cancel|back|delet|edit|print|downl
 ================================
 
 # APP_DEBUG = false
+
+update to laravel 9
+
+# In order to use the Auth::routes() method, please install the laravel/ui package.
+
+composer require laravel/ui
+php artisan ui:auth
+php artisan ui bootstrap
+npm install
+npm run dev
+npm run build

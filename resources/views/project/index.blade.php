@@ -18,11 +18,18 @@
         <a class="btn btn-info btn-block w-75 mx-auto mb-4" href="{{route('project.check')}}">crate new project</a>
         @endif
         <div class="d-flex justify-content-center my-2">
-            {{ $projects->links() }}
+            {{-- {{ $projects->links() }} --}}
+
+            {!! $projects->withQueryString()->links('pagination::bootstrap-5') !!}
+
         </div>
-        {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+        {{--
+        -------------------------------------------------------------------------------------------------------------------------
+        --}}
         <div class="jumbotron my-2"> @include('project.forms.find') </div>
-        {{-- ------------------------------------------------------------------------------------------------------------------------- --}}
+        {{--
+        -------------------------------------------------------------------------------------------------------------------------
+        --}}
         <table class="table table-hover table-bordered">
             <thead class="bg-thead">
                 <tr>

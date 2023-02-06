@@ -557,9 +557,9 @@ class ProjectDocController extends Controller
         // Custom Header
         $newPDF::setHeaderCallback(function ($pdf) {
             // top header logo
-            $pdf->Image(URL::asset('/img/header.jpg'), 10, 4, 190, '', 'JPG', '');
+            $pdf->Image(URL::asset('/img/header.jpg'), 200, 4, 190, '', 'JPG', '');
             // background logo
-            $pdf->Image(URL::asset('/img/bg-Logo-t.jpg'), 20, 70, 170, '', 'JPG');
+            $pdf->Image(URL::asset('/img/bg-Logo-t.jpg'), 190, 70, 170, '', 'JPG');
         });
         // -----------------------------------------------------------------
         // Custom Footer
