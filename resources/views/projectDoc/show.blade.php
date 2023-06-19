@@ -16,6 +16,16 @@
     <li class="list-group-item d-flex justify-content-between">
         <span class=" align-self-center">{{$project_doc->name_ar}}</span>
         <span class="d-flex">
+            @if ($project_doc->id == 5)
+            <form action="{{route('project.edit',$project->id)}}" method="get">
+                <input type="hidden" name="form_action" value="edit_azel_data">
+                <x-btn btnText='edit' class="m-0 p-0">
+                    <x-slot name='is_btn_link'>true</x-slot>
+                </x-btn>
+            </form>
+            &nbsp;&nbsp;
+            @endif
+
             <form action="{{route('projectDoc.get_pdf')}}" method="get">
                 @csrf
                 <input type="hidden" name="project_id" value="{{$project->id}}">
@@ -28,7 +38,9 @@
     </li>
     @endforeach
 </ul>
-{{-- ----------------------------------------------------------------------------------------------------------------------- --}}
+{{--
+-----------------------------------------------------------------------------------------------------------------------
+--}}
 <form action="{{route('projectDoc.get_pdf')}}" method="get" class=" form-group m-0 d-flex jumbotron p-3 mt-2">
     @csrf
     <input type="hidden" name="project_id" value="{{$project->id}}">

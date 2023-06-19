@@ -342,6 +342,13 @@ ALTER TABLE `projects` ADD `is_only_supervision` BOOLEAN NULL AFTER `project_typ
 ALTER TABLE `projects` ADD `organization_id` BIGINT(20) UNSIGNED NULL AFTER `person_id`;
 ALTER TABLE `projects` ADD CONSTRAINT projects_organization_id_foreign FOREIGN KEY (organization_id) REFERENCES organizations(id);
 
+ALTER TABLE `projects`ADD COLUMN `azel_walls_material` VARCHAR(191) NULL AFTER `project_location`;
+ALTER TABLE `projects`ADD COLUMN `azel_walls_value` VARCHAR(191) NULL AFTER `azel_walls_material`;
+ALTER TABLE `projects`ADD COLUMN `azel_ceiling_material` VARCHAR(191) NULL AFTER `azel_walls_value`;
+ALTER TABLE `projects`ADD COLUMN `azel_ceiling_value` VARCHAR(191) NULL AFTER `azel_ceiling_material`;
+ALTER TABLE `projects`ADD COLUMN `azel_window_material` VARCHAR(191) NULL AFTER `azel_ceiling_value`;
+ALTER TABLE `projects`ADD COLUMN `azel_window_value` VARCHAR(191) NULL AFTER `azel_window_material`;
+
 <!-- ------------------------------------------------------------------------ -->
 
 ALTER TABLE `representative_types`ADD COLUMN `authorization_type_ar` VARCHAR(191) NULL AFTER `name_en`;

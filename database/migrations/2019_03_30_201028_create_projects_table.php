@@ -110,6 +110,14 @@ class CreateProjectsTable extends Migration
             // -----------------------------
             $table->foreignId('plot_id')->nullable();
             $table->string('project_location')->nullable();
+            // -----------------------------
+            $table->string('azel_walls_material')->nullable();
+            $table->string('azel_walls_value')->nullable();
+            $table->string('azel_ceiling_material')->nullable();
+            $table->string('azel_ceiling_value')->nullable();
+            $table->string('azel_window_material')->nullable();
+            $table->string('azel_window_value')->nullable();
+            // -----------------------------
             // =============================
             // -----------------------------
             $table->longText('notes')->nullable();

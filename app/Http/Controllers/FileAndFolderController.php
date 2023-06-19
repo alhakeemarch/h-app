@@ -731,14 +731,20 @@ class FileAndFolderController extends Controller
             '1441' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1441',
             '1442' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1442',
             '1443' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1443',
+            '1444' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1444',
         ];
+
         foreach ($directories as $directory_key => $directory) {
-            $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-            $kyed_dir = [];
-            foreach ($scanned_directory as $key => $value) {
-                $kyed_dir[$key . '|' . $directory_key] = $value;
+
+            if ($directory !== false and is_dir($directory)) {
+
+                $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+                $kyed_dir = [];
+                foreach ($scanned_directory as $key => $value) {
+                    $kyed_dir[$key . '|' . $directory_key] = $value;
+                }
+                array_push($projects_dir, $kyed_dir);
             }
-            array_push($projects_dir, $kyed_dir);
         }
 
         // $projects_dir = $scanned_directory;

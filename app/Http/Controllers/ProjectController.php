@@ -264,12 +264,23 @@ class ProjectController extends Controller
      */
     public function edit(Project $project, Request $request)
     {
+        // ----------------------------------------------------
         if ($request->form_action == 'project_quick_edit') {
             return view('project.forms.q_edit')->with([
                 'project' => $project,
                 'project_statuses' => ProjectStatus::all(),
             ]);
         }
+        // ----------------------------------------------------
+        // ----------------------------------------------------
+        if ($request->form_action == 'edit_azel_data') {
+            return view('project.forms.edit_azel_data')->with([
+                'project' => $project,
+            ]);
+        }
+        // ----------------------------------------------------
+
+
         // ----------------------------------------------------
         if ($request->form_action == 'show_edit_owner_info_form') {
             return view('project.forms.owners_form')->with([
@@ -330,6 +341,11 @@ class ProjectController extends Controller
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'add_representative_to_project') {
             return $this->add_representative_to_project($request, $project);
+        }
+        // ------------------------------------------------------------------------------------------------------------------------------------- 
+        // ------------------------------------------------------------------------------------------------------------------------------------- 
+        if ($request->form_action == 'update_azel_data') {
+            return $this->update_azel_data($request, $project);
         }
         // ------------------------------------------------------------------------------------------------------------------------------------- 
         if ($request->form_action == 'update_project_team_member') {
@@ -1380,6 +1396,20 @@ class ProjectController extends Controller
         }
 
         return $beneficiary_list;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function update_azel_data($request, $project)
+    {
+        $valed_data = $request->validate([
+            'azel_walls_material' => 'nullable|string|regex:/^([^0-9]*)$/',
+            'azel_walls_value' => 'nullable|numeric',
+            'azel_ceiling_material' => 'nullable|string|regex:/^([^0-9]*)$/',
+            'azel_ceiling_value' => 'nullable|numeric',
+            'azel_window_material' => 'nullable|string|regex:/^([^0-9]*)$/',
+            'azel_window_value' => 'nullable|numeric',
+        ]);
+        $project->update($valed_data);
+        return redirect()->action('ProjectController@show', $project->id)->withSuccess(['تم تعديل بيانات العزل بنجاح']);
     }
     // -----------------------------------------------------------------------------------------------------------------
 

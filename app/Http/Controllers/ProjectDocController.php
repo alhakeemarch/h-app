@@ -24,14 +24,7 @@ class ProjectDocController extends Controller
 {
     // -----------------------------------------------------------------------------------------------------------------
     public $is_tafweed = false;
-    private  $azel_data = [
-        'walls_material' => 'بولسترين',
-        'walls_value' => '0.53',
-        'ceiling_material' => 'بولسترين',
-        'ceiling_value' => '0.31',
-        'window_material' => 'زجاج مضاعف',
-        'window_value' => '2.67',
-    ];
+
     // -----------------------------------------------------------------------------------------------------------------
     /**
      * Create a new controller instance.
@@ -241,7 +234,7 @@ class ProjectDocController extends Controller
                 'office_data' => $office_data,
                 'project_team' => $project_team,
                 'date_and_time' => $date_and_time,
-                'azel_data' => $this->azel_data,
+                'azel_data' => $this->get_azel_data($project),
                 '_' => $_,
             ];
 
@@ -322,7 +315,7 @@ class ProjectDocController extends Controller
             'office_data' => $office_data,
             'project_tame' => $project_tame,
             'date_and_time' => $date_and_time,
-            'azel_data' => $this->azel_data,
+            'azel_data' => $this->get_azel_data($project),
             '_' => $_,
         ];
         // -----------------------------------------------------------------
@@ -711,6 +704,25 @@ class ProjectDocController extends Controller
         return $a;
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function get_azel_data($project)
+    {
+        $azel_data = [
+            'walls_material' => 'بولسترين',
+            'walls_value' => '0.53',
+            'ceiling_material' => 'بولسترين',
+            'ceiling_value' => '0.31',
+            'window_material' => 'زجاج مضاعف',
+            'window_value' => '2.67',
+        ];
+        // $azel_data['walls_material'] = (condition) ? a : b ;
+        if ($project->azel_walls_material) $azel_data['walls_material'] = $project->azel_walls_material;
+        if ($project->azel_walls_value) $azel_data['walls_value'] = $project->azel_walls_value;
+        if ($project->azel_ceiling_material) $azel_data['ceiling_material'] = $project->azel_ceiling_material;
+        if ($project->azel_ceiling_value) $azel_data['ceiling_value'] = $project->azel_ceiling_value;
+        if ($project->azel_window_material) $azel_data['window_material'] = $project->azel_window_material;
+        if ($project->azel_window_value) $azel_data['window_value'] = $project->azel_window_value;
+        return $azel_data;
+    }
     // -----------------------------------------------------------------------------------------------------------------
     // -----------------------------------------------------------------------------------------------------------------
 
