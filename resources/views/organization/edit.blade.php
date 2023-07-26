@@ -134,10 +134,11 @@
             </x-input>
         </div>
 
-        @if (auth()->user()->is_admin)
+        @if (auth()->user()->is_admin && false)
         @php
         $obj = json_decode($organization, TRUE);
         @endphp
+
         <ul class="card-body">
             @foreach ($obj as $a=>$b )
             <li>

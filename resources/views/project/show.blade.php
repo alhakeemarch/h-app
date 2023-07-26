@@ -77,7 +77,8 @@
         @include('project.representative_info')
         @endif
         {{-- ----------------------------------------------------------------- --}}
-        @if ($project->organization_id && !($project->representative_id))
+        {{-- @if ($project->organization_id && !($project->representative_id)) --}}
+        @if (!($project->representative_id))
         <form action="{{route('project.edit',$project->id)}}" method="GET"
             class="card-footer d-flex justify-content-between">
             <input type="hidden" name="form_action" value="add_representative">
