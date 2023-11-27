@@ -410,6 +410,7 @@ Route::group(['prefix' => 'contract'], function () {
     Route::any('mahder_tathbeet', 'ContractController@mahder_tathbeet')->name('contract.mahder_tathbeet');
     Route::any('contract_to_pdf', 'ContractController@contract_to_pdf')->name('contract.contract_to_pdf');
     Route::any('re_render', 'ContractController@re_render_contract')->name('contract.re_render');
+    Route::any('get_uni_contract_pdf', 'ContractController@get_uni_contract_pdf')->name('contract.get_uni_contract_pdf');
 });
 // -----------------------------------------------------------------------------------------------------------------
 Route::group(['prefix' => 'file_folder'], function () {

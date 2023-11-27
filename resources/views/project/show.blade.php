@@ -193,6 +193,17 @@
         <div class="car d-body p-0 py-1">
             @include('quotation.show')
         </div>
+        {{-- ------------------------------------------ --}}
+        @if (auth()->user()->is_admin || $project->get_uni_contracts_count()>1)
+        <div class="card-header d-flex justify-content-between">
+            <span>Uni-Contract</span>
+            <span>العقد المجمع</span>
+        </div>
+        <div class="car d-body p-0 py-1">
+            @include('contract.uni_contract_show')
+        </div>
+        @endif
+        {{-- ------------------------------------------ --}}
         <div class="card-header d-flex justify-content-between">
             <span>document list</span>
             <span>قائمة المستندات</span>

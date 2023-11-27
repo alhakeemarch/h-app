@@ -390,6 +390,7 @@ ALTER TABLE `contract_types` ADD `has_monthly_fee` BOOLEAN default FALSE NULL AF
 <!-- ------------------------------------------------------------------------ -->
 
 ALTER TABLE `contracts` ADD `is_in_quotation` BOOLEAN default TRUE NULL AFTER `contract_no_acc`;
+ALTER TABLE `contracts` ADD `is_in_uni_contract` BOOLEAN default FAlSE NULL AFTER `is_in_quotation`;
 ALTER TABLE `contracts` ADD `invoice_id` BIGINT(20) UNSIGNED NULL AFTER `contract_class_id`;
 ALTER TABLE `contracts` ADD CONSTRAINT contracts_invoice_id_foreign FOREIGN KEY (invoice_id) REFERENCES invoices(id);
 ALTER TABLE `contracts` ADD `is_in_invoice` BOOLEAN default FALSE NULL AFTER `is_in_quotation`;

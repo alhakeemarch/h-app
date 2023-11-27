@@ -237,4 +237,18 @@ class Project extends Model
         return (isset($this->invoicing_vat_no)) ? $this->invoicing_vat_no : '';
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function get_uni_contracts_count()
+    {
+        $count = 0;
+        $count = Contract::where([
+            'project_id' => $this->id,
+            'is_in_uni_contract' => true,
+        ])->count();
+
+        return $count;
+
+
+        // return (isset($this->invoicing_vat_no)) ? $this->invoicing_vat_no : '';
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 }

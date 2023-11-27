@@ -6,6 +6,7 @@ use App\Contract;
 use App\ContractType;
 use App\OfficeData;
 use App\Project;
+use App\ProjectService;
 use DateTime;
 // use PDF as TCPDF;
 use Elibyy\TCPDF\Facades\TCPDF as TCPDF;
@@ -139,6 +140,12 @@ class ContractController extends Controller
             return redirect()->back();
         }
         // -----------------------------------------------------------------
+        if ($request->add_or_remove_form_uni_contract) {
+            $contract->is_in_uni_contract = !($contract->is_in_uni_contract);
+            $contract->save();
+            return redirect()->back();
+        }
+        // -----------------------------------------------------------------
         if ($request->add_or_remove_form_invoice) {
             $contract->is_in_invoice = !($contract->is_in_invoice);
             $contract->save();
@@ -233,6 +240,24 @@ class ContractController extends Controller
         return  $found_contract;
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public static function get_project_contracts_for_uni_contract($project)
+    {
+        $found_contract = Contract::where([
+            'project_id' => $project->id,
+            'is_in_uni_contract' => true,
+        ])->get()->sortBy('contract_type_id');
+        return  $found_contract;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public static function get_project_services_for_uni_contract($project)
+    {
+        $project_services = ProjectService::where([
+            'project_id' => $project->id,
+            // 'is_in_uni_contract' => true,
+        ])->get();
+        return  $project_services;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     public static function get_project_contracts_for_invoice($project)
     {
         $found_contract = Contract::where([
@@ -260,7 +285,7 @@ class ContractController extends Controller
         return ($contract->withTrashed()->get()->max('contract_no')) + 1;
     }
     // -----------------------------------------------------------------------------------------------------------------
-    public static function contract_to_pdf(Request $request, $contract = null)
+    public static function contract_to_pdf(Request $request, $contract = null, $html = null)
     {
         $contract = ($contract) ? $contract : Contract::findOrFail($request->contract_id);
         // -----------------------------------------------------------------
@@ -299,6 +324,40 @@ class ContractController extends Controller
         // -----------------------------------------------------------------
         $contract->print_count = $contract->print_count + 1;
         $contract->save();
+        // -----------------------------------------------------------------
+        return redirect()->back();
+        // -----------------------------------------------------------------
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    function uni_contract_to_pdf($html)
+    {
+        $newPDF = new TCPDF();
+        // -----------------------------------------------------------------
+        $newPDF = ProjectDocController::set_hakeem_header_footer($newPDF);
+        $newPDF = ProjectDocController::set_common_settings($newPDF);
+        // -----------------------------------------------------------------
+        $newPDF::SetTitle('عقد تقديم خدمات استشارات هندسية');
+        $newPDF::SetSubject('عقد تقديم خدمات استشارات هندسية');
+        // -----------------------------------------------------------------
+        $newPDF::AddPage('P', 'A4');
+        $newPDF::writeHTML($html, true, false, true, false, '');
+        // -----------------------------------------------------------------
+        // to print contract no and user id and contract creator id 
+        $text = 'Code="Cn' . '-Up' . auth()->user()->id;
+
+        // -----------------------------------------------------------------
+        $newPDF::SetY(150);
+        $newPDF::SetX(198);
+        $newPDF::StartTransform();
+        $newPDF::Rotate(+90);
+        $newPDF::SetFont('consolas', '', 8);
+        $newPDF::SetTextColor(0, 0, 0, 35);;
+        $newPDF::Cell(0, 0, $text, 0, 0, 'C', 0, '', 0, false, 'B', 'B');
+        $newPDF::StopTransform();
+        // -----------------------------------------------------------------
+        $newPDF::lastPage();
+        if (env('DEVELOPMENT'))  return  $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'I');
+        $newPDF::Output(date_format(now(), 'Ymd_His') . '.pdf', 'D');
         // -----------------------------------------------------------------
         return redirect()->back();
         // -----------------------------------------------------------------
@@ -528,5 +587,64 @@ class ContractController extends Controller
         }
     }
     // -----------------------------------------------------------------------------------------------------------------
+    public function get_uni_contract_pdf()
+    {
+        // -------------------------------------------------------------------    
+        $project = Project::findOrFail(request()->project_id);
+        // -------------------------------------------------------------------
+        $found_contracts = $this->get_project_contracts_for_uni_contract($project);
+        // -------------------------------------------------------------------
 
+        $pdf_data = [
+            'date_and_time' => DateAndTime::get_date_time_arr($found_contracts->first()),
+            'office_data' => OfficeData::findOrFail(1),
+            'contract' => $found_contracts->first(),
+            '_' => (new ProjectDocController)->get_doc_data($project),
+            'contract_title' => 'عقد تقديم خدمات إستشارات هندسية',
+            'total_arr' => $this->get_total_array($project),
+            'project_contracts' => $found_contracts,
+            'project_services' => $this->get_project_services_for_uni_contract($project),
+        ];
+        // return view('contract.pdf.uni_contract')->with($pdf_data);
+
+        $the_view = View::make('contract.pdf.uni_contract')->with($pdf_data);
+        $html = $the_view->render();
+        $this->uni_contract_to_pdf($html);
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    public function get_total_array($project)
+    {
+        $project_contracts = $this->get_project_contracts_for_uni_contract($project);
+        $project_services = $this->get_project_services_for_uni_contract($project);
+        $total_arr = [
+            'total_cost' => 0,
+            'total_vat' => 0,
+            'total_price_withe_vat' => 0,
+            'total_price_withe_vat_text' => '',
+            'vat_percentage' => 0,
+        ];
+        foreach ($project_contracts as $contract) {
+            $total_arr['total_cost'] += $contract->cost;
+            $total_arr['total_vat'] += $contract->vat_value;
+            $total_arr['total_price_withe_vat'] += $contract->price_withe_vat;
+            $total_arr['vat_percentage'] = (int) $contract->vat_percentage;
+            if ($contract->contract_type_id == 39) {
+                $total_arr['total_cost'] += $contract->cost_of_defined_visits;
+                $total_arr['total_vat'] += ($contract->cost_of_defined_visits * 0.15);
+                $total_arr['total_price_withe_vat'] += ($contract->cost_of_defined_visits * 1.15);
+                $total_arr['vat_percentage'] = (int) $contract->vat_percentage;
+            }
+        }
+        foreach ($project_services as $project_service) {
+            $total_arr['total_cost'] += $project_service->price;
+            $total_arr['total_vat'] += $project_service->vat_value;
+            $total_arr['total_price_withe_vat'] += $project_service->price_withe_vat;
+            $total_arr['vat_percentage'] = (int) $project_service->vat_percentage;
+        }
+        $ar_num  = new \App\I18N_Arabic_Numbers();
+        $total_arr['total_price_withe_vat_text'] = $ar_num->money2str($total_arr['total_price_withe_vat'], 'SAR');
+
+        return $total_arr;
+    }
+    // -----------------------------------------------------------------------------------------------------------------
 }
