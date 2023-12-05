@@ -55,54 +55,54 @@
 </table>
 {{-- ---------------------------------------------------------------------------------------------------------- --}}
 {{-- <table class="tbl-bordered txt-center" cellpadding="6"> --}}
-<table class="tbl-bordered txt-center">
-  <tr>
-    <th colspan="2">الدفعات</th>
-    <th>المبلغ</th>
-    <th><span>الضريبة</span> <span>VAT</span> <span>{{$pyment_arr['vat_percentage']??''}}</span><span>%</span></th>
-    <th>الإجمالي</th>
-  </tr>
-  <tr>
-    <td colspan="2" style="font-size: 95%;">
-      <span>الدفعة الاولى</span>
-      <span>(شاملة كامل الضريبة)</span>
-      <span>عند التعاقد</span>
-    </td>
-    <td>{{$pyment_arr['pyment_1']??''}}</td>
-    {{-- <td>{{$pyment_arr['pyment_1_vat']??''}}</td> --}}
-    <td>{{$pyment_arr['vat_value']??''}}</td>
-    {{-- <td>{{$pyment_arr['pyment_1_with_vat']??''}}</td> --}}
-    <td>{{$pyment_arr['pyment_1_with_total_vat']??''}}</td>
-  </tr>
-  <tr>
-    <td colspan="2">الدفعة الثانية عند اعتماد العميل للفكرة</td>
-    <td>{{$pyment_arr['pyment_2']??''}}</td>
-    {{-- <td>{{$pyment_arr['pyment_2_vat']??''}}</td> --}}
-    <td>{{'0'}}</td>
-    {{-- <td>{{$pyment_arr['pyment_2_with_vat']??''}}</td> --}}
-    <td>{{$pyment_arr['pyment_2']??''}}</td>
-  </tr>
-  <tr>
-    <td colspan="2"> الدفعة الأخيرة عند صدور الرخصة</td>
-    <td>{{$pyment_arr['pyment_3']??''}}</td>
-    {{-- <td>{{$pyment_arr['pyment_3_vat']??''}}</td> --}}
-    <td>{{'0'}}</td>
-    {{-- <td>{{$pyment_arr['pyment_3_with_vat']??''}}</td> --}}
-    <td>{{$pyment_arr['pyment_3']??''}}</td>
-  </tr>
-  <tr>
-    <td colspan="2"><span>الاجمالي</span></td>
-    <th>{{$pyment_arr['cost']??''}}</th>
-    <th>{{$pyment_arr['vat_value']??''}}</th>
-    <th>{{$pyment_arr['price_withe_vat']??''}}</th>
-  </tr>
-  <tr>
-    <td colspan="5" class="" style="text-align: justify;">
-      <span>الاجمالي شامل ضريبة القيمة المضافة وقدره</span>
-      <span>{{$pyment_arr['price_withe_vat_text'] ?? '........'}}</span>
-      <span>فقط لا غير.</span>
-    </td>
-  </tr>
-</table><br><br style="line-height: 30%;">
-{{-- ---------------------------------------------------------------------------------------------------------- --}}
-@include('contract.pdf.footer')
+  <table class="tbl-bordered txt-center">
+    <tr>
+      <th colspan="2">الدفعات</th>
+      <th>المبلغ</th>
+      <th><span>الضريبة</span> <span>VAT</span> <span>{{$pyment_arr['vat_percentage']??''}}</span><span>%</span></th>
+      <th>الإجمالي</th>
+    </tr>
+    <tr>
+      <td colspan="2" style="font-size: 95%;">
+        <span>الدفعة الاولى</span>
+        <span>(شاملة كامل الضريبة)</span>
+        <span>عند التعاقد</span>
+      </td>
+      <td>{{number_format ($pyment_arr['pyment_1'])??''}}</td>
+      {{-- <td>{{$pyment_arr['pyment_1_vat']??''}}</td> --}}
+      <td>{{number_format ($pyment_arr['vat_value'])??''}}</td>
+      {{-- <td>{{$pyment_arr['pyment_1_with_vat']??''}}</td> --}}
+      <td>{{number_format ($pyment_arr['pyment_1_with_total_vat'])??''}}</td>
+    </tr>
+    <tr>
+      <td colspan="2">الدفعة الثانية عند اعتماد العميل للفكرة</td>
+      <td>{{number_format ($pyment_arr['pyment_2'])??''}}</td>
+      {{-- <td>{{$pyment_arr['pyment_2_vat']??''}}</td> --}}
+      <td>{{'0'}}</td>
+      {{-- <td>{{$pyment_arr['pyment_2_with_vat']??''}}</td> --}}
+      <td>{{number_format ($pyment_arr['pyment_2'])??''}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"> الدفعة الأخيرة عند صدور الرخصة</td>
+      <td>{{number_format ($pyment_arr['pyment_3'])??''}}</td>
+      {{-- <td>{{$pyment_arr['pyment_3_vat']??''}}</td> --}}
+      <td>{{'0'}}</td>
+      {{-- <td>{{$pyment_arr['pyment_3_with_vat']??''}}</td> --}}
+      <td>{{number_format ($pyment_arr['pyment_3'])??''}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><span>الاجمالي</span></td>
+      <th>{{number_format ($pyment_arr['cost'])??''}}</th>
+      <th>{{number_format ($pyment_arr['vat_value'])??''}}</th>
+      <th>{{number_format ($pyment_arr['price_withe_vat'])??''}}</th>
+    </tr>
+    <tr>
+      <td colspan="5" class="" style="text-align: justify;">
+        <span>الاجمالي شامل ضريبة القيمة المضافة وقدره</span>
+        <span>{{$pyment_arr['price_withe_vat_text'] ?? '........'}}</span>
+        <span>فقط لا غير.</span>
+      </td>
+    </tr>
+  </table><br><br style="line-height: 30%;">
+  {{-- ---------------------------------------------------------------------------------------------------------- --}}
+  @include('contract.pdf.footer')

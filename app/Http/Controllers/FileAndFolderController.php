@@ -18,7 +18,7 @@ use Hamcrest\Type\IsNumeric;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use League\CommonMark\Inline\Element\Strong;
-
+use PhpParser\Node\Stmt\TryCatch;
 
 class FileAndFolderController extends Controller
 {
@@ -583,27 +583,31 @@ class FileAndFolderController extends Controller
         $project_no = [];
         $project_name = [];
         $directory = $this->running_projects_path;
-
-        $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-        $projects_dir = $scanned_directory;
-        // $project_name['path'] = $directory;
-        foreach ($projects_dir as $key => $value) {
-            $n = substr($value, 1, 1);
-            $n = trim($n);
-            if (is_numeric($n)) {
-                $position = stripos($value, '-');
-                $sub = substr($value, 0, $position);
-                $sub = trim($sub);
-                $sub2 = substr($value, $position + 1);
-                $sub2 = trim($sub2);
-                $project_no[$sub] = $value;
-                $project_name[$sub] = $sub2;
-            } else {
-                $project_name['لم يعطى رقم' . $key] = $value;
+        try {
+            //code...
+            $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+            $projects_dir = $scanned_directory;
+            // $project_name['path'] = $directory;
+            foreach ($projects_dir as $key => $value) {
+                $n = substr($value, 1, 1);
+                $n = trim($n);
+                if (is_numeric($n)) {
+                    $position = stripos($value, '-');
+                    $sub = substr($value, 0, $position);
+                    $sub = trim($sub);
+                    $sub2 = substr($value, $position + 1);
+                    $sub2 = trim($sub2);
+                    $project_no[$sub] = $value;
+                    $project_name[$sub] = $sub2;
+                } else {
+                    $project_name['لم يعطى رقم' . $key] = $value;
+                }
             }
+            ksort($project_no);
+            ksort($project_name);
+        } catch (\Throwable $th) {
+            //throw $th;
         }
-        ksort($project_no);
-        ksort($project_name);
 
 
         return $project_name;
@@ -673,21 +677,25 @@ class FileAndFolderController extends Controller
         $project_no = [];
         $project_name = [];
         $directory = $this->finished_projects_pathe;
-        $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-        $projects_dir = $scanned_directory;
+        try {
+            $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+            $projects_dir = $scanned_directory;
 
-        foreach ($projects_dir as $key => $value) {
-            $position = stripos($value, '-');
-            $sub = substr($value, 0, $position);
-            $sub = trim($sub);
-            $sub2 = substr($value, $position + 1);
-            $sub2 = trim($sub2);
-            $project_no[$sub] = $value;
-            $project_name[$sub] = $sub2;
+            foreach ($projects_dir as $key => $value) {
+                $position = stripos($value, '-');
+                $sub = substr($value, 0, $position);
+                $sub = trim($sub);
+                $sub2 = substr($value, $position + 1);
+                $sub2 = trim($sub2);
+                $project_no[$sub] = $value;
+                $project_name[$sub] = $sub2;
+            }
+
+            ksort($project_no);
+            ksort($project_name);
+        } catch (\Throwable $th) {
+            //throw $th;
         }
-
-        ksort($project_no);
-        ksort($project_name);
 
         return $project_name;
     }

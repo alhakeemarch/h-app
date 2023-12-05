@@ -6,9 +6,9 @@
         <th>الإجمالي</th>
     </tr>
     <tr>
-        <td>{{$pyment_arr['cost']??''}}</td>
-        <td>{{$pyment_arr['vat_value']??''}}</td>
-        <td>{{$pyment_arr['price_withe_vat']??''}}</td>
+        <td>{{number_format($pyment_arr['cost'])??''}}</td>
+        <td>{{number_format($pyment_arr['vat_value'])??''}}</td>
+        <td>{{number_format($pyment_arr['price_withe_vat'])??''}}</td>
     </tr>
     <tr>
         <td colspan="5" class="" style="text-align: justify;">

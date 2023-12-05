@@ -596,7 +596,7 @@ class ContractController extends Controller
         // -------------------------------------------------------------------
 
         $pdf_data = [
-            'date_and_time' => DateAndTime::get_date_time_arr($found_contracts->first()),
+            'date_and_time' => DateAndTime::get_date_time_arr($found_contracts->first()->date),
             'office_data' => OfficeData::findOrFail(1),
             'contract' => $found_contracts->first(),
             '_' => (new ProjectDocController)->get_doc_data($project),

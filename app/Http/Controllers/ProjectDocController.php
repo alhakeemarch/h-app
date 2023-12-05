@@ -451,6 +451,7 @@ class ProjectDocController extends Controller
                 $_['street_name'] = $plot->street->ar_name;
             }
         }
+
         // -----------------------------------------------------
         if ($project->project_manager_id) {
             $_['project_manager'] = $project->project_manager->get_full_name_ar();
@@ -458,6 +459,7 @@ class ProjectDocController extends Controller
         }
         // -----------------------------------------------------
         $_['required_use'] = $project->project_type;
+        $_['required_hight'] = $project->project_arch_hight;
 
         // -----------------------------------------------------
         return $_;
@@ -656,7 +658,7 @@ class ProjectDocController extends Controller
     {
         $newPDF::setHeaderCallback(function ($pdf) {
             // top header logo
-            $pdf->Image(URL::asset('/img/amana-logo.jpg'), 90, 10, 35, '', 'JPG', '');
+            $pdf->Image(URL::asset('/img/amana-logo.jpg'), 120, 10, 35, '', 'JPG', '');
             $pdf->SetFont('traditionalarabic', '', 12, '', false);
             // set top right text
             $pdf->Cell(0, 0, '', 0, 1, 'R', 0, '', 0);
@@ -679,7 +681,8 @@ class ProjectDocController extends Controller
             $page_numbring = 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages();
             $pdf->Cell(0, 0, $page_numbring, 0, true, 'R', 0, '', 0, false, 'B', 'M');
             // image of footer
-            $pdf->Image(URL::asset('/img/amana-footer.jpg'), 10, 280, 190, '', 'JPG');
+            // $pdf->Image(URL::asset('/img/amana-footer.jpg'), 10, 280, 190, '', 'JPG');
+            $pdf->Image(URL::asset('/img/amana-footer.jpg'), 195, 280, 180, '', 'JPG');
             // $pdf->setCellHeightRatio(0.5);
         });
         // -----------------------------------------------------------------

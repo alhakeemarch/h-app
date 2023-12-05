@@ -21,17 +21,17 @@
                 </td>
                 <td>
                     <span class="align-self-center">
-                        {{$contract->cost}}
+                        {{number_format($contract->cost)}}
                     </span>
                 </td>
                 <td>
                     <span class="align-self-center">
-                        {{$contract->vat_value}}
+                        {{number_format($contract->vat_value)}}
                     </span>
                 </td>
                 <td>
                     <span class="align-self-center">
-                        {{$contract->price_withe_vat}}
+                        {{number_format($contract->price_withe_vat)}}
                     </span>
                 </td>
                 <td>
@@ -142,12 +142,12 @@
             @endforeach
             <tr class=" bg-light-blue">
                 <td>الإجمالي</td>
-                <td>{{$total_price}}</td>
-                <td>{{$total_vat}}</td>
-                <td>{{$total_price_with_vat}}</td>
+                <td>{{number_format($total_price)}}</td>
+                <td>{{number_format($total_vat)}}</td>
+                <td>{{number_format($total_price_with_vat)}}</td>
                 <td colspan="@if (auth()->user()->is_admin)4 @else 3 @endif">
                     <span>اجمالي الدفعة الأولى</span>
-                    <span> =({{$total_1st_payment}})</span>
+                    <span> =({{number_format($total_1st_payment)}})</span>
                 </td>
             </tr>
     </table>

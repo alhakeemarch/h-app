@@ -126,6 +126,7 @@
     @foreach ($project_contracts as $contract)
     <tr>
         <td>{{$n}}</td>
+
         <td colspan="6">{{$contract->contract_type->name_ar}}
             @if ($contract->contract_type_id == 39)
             <span>(مرحلة العظم)</span>
@@ -140,9 +141,9 @@
             </div>
             @endif
         </td>
-        <td colspan="2">{{$contract->cost}}</td>
-        <td colspan="2">{{$contract->vat_value}}</td>
-        <td colspan="2">{{$contract->price_withe_vat}}</td>
+        <td colspan="2">{{number_format($contract->cost)}}</td>
+        <td colspan="2">{{number_format($contract->vat_value)}}</td>
+        <td colspan="2">{{number_format($contract->price_withe_vat)}}</td>
     </tr>
     {{-- ------------------------------------------------------------------------ --}}
     {{-- to add cost_of_defined_visits --}}
@@ -174,9 +175,9 @@
     @endforeach
     <tr style="background-color:#fffbee; opacity: 0.2;">
         <td colspan="7">الإجمالي</td>
-        <td colspan="2">{{$total_arr['total_cost']}}</td>
-        <td colspan="2">{{$total_arr['total_vat']}}</td>
-        <td colspan="2">{{$total_arr['total_price_withe_vat']}}</td>
+        <td colspan="2">{{number_format($total_arr['total_cost'])}}</td>
+        <td colspan="2">{{number_format($total_arr['total_vat'])}}</td>
+        <td colspan="2">{{number_format($total_arr['total_price_withe_vat'])}}</td>
     </tr>
     <tr>
         <th colspan="13" class="" style="text-align: justify;">

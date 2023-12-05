@@ -42,7 +42,8 @@
     <tr>
         <td colspan="4">
             <span>يمثله بالعقد:</span>
-            <span>{{$_['representative_name_ar']  ?? '...................................................................'}}</span>
+            <span>{{$_['representative_name_ar'] ??
+                '...................................................................'}}</span>
         </td>
     </tr>
 </table><br><br style="line-height: 30%;">
@@ -77,6 +78,16 @@
         <td>
             <span>الحي:</span>
             <span>{{$_['neighbor_name'] ?? '...........................'}}</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span>الإستخدام المطلوب</span>
+            <span>{{$_['required_use'] ?? '......................'}}</span>
+        </td>
+        <td>
+            <span>الإرتفاع المطلوب:</span>
+            <span>{{$_['required_hight'] ?? '....................'}}</span>
         </td>
     </tr>
 </table>
