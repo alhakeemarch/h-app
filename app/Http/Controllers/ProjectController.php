@@ -200,6 +200,7 @@ class ProjectController extends Controller
         $project_contracts_type_id = $project_contracts->map(function ($contract) {
             return $contract->contract_type_id;
         })->toArray();
+        // dd($project_contracts_type_id);
         $project_team = $this->get_project_team($project);
         $contract = new Contract();
         $contract_types = ContractType::all()->sortBy('sorting');
