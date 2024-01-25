@@ -73,7 +73,9 @@ class ContractController extends Controller
             'project_id' => $project->id,
             'contract_type_id' => $request->contract_type_id
         ])->first();
-        if ($found_contract) {
+
+
+        if ($found_contract && $found_contract->contract_type_id != 11) {
             return redirect()->back()->withErrors([
                 'this contract is allredy created',
                 'هذا العقد تم عمله مسبقاً',
