@@ -278,7 +278,7 @@ class ProjectDocController extends Controller
                     $newPDF::SetAutoPageBreak(TRUE, 24);
                     $newPDF::SetMargins(20, 20, 20, true);
                     $newPDF::setCellHeightRatio(1.3);
-                    $newPDF::SetFont('al-mohanad', 'B', 11, '', false);
+                    $newPDF::SetFont('al-mohanad', 'B', 10, '', false);
                 }
                 // -----------------------------------------------------------------
                 if ($doc_name == 'اقرار الرخصة الفورية') {

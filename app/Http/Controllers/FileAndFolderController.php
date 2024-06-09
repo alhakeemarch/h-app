@@ -740,6 +740,7 @@ class FileAndFolderController extends Controller
             '1442' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1442',
             '1443' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1443',
             '1444' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1444',
+            '1445' => '//100.0.0.5/f$/data-server/Zaied/مشاريع منتهية/1445',
         ];
 
         foreach ($directories as $directory_key => $directory) {
