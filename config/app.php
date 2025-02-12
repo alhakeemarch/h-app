@@ -41,6 +41,10 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+
+
+
+
     // 'debug' => value(function () {
     //     // load your user
     //     if (auth()->user()->is_admin) {

@@ -123,19 +123,29 @@
         <th colspan="2">الإجمالي</th>
     </tr>
     @php $n=1; @endphp
+
     @foreach ($project_contracts as $contract)
     <tr>
         <td>{{$n}}</td>
 
         <td colspan="6">{{$contract->contract_type->name_ar}}
-            @if ($contract->contract_type_id == 39)
+            @if ($contract->monthly_fee OR $contract->visit_fee)
             <span>(مرحلة العظم)</span>
             @endif
-            @if ($contract->monthly_fee ?? false)
+            @if ($contract->monthly_fee ?? false )
             <div class="txt-center">
                 <small>
                     <span>الدفعات الشهرية</span>
-                    ({{intval($contract->monthly_fee)}}) <span>ريال</span>
+                    ({{intval($contract->monthly_fee)}}) <span>ريال</span> <br>
+                    <span>تضاف لها الضريبة عند التعاقد</span>
+                </small>
+            </div>
+            @endif
+            @if ($contract->visit_fee ?? false)
+            <div class="txt-center">
+                <small>
+                    <span>دفعة لكل زيارة تشطيب</span>
+                    ({{intval($contract->visit_fee)}}) <span>ريال</span><br>
                     <span>تضاف لها الضريبة عند التعاقد</span>
                 </small>
             </div>
